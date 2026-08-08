@@ -7,7 +7,6 @@ import cv2
 import os
 import genesis as gs
 from pathlib import Path
-from simulation.image23D.single_view_reconstructor import SingleViewReconstructor
 from simulation.utils import (
     pt3d_to_gs,
     gs_to_pt3d,
@@ -38,8 +37,19 @@ class DiffSim(nn.Module):
         self.simulation_steps = self.simulated_frames_num * self.frame_steps
         self.material_type = self.config['material_type']
 
-        self.svr = SingleViewReconstructor(config)
-        self.fg_pcs_from_3d, self.fg_meshes, self.ground_plane_normal, self.config = self.svr.reconstruct()
+        if self.config.get("reconstruction_cache"):
+            from simulation.reconstruction_cache import load_reconstruction_cache
+            (
+                self.svr,
+                self.fg_pcs_from_3d,
+                self.fg_meshes,
+                self.ground_plane_normal,
+                self.config,
+            ) = load_reconstruction_cache(self.config)
+        else:
+            from simulation.image23D.single_view_reconstructor import SingleViewReconstructor
+            self.svr = SingleViewReconstructor(config)
+            self.fg_pcs_from_3d, self.fg_meshes, self.ground_plane_normal, self.config = self.svr.reconstruct()
 
         # initialize the proxy primitived for foreground object
         if self.ground_plane_normal is not None:
@@ -201,6 +211,12 @@ class DiffSim(nn.Module):
             fov = self.config['fov_x_input'],
             GUI = False,
         )
+        # Headless physics-only mode:
+        # this server exposes no usable EGL device to Genesis.
+        # RGB/masks/flow are rendered separately by self.svr (PyTorch3D).
+        if self.config.get("physics_only_no_visualizer", False):
+            self.scene._visualizer.build = lambda: None
+
         self.scene.build()
 
         self.case_handler.after_scene_building()
@@ -246,7 +262,10 @@ class DiffSim(nn.Module):
         if self.config.get('debug', False):
             self.cam.start_recording()
         self.case_handler.custom_simulation(sid)
-        self.scene.step()
+        if self.config.get("physics_only_no_visualizer", False):
+            self.scene.step(update_visualizer=False)
+        else:
+            self.scene.step()
         if self.config.get('debug', False):
             render_out = self.cam.render()
         updated_all_obj_points = []

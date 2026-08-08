@@ -27,7 +27,6 @@ from pathlib import Path
 
 from simulation.image23D.segmenter import RepViTSegmenter, SegmentAnythingSegmenter
 from simulation.image23D.mesh_generator import Sam3DMeshGenerator
-from simulation.image23D.inpainter import FluxInpainter
 
 from pytorch3d.renderer.mesh.textures import TexturesVertex
 
@@ -135,6 +134,7 @@ class SingleViewReconstructor(torch.nn.Module):
         if os.path.exists(inpainted_image_path):
             self.inpainted_image = ToTensor()(Image.open(inpainted_image_path).convert('RGB')).to(self.device)
         else:
+            from simulation.image23D.inpainter import FluxInpainter
             inpainter = FluxInpainter(device=self.device)
             all_objects_masks = torch.zeros_like(self.object_masks[0], dtype=torch.bool)
             for mask in self.object_masks:

@@ -857,7 +857,7 @@ class _MinimalSVR:
             )
             flow_np = optical_flow.cpu().numpy()
             self._last_optical_flow = flow_np
-            if self.config.get('debug', False):
+            if self.config.get('debug', False) or self.config.get('accumulate_optical_flow', False):
                 if self.optical_flow.size == 0:
                     self.optical_flow = np.expand_dims(flow_np, 0)
                 else:

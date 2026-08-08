@@ -1,9 +1,17 @@
-from transformers import OneFormerForUniversalSegmentation, OneFormerProcessor
+try:
+    from transformers import OneFormerForUniversalSegmentation, OneFormerProcessor
+except ImportError:
+    OneFormerForUniversalSegmentation = None
+    OneFormerProcessor = None
 import torch
 import sys
 import os
 import cv2
-from repvit_sam import SamAutomaticMaskGenerator, sam_model_registry
+try:
+    from repvit_sam import SamAutomaticMaskGenerator, sam_model_registry
+except ImportError:
+    SamAutomaticMaskGenerator = None
+    sam_model_registry = None
 import urllib.request
 import PIL
 from torchvision.transforms import ToPILImage
@@ -220,7 +228,7 @@ class RepViTSegmenter:
 class SegmentAnythingSegmenter:
     def __init__(self, config, device="cuda"):
         self.device = device
-        self.sam2_checkpoint = "/svl/u/wliu283/projects/wonder_play/i2v/flex-forcing/submodules/sam2/checkpoints/sam2.1_hiera_large.pt"
+        self.sam2_checkpoint = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../submodules/sam2/checkpoints/sam2.1_hiera_large.pt"))
         self.model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
         self.config = config
 
