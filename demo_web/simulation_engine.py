@@ -19,6 +19,7 @@ from omegaconf import OmegaConf
 
 from simulation.utils import pt3d_to_gs, gs_to_pt3d, pose_to_transform_matrix
 from simulation.case_simulation.case_handler import get_case_handler
+from deform_transport.trajectory import PointTrajectoryRecorder
 
 from pytorch3d.renderer import PerspectiveCameras
 from PIL import Image
@@ -234,6 +235,13 @@ class InteractiveSimulator:
             ),
         )
 
+        # RGB与flow由_MinimalSVR(PyTorch3D)渲染；计算型Docker可能没有EGL。
+        # 显式请求时只禁用未使用的Genesis visualizer生命周期，保留物理求解器。
+        if self.config.get("disable_genesis_visualizer", False):
+            self.scene._visualizer.build = lambda: None
+            self.scene._visualizer.reset = lambda: None
+            self.scene._visualizer.update = lambda *args, **kwargs: None
+
         obj_materials = []
         obj_vis_modes = []
         for mt in self.material_type:
@@ -293,6 +301,10 @@ class InteractiveSimulator:
             )
             for obj_idx in self.closest_indices
         }
+
+        self.trajectory_recorder = None
+        if self.config.get("export_point_trajectories", False):
+            self.trajectory_recorder = self._create_trajectory_recorder()
 
         self.step_count = 0
         print("Genesis scene construction finished")
@@ -390,9 +402,16 @@ class InteractiveSimulator:
 
     def render_and_flow(self, updated_points, frame_id=None):
         """Render the current frame and compute optical flow."""
-        self.svr.update_fg_obj_info(updated_points)
         if frame_id is None:
             frame_id = self.step_count
+        if self.trajectory_recorder is not None:
+            self.trajectory_recorder.record(
+                frame_id=frame_id,
+                simulation_step=self.step_count,
+                object_points=updated_points,
+                camera=self.svr.current_camera,
+            )
+        self.svr.update_fg_obj_info(updated_points)
         save_debug = self.config.get("debug", False)
         frame_pil, fg_mask, mesh_mask = self.svr.render(
             frame_id=frame_id, save=save_debug, mask=True,
@@ -457,6 +476,22 @@ class InteractiveSimulator:
         self.svr.cache_bg = None
         self.svr._prev_fg_frags_idx = None
         self.svr._prev_fg_frags_dists = None
+        if self.config.get("export_point_trajectories", False):
+            self.trajectory_recorder = self._create_trajectory_recorder()
+
+    def _create_trajectory_recorder(self):
+        return PointTrajectoryRecorder(
+            [pc["points"] for pc in self.fg_pcs_pt3d],
+            material_types=self.material_type,
+            camera=self.svr.current_camera,
+            binding_indices=self.closest_indices,
+            image_size=self.svr.target_size[0],
+        )
+
+    def save_point_trajectories(self, path):
+        if self.trajectory_recorder is None:
+            raise RuntimeError("export_point_trajectories is not enabled")
+        return self.trajectory_recorder.save(path)
 
     def _map_pc_to_particles(self, obj_idx):
         sim_particles = torch.tensor(

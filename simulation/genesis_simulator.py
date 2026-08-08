@@ -16,6 +16,7 @@ from simulation.utils import (
     pose_to_transform_matrix,
 )
 from simulation.case_simulation.case_handler import get_case_handler
+from deform_transport.trajectory import PointTrajectoryRecorder
 import time
 from simulation.utils import save_gif_from_image_folder
 
@@ -227,6 +228,17 @@ class DiffSim(nn.Module):
             else:
                 raise NotImplementedError("The current material is not supported for now")
 
+        self.trajectory_recorder = None
+        self.point_trajectory_export = None
+        if self.config.get('export_point_trajectories', False):
+            self.trajectory_recorder = PointTrajectoryRecorder(
+                [pc['points'] for pc in self.fg_pcs_from_3d],
+                material_types=self.material_type,
+                camera=self.svr.current_camera,
+                binding_indices=self.closest_indices,
+                image_size=self.svr.target_size[0],
+            )
+
         print("genesis scene construction finished")
         
     def simulate_step(self, sid, output_folder):
@@ -314,6 +326,13 @@ class DiffSim(nn.Module):
             if sid % self.frame_steps == 0:
                 self.svr.update_fg_obj_info(all_obj_points)
                 frame_id = sid // self.frame_steps
+                if self.trajectory_recorder is not None:
+                    self.trajectory_recorder.record(
+                        frame_id=frame_id,
+                        simulation_step=sid,
+                        object_points=all_obj_points,
+                        camera=self.svr.current_camera,
+                    )
                 current_frame, current_points_mask, current_mesh_mask = self.svr.render(frame_id = frame_id, save = self.config.get('debug', False), mask = True)
                 self.simulated_frames.append(current_frame)
                 self.simualted_masks.append(current_points_mask)
@@ -326,6 +345,8 @@ class DiffSim(nn.Module):
             save_gif_from_image_folder(self.output_folder / "gs_frames", self.output_folder / "simulated_frames_gs.gif")
             save_video_from_pil(self.simulated_frames, self.output_folder / "simulated_frames.mp4", fps=10)
             save_gif_from_image_folder(self.output_folder / "render" / "flow_image", self.output_folder / "flow_image.gif")
+        if self.trajectory_recorder is not None:
+            self.point_trajectory_export = self.trajectory_recorder.state_dict()
         return self.simulated_frames, self.simualted_masks, self.simualted_mesh_masks
 
     def map_pc_to_particles(self, obj_idx):

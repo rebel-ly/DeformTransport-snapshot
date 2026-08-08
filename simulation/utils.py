@@ -6,7 +6,10 @@ import trimesh
 from scipy.spatial.transform import Rotation
 from PIL import Image
 from typing import List, Optional, Tuple
-from torchvision.io import write_video
+try:
+    from torchvision.io import write_video as _torchvision_write_video
+except ImportError:
+    _torchvision_write_video = None
 from torchvision.transforms.functional import pil_to_tensor
 import cv2
 import matplotlib.pyplot as plt
@@ -33,6 +36,31 @@ from pytorch3d.transforms import Transform3d
 from torchvision.utils import save_image
 
 PRESET_Z_VALUE = 0.0 # 10.0
+
+
+def _write_video_compat(filename, video_array, fps, video_codec, options):
+    """Write video with old torchvision or the imageio fallback on 0.27+."""
+    if _torchvision_write_video is not None:
+        return _torchvision_write_video(
+            filename=filename,
+            video_array=video_array,
+            fps=fps,
+            video_codec=video_codec,
+            options=options,
+        )
+
+    output_params = []
+    for key in ("crf", "preset"):
+        if key in options:
+            output_params.extend((f"-{key}", str(options[key])))
+    imageio.mimwrite(
+        filename,
+        video_array.cpu().numpy(),
+        fps=fps,
+        codec=video_codec,
+        pixelformat=options.get("pix_fmt"),
+        output_params=output_params,
+    )
 
 def load_simulation_state(load_path):
     """
@@ -302,7 +330,7 @@ def save_video_from_pil(
     if yuv420p:
         options["pix_fmt"] = "yuv420p"
 
-    write_video(
+    _write_video_compat(
         filename=out_path,
         video_array=video,      # (T,H,W,C), uint8 RGB
         fps=fps,

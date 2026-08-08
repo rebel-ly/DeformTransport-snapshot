@@ -57,6 +57,13 @@ def flash_attention(
     deterministic:  bool. If True, slightly slower and uses more memory.
     dtype:          torch.dtype. Apply when dtype of q/k/v is not float16/bfloat16.
     """
+    if not (FLASH_ATTN_2_AVAILABLE or FLASH_ATTN_3_AVAILABLE):
+        return attention(
+            q=q, k=k, v=v, q_lens=q_lens, k_lens=k_lens,
+            dropout_p=dropout_p, softmax_scale=softmax_scale,
+            q_scale=q_scale, causal=causal, window_size=window_size,
+            deterministic=deterministic, dtype=dtype, fa_version=version)
+
     half_dtypes = (torch.float16, torch.bfloat16)
     assert dtype in half_dtypes
     assert q.device.type == 'cuda' and q.size(-1) <= 256
@@ -168,18 +175,36 @@ def attention(
             version=fa_version,
         )
     else:
-        if q_lens is not None or k_lens is not None:
-            warnings.warn(
-                'Padding mask is disabled when using scaled_dot_product_attention. It can have a significant impact on performance.'
-            )
-        attn_mask = None
-
+        out_dtype = q.dtype
         q = q.transpose(1, 2).to(dtype)
         k = k.transpose(1, 2).to(dtype)
         v = v.transpose(1, 2).to(dtype)
+        if q_scale is not None:
+            q = q * q_scale
+
+        b, _, lq, _ = q.shape
+        lk = k.shape[2]
+        attn_mask = None
+        if q_lens is not None or k_lens is not None or window_size != (-1, -1):
+            allowed = torch.ones((b, 1, lq, lk), dtype=torch.bool, device=q.device)
+            if q_lens is not None:
+                allowed &= torch.arange(lq, device=q.device)[None, None, :, None] < q_lens.to(q.device)[:, None, None, None]
+            if k_lens is not None:
+                allowed &= torch.arange(lk, device=q.device)[None, None, None, :] < k_lens.to(q.device)[:, None, None, None]
+            if window_size != (-1, -1):
+                left, right = window_size
+                qi = torch.arange(lq, device=q.device)[:, None]
+                ki = torch.arange(lk, device=q.device)[None, :]
+                if left >= 0:
+                    allowed &= (ki >= qi - left)[None, None]
+                if right >= 0:
+                    allowed &= (ki <= qi + right)[None, None]
+            attn_mask = allowed
+        if causal and attn_mask is not None:
+            causal_mask = torch.arange(lk, device=q.device)[None, :] <= torch.arange(lq, device=q.device)[:, None]
+            attn_mask &= causal_mask[None, None]
 
         out = torch.nn.functional.scaled_dot_product_attention(
-            q, k, v, attn_mask=attn_mask, is_causal=causal, dropout_p=dropout_p)
-
-        out = out.transpose(1, 2).contiguous()
-        return out
+            q, k, v, attn_mask=attn_mask, is_causal=causal and attn_mask is None,
+            dropout_p=dropout_p, scale=softmax_scale)
+        return out.transpose(1, 2).contiguous().type(out_dtype)

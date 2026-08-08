@@ -3,11 +3,39 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 from PIL import Image
 from typing import List, Optional, Tuple
-from torchvision.io import write_video
+try:
+    from torchvision.io import write_video as _torchvision_write_video
+except ImportError:
+    _torchvision_write_video = None
 from torchvision.transforms.functional import pil_to_tensor
 import os
 from glob import glob
 import imageio.v2 as imageio
+
+
+def _write_video_compat(filename, video_array, fps, video_codec, options):
+    """Write video with old torchvision or the imageio fallback on 0.27+."""
+    if _torchvision_write_video is not None:
+        return _torchvision_write_video(
+            filename=filename,
+            video_array=video_array,
+            fps=fps,
+            video_codec=video_codec,
+            options=options,
+        )
+
+    output_params = []
+    for key in ("crf", "preset"):
+        if key in options:
+            output_params.extend((f"-{key}", str(options[key])))
+    imageio.mimwrite(
+        filename,
+        video_array.cpu().numpy(),
+        fps=fps,
+        codec=video_codec,
+        pixelformat=options.get("pix_fmt"),
+        output_params=output_params,
+    )
 
 PRESET_Z_VALUE = 0.0
 
@@ -105,7 +133,13 @@ def save_video_from_pil(
     options = {"crf": str(crf), "preset": preset}
     if yuv420p:
         options["pix_fmt"] = "yuv420p"
-    write_video(filename=out_path, video_array=video, fps=fps, video_codec=codec, options=options)
+    _write_video_compat(
+        filename=out_path,
+        video_array=video,
+        fps=fps,
+        video_codec=codec,
+        options=options,
+    )
 
 
 def save_gif_from_image_folder(input_folder, gif_path, duration=0.1):

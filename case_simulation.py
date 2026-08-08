@@ -106,8 +106,17 @@ optical_flows = genesis_simulator.svr.optical_flow
 optical_flows = np.array(optical_flows)[..., :2]  # shape (71, 512, 512, 2)
 optical_flows = np.transpose(optical_flows, (0, 3, 1, 2))  # shape (71, 2, 512, 512)
 
-if debug:
+export_point_trajectories = config.get('export_point_trajectories', False)
+if debug or export_point_trajectories:
     np.save(os.path.join(final_sim_folder, "flows.npy"), optical_flows)
+
+if export_point_trajectories:
+    if genesis_simulator.point_trajectory_export is None:
+        raise RuntimeError("point trajectory export was requested but no trajectory was recorded")
+    torch.save(
+        genesis_simulator.point_trajectory_export,
+        os.path.join(final_sim_folder, "point_trajectories.pt"),
+    )
 
 # save the simulation results
 frame_folder = os.path.join(final_sim_folder, "frames")

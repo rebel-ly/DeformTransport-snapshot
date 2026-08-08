@@ -22,6 +22,10 @@ from omegaconf import OmegaConf
 from PIL import Image
 import imageio
 
+from deform_transport.pipeline_integration import (
+    load_precomputed_transport_latent,
+    load_precomputed_transport_residual,
+)
 from vidgen import (
     WanImageEncoder,
     WanVideoVAE,
@@ -89,8 +93,68 @@ def main():
     parser.add_argument("--eval_degradation", type=float, default=0.5,
                         help="Degradation level for noise (0.0 = pure structured noise)")
     parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
+    parser.add_argument(
+        "--transport_latent_path",
+        type=str,
+        default=None,
+        help=(
+            "Optional VAE transport artifact produced by "
+            "scripts/run_wan_vae_transport_probe.py"
+        ),
+    )
+    parser.add_argument(
+        "--transport_mode",
+        choices=("correct", "shuffled", "flow", "blend"),
+        default="correct",
+        help="Which precomputed transport condition to use",
+    )
+    parser.add_argument(
+        "--transport_injection_mode",
+        choices=("replace", "inter_step_residual", "condition_residual"),
+        default="replace",
+        help=(
+            "replace uses the precomputed transported latent; "
+            "inter_step_residual injects an artifact-local residual "
+            "between denoising steps; condition_residual applies the "
+            "artifact-local residual to the fresh runtime sim_latent "
+            "before the standard RealWonder SDEdit process"
+        ),
+    )
+    parser.add_argument(
+        "--transport_injection_scale",
+        type=float,
+        default=1.0,
+        help="Scale applied to the selected transport residual",
+    )
+    parser.add_argument(
+        "--transport_injection_step",
+        type=int,
+        default=0,
+        help=(
+            "Denoising-step index after which the residual is "
+            "injected, before re-noising to the next step"
+        ),
+    )
 
     args, additional_args = parser.parse_known_args()
+
+    if args.transport_injection_scale < 0:
+        raise ValueError(
+            "--transport_injection_scale must be nonnegative"
+        )
+
+    if (
+        args.transport_injection_mode
+        in (
+            "inter_step_residual",
+            "condition_residual",
+        )
+        and not args.transport_latent_path
+    ):
+        raise ValueError(
+            "--transport_latent_path is required for "
+            f"{args.transport_injection_mode}"
+        )
 
     device = torch.device("cuda")
     set_seed(args.seed)
@@ -251,12 +315,92 @@ def main():
 
     # Encode simulation frames to latent space for SDEdit
     sim_latent = None
+    transport_residual = None
+    condition_transport_residual = None
     if pipeline.sdedit:
         print("Encoding simulation frames to latent space...")
         sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
         sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
         sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
         print(f"  sim_latent shape: {sim_latent.shape}")
+
+        if args.transport_latent_path:
+            if args.transport_injection_mode == "replace":
+                print(
+                    f"Loading {args.transport_mode} transported "
+                    "sim_latent from: "
+                    f"{args.transport_latent_path}"
+                )
+                sim_latent = load_precomputed_transport_latent(
+                    args.transport_latent_path,
+                    mode=args.transport_mode,
+                    reference_latent=sim_latent,
+                )
+                print(
+                    "  transported sim_latent shape: "
+                    f"{sim_latent.shape}"
+                )
+            else:
+                print(
+                    f"Loading {args.transport_mode} artifact-local "
+                    "transport residual from: "
+                    f"{args.transport_latent_path}"
+                )
+                loaded_transport_residual = (
+                    load_precomputed_transport_residual(
+                        args.transport_latent_path,
+                        mode=args.transport_mode,
+                        reference_latent=sim_latent,
+                    )
+                )
+
+                if (
+                    args.transport_injection_mode
+                    == "condition_residual"
+                ):
+                    condition_transport_residual = (
+                        loaded_transport_residual
+                    )
+                else:
+                    transport_residual = (
+                        loaded_transport_residual
+                    )
+
+                residual_float = (
+                    loaded_transport_residual.to(
+                        torch.float32
+                    )
+                )
+
+                print(
+                    "  transport residual shape: "
+                    f"{loaded_transport_residual.shape}"
+                )
+                print(
+                    "  transport residual scale: "
+                    f"{args.transport_injection_scale}"
+                )
+                if (
+                    args.transport_injection_mode
+                    == "inter_step_residual"
+                ):
+                    print(
+                        "  transport residual step: "
+                        f"{args.transport_injection_step}"
+                    )
+                else:
+                    print(
+                        "  transport residual target: "
+                        "runtime sim_latent condition"
+                    )
+                print(
+                    "  transport residual mean_abs: "
+                    f"{float(residual_float.abs().mean()):.8f}"
+                )
+                print(
+                    "  transport residual max_abs: "
+                    f"{float(residual_float.abs().max()):.8f}"
+                )
 
         # Trim or pad sim_latent to match noise frames
         if sim_latent.shape[1] > num_output_frames:
@@ -269,6 +413,114 @@ def main():
                 sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
             ], dim=1)
         print(f"  sim_latent shape (after align): {sim_latent.shape}")
+
+        if condition_transport_residual is not None:
+            condition_transport_residual = (
+                condition_transport_residual.to(
+                    device=sim_latent.device,
+                )
+            )
+
+            if tuple(
+                condition_transport_residual.shape
+            ) != tuple(sim_latent.shape):
+                raise ValueError(
+                    "condition transport residual shape "
+                    f"{tuple(condition_transport_residual.shape)} "
+                    "does not match aligned sim_latent "
+                    f"{tuple(sim_latent.shape)}"
+                )
+
+            if not bool(
+                torch.isfinite(
+                    condition_transport_residual
+                ).all()
+            ):
+                raise ValueError(
+                    "condition transport residual "
+                    "contains NaN or Inf"
+                )
+
+            slot0_max_abs = float(
+                condition_transport_residual[
+                    :, 0
+                ]
+                .to(torch.float32)
+                .abs()
+                .max()
+            )
+
+            if slot0_max_abs != 0.0:
+                raise ValueError(
+                    "condition transport residual must "
+                    "preserve latent slot 0, but its "
+                    f"maximum absolute value is "
+                    f"{slot0_max_abs}"
+                )
+
+            requested_delta = (
+                float(
+                    args.transport_injection_scale
+                )
+                * condition_transport_residual.to(
+                    torch.float32
+                )
+            )
+
+            original_sim_latent = sim_latent
+
+            sim_latent = (
+                original_sim_latent.to(
+                    torch.float32
+                )
+                + requested_delta
+            ).to(
+                dtype=original_sim_latent.dtype
+            )
+
+            applied_delta = (
+                sim_latent.to(torch.float32)
+                - original_sim_latent.to(
+                    torch.float32
+                )
+            )
+
+            applied_slot0_max_abs = float(
+                applied_delta[
+                    :, 0
+                ].abs().max()
+            )
+
+            if applied_slot0_max_abs != 0.0:
+                raise RuntimeError(
+                    "condition-space transport changed "
+                    "latent slot 0 unexpectedly"
+                )
+
+            print(
+                "Applied condition-space transport "
+                "to runtime sim_latent before SDEdit"
+            )
+            print(
+                "  condition residual scale: "
+                f"{args.transport_injection_scale}"
+            )
+            print(
+                "  requested condition delta mean_abs: "
+                f"{float(requested_delta.abs().mean()):.8f}"
+            )
+            print(
+                "  applied condition delta mean_abs: "
+                f"{float(applied_delta.abs().mean()):.8f}"
+            )
+            print(
+                "  applied condition delta max_abs: "
+                f"{float(applied_delta.abs().max()):.8f}"
+            )
+            print(
+                "  applied condition slot0 max_abs: "
+                f"{applied_slot0_max_abs:.8f}"
+            )
 
     # Prepare batch for I2V processors
     pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
@@ -292,6 +544,13 @@ def main():
         sim_latent=sim_latent,
         sim_masks=sim_masks,
         sim_franka_masks=sim_franka_masks,
+        transport_residual=transport_residual,
+        transport_residual_scale=(
+            args.transport_injection_scale
+        ),
+        transport_residual_step=(
+            args.transport_injection_step
+        ),
         low_memory=low_memory,
         device=device,
         structured_noise_sde=structured_noise_sde,

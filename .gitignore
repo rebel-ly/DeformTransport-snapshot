@@ -18,3 +18,14 @@ slurm_logs/
 sim_tmp
 demo_web_old
 demo_web/demo_data/**/sim_tmp
+.venv/
+.venv-wsl/
+artifacts/
+
+# DeformTransport local experiment outputs
+server_runs/
+server_env/
+
+# DeformTransport local experiment outputs
+server_runs/
+server_env/

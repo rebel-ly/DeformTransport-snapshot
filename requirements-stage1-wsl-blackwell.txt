@@ -1,0 +1,23 @@
+# Checkpoint-free RealWonder trajectory probe for RTX 50-series GPUs.
+#
+# RealWonder's original Torch 2.5.1 / CUDA 12.1 pins predate NVIDIA Blackwell
+# (sm_120).  Keep requirements-stage1-wsl.txt as the upstream reproduction
+# profile; use this profile on the RTX 5060 workstation.
+--extra-index-url https://download.pytorch.org/whl/cu130
+--extra-index-url https://miropsota.github.io/torch_packages_builder
+
+numpy==1.26.4
+torch==2.12.0+cu130
+torchvision==0.27.0+cu130
+pytorch3d==0.7.9+d9839a9pt2.12.0cu130
+genesis-world @ git+https://github.com/Genesis-Embodied-AI/Genesis.git@3aa206cd84729bc7cc14fb4007aeb95a0bead7aa
+omegaconf==2.3.0
+trimesh==4.11.1
+Pillow==11.3.0
+opencv-python==4.9.0.80
+imageio==2.37.2
+tqdm==4.67.3
+PyYAML==6.0.3
+scipy==1.17.0
+matplotlib==3.10.8
+ninja
