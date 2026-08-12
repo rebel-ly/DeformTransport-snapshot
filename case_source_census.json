@@ -1,0 +1,188 @@
+{
+  "cases": [
+    "lamp",
+    "persimmon",
+    "sand_house",
+    "santa_cloth",
+    "santa_cloth_robot",
+    "tree",
+    "two_duck"
+  ],
+  "records": [
+    {
+      "case": "lamp",
+      "class": "Lamp",
+      "file": "simulation/case_simulation/lamp.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "persimmon",
+      "class": "Persimmon",
+      "file": "simulation/case_simulation/persimmon.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation",
+        "add_entities_to_scene"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "sand_house",
+      "class": "SandHouse",
+      "file": "simulation/case_simulation/sand_house.py",
+      "line": 10,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "add_robots",
+        "fix_particles",
+        "init_robots_pose",
+        "custom_simulation",
+        "after_simulation_step"
+      ],
+      "flags": {
+        "robot": [
+          "franka",
+          "robot",
+          "inverse_kinematics",
+          "ik",
+          "end_effector",
+          "ee_"
+        ],
+        "cloth": [],
+        "mpm": [
+          "particle",
+          "sand"
+        ],
+        "rigid": [
+          "mesh"
+        ],
+        "precomputed": [],
+        "trajectory": [
+          "vertices",
+          "particles"
+        ],
+        "render": []
+      },
+      "asset_strings": [
+        "cases/xml/franka_emika_panda/panda.xml"
+      ]
+    },
+    {
+      "case": "santa_cloth",
+      "class": "SantaCloth",
+      "file": "simulation/case_simulation/santa_cloth.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation",
+        "fix_particles",
+        "create_force_fields",
+        "detect_ground_plane"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [
+          "cloth"
+        ],
+        "mpm": [
+          "particle"
+        ],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [
+          "particles",
+          "vel"
+        ],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "tree",
+      "class": "Tree",
+      "file": "simulation/case_simulation/tree.py",
+      "line": 10,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "fix_particles",
+        "create_force_fields"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [
+          "particle"
+        ],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [
+          "particles"
+        ],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "two_duck",
+      "class": "TwoDuck",
+      "file": "simulation/case_simulation/two_duck.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [],
+        "render": []
+      },
+      "asset_strings": []
+    }
+  ]
+}
