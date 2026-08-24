@@ -1,0 +1,9 @@
+{
+  "seed": 0,
+  "n_tracks": 1277,
+  "fixed_points": 0,
+  "source_coordinates_permuted_only": true,
+  "future_tracks_identical": true,
+  "visibility_identical": true,
+  "point_ids_unchanged": true
+}

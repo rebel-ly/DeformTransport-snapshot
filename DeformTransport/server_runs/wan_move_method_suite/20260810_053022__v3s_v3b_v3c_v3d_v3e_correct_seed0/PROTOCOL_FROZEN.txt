@@ -1,0 +1,84 @@
+DeformTransport V3 one-shot development suite.
+
+No result-dependent tuning is allowed between variants.
+
+REFERENCE:
+Old Correct formal Wan-Move seed0.
+
+CANDIDATES:
+
+V3S
+Actual-Wan-grid source de-duplication.
+Existing Correct conditioning track set is de-duplicated at t=0 on the
+actual Wan conditioning domain 832x464 and VAE grid 104x58.
+Nearest material point to latent-cell center wins; tie by material ID.
+Future overlap handling remains original Wan-Move behavior.
+
+V3B
+2D deterministic hard arbitration.
+For multiple material trajectories mapped to one future latent cell,
+choose the point whose continuous projected position is nearest to
+that latent-cell center.
+Tie by persistent material ID.
+No feature averaging.
+
+V3C
+3D depth-aware hard arbitration.
+For multiple material trajectories mapped to one future latent cell,
+choose the visible material point with minimum positive camera depth.
+Tie by persistent material ID.
+No feature averaging.
+
+V3D
+V3C target arbitration plus continuous source-feature sampling.
+The source t=0 condition feature is bilinearly sampled from the
+continuous material coordinate rather than floor-quantized source cell.
+
+V3E
+V3C depth-aware arbitration plus fixed 3x3 local source-condition
+feature transport.
+Each target latent cell keeps exactly one depth-nearest material
+contributor.
+No feature averaging.
+Patch radius is frozen to one latent cell; no patch-size sweep.
+
+FROZEN GENERATION:
+Correct only
+seed=0
+frame_num=81
+sample_steps=40
+sample_shift=3.0
+dtype=bf16
+t5_cpu=True
+offload_model=True
+same image
+same prompt
+same checkpoint
+
+Existing DeformTransport trajectory-internal RNG freeze must remain active.
+
+POST-HOC EVALUATION ONLY AFTER ALL 10 GENERATIONS FINISH:
+
+Appearance:
+Frozen TC-MAR Lab using the same authoritative material evaluation tracks.
+
+Motion:
+Frozen TC-ME using the same authoritative material trajectories.
+
+Motion safety:
+Reject a candidate for a case iff lower 95% bootstrap CI of
+(candidate TC-ME - OldCorrect TC-ME) > 0.
+
+Appearance selection among motion-safe candidates:
+1. both cases significant TC-MAR improvement;
+2. one case significant improvement and no significant regression
+   in the other;
+3. no significant changes;
+4. any significant appearance regression rejects candidate.
+
+If candidates remain tied:
+rank by mean relative TC-MAR improvement over Santa + Tree.
+
+No metric, threshold, candidate definition, patch size, alpha,
+guidance scale, track count, or arbitration rule may be changed
+after generated results are inspected.

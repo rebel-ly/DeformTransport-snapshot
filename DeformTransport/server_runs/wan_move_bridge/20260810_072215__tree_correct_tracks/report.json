@@ -1,0 +1,77 @@
+{
+  "status": "TREE_BRIDGE_GO",
+  "case": "tree",
+  "readiness": {
+    "A_authoritative_persistent_trajectories": true,
+    "B_persistent_material_id": true,
+    "C_native_81_state_contract": true,
+    "C_contract": "S0,S2,S4,...,S160; no 165-to-81 window selection",
+    "D_authoritative_image_prompt_lineage": true,
+    "E_deterministic_coordinate_mapping": true,
+    "F_overlay_generated": true,
+    "G_no_reconstruction_or_physics_rerun": true
+  },
+  "lineage": {
+    "trajectory_source": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/point_trajectories.pt",
+    "transport_ready": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_183939__tree__aligned_81state_contract/aligned_transport_ready.pt",
+    "visibility_contract": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_183939__tree__aligned_81state_contract/aligned_visibility_contract.pt",
+    "aligned_input_image": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/resized_input_image.png",
+    "prompt": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/prompt.txt",
+    "realwonder_baseline_record_only": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_203228__tree__realwonder_baseline_seed0/tree_realwonder_baseline_seed0.mp4"
+  },
+  "coordinate_mapping": {
+    "source": "RealWonder 512x512 UV",
+    "output": "Wan-Move input 832x480 pixel XY",
+    "formula": "x=uv_x*832/512; y=uv_y*832/512-176",
+    "mapping_max_abs_diff_vs_aligned_transport": 0.0
+  },
+  "sampling": {
+    "rule": "one persistent point per occupied frame-0 Wan VAE 8x8 cell; nearest to cell center; tie minimum material ID",
+    "manual_track_count": false,
+    "source_material_point_count": 15774,
+    "source_visible_point_count": 11172,
+    "selected_track_count": 713
+  },
+  "tracks": {
+    "shape": [
+      1,
+      81,
+      713,
+      2
+    ],
+    "dtype": "float32",
+    "x_range": [
+      274.014892578125,
+      640.9464721679688
+    ],
+    "y_range": [
+      67.35282897949219,
+      342.6512451171875
+    ],
+    "in_bounds_fraction": 1.0
+  },
+  "visibility": {
+    "definition": {
+      "raster": "unique non-negative frontmost point IDs from exact PyTorch3D point rasterization",
+      "timeline": "S0,S2,S4,...,S160",
+      "validity": "intersection with aligned projection/crop validity",
+      "not_projection_only": true,
+      "not_depth_threshold": true
+    },
+    "shape": [
+      1,
+      81,
+      713
+    ],
+    "dtype": "bool",
+    "global_fraction": 0.6258203037071667,
+    "per_track_mean": 0.6258203037071667,
+    "per_track_min": 0.037037037037037035
+  },
+  "motion": {
+    "valid_step_mean_px": 1.909475564956665,
+    "valid_step_p95_px": 4.729873538017273,
+    "start_to_end_mean_px": 87.63176727294922,
+    "start_to_end_p95_px": 158.94465332031248
+  }
+}

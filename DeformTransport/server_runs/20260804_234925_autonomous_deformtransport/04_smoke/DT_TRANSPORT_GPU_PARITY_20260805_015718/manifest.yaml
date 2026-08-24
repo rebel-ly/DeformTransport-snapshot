@@ -1,0 +1,14 @@
+RUN_ID: 20260804_234925_autonomous_deformtransport
+job_id: DT_TRANSPORT_GPU_PARITY_20260805_015718
+任务: 真实CUDA材料点transport重算一致性验证
+状态: 启动中
+GPU编号: 2
+GPU_UUID: GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf
+调度分类: SHAREABLE
+预计显存: 小于1GiB
+预计时间: 小于60秒
+timeout秒: 120
+seed: 0
+输入transport_ready: /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt
+输入latent_artifact: /workspace/DeformTransport/artifacts/transport_validation/santa_cloth_21f/wan_vae/vae_latent_outputs.pt
+开始时间: "2026-08-05T01:57:18+0800"

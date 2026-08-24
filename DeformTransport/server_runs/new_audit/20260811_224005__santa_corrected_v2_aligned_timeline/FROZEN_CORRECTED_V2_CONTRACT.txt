@@ -1,0 +1,37 @@
+DeformTransport Evidence V4.1
+Santa Corrected-V2 Aligned Bridge Contract
+
+Timeline:
+frame 0  = true source state / simulation step 0
+frame 1  = simulation step 10
+...
+frame 80 = simulation step 800
+
+Geometry source:
+aligned_transport_ready.pt / points_2d_video
+
+Visibility source:
+aligned_visibility_contract.pt /
+source_and_aligned_visible
+
+Carrier selection:
+Candidate material points must be physically source-visible.
+
+Exactly one persistent material point per occupied
+Wan-VAE 8x8 TRUE SOURCE cell.
+
+Tie-break:
+nearest point to VAE-cell center, then lowest material point index.
+
+Invisible-coordinate filling:
+Reuse the exact fill_nonfinite_tracks() implementation
+from the legacy corrected exporter.
+
+Visible coordinates are never modified by filling.
+
+This artifact supersedes the failed audited bridge:
+20260811_024330__santa_corrected_physical_visibility
+
+The superseded artifact used old-future geometry steps10..810
+with aligned visibility steps0..800 and therefore violated
+the temporal/source-cell contract.

@@ -1,0 +1,873 @@
+==================================================
+最高优先级硬约束：LOCAL CODEX ONLY
+==================================================
+
+LOCAL CODEX DOES ALL REASONING.
+SERVER IS SSH EXECUTION TARGET ONLY.
+
+严格禁止：
+
+- 服务器侧 codex CLI
+- 服务器侧 Codex agent
+- nested remote agent
+- 服务器侧 OpenAI / Codex API inference
+- 使用 CPA_API_KEY / OPENAI_API_KEY 产生 LLM token
+
+服务器仅允许：
+
+- deterministic shell
+- deterministic Python
+- existing evaluator execution
+- source/log/artifact read
+- filesystem operations required to create NEW evidence files
+
+不得 kill existing remote helper / app-server。
+
+最终必须继续输出 CODEX QUOTA ISOLATION AUDIT。
+
+==================================================
+当前阶段
+==================================================
+
+Phase 0D-2F / F1-R2 —
+Corrected-v2 Evaluator Contract Port,
+Semantic-Equivalence Audit,
+and Formal Paired Rescore
+
+==================================================
+0. Previous evidence
+==================================================
+
+F1:
+
+reports/phase0d/conditioning_alignment/
+20260813_062722__f1_rw_dtfull_corrected_v2_rescore
+
+F1-R:
+
+reports/phase0d/conditioning_alignment/
+20260813_064333__f1r_paired_eval_contract_recovery
+
+F1-R final result:
+
+EVAL_CONTRACT_FIRST_FAIL_PREDICATE =
+n == cfg['expect']['n']
+
+原因：
+
+historical Santa evaluator/config expects N=1277
+
+而 authoritative corrected-v2 evaluation set：
+
+N=1257
+
+同时存在：
+
+missing DT_FULL binding
+
+Frozen F1-R classification:
+
+SCIENTIFIC_CONTRACT_INCOMPATIBILITY = True
+
+PHASE0D2F_F1R_STATUS =
+FAIL_SCIENTIFIC_EVAL_CONTRACT
+
+该历史结果保持不变。
+
+不得 retroactively 修改为 PASS。
+
+==================================================
+1. 已经正式通过、不得重开的问题
+==================================================
+
+以下全部冻结：
+
+DTFULL_LINEAGE = PASS
+
+RW_SOURCE_LINEAGE = PASS
+RW_ACTION_LINEAGE = PASS
+RW_PHYSICS_LINEAGE = PASS
+RW_TIMELINE = PASS
+
+RW_EXISTING_VIDEO_REUSABLE = True
+
+RW_N1277_RUNTIME_LOAD_COUNT = 0
+RW_N1277_GENERATOR_CONSUMPTION_COUNT = 0
+
+N1277_FORMAL_CONTAMINATION
+for current generator = False
+
+REAL_TRANSPORT_Y_SHAPE =
+[1,16,21,60,104]
+
+REAL_DOMAIN_INTERVENTION_FRACTION =
+7.236378%
+
+final video domain =
+464x832
+
+evaluation video domain =
+464x832
+
+track->evaluation mapping =
+y * 464/480
+
+conditioning/evaluation decoupled =
+True
+
+==================================================
+2. 本阶段科学目标
+==================================================
+
+当前 historical evaluator/data contract
+不能直接评价 corrected-v2，
+因为它期望 N=1277。
+
+本阶段不允许修改 metric semantics。
+
+目标是创建一个：
+
+CORRECTED_V2_EVALUATOR_CONTRACT
+
+使：
+
+N = 1257
+
+且：
+
+- evaluator implementation不变；
+- metric formulas不变；
+- track coordinate mapping不变；
+- visibility semantics不变；
+- patch definition不变；
+- temporal buckets不变；
+- metric parameters不变。
+
+然后通过一个 legacy-domain exact equivalence test
+证明：
+
+新的 evaluator contract construction
+没有改变 metric semantics。
+
+只有 equivalence PASS，
+才允许正式计算：
+
+RW_corrected-v2
+vs
+DT-FULL_corrected-v2
+
+==================================================
+3. 禁止事项
+==================================================
+
+严格禁止：
+
+- 修改 historical evaluator source
+- 修改 metric公式
+- 修改 TC-MAR
+- 修改 TC-ME
+- 修改 TC-CDE
+- 修改 patch size
+- 修改 temporal buckets
+- 修改 coordinate scaling
+- 修改 visibility semantics
+- 修改 corrected-v2 sidecars
+- 修改 videos
+- resize/crop/resample videos
+- 新 RealWonder generation
+- 新 Wan-Move generation
+- GRID100
+- WM-0
+- F2
+- Phase0D-3
+- seed1-4
+- package install/update
+- outcome-dependent tuning
+
+==================================================
+4. 创建新的 Evidence 目录
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+conditioning_alignment/
+<TIMESTAMP>__f1r2_corrected_v2_evaluator_port
+
+至少保存：
+
+PHASE0D2F_F1R2_PROTOCOL_FROZEN.txt
+
+historical_evaluator_contract.json
+corrected_v2_evaluator_contract.json
+
+historical_vs_corrected_contract_diff.json
+
+legacy_equivalence_config.json
+legacy_equivalence_results_reference.json
+legacy_equivalence_results_ported.json
+legacy_equivalence_comparison.json
+
+rw_corrected_v2_metrics.json
+dtfull_corrected_v2_metrics.json
+paired_metric_comparison.json
+
+evaluator_port_provenance.json
+legacy_metric_policy.json
+
+PHASE0D2F_F1R2_SUMMARY.md
+phase0d2f_f1r2_status.json
+SHA256SUMS.txt
+
+如果创建新的 deterministic config-builder/wrapper：
+
+scripts/build_corrected_v2_eval_contract.py
+或相应文件
+
+必须保存 SHA256。
+
+==================================================
+5. 第一动作：审计 evaluator 与 config 的职责边界
+==================================================
+
+找到 historical evaluator：
+
+SHA =
+2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08
+
+明确：
+
+N=1277 expectation
+到底存在于：
+
+A. evaluator source code hard-code
+
+还是：
+
+B. external config
+
+还是：
+
+C. evaluator source读取 external config
+而 expectation来自 config
+
+必须提供：
+
+SOURCE_FILE
+FUNCTION / CONFIG
+LINE_RANGE / JSON PATH
+EXACT EXPRESSION
+
+例如：
+
+cfg['expect']['n']
+
+本身说明 evaluator可能是通用实现，
+但必须用真实源码证明。
+
+输出：
+
+N_EXPECTATION_LOCATION =
+SOURCE_HARDCODE /
+EXTERNAL_CONFIG /
+CONFIG_DRIVEN_SOURCE /
+OTHER
+
+==================================================
+6. 判断是否可以保持 evaluator source SHA 不变
+==================================================
+
+Primary target：
+
+EVALUATOR_SOURCE_MODIFICATION = False
+
+EVALUATOR_SHA remains exactly:
+
+2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08
+
+如果只需创建新的 config / wrapper：
+
+允许。
+
+如果必须修改 evaluator source
+才能接受 N=1257：
+
+不要修改。
+
+输出：
+
+SOURCE_MODIFICATION_REQUIRED = True
+
+并 STOP：
+
+PHASE0D2F_F1R2_STATUS =
+FAIL_REQUIRES_METRIC_SOURCE_CHANGE
+
+==================================================
+7. 构造 corrected-v2 evaluator contract
+==================================================
+
+只有 evaluator source无需修改时继续。
+
+新 contract 必须使用：
+
+EVAL_N = 1257
+
+EVAL_IDS_SHA =
+f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8
+
+EVAL_TRACKS_SHA =
+a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33df7fdebfb51929
+
+EVAL_VISIBILITY_SHA =
+5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff
+
+视频：
+
+RW =
+aligned_santa_baseline_seed0.mp4
+
+RW SHA =
+1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7
+
+DT-FULL =
+formal Replay A
+
+DT-FULL SHA =
+08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935
+
+==================================================
+8. 允许修改的 contract fields
+==================================================
+
+历史 N1277 contract
+→ corrected-v2 N1257 contract
+
+只允许以下类型的变化：
+
+DATASET_BINDING:
+
+expect.n:
+1277 -> 1257
+
+material_ids_path / SHA:
+legacy -> corrected-v2
+
+tracks_path / SHA:
+legacy -> corrected-v2
+
+visibility_path / SHA:
+legacy -> corrected-v2
+
+如果存在 evaluation timeline sidecar：
+切换到 authoritative corrected-v2 equivalent artifact
+
+METHOD_BINDING:
+
+添加/绑定：
+
+RW canonical video
+DT_FULL canonical video
+
+允许：
+
+METHOD_LABEL
+VIDEO_PATH
+VIDEO_SHA
+OUTPUT_DIR
+
+改变。
+
+==================================================
+9. 严格禁止变化的 contract fields
+==================================================
+
+必须 machine-compare 以下所有字段：
+
+metric names
+metric implementation
+patch size
+patch sampling rule
+Lab conversion
+distance formula
+normalization
+visibility usage
+temporal sampling
+Early/Late definition
+global aggregation
+track coordinate conversion
+480→464 y scaling
+video decoder semantics
+frame indexing
+frame count expectations
+any epsilon
+any threshold
+any weighting
+any filtering
+any reduction
+
+全部必须：
+
+EXACT_SAME_SEMANTICS = True
+
+如任何一个变化：
+
+FORBIDDEN_CONTRACT_DIFF_COUNT > 0
+
+则 STOP。
+
+==================================================
+10. 输出 contract diff
+==================================================
+
+创建：
+
+historical_vs_corrected_contract_diff.json
+
+将 diff 分成：
+
+ALLOWED_DATASET_BINDING_DIFFS
+ALLOWED_METHOD_BINDING_DIFFS
+FORBIDDEN_METRIC_SEMANTIC_DIFFS
+
+必须输出：
+
+ALLOWED_DATASET_BINDING_DIFF_COUNT
+ALLOWED_METHOD_BINDING_DIFF_COUNT
+FORBIDDEN_METRIC_SEMANTIC_DIFF_COUNT
+
+PASS要求：
+
+FORBIDDEN_METRIC_SEMANTIC_DIFF_COUNT = 0
+
+==================================================
+11. Legacy-domain semantic equivalence test
+==================================================
+
+这是 HARD GATE。
+
+在正式 N1257评分之前，
+必须证明新的 config-builder/wrapper
+不会改变 historical evaluator semantics。
+
+做法：
+
+使用同一个：
+
+historical N=1277 evaluation dataset
+
+和同一个 historical video input。
+
+运行两次：
+
+A.
+原 historical evaluator/config
+
+B.
+新 port/config-builder 生成的
+LEGACY-COMPATIBILITY contract，
+但将：
+
+N=1277
+legacy IDs
+legacy tracks
+legacy visibility
+legacy method video
+
+恢复成与 A 完全相同的数据。
+
+注意：
+
+B 必须使用与 corrected-v2
+相同的“新 contract construction mechanism”，
+只是把 dataset binding设回 historical N1277。
+
+==================================================
+12. Legacy equivalence要求
+==================================================
+
+比较 A 与 B：
+
+exit code
+sample count
+visibility count
+frame count
+
+以及 evaluator输出的
+所有正式指标和所有正式 buckets。
+
+Primary requirement：
+
+所有数值 exact equal
+在 evaluator自身输出 precision 下。
+
+如果能比较 full-precision JSON，
+则要求 full-precision exact equal。
+
+必须输出：
+
+LEGACY_EQ_SAMPLE_COUNT_EQUAL
+LEGACY_EQ_METRIC_SET_EQUAL
+LEGACY_EQ_ALL_VALUES_EXACT
+LEGACY_EQ_MAX_ABS_DIFF
+
+理想：
+
+LEGACY_EQ_MAX_ABS_DIFF = 0
+
+==================================================
+13. Legacy equivalence失败时
+==================================================
+
+如果新 contract-builder
+在相同 historical data 上
+不能复现原 evaluator：
+
+立即 STOP。
+
+不得进行 N1257打分。
+
+状态：
+
+FAIL_SEMANTIC_EQUIVALENCE
+
+==================================================
+14. Legacy equivalence的用途
+==================================================
+
+注意：
+
+本步骤中的 N1277
+只作为：
+
+SEMANTIC_EQUIVALENCE_TEST_FIXTURE
+
+不是正式评价结果。
+
+不得把这些旧指标
+重新升级为正式 baseline。
+
+保持：
+
+LEGACY_HISTORICAL_ONLY
+
+==================================================
+15. Corrected-v2 evaluator contract freeze
+==================================================
+
+Legacy equivalence PASS后，
+冻结 corrected-v2 config。
+
+保存：
+
+CORRECTED_V2_EVAL_CONFIG_SHA
+
+如果存在 wrapper：
+
+CORRECTED_V2_EVAL_WRAPPER_SHA
+
+同时保存：
+
+EVALUATOR_SHA unchanged.
+
+机器确认：
+
+EVAL_N = 1257
+
+IDs / tracks / visibility SHA exact
+
+CONDITIONING_EVALUATION_DECOUPLED = True
+
+==================================================
+16. Corrected-v2 preflight
+==================================================
+
+对：
+
+RW
+DT-FULL
+
+使用新的 corrected-v2 contract执行 preflight。
+
+要求：
+
+video decode PASS
+81 frames
+464x832
+N=1257
+track mapping valid
+patch bounds valid
+visibility valid
+timeline valid
+
+输出：
+
+RW_CORRECTED_V2_PREFLIGHT
+DTFULL_CORRECTED_V2_PREFLIGHT
+
+只有双方 PASS才能正式打分。
+
+==================================================
+17. 正式 paired rescoring
+==================================================
+
+然后执行：
+
+RW corrected-v2
+
+DT-FULL corrected-v2
+
+除以下字段外：
+
+VIDEO_PATH
+VIDEO_SHA
+METHOD_LABEL
+
+所有 evaluator contract字段完全一致。
+
+==================================================
+18. 正式指标
+==================================================
+
+只输出 historical evaluator
+已经定义的正式指标。
+
+不得新增。
+
+不得删掉任何不利指标。
+
+对所有实际存在的：
+
+TC-MAR
+TC-ME
+TC-CDE
+global
+Early
+Late
+其他 frozen bucket
+
+全部输出。
+
+==================================================
+19. Paired comparison
+==================================================
+
+每个 metric：
+
+METHOD = ...
+
+RW = ...
+DT_FULL = ...
+DT_MINUS_RW = ...
+
+从 evaluator protocol恢复：
+
+HIGHER_IS_BETTER
+或
+LOWER_IS_BETTER
+
+输出：
+
+NUMERICAL_WINNER =
+RW /
+DT_FULL /
+TIE
+
+这里只是：
+
+seed0 numerical screening。
+
+禁止：
+
+statistical superiority
+significance
+noninferiority
+multi-seed claim
+
+==================================================
+20. 历史数字政策
+==================================================
+
+所有 historical N1277
+Santa metric values继续：
+
+LEGACY_HISTORICAL_ONLY
+
+新的 N1257值成为：
+
+CURRENT_FORMAL_CORRECTED_V2
+
+两者不得在正式 comparison table
+中作为同级数字并列。
+
+如需报告变化，只能解释：
+
+evaluation contract changed from rejected
+historical N1277 lineage
+to authoritative corrected-v2 N1257 lineage。
+
+不得说：
+“模型性能变化了”。
+
+==================================================
+21. F1-R2 PASS rule
+==================================================
+
+PASS要求：
+
+EVALUATOR_SOURCE_MODIFICATION = False
+
+EVALUATOR_SHA unchanged
+
+FORBIDDEN_METRIC_SEMANTIC_DIFF_COUNT = 0
+
+LEGACY_EQ_ALL_VALUES_EXACT = True
+
+LEGACY_EQ_MAX_ABS_DIFF = 0
+
+CORRECTED_V2_EVAL_CONFIG frozen
+
+RW_CORRECTED_V2_PREFLIGHT = PASS
+DTFULL_CORRECTED_V2_PREFLIGHT = PASS
+
+RW evaluation exit code = 0
+DT evaluation exit code = 0
+
+EVAL_N = 1257
+
+same formal sidecars.
+
+满足后：
+
+PHASE0D2F_F1R2_STATUS = PASS
+
+PHASE0D2F_F1_RECOVERED_STATUS =
+PASS_WITH_CORRECTED_V2_EVALUATOR_CONTRACT
+
+PROCEED_TO_F2 = True
+
+==================================================
+22. 若只需 config change，不要称“修改 evaluator”
+==================================================
+
+如果 evaluator source SHA unchanged，
+而只新增 corrected-v2 config：
+
+准确术语：
+
+NEW CORRECTED-V2 EVALUATION CONTRACT
+
+或：
+
+CORRECTED-V2 DATA-BINDING PORT
+
+不要写：
+
+“we modified the metric”
+“we changed the evaluator algorithm”
+
+==================================================
+23. Summary 九节
+==================================================
+
+PHASE0D2F_F1R2_SUMMARY.md：
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+24. Final stdout
+==================================================
+
+===== PHASE0D-2F / F1-R2 CORRECTED-V2 EVALUATOR PORT =====
+
+OUT = ...
+
+N_EXPECTATION_LOCATION = ...
+
+EVALUATOR_SOURCE_MODIFICATION = ...
+EVALUATOR_SHA_BEFORE = ...
+EVALUATOR_SHA_AFTER = ...
+
+ALLOWED_DATASET_BINDING_DIFF_COUNT = ...
+ALLOWED_METHOD_BINDING_DIFF_COUNT = ...
+FORBIDDEN_METRIC_SEMANTIC_DIFF_COUNT = ...
+
+LEGACY_EQ_REFERENCE_CONFIG = ...
+LEGACY_EQ_PORTED_CONFIG = ...
+
+LEGACY_EQ_SAMPLE_COUNT_EQUAL = ...
+LEGACY_EQ_METRIC_SET_EQUAL = ...
+LEGACY_EQ_ALL_VALUES_EXACT = ...
+LEGACY_EQ_MAX_ABS_DIFF = ...
+
+CORRECTED_V2_EVAL_CONFIG = ...
+CORRECTED_V2_EVAL_CONFIG_SHA = ...
+
+CORRECTED_V2_EVAL_WRAPPER = ...
+CORRECTED_V2_EVAL_WRAPPER_SHA = ...
+
+EVAL_N = 1257
+EVAL_IDS_SHA = ...
+EVAL_TRACKS_SHA = ...
+EVAL_VISIBILITY_SHA = ...
+
+RW_CORRECTED_V2_PREFLIGHT = ...
+DTFULL_CORRECTED_V2_PREFLIGHT = ...
+
+RW_EVAL_EXIT_CODE = ...
+DTFULL_EVAL_EXIT_CODE = ...
+
+然后打印所有正式指标：
+
+METRIC = ...
+RW = ...
+DT_FULL = ...
+DT_MINUS_RW = ...
+NUMERICAL_WINNER = ...
+
+LEGACY_RW_METRICS_STATUS =
+LEGACY_HISTORICAL_ONLY
+
+CURRENT_METRICS_STATUS =
+CURRENT_FORMAL_CORRECTED_V2
+
+PHASE0D2F_F1R2_STATUS =
+PASS /
+FAIL_REQUIRES_METRIC_SOURCE_CHANGE /
+FAIL_SEMANTIC_EQUIVALENCE /
+FAIL_CORRECTED_V2_PREFLIGHT /
+EVALUATOR_RUNTIME_FAIL /
+ERROR
+
+PHASE0D2F_F1_RECOVERED_STATUS = ...
+
+PROCEED_TO_F2 = True/False
+
+===== CODEX QUOTA ISOLATION AUDIT =====
+
+LOCAL_CODEX_ONLY_POLICY = ENABLED
+SERVER_ROLE = SSH_EXECUTION_TARGET_ONLY
+
+SERVER_SIDE_CODEX_CLI_INVOKED = False/UNRESOLVED
+SERVER_SIDE_CODEX_AGENT_CREATED = False/UNRESOLVED
+SERVER_SIDE_OPENAI_API_CALLED = False/UNRESOLVED
+SERVER_SIDE_CPA_API_KEY_CONSUMED_FOR_LLM = False/UNRESOLVED
+SERVER_SIDE_LLM_INFERENCE_DETECTED = False/UNRESOLVED
+
+EXISTING_REMOTE_HELPER_PROCESSES_KILLED = False
+
+QUOTA_ISOLATION_STATUS = PASS/UNRESOLVED
+
+然后 STOP。
+
+禁止执行 F2。
+禁止 GRID100。
+禁止任何 generation。

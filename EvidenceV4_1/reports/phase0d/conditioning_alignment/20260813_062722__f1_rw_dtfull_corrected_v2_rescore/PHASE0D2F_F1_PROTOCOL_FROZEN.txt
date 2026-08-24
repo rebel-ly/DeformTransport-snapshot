@@ -1,0 +1,4 @@
+Frozen protocol authority:
+/mnt/sdbd/home/liuyu_qyh/.codex/attachments/8983e9dc-defc-4b04-b8c0-6fb1c22adb70/pasted-text.txt
+
+Local-Codex-only execution policy was enabled. Server execution was limited to ordinary shell/file/hash/source inspection. No server-side Codex CLI/agent/OpenAI API/CPA API call, no new generation, and no evaluator execution occurred.

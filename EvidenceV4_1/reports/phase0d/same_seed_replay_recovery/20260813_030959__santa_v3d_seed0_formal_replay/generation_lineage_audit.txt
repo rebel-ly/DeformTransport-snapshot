@@ -1,0 +1,7 @@
+N1277_PATH_HITS=0
+FORMAL_INPUT_TRACK_SHAPE=(1,81,1257,2)
+FORMAL_GENERATION_REQUESTED_SIZE=480x832
+ACTUAL_DECODED_RGB_SHAPE=(81,464,832,3)
+EXPLANATION=Wan VAE uses spatial stride (4,8,8); 480 is not divisible by 8, and the model-generated decoded height is 464. No decode resize/crop/resample was applied.
+FFMPEG_FFPROBE=UNAVAILABLE_IN_HOST_AND_CONTAINER
+FALLBACK_DECODER=decord 0.6.0 from frozen formal runtime

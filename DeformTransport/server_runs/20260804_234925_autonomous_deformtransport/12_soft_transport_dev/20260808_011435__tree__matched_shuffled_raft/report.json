@@ -1,0 +1,18 @@
+{
+  "baseline": {
+    "global_EPE": 0.12279396504163742,
+    "transport_EPE": 0.7168875932693481,
+    "transport_angle_deg": 22.002452850341797
+  },
+  "correct_scalar0745": {
+    "global_EPE": 0.12115440517663956,
+    "transport_EPE": 0.707556426525116,
+    "transport_angle_deg": 23.45807456970215
+  },
+  "matched_shuffled": {
+    "global_EPE": 0.11969447880983353,
+    "transport_EPE": 0.6969098448753357,
+    "transport_angle_deg": 23.716474533081055,
+    "pred_flow_magnitude_mean": 0.18032364547252655
+  }
+}

@@ -1,0 +1,65 @@
+DeformTransport Evidence V4.1
+Phase0B-1 Formal Causal Contract
+
+CASE:
+Santa cloth
+
+AUTHORITATIVE INPUT:
+Corrected-v2 aligned material bridge
+
+TRACK COUNT:
+N = 1257
+
+TIMELINE:
+81 states
+simulation steps = 0,10,...,800
+
+CORRECT:
+Persistent material point i uses its own true-source coordinate
+at t=0 and its own aligned future trajectory at t>=1.
+
+IDENTITY-SHUFFLED:
+Use deterministic NumPy default_rng(seed=0).
+
+Generate one fixed derangement pi over all N persistent carriers.
+
+For material trajectory i:
+- replace ONLY its t=0 source coordinate with Correct source
+  coordinate pi(i);
+- leave t=1..80 coordinates bit-identical to Correct;
+- leave visibility bit-identical;
+- leave persistent material point ID unchanged;
+- leave future physical geometry unchanged.
+
+The permutation is sampled once and is not time-varying.
+
+INTENDED INTERVENTION:
+Break source material identity / source appearance correspondence
+while preserving the physical future trajectories and their support.
+
+NON-INTERVENED VARIABLES THAT MUST REMAIN EXACT:
+- number of tracks
+- tensor shape
+- tensor dtype
+- t=1..80 track coordinates
+- visibility
+- point IDs
+- source coordinate multiset
+- source occupied Wan-VAE cell set
+- one-carrier-per-source-cell property
+- temporal length
+- temporal ordering
+
+PASS CRITERIA:
+1. N == 1257
+2. permutation is a bijection over [0,N)
+3. fixed point count == 0
+4. future tracks t=1..80 exact equal
+5. visibility exact equal
+6. point IDs unchanged
+7. source coordinate multiset preserved exactly
+8. source VAE-cell set preserved exactly
+9. one track per source VAE cell remains true
+10. shuffled source-cell assignment equals correct cell IDs indexed by pi
+
+No performance result is inspected in Phase0B-1.

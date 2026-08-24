@@ -1,0 +1,72 @@
+{
+  "hard_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/vae_latent_outputs.pt",
+  "soft_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_184845__santa__soft_wan_gate025_artifact_retry1/outputs/vae_latent_outputs_soft_gate025.pt",
+  "alpha": 0.5,
+  "support": {
+    "hard_cells": 20813,
+    "soft_gate025_cells": 22453,
+    "soft_only_cells": 1640
+  },
+  "candidate_outputs": {
+    "soft_hardmask_replace": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_194114__santa__soft_fusion_ablations/outputs/vae_latent_outputs_soft_hardmask_replace.pt",
+      "sha256": "3397bf94b31998ab6ddb1dcd091f1fd9126112a68b51e548285e10a9711d9060",
+      "mask_cells": 20813,
+      "correct_statistics": {
+        "shape": [
+          1,
+          21,
+          16,
+          60,
+          104
+        ],
+        "dtype": "torch.float32",
+        "mean": 0.09723593294620514,
+        "std": 1.0215249061584473,
+        "min": -2.953125,
+        "max": 4.15625,
+        "finite": true
+      },
+      "correct_vs_shuffled_mean_abs": 0.045542921870946884,
+      "correct_vs_hard_correct_mean_abs": 0.0149252749979496,
+      "correct_vs_existing_soft_replace_mean_abs": 0.008037406951189041,
+      "correct_vs_target_on_mask": 0.4389789402484894,
+      "loader_compatible": true
+    },
+    "soft_gate025_blend_a050": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_194114__santa__soft_fusion_ablations/outputs/vae_latent_outputs_soft_gate025_blend_a050.pt",
+      "sha256": "2f0c643ca8584f7655e6aa8d7eba84ea9e404031cafe1776fe92e118ab4cecb5",
+      "mask_cells": 22453,
+      "correct_statistics": {
+        "shape": [
+          1,
+          21,
+          16,
+          60,
+          104
+        ],
+        "dtype": "torch.float32",
+        "mean": 0.10649026185274124,
+        "std": 1.0279210805892944,
+        "min": -2.953125,
+        "max": 4.15625,
+        "finite": true
+      },
+      "correct_vs_shuffled_mean_abs": 0.025289228186011314,
+      "correct_vs_hard_correct_mean_abs": 0.04005492478609085,
+      "correct_vs_existing_soft_replace_mean_abs": 0.03888007998466492,
+      "correct_vs_target_on_mask": 0.22691157460212708,
+      "loader_compatible": true
+    }
+  },
+  "checks": {
+    "source_latents_exactly_equal": true,
+    "target_latents_exactly_equal": true,
+    "latent_frame_indices_exactly_equal": true,
+    "hard_support_subset_of_soft": true,
+    "both_candidates_finite": true,
+    "both_candidates_loader_compatible": true,
+    "correct_shuffled_remain_different": true
+  },
+  "all_checks_pass": true
+}

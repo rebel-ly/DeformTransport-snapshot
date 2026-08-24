@@ -1,0 +1,222 @@
+{
+  "deform_transport/soft_transport.py": [
+    {
+      "name": "_as_device_tensor",
+      "line": 19,
+      "arguments": [
+        "value",
+        "device",
+        "dtype"
+      ]
+    },
+    {
+      "name": "_validate_continuous_uv",
+      "line": 31,
+      "arguments": [
+        "uv",
+        "height",
+        "width"
+      ]
+    },
+    {
+      "name": "_bilinear_neighbors",
+      "line": 49,
+      "arguments": [
+        "uv",
+        "height",
+        "width"
+      ]
+    },
+    {
+      "name": "_sample_source_bilinear",
+      "line": 116,
+      "arguments": [
+        "source_grid",
+        "source_uv",
+        "eligible_source"
+      ]
+    },
+    {
+      "name": "soft_point_transport",
+      "line": 182,
+      "arguments": [
+        "source_grid",
+        "source_uv",
+        "target_uv",
+        "source_visible",
+        "source_valid",
+        "target_valid",
+        "point_id",
+        "object_id",
+        "mode",
+        "seed",
+        "eps"
+      ]
+    }
+  ],
+  "deform_transport/transport_ready.py": [
+    {
+      "name": "_plain_cpu",
+      "line": 22,
+      "arguments": [
+        "value"
+      ]
+    },
+    {
+      "name": "_plain_structure",
+      "line": 34,
+      "arguments": [
+        "value"
+      ]
+    },
+    {
+      "name": "_map_frames_to_latent",
+      "line": 46,
+      "arguments": [
+        "points_uv"
+      ]
+    },
+    {
+      "name": "_flatten_trajectory_objects",
+      "line": 64,
+      "arguments": [
+        "trajectory"
+      ]
+    },
+    {
+      "name": "build_transport_ready",
+      "line": 139,
+      "arguments": [
+        "trajectory",
+        "source_raster_point_indices",
+        "case_name",
+        "source_trajectory_path",
+        "initial_rgb_path",
+        "coarse_rgb_paths",
+        "flow_path",
+        "source_raster_path"
+      ]
+    },
+    {
+      "name": "path_string",
+      "line": 198,
+      "arguments": [
+        "path"
+      ]
+    },
+    {
+      "name": "_require_tensor",
+      "line": 259,
+      "arguments": [
+        "state",
+        "name",
+        "shape",
+        "dtype"
+      ]
+    },
+    {
+      "name": "validate_transport_ready",
+      "line": 279,
+      "arguments": [
+        "state"
+      ]
+    },
+    {
+      "name": "save_transport_ready",
+      "line": 459,
+      "arguments": [
+        "state",
+        "path"
+      ]
+    }
+  ],
+  "scripts/build_soft_wan_latent_artifact.py": [
+    {
+      "name": "parse_args",
+      "line": 25,
+      "arguments": []
+    },
+    {
+      "name": "sha256",
+      "line": 55,
+      "arguments": [
+        "path"
+      ]
+    },
+    {
+      "name": "tensor_stats",
+      "line": 68,
+      "arguments": [
+        "tensor"
+      ]
+    },
+    {
+      "name": "masked_mean_abs",
+      "line": 82,
+      "arguments": [
+        "first",
+        "second",
+        "mask"
+      ]
+    },
+    {
+      "name": "main",
+      "line": 97,
+      "arguments": []
+    }
+  ],
+  "scripts/build_confidence_weighted_residual_artifact.py": [
+    {
+      "name": "parse_args",
+      "line": 28,
+      "arguments": []
+    },
+    {
+      "name": "sha256",
+      "line": 55,
+      "arguments": [
+        "path"
+      ]
+    },
+    {
+      "name": "statistics",
+      "line": 68,
+      "arguments": [
+        "value"
+      ]
+    },
+    {
+      "name": "region_statistics",
+      "line": 108,
+      "arguments": [
+        "value",
+        "regions"
+      ]
+    },
+    {
+      "name": "main",
+      "line": 125,
+      "arguments": []
+    }
+  ],
+  "deform_transport/pipeline_integration.py": [
+    {
+      "name": "load_precomputed_transport_residual",
+      "line": 31,
+      "arguments": [
+        "artifact_path",
+        "mode",
+        "reference_latent"
+      ]
+    },
+    {
+      "name": "load_precomputed_transport_latent",
+      "line": 237,
+      "arguments": [
+        "artifact_path",
+        "mode",
+        "reference_latent"
+      ]
+    }
+  ]
+}

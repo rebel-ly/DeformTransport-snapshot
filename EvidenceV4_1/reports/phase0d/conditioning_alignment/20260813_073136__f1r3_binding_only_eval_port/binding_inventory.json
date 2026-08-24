@@ -1,0 +1,116 @@
+{
+  "evaluator": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "DATASET_BINDING": [
+    {
+      "field": "CASES.santa.source",
+      "lines": "42-49",
+      "consumed_by": "appearance_case->read_rgb_image"
+    },
+    {
+      "field": "CASES.santa.tracks",
+      "lines": "65-70",
+      "consumed_by": "appearance_case,motion_case"
+    },
+    {
+      "field": "CASES.santa.vis",
+      "lines": "71-75",
+      "consumed_by": "appearance_case,motion_case"
+    },
+    {
+      "field": "CASES.santa.expect",
+      "lines": "77-84",
+      "consumed_by": "appearance_case,motion_case reproduction guards"
+    },
+    {
+      "field": "corrected-v2 IDs",
+      "source_location": null,
+      "consumed_by": "not loaded by historical evaluator; external preflight binding only"
+    }
+  ],
+  "METHOD_BINDING": [
+    {
+      "field": "CANDIDATES",
+      "lines": "32-38",
+      "consumed_by": "method_paths and comparison loops"
+    },
+    {
+      "field": "CASES.santa.rw/old_correct",
+      "lines": "51-64",
+      "consumed_by": "method_paths"
+    },
+    {
+      "field": "suite/candidate_path",
+      "lines": "155-199",
+      "consumed_by": "method_paths"
+    }
+  ],
+  "OUTPUT_BINDING": [
+    {
+      "field": "--out",
+      "lines": "2157-2162",
+      "consumed_by": "main report targets"
+    },
+    {
+      "field": "appearance case selection",
+      "lines": "2216-2219",
+      "consumed_by": "main"
+    },
+    {
+      "field": "motion --case",
+      "lines": "2170-2178",
+      "consumed_by": "main"
+    }
+  ],
+  "METRIC_SEMANTIC_CODE": [
+    {
+      "metric": "TC-MAR",
+      "entry": "appearance_case",
+      "lines": "780-1403",
+      "dependencies": [
+        "ANCHORS",
+        "OFF",
+        "read_rgb_image",
+        "read_video_common",
+        "sample_patches",
+        "patch_mean_lab",
+        "aggregate",
+        "stats",
+        "bootstrap_mean_ci"
+      ]
+    },
+    {
+      "metric": "TC-ME",
+      "entry": "motion_case",
+      "lines": "1633-2141",
+      "dependencies": [
+        "read_video_common",
+        "bilinear_flow",
+        "load_raft_cached",
+        "bootstrap_mean_ci"
+      ]
+    },
+    {
+      "metric": "TC-CDE",
+      "entry": null,
+      "status": "NOT_PRESENT_IN_ACTUAL_EVALUATOR"
+    }
+  ],
+  "directions": {
+    "tc_mar_lab": "lower is numerically better (source definitions use reference-candidate positive=better)",
+    "tc_mar_rgb_l1": "lower is numerically better",
+    "tc_me_epe": "lower is numerically better"
+  },
+  "frozen_semantics": [
+    "8x8 bilinear patches with offsets -3.5..3.5",
+    "Lab conversion",
+    "x identity and y*=464/480",
+    "visibility and finite/bounds filtering",
+    "TC-MAR anchors 4..80 step 4",
+    "TC-ME transitions 0..79",
+    "per-track aggregation",
+    "stats mean/median/p95",
+    "bootstrap seed/count",
+    "reproduction thresholds 0.002/0.005",
+    "RAFT transforms/downsample"
+  ]
+}

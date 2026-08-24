@@ -1,0 +1,43 @@
+{
+  "status": "TREE_CONTINUOUS_COORDINATES_READY",
+  "source_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_183939__tree__aligned_81state_contract/aligned_transport_ready.pt",
+  "source_sha256": "9b1250cc6b771e358de51b8297487789116bddbc7290a02792cff83c9363e357",
+  "output_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_210611__tree__continuous_latent_coordinates/aligned_transport_ready_continuous.pt",
+  "output_sha256": "f61e6dd160ee05b06fa2e78aaaaf31c5df3bf244dccd4bb6add115b3f7c16720",
+  "video_size": [
+    480,
+    832
+  ],
+  "latent_size": [
+    60,
+    104
+  ],
+  "scale_xy": [
+    0.125,
+    0.125
+  ],
+  "source_shape": [
+    15774,
+    2
+  ],
+  "future_shape": [
+    81,
+    15774,
+    2
+  ],
+  "source_noninteger_points": 15774,
+  "future_noninteger_states": 1277694,
+  "checks": {
+    "source_floor_match": true,
+    "future_floor_match": true,
+    "source_continuous_shape": true,
+    "future_continuous_shape": true,
+    "source_finite": true,
+    "future_finite": true,
+    "source_has_fractional_points": true,
+    "future_has_fractional_states": true,
+    "saved_source_exact": true,
+    "saved_future_exact": true
+  },
+  "all_checks_pass": true
+}

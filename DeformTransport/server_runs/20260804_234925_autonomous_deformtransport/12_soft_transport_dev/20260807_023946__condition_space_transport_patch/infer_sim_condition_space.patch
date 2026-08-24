@@ -1,0 +1,233 @@
+--- /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_023946__condition_space_transport_patch/infer_sim_before.py	2026-08-07 02:39:46.000000000 +0000
++++ infer_sim.py	2026-08-07 02:39:56.000000000 +0000
+@@ -110,20 +110,21 @@
+     )
+     parser.add_argument(
+         "--transport_injection_mode",
+-        choices=("replace", "inter_step_residual"),
++        choices=("replace", "inter_step_residual", "condition_residual"),
+         default="replace",
+         help=(
+-            "replace preserves the existing precomputed-latent "
+-            "behavior; inter_step_residual keeps the fresh runtime "
+-            "sim_latent and injects an artifact-local residual "
+-            "between denoising steps"
++            "replace uses the precomputed transported latent; "
++            "inter_step_residual injects an artifact-local residual "
++            "between denoising steps; condition_residual applies the "
++            "artifact-local residual to the fresh runtime sim_latent "
++            "before the standard RealWonder SDEdit process"
+         ),
+     )
+     parser.add_argument(
+         "--transport_injection_scale",
+         type=float,
+         default=1.0,
+-        help="Scale applied to an inter-step transport residual",
++        help="Scale applied to the selected transport residual",
+     )
+     parser.add_argument(
+         "--transport_injection_step",
+@@ -144,12 +145,15 @@
+ 
+     if (
+         args.transport_injection_mode
+-        == "inter_step_residual"
++        in (
++            "inter_step_residual",
++            "condition_residual",
++        )
+         and not args.transport_latent_path
+     ):
+         raise ValueError(
+             "--transport_latent_path is required for "
+-            "inter_step_residual injection"
++            f"{args.transport_injection_mode}"
+         )
+ 
+     device = torch.device("cuda")
+@@ -312,6 +316,7 @@
+     # Encode simulation frames to latent space for SDEdit
+     sim_latent = None
+     transport_residual = None
++    condition_transport_residual = None
+     if pipeline.sdedit:
+         print("Encoding simulation frames to latent space...")
+         sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
+@@ -341,7 +346,7 @@
+                     "transport residual from: "
+                     f"{args.transport_latent_path}"
+                 )
+-                transport_residual = (
++                loaded_transport_residual = (
+                     load_precomputed_transport_residual(
+                         args.transport_latent_path,
+                         mode=args.transport_mode,
+@@ -349,22 +354,45 @@
+                     )
+                 )
+ 
+-                residual_float = transport_residual.to(
+-                    torch.float32
++                if (
++                    args.transport_injection_mode
++                    == "condition_residual"
++                ):
++                    condition_transport_residual = (
++                        loaded_transport_residual
++                    )
++                else:
++                    transport_residual = (
++                        loaded_transport_residual
++                    )
++
++                residual_float = (
++                    loaded_transport_residual.to(
++                        torch.float32
++                    )
+                 )
+ 
+                 print(
+                     "  transport residual shape: "
+-                    f"{transport_residual.shape}"
++                    f"{loaded_transport_residual.shape}"
+                 )
+                 print(
+                     "  transport residual scale: "
+                     f"{args.transport_injection_scale}"
+                 )
+-                print(
+-                    "  transport residual step: "
+-                    f"{args.transport_injection_step}"
+-                )
++                if (
++                    args.transport_injection_mode
++                    == "inter_step_residual"
++                ):
++                    print(
++                        "  transport residual step: "
++                        f"{args.transport_injection_step}"
++                    )
++                else:
++                    print(
++                        "  transport residual target: "
++                        "runtime sim_latent condition"
++                    )
+                 print(
+                     "  transport residual mean_abs: "
+                     f"{float(residual_float.abs().mean()):.8f}"
+@@ -386,6 +414,114 @@
+             ], dim=1)
+         print(f"  sim_latent shape (after align): {sim_latent.shape}")
+ 
++        if condition_transport_residual is not None:
++            condition_transport_residual = (
++                condition_transport_residual.to(
++                    device=sim_latent.device,
++                )
++            )
++
++            if tuple(
++                condition_transport_residual.shape
++            ) != tuple(sim_latent.shape):
++                raise ValueError(
++                    "condition transport residual shape "
++                    f"{tuple(condition_transport_residual.shape)} "
++                    "does not match aligned sim_latent "
++                    f"{tuple(sim_latent.shape)}"
++                )
++
++            if not bool(
++                torch.isfinite(
++                    condition_transport_residual
++                ).all()
++            ):
++                raise ValueError(
++                    "condition transport residual "
++                    "contains NaN or Inf"
++                )
++
++            slot0_max_abs = float(
++                condition_transport_residual[
++                    :, 0
++                ]
++                .to(torch.float32)
++                .abs()
++                .max()
++            )
++
++            if slot0_max_abs != 0.0:
++                raise ValueError(
++                    "condition transport residual must "
++                    "preserve latent slot 0, but its "
++                    f"maximum absolute value is "
++                    f"{slot0_max_abs}"
++                )
++
++            requested_delta = (
++                float(
++                    args.transport_injection_scale
++                )
++                * condition_transport_residual.to(
++                    torch.float32
++                )
++            )
++
++            original_sim_latent = sim_latent
++
++            sim_latent = (
++                original_sim_latent.to(
++                    torch.float32
++                )
++                + requested_delta
++            ).to(
++                dtype=original_sim_latent.dtype
++            )
++
++            applied_delta = (
++                sim_latent.to(torch.float32)
++                - original_sim_latent.to(
++                    torch.float32
++                )
++            )
++
++            applied_slot0_max_abs = float(
++                applied_delta[
++                    :, 0
++                ].abs().max()
++            )
++
++            if applied_slot0_max_abs != 0.0:
++                raise RuntimeError(
++                    "condition-space transport changed "
++                    "latent slot 0 unexpectedly"
++                )
++
++            print(
++                "Applied condition-space transport "
++                "to runtime sim_latent before SDEdit"
++            )
++            print(
++                "  condition residual scale: "
++                f"{args.transport_injection_scale}"
++            )
++            print(
++                "  requested condition delta mean_abs: "
++                f"{float(requested_delta.abs().mean()):.8f}"
++            )
++            print(
++                "  applied condition delta mean_abs: "
++                f"{float(applied_delta.abs().mean()):.8f}"
++            )
++            print(
++                "  applied condition delta max_abs: "
++                f"{float(applied_delta.abs().max()):.8f}"
++            )
++            print(
++                "  applied condition slot0 max_abs: "
++                f"{applied_slot0_max_abs:.8f}"
++            )
++
+     # Prepare batch for I2V processors
+     pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+     batch = {

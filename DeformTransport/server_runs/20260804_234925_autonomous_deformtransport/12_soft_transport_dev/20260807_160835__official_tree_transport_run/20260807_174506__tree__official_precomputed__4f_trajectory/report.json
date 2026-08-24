@@ -1,0 +1,59 @@
+{
+  "case": "tree",
+  "experiment": "precomputed_geometry_official_tree_dynamics_4f",
+  "geometry_source": "/workspace/DeformTransport/demo_web/demo_data/tree",
+  "runtime_config": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/config.tree.transport.yaml",
+  "official_case_handler": "simulation.case_simulation.tree.Tree",
+  "demo_case_handler_attached": false,
+  "extra_ui_force": false,
+  "material_type": [
+    "mpm_elastic"
+  ],
+  "physics": {
+    "dt": 0.01,
+    "substeps": 20,
+    "frame_steps": 2,
+    "MPM_grid_density": 32,
+    "particle_size": 0.02,
+    "gravity": -1
+  },
+  "trajectory": {
+    "points_shape": [
+      4,
+      15774,
+      3
+    ],
+    "uv_shape": [
+      4,
+      15774,
+      2
+    ],
+    "binding_shape": [
+      15774,
+      5
+    ],
+    "finite": true,
+    "frame_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "simulation_steps": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "final_mean_motion_3d": 0.004075686447322369,
+    "final_max_motion_3d": 0.004609192721545696,
+    "final_mean_motion_uv": 1.0131158828735352,
+    "final_max_motion_uv": 1.325392246246338
+  },
+  "flow_shape": [
+    4,
+    2,
+    512,
+    512
+  ]
+}

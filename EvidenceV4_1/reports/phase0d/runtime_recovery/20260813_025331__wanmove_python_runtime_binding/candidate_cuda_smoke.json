@@ -1,0 +1,12 @@
+GPU_VISIBLE=1
+visible=1
+available=True
+count=1
+name=NVIDIA L40
+memory=47590277120
+GPU_VISIBLE=2
+visible=2
+available=True
+count=1
+name=NVIDIA L40
+memory=47590277120

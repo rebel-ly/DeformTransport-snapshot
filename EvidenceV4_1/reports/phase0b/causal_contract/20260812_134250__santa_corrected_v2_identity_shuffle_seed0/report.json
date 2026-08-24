@@ -1,0 +1,58 @@
+{
+  "phase": "Phase0B-1",
+  "decision": "PASS",
+  "case": "santa",
+  "authoritative_input": {
+    "directory": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline",
+    "track_count": 1257,
+    "timeline": "simulation steps 0,10,...,800",
+    "correct_tracks": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+    "correct_visibility": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+    "material_ids": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "source_vae_cell_ids": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_source_vae_cell_ids.npy"
+  },
+  "intervention": {
+    "name": "source_identity_derangement",
+    "seed": 0,
+    "derangement_attempts": 1,
+    "fixed_points": 0,
+    "definition": "only t0 source coordinates are permuted; t1..80 future geometry, visibility, material IDs, track count and temporal ordering remain exact"
+  },
+  "checks": {
+    "track_count_is_1257": true,
+    "permutation_length_is_N": true,
+    "permutation_in_range": true,
+    "permutation_is_bijection": true,
+    "fixed_point_count_is_zero": true,
+    "shape_exact_equal": true,
+    "dtype_exact_equal": true,
+    "future_tracks_t1_80_bit_identical": true,
+    "source_assignment_changed": true,
+    "source_assignment_exactly_matches_permutation": true,
+    "visibility_bit_identical": true,
+    "material_ids_bit_identical": true,
+    "source_coordinate_multiset_preserved": true,
+    "correct_saved_cell_ids_match_coordinates": true,
+    "shuffled_cell_ids_match_permuted_correct_cells": true,
+    "shuffled_source_cells_unique": true,
+    "source_cell_set_preserved": true
+  },
+  "mismatch_counts": {
+    "future_coordinate_scalar_mismatches": 0,
+    "visibility_bit_mismatches": 0
+  },
+  "source_intervention": {
+    "same_coordinate_row_count": 0,
+    "different_coordinate_row_count": 1257,
+    "mean_displacement_px": 152.40318227619272,
+    "p50_displacement_px": 148.28052286709917,
+    "p95_displacement_px": 285.22584319370435,
+    "max_displacement_px": 380.09963657412544
+  },
+  "formal_outputs": {
+    "shuffled_tracks": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/santa_material_tracks_identity_shuffled_seed0.npy",
+    "shuffled_visibility": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/santa_material_visibility_identity_shuffled_seed0.npy",
+    "permutation": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/source_identity_permutation_seed0.npy",
+    "shuffled_source_cell_ids": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/santa_material_source_vae_cell_ids_identity_shuffled_seed0.npy"
+  }
+}

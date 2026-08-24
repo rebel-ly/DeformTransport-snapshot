@@ -1,0 +1,72 @@
+{
+  "C2_WRITE_MAP_SEED0_EQ_SEED1": true,
+  "CS_WRITE_MAP_SEED0_EQ_SEED1": true,
+  "H1_SEED0": "PASS",
+  "H1_SEED1": "PASS",
+  "arms": {
+    "C2": {
+      "seed0": {
+        "collision_cells": 788,
+        "counting_definition": "Phase0C current frozen create_pos_feature_map + replace_feature; deterministic reconstruction from runtime-consumed inputs",
+        "effective_K": 1257,
+        "evidence_kind": "DETERMINISTIC_RECONSTRUCTION_FROM_RUNTIME_INPUTS",
+        "future_evaluated_cells": 120640,
+        "intervention_fraction": 0.07428713527851459,
+        "latent_grid": [
+          58,
+          104
+        ],
+        "unique_writes": 8962
+      },
+      "seed0_descriptor_sha256": "4c7b1f89ca4f7295a21bc42c22144889b250542e7997723fbdcc951a353f87de",
+      "seed1": {
+        "collision_cells": 788,
+        "counting_definition": "Phase0C current frozen create_pos_feature_map + replace_feature; deterministic reconstruction from runtime-consumed inputs",
+        "effective_K": 1257,
+        "evidence_kind": "DETERMINISTIC_RECONSTRUCTION_FROM_RUNTIME_INPUTS",
+        "future_evaluated_cells": 120640,
+        "intervention_fraction": 0.07428713527851459,
+        "latent_grid": [
+          58,
+          104
+        ],
+        "unique_writes": 8962
+      },
+      "seed1_descriptor_sha256": "4c7b1f89ca4f7295a21bc42c22144889b250542e7997723fbdcc951a353f87de",
+      "write_map_seed0_eq_seed1": true
+    },
+    "CS": {
+      "seed0": {
+        "collision_cells": 788,
+        "counting_definition": "Phase0C current frozen create_pos_feature_map + replace_feature; deterministic reconstruction from runtime-consumed inputs",
+        "effective_K": 1257,
+        "evidence_kind": "DETERMINISTIC_RECONSTRUCTION_FROM_RUNTIME_INPUTS",
+        "future_evaluated_cells": 120640,
+        "intervention_fraction": 0.07428713527851459,
+        "latent_grid": [
+          58,
+          104
+        ],
+        "unique_writes": 8962
+      },
+      "seed0_descriptor_sha256": "616e754fa4dff7ecb53bf4ddbb70b9017091e1e10351d405d0b51637815b9b18",
+      "seed1": {
+        "collision_cells": 788,
+        "counting_definition": "Phase0C current frozen create_pos_feature_map + replace_feature; deterministic reconstruction from runtime-consumed inputs",
+        "effective_K": 1257,
+        "evidence_kind": "DETERMINISTIC_RECONSTRUCTION_FROM_RUNTIME_INPUTS",
+        "future_evaluated_cells": 120640,
+        "intervention_fraction": 0.07428713527851459,
+        "latent_grid": [
+          58,
+          104
+        ],
+        "unique_writes": 8962
+      },
+      "seed1_descriptor_sha256": "616e754fa4dff7ecb53bf4ddbb70b9017091e1e10351d405d0b51637815b9b18",
+      "write_map_seed0_eq_seed1": true
+    }
+  },
+  "phase0c_reference": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/PHASE0C_RUNTIME_GRID_REAUDIT.json",
+  "phase0c_reference_sha256": "9e5c5f246e53b73e2574722f9b9647c2e43edd3eb2043210a55c1d898ec67b67"
+}

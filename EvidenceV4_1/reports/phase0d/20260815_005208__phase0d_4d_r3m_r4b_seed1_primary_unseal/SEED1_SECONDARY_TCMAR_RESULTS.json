@@ -1,0 +1,28 @@
+{
+  "N": 1257,
+  "TCMAR_INDEPENDENCE_FROM_PREVIEW": "NOT_ESTABLISHED",
+  "authoritative_evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "deltas": {
+    "identity_seed1": -2.035870555955624,
+    "transport_seed1": -1.480901957093776,
+    "wrong_identity_vs_off_seed1": 0.5549685988618478
+  },
+  "does_not_modify_primary_tcme_conclusion": true,
+  "metric": "TC-MAR",
+  "raw_result_paths": {
+    "C1": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/SECONDARY_RAW/C1/raw.json",
+    "C2": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/SECONDARY_RAW/C2/raw.json",
+    "CS": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/SECONDARY_RAW/CS/raw.json"
+  },
+  "seed": 1,
+  "values": {
+    "C1": 10.819041036200092,
+    "C2": 9.338139079106316,
+    "CS": 11.37400963506194
+  },
+  "video_sha256": {
+    "C1": "cb1f81c25549b9fccedcb5473f6453cce2fe5982d4b2687fc9ac1975b17e7a1a",
+    "C2": "fb1b15389debe03dc4254917cca222ace6324d384e7cbca98dcd7f1828d57122",
+    "CS": "451492647274dba81709e03952b159b5ecba341d9fd5d97cdd03d688839e60e2"
+  }
+}

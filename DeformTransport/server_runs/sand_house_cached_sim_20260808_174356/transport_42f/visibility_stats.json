@@ -1,0 +1,392 @@
+{
+  "case": "sand_house",
+  "pixel_frames": 165,
+  "latent_slots": 42,
+  "point_count": 441807,
+  "source_projection_valid": 441807,
+  "source_crop_valid": 441807,
+  "source_raster_visible": 30538,
+  "source_transport_valid": 30538,
+  "mask_overlap_total_pixels": 0,
+  "mask_overlap_max_per_frame": 0,
+  "frames": [
+    {
+      "slot": 0,
+      "pixel_frame": 0,
+      "raster_fg_pixels": 43321,
+      "self_visible_points": 30538,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 30538,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 1,
+      "pixel_frame": 4,
+      "raster_fg_pixels": 43321,
+      "self_visible_points": 30538,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 30538,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 2,
+      "pixel_frame": 8,
+      "raster_fg_pixels": 43321,
+      "self_visible_points": 30538,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 30538,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 3,
+      "pixel_frame": 12,
+      "raster_fg_pixels": 43321,
+      "self_visible_points": 30538,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 30538,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 4,
+      "pixel_frame": 16,
+      "raster_fg_pixels": 43321,
+      "self_visible_points": 30538,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 30538,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 5,
+      "pixel_frame": 20,
+      "raster_fg_pixels": 43320,
+      "self_visible_points": 30644,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 30644,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 6,
+      "pixel_frame": 24,
+      "raster_fg_pixels": 42904,
+      "self_visible_points": 27166,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 27166,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 7,
+      "pixel_frame": 28,
+      "raster_fg_pixels": 44009,
+      "self_visible_points": 19105,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 19105,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 8,
+      "pixel_frame": 32,
+      "raster_fg_pixels": 43365,
+      "self_visible_points": 14414,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 14414,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 9,
+      "pixel_frame": 36,
+      "raster_fg_pixels": 41698,
+      "self_visible_points": 12534,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 12534,
+      "projection_valid_points": 441807
+    },
+    {
+      "slot": 10,
+      "pixel_frame": 40,
+      "raster_fg_pixels": 36182,
+      "self_visible_points": 10940,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10940,
+      "projection_valid_points": 440459
+    },
+    {
+      "slot": 11,
+      "pixel_frame": 44,
+      "raster_fg_pixels": 35226,
+      "self_visible_points": 10353,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10353,
+      "projection_valid_points": 439572
+    },
+    {
+      "slot": 12,
+      "pixel_frame": 48,
+      "raster_fg_pixels": 34999,
+      "self_visible_points": 10368,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10368,
+      "projection_valid_points": 439551
+    },
+    {
+      "slot": 13,
+      "pixel_frame": 52,
+      "raster_fg_pixels": 35165,
+      "self_visible_points": 10252,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10252,
+      "projection_valid_points": 439550
+    },
+    {
+      "slot": 14,
+      "pixel_frame": 56,
+      "raster_fg_pixels": 34771,
+      "self_visible_points": 9882,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 9882,
+      "projection_valid_points": 439551
+    },
+    {
+      "slot": 15,
+      "pixel_frame": 60,
+      "raster_fg_pixels": 34344,
+      "self_visible_points": 9434,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 9434,
+      "projection_valid_points": 439551
+    },
+    {
+      "slot": 16,
+      "pixel_frame": 64,
+      "raster_fg_pixels": 34683,
+      "self_visible_points": 9475,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 9475,
+      "projection_valid_points": 439546
+    },
+    {
+      "slot": 17,
+      "pixel_frame": 68,
+      "raster_fg_pixels": 36596,
+      "self_visible_points": 9787,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 9787,
+      "projection_valid_points": 439534
+    },
+    {
+      "slot": 18,
+      "pixel_frame": 72,
+      "raster_fg_pixels": 39009,
+      "self_visible_points": 10414,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10414,
+      "projection_valid_points": 439531
+    },
+    {
+      "slot": 19,
+      "pixel_frame": 76,
+      "raster_fg_pixels": 37868,
+      "self_visible_points": 10229,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10229,
+      "projection_valid_points": 439526
+    },
+    {
+      "slot": 20,
+      "pixel_frame": 80,
+      "raster_fg_pixels": 38139,
+      "self_visible_points": 10358,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10358,
+      "projection_valid_points": 439519
+    },
+    {
+      "slot": 21,
+      "pixel_frame": 84,
+      "raster_fg_pixels": 38116,
+      "self_visible_points": 10198,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10198,
+      "projection_valid_points": 439520
+    },
+    {
+      "slot": 22,
+      "pixel_frame": 88,
+      "raster_fg_pixels": 38880,
+      "self_visible_points": 10286,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10286,
+      "projection_valid_points": 439520
+    },
+    {
+      "slot": 23,
+      "pixel_frame": 92,
+      "raster_fg_pixels": 40056,
+      "self_visible_points": 10521,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10521,
+      "projection_valid_points": 439474
+    },
+    {
+      "slot": 24,
+      "pixel_frame": 96,
+      "raster_fg_pixels": 40141,
+      "self_visible_points": 10545,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10545,
+      "projection_valid_points": 438717
+    },
+    {
+      "slot": 25,
+      "pixel_frame": 100,
+      "raster_fg_pixels": 39670,
+      "self_visible_points": 10533,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10533,
+      "projection_valid_points": 438361
+    },
+    {
+      "slot": 26,
+      "pixel_frame": 104,
+      "raster_fg_pixels": 39397,
+      "self_visible_points": 10605,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10605,
+      "projection_valid_points": 438240
+    },
+    {
+      "slot": 27,
+      "pixel_frame": 108,
+      "raster_fg_pixels": 39379,
+      "self_visible_points": 10653,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10653,
+      "projection_valid_points": 438239
+    },
+    {
+      "slot": 28,
+      "pixel_frame": 112,
+      "raster_fg_pixels": 39332,
+      "self_visible_points": 10623,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10623,
+      "projection_valid_points": 438245
+    },
+    {
+      "slot": 29,
+      "pixel_frame": 116,
+      "raster_fg_pixels": 39314,
+      "self_visible_points": 10708,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10708,
+      "projection_valid_points": 438244
+    },
+    {
+      "slot": 30,
+      "pixel_frame": 120,
+      "raster_fg_pixels": 39721,
+      "self_visible_points": 10768,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10768,
+      "projection_valid_points": 438244
+    },
+    {
+      "slot": 31,
+      "pixel_frame": 124,
+      "raster_fg_pixels": 40697,
+      "self_visible_points": 10867,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10867,
+      "projection_valid_points": 438237
+    },
+    {
+      "slot": 32,
+      "pixel_frame": 128,
+      "raster_fg_pixels": 41912,
+      "self_visible_points": 11081,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 11081,
+      "projection_valid_points": 438233
+    },
+    {
+      "slot": 33,
+      "pixel_frame": 132,
+      "raster_fg_pixels": 42658,
+      "self_visible_points": 11220,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 11220,
+      "projection_valid_points": 438218
+    },
+    {
+      "slot": 34,
+      "pixel_frame": 136,
+      "raster_fg_pixels": 41381,
+      "self_visible_points": 10633,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10633,
+      "projection_valid_points": 438216
+    },
+    {
+      "slot": 35,
+      "pixel_frame": 140,
+      "raster_fg_pixels": 41061,
+      "self_visible_points": 10595,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10595,
+      "projection_valid_points": 438213
+    },
+    {
+      "slot": 36,
+      "pixel_frame": 144,
+      "raster_fg_pixels": 41063,
+      "self_visible_points": 10486,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10486,
+      "projection_valid_points": 438207
+    },
+    {
+      "slot": 37,
+      "pixel_frame": 148,
+      "raster_fg_pixels": 41177,
+      "self_visible_points": 10542,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10542,
+      "projection_valid_points": 438201
+    },
+    {
+      "slot": 38,
+      "pixel_frame": 152,
+      "raster_fg_pixels": 40653,
+      "self_visible_points": 10473,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10473,
+      "projection_valid_points": 438198
+    },
+    {
+      "slot": 39,
+      "pixel_frame": 156,
+      "raster_fg_pixels": 39964,
+      "self_visible_points": 10302,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10302,
+      "projection_valid_points": 438184
+    },
+    {
+      "slot": 40,
+      "pixel_frame": 160,
+      "raster_fg_pixels": 39605,
+      "self_visible_points": 10304,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10304,
+      "projection_valid_points": 438188
+    },
+    {
+      "slot": 41,
+      "pixel_frame": 164,
+      "raster_fg_pixels": 39509,
+      "self_visible_points": 10235,
+      "robot_mask_pixels": 0,
+      "visible_after_robot_points": 10235,
+      "projection_valid_points": 438186
+    }
+  ]
+}

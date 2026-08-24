@@ -1,0 +1,95 @@
+{
+  "artifacts": {
+    "projection": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_205857__aligned_projection_vs_future_visible_soft_parallel/projection_only/vae_latent_outputs_soft_projection.pt",
+      "sha256": "11725ccb14b84632e4fd95f0bc9cc230488cac3e3efaa5b7d1415c96379fc5d8",
+      "bytes": 49126434
+    },
+    "future_visible": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_205857__aligned_projection_vs_future_visible_soft_parallel/source_and_future_visible/vae_latent_outputs_soft_future_visible.pt",
+      "sha256": "bf61b540d55159f9ca6af4f89ff49d6e076ae61ae990e6bcb9f579c2efc0874c",
+      "bytes": 49720606
+    }
+  },
+  "checks": {
+    "projection_mode_is_default_projection_only": true,
+    "future_mode_is_source_and_future_visible": true,
+    "source_latents_exact": true,
+    "target_latents_exact": true,
+    "latent_indices_exact": true,
+    "projection_selected_equals_projection_contract": true,
+    "future_target_subset_projection_target": true,
+    "future_raw_support_subset_projection_raw_support": true,
+    "future_gated_support_subset_projection_gated_support": true,
+    "future_count_not_above_projection_count": true,
+    "projection_mask_count_contract": true,
+    "future_mask_count_contract": true,
+    "frame0_gated_masks_equal": true,
+    "frame0_raw_masks_equal": true
+  },
+  "all_checks_pass": true,
+  "support": {
+    "projection_gated_cells": 22580,
+    "future_gated_cells": 22491,
+    "gated_retention": 0.996058458813109,
+    "projection_raw_cells": 23333,
+    "future_raw_cells": 23293,
+    "raw_retention": 0.9982856897955685,
+    "removed_gated_cells": 89,
+    "removed_raw_cells": 40
+  },
+  "effective_point_counts": {
+    "projection": [
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264,
+      28264
+    ],
+    "future_visible": [
+      19126,
+      15189,
+      13957,
+      12840,
+      12184,
+      11651,
+      11234,
+      10756,
+      10345,
+      9842,
+      9478,
+      8987,
+      8552,
+      8170,
+      7790,
+      7416,
+      7027,
+      6660,
+      6435,
+      6285,
+      6182
+    ]
+  },
+  "latent_differences": {
+    "projection_correct_vs_future_correct_mean_abs": 0.006762107368558645,
+    "projection_shuffled_vs_future_shuffled_mean_abs": 0.009089043363928795,
+    "future_correct_vs_shuffled_mean_abs": 0.05291111022233963
+  },
+  "interpretation_boundary": "This comparison validates artifact geometry and contracts. It does not yet establish improved decoded or generated video quality."
+}

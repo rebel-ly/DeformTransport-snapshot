@@ -1,0 +1,22 @@
+PHASE0D-2F / F1-R4 CORRECTED-V2 PREFLIGHT FAILURE LOCALIZATION AND BINDING-ONLY RECOVERY
+FROZEN_AT=2026-08-13T07:57:42+08:00
+
+SCOPE
+- Reuse frozen F1-R3 original immutability, 17-region semantic equivalence, AST equivalence, and legacy N1277 functional exact-equivalence evidence.
+- Localize every actual F1-R3 preflight predicate and its first failure before any recovery.
+- Permit recovery only through dataset/method/path binding; do not alter evaluator metric semantics, sidecars, videos, N, mapping, visibility, sampling, or temporal definitions.
+- Keep port builder SHA 385b39f7ad018be72d10d37ffd6eb56e117fe0ccba49f01bc11cf0a75bfda0f0 unchanged.
+- Re-run lightweight static equivalence for the recovered derived evaluator; do not re-run legacy functional evaluation.
+- Run formal RW versus DT-FULL only if both recovered preflights pass.
+- Stop after F1-R4; never run F2, GRID100, WM-0, generation, or additional seeds.
+
+FROZEN ASSETS
+ORIGINAL_EVALUATOR_SHA=2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08
+EVAL_N=1257
+IDS_SHA=f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8
+TRACKS_ASSET_SHA=a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929
+VISIBILITY_SHA=5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff
+RW_SHA=1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7
+DT_FULL_SHA=08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935
+
+LOCAL_CODEX_ONLY=ENABLED

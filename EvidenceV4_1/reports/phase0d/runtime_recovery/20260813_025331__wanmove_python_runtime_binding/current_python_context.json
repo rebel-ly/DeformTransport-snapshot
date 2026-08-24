@@ -1,0 +1,10 @@
+{
+  "container": "deformtransport-dev",
+  "hostname": "gpu3",
+  "pwd": "/workspace",
+  "default_container_python": "/usr/bin/python",
+  "default_python_version": "Python 3.8.10",
+  "default_sys_prefix": "/usr",
+  "default_python_problem": "ModuleNotFoundError: No module named easydict when importing wan/configs/wan_move_14B.py",
+  "raw_evidence": "current_python_context_raw.txt"
+}

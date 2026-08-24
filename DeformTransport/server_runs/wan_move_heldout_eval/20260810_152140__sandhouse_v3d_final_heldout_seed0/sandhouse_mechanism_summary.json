@@ -1,0 +1,25 @@
+{
+  "split": "held-out",
+  "case": "sandhouse",
+  "TC_MAR_Lab": {
+    "shuffled": 27.266238756585757,
+    "correct": 23.294537291684335,
+    "shuffled_minus_correct": 3.971701464901428,
+    "bootstrap_95_ci": [
+      3.423392751306401,
+      4.510346740075069
+    ],
+    "decision": "CORRECT_WIN"
+  },
+  "TC_ME": {
+    "shuffled": 3.222572964920815,
+    "correct": 2.8482601992328838,
+    "correct_minus_shuffled": -0.37431276568793015,
+    "bootstrap_95_ci": [
+      -1.0202334793572505,
+      0.15141266298268247
+    ],
+    "decision": "TIE"
+  },
+  "realwonder_status": "NO_COMPATIBLE_81F_RW_FOUND"
+}

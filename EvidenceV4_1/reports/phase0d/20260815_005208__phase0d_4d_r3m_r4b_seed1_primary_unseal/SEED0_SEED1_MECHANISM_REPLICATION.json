@@ -1,0 +1,41 @@
+{
+  "NO_EQUIVALENCE_CLAIM": true,
+  "NO_EQUIVALENCE_TEST": true,
+  "NO_SIGNIFICANCE_TEST": true,
+  "N_SEEDS": 2,
+  "deltas": {
+    "identity_seed0": -0.09218350558735983,
+    "identity_seed1": -0.00841423880756792,
+    "transport_seed0": -0.0527161822253191,
+    "transport_seed1": 0.0012638294608653955,
+    "wrong_identity_vs_off_seed0": 0.03946732336204073,
+    "wrong_identity_vs_off_seed1": 0.009678068268433315
+  },
+  "identity_direction_consistency_2seeds": "PASS",
+  "identity_direction_seed1": "PASS",
+  "identity_paired_delta_mean_2seeds": -0.05029887219746387,
+  "identity_paired_delta_sample_std_2seeds": 0.05923381659501584,
+  "seed0_provenance_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_004423__phase0d_4d_r3m_r4a_evaluator_lineage_recovery/SEED0_AUTHORITATIVE_METRIC_PROVENANCE.json",
+  "seed0_tcme": {
+    "C1": 0.47438763126111494,
+    "C2": 0.42167144903579584,
+    "CS": 0.5138549546231557
+  },
+  "seed1_tcme": {
+    "C1": 0.39610003385941484,
+    "C2": 0.39736386332028023,
+    "CS": 0.40577810212784815
+  },
+  "seed1_three_arm_order": [
+    "C1",
+    "C2",
+    "CS"
+  ],
+  "strong_three_arm_order_replication_2seeds": "FAIL",
+  "transport_direction_consistency_2seeds": "FAIL",
+  "transport_direction_seed1": "FAIL",
+  "transport_paired_delta_mean_2seeds": -0.02572617638222685,
+  "transport_paired_delta_sample_std_2seeds": 0.03816963231183013,
+  "wrong_identity_harm_consistency_2seeds": "PASS",
+  "wrong_identity_harm_seed1": "PASS"
+}

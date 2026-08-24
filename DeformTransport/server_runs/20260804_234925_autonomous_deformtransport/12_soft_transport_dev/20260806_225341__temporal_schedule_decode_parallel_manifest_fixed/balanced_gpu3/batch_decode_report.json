@@ -1,0 +1,400 @@
+{
+  "stage": "wan_alpha_tau_candidate_batch_decode",
+  "manifest": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/gpu3_balanced_manifest.json",
+  "checkpoint": {
+    "path": "/workspace/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth",
+    "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+  },
+  "evaluation_mask": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/quality_a0p250_t0p750_freeze0.pt",
+    "key": "transport_mask"
+  },
+  "target_uint8_sha256": "f4aa8c76dc88aa1f44d1a771edf5f946b654a4703874744260583812f597c81f",
+  "candidate_count": 3,
+  "target_sharpness_common": {
+    "mean_laplacian_variance": 0.011125864938223436,
+    "mean_sobel": 0.2712781719955397,
+    "mean_high_frequency": 0.012802890042004026
+  },
+  "results": [
+    {
+      "candidate_id": "balanced_a0p500_t0p750_freeze0",
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/balanced_a0p500_t0p750_freeze0.pt",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "latent_scan_metrics": {
+        "group": "balanced",
+        "schedule_name": "freeze0",
+        "alpha_schedule": [
+          0.0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "checks": {
+          "target_slot0_exact": true,
+          "correct_slot0_exact": true,
+          "shuffled_slot0_exact": true,
+          "correct_finite": true,
+          "shuffled_finite": true,
+          "mask_equal": true
+        }
+      },
+      "common_raw_support": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.08423392014738953,
+          "mean_masked_mse": 0.012802950940152377,
+          "mean_masked_psnr_db": 18.93000093936653
+        },
+        "shuffled_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.12824870388448975,
+          "mean_masked_mse": 0.02585796222527638,
+          "mean_masked_psnr_db": 15.872757940659108
+        },
+        "correct_vs_shuffled": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.06638438507546614,
+          "mean_masked_mse": 0.008445855626767432,
+          "mean_masked_psnr_db": 20.7038398916391
+        }
+      },
+      "native_support": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.08423392014738953,
+          "mean_masked_mse": 0.012802950940152377,
+          "mean_masked_psnr_db": 18.93000093936653
+        }
+      },
+      "full_frame": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.015991225286766334,
+          "mean_masked_mse": 0.00223356199502531,
+          "mean_masked_psnr_db": 26.48409640164873
+        }
+      },
+      "sharpness_common": {
+        "target": {
+          "mean_laplacian_variance": 0.011125864938223436,
+          "mean_sobel": 0.2712781719955397,
+          "mean_high_frequency": 0.012802890042004026
+        },
+        "correct": {
+          "mean_laplacian_variance": 0.004751938084761302,
+          "mean_sobel": 0.19029749856318956,
+          "mean_high_frequency": 0.00935827502635894
+        },
+        "shuffled": {
+          "mean_laplacian_variance": 0.0023620420244786842,
+          "mean_sobel": 0.15553706488859506,
+          "mean_high_frequency": 0.007668970158484615
+        }
+      },
+      "temporal": {
+        "target": {
+          "mean_first_order_abs_difference": 0.012154888361692429,
+          "mean_second_order_abs_difference": 0.018790582194924355
+        },
+        "correct": {
+          "mean_first_order_abs_difference": 0.01030698698014021,
+          "mean_second_order_abs_difference": 0.015029924921691418
+        },
+        "shuffled": {
+          "mean_first_order_abs_difference": 0.009660501964390278,
+          "mean_second_order_abs_difference": 0.014195186085999012
+        }
+      },
+      "runtime_seconds": {
+        "correct_decode": 9.153449716977775,
+        "shuffled_decode": 8.6580780739896
+      },
+      "artifacts": {
+        "correct_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/correct.mp4",
+        "shuffled_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/shuffled.mp4",
+        "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/comparison.mp4",
+        "selected_images": {
+          "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/first.png",
+          "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/quarter.png",
+          "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/mid.png",
+          "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/three_quarter.png",
+          "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_freeze0/final.png"
+        }
+      }
+    },
+    {
+      "candidate_id": "balanced_a0p500_t0p750_ramp2",
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/balanced_a0p500_t0p750_ramp2.pt",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "latent_scan_metrics": {
+        "group": "balanced",
+        "schedule_name": "ramp2",
+        "alpha_schedule": [
+          0.0,
+          0.25,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "checks": {
+          "target_slot0_exact": true,
+          "correct_slot0_exact": true,
+          "shuffled_slot0_exact": true,
+          "correct_finite": true,
+          "shuffled_finite": true,
+          "mask_equal": true
+        }
+      },
+      "common_raw_support": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.08247829966798977,
+          "mean_masked_mse": 0.01245431636494619,
+          "mean_masked_psnr_db": 19.24647993239095
+        },
+        "shuffled_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.12529138712511387,
+          "mean_masked_mse": 0.025079143235034504,
+          "mean_masked_psnr_db": 16.222352267266775
+        },
+        "correct_vs_shuffled": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.06464108815531672,
+          "mean_masked_mse": 0.008142908128196902,
+          "mean_masked_psnr_db": 21.0413887360424
+        }
+      },
+      "native_support": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.08247829966798977,
+          "mean_masked_mse": 0.01245431636494619,
+          "mean_masked_psnr_db": 19.24647993239095
+        }
+      },
+      "full_frame": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.015559932579182915,
+          "mean_masked_mse": 0.002154010602051714,
+          "mean_masked_psnr_db": 26.801475788755578
+        }
+      },
+      "sharpness_common": {
+        "target": {
+          "mean_laplacian_variance": 0.011125864938223436,
+          "mean_sobel": 0.2712781719955397,
+          "mean_high_frequency": 0.012802890042004026
+        },
+        "correct": {
+          "mean_laplacian_variance": 0.004823242072705869,
+          "mean_sobel": 0.19162410663233864,
+          "mean_high_frequency": 0.009390911553055048
+        },
+        "shuffled": {
+          "mean_laplacian_variance": 0.00248156407457075,
+          "mean_sobel": 0.1577545592998281,
+          "mean_high_frequency": 0.007742278134151373
+        }
+      },
+      "temporal": {
+        "target": {
+          "mean_first_order_abs_difference": 0.012154888361692429,
+          "mean_second_order_abs_difference": 0.018790582194924355
+        },
+        "correct": {
+          "mean_first_order_abs_difference": 0.010393553413450718,
+          "mean_second_order_abs_difference": 0.015268044546246529
+        },
+        "shuffled": {
+          "mean_first_order_abs_difference": 0.00976058840751648,
+          "mean_second_order_abs_difference": 0.01446390338242054
+        }
+      },
+      "runtime_seconds": {
+        "correct_decode": 9.823220238031354,
+        "shuffled_decode": 8.810706005024258
+      },
+      "artifacts": {
+        "correct_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/correct.mp4",
+        "shuffled_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/shuffled.mp4",
+        "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/comparison.mp4",
+        "selected_images": {
+          "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/first.png",
+          "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/quarter.png",
+          "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/mid.png",
+          "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/three_quarter.png",
+          "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp2/final.png"
+        }
+      }
+    },
+    {
+      "candidate_id": "balanced_a0p500_t0p750_ramp4",
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/balanced_a0p500_t0p750_ramp4.pt",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "latent_scan_metrics": {
+        "group": "balanced",
+        "schedule_name": "ramp4",
+        "alpha_schedule": [
+          0.0,
+          0.1666666716337204,
+          0.3333333432674408,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "checks": {
+          "target_slot0_exact": true,
+          "correct_slot0_exact": true,
+          "shuffled_slot0_exact": true,
+          "correct_finite": true,
+          "shuffled_finite": true,
+          "mask_equal": true
+        }
+      },
+      "common_raw_support": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.08060750365257263,
+          "mean_masked_mse": 0.012102774881907268,
+          "mean_masked_psnr_db": 19.611045006638115
+        },
+        "shuffled_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.12218645578365267,
+          "mean_masked_mse": 0.024281844534813486,
+          "mean_masked_psnr_db": 16.6117746880897
+        },
+        "correct_vs_shuffled": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.06291703621132506,
+          "mean_masked_mse": 0.007863157233338297,
+          "mean_masked_psnr_db": 21.423748854695116
+        }
+      },
+      "native_support": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.08060750365257263,
+          "mean_masked_mse": 0.012102774881907268,
+          "mean_masked_psnr_db": 19.611045006638115
+        }
+      },
+      "full_frame": {
+        "correct_vs_target": {
+          "valid_frames": 81,
+          "mean_masked_l1": 0.01510460263716034,
+          "mean_masked_mse": 0.0020742693373050976,
+          "mean_masked_psnr_db": 27.166324708996008
+        }
+      },
+      "sharpness_common": {
+        "target": {
+          "mean_laplacian_variance": 0.011125864938223436,
+          "mean_sobel": 0.2712781719955397,
+          "mean_high_frequency": 0.012802890042004026
+        },
+        "correct": {
+          "mean_laplacian_variance": 0.004912610059420084,
+          "mean_sobel": 0.19301189169471647,
+          "mean_high_frequency": 0.00943027791440671
+        },
+        "shuffled": {
+          "mean_laplacian_variance": 0.002603112704143572,
+          "mean_sobel": 0.1599292626351486,
+          "mean_high_frequency": 0.007817510521200336
+        }
+      },
+      "temporal": {
+        "target": {
+          "mean_first_order_abs_difference": 0.012154888361692429,
+          "mean_second_order_abs_difference": 0.018790582194924355
+        },
+        "correct": {
+          "mean_first_order_abs_difference": 0.010470162145793438,
+          "mean_second_order_abs_difference": 0.015452787280082703
+        },
+        "shuffled": {
+          "mean_first_order_abs_difference": 0.009855017997324467,
+          "mean_second_order_abs_difference": 0.014671584591269493
+        }
+      },
+      "runtime_seconds": {
+        "correct_decode": 7.237876550003421,
+        "shuffled_decode": 10.610519770008978
+      },
+      "artifacts": {
+        "correct_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/correct.mp4",
+        "shuffled_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/shuffled.mp4",
+        "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/comparison.mp4",
+        "selected_images": {
+          "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/first.png",
+          "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/quarter.png",
+          "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/mid.png",
+          "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/three_quarter.png",
+          "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/balanced_a0p500_t0p750_ramp4/final.png"
+        }
+      }
+    }
+  ],
+  "runtime_seconds": {
+    "model_load": 6.449538013024721,
+    "target_decode": 18.740286715037655,
+    "total": 129.49697376199765
+  },
+  "all_checks_pass": true,
+  "interpretation_boundary": "VAE-only proxy scan. Full RealWonder diffusion generation has not yet been run."
+}

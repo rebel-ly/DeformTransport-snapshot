@@ -1,0 +1,11 @@
+The geometry diagnostic produced a valid report, CSV, and diagnostic tensor
+with all internal checks passing.
+
+The value 1 in exit_code.txt was captured after an accidentally concatenated
+shell command:
+
+    cat "$GEOMETRY_DIAG_DIR/stderr.log"env ...
+
+The option --aligned-transport was therefore parsed by cat, not by the Python
+diagnostic. The original exit_code.txt is preserved and is not rewritten.
+See posthoc_validation.json for the artifact-level validation result.

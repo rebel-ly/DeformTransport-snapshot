@@ -1,0 +1,8 @@
+{
+  "formal_construction":"wan/wan_move.py:90-94 constructs WanVAE(vae_pth=os.path.join(checkpoint_dir, config.vae_checkpoint), device=self.device).",
+  "standalone_api":"wan/modules/vae.py:619-655 defines WanVAE and its encode API; no whole WanMove/T5/CLIP/transformer object is required.",
+  "formal_checkpoint":"/workspace/Wan-Move/Wan-Move-14B-480P/Wan2.1_VAE.pth",
+  "formal_python":"/workspace/tools/miniforge3/envs/wan-move/bin/python",
+  "f0r2_probe_invocation":"/tmp/f0r2_vae_probe.py executed after cd /workspace/Wan-Move but without PYTHONPATH=/workspace/Wan-Move; Python resolved imports relative to /tmp and failed before VAE instantiation.",
+  "no_prohibited_component_instantiated":true
+}

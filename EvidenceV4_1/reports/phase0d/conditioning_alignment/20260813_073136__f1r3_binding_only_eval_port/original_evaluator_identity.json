@@ -1,0 +1,12 @@
+{
+  "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "sha256_before": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "sha256_after": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "size_bytes": 37339,
+  "mtime": "2026-08-11 06:16:21.000000000 +0800",
+  "mode": "-rw-r--r--",
+  "uid": 10001,
+  "gid": 1000,
+  "git_status": "?? v4_eval_files_to_upload/eval_v3.py",
+  "original_evaluator_modified": false
+}

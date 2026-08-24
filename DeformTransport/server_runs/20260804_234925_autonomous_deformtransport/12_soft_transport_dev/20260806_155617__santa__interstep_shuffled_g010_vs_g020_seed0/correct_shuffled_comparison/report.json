@@ -1,0 +1,165 @@
+{
+  "paths": {
+    "baseline": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_033448__interstep_patch_baseline_regression/santa_interstep_patch_baseline_seed0.mp4",
+    "g010_correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_034301__santa__interstep_correct_g010_vs_g020_seed0/interstep_correct_g010/santa_interstep_correct_g010_seed0.mp4",
+    "g010_shuffled": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/interstep_shuffled_g010/santa_interstep_shuffled_g010_seed0.mp4",
+    "g020_correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_034301__santa__interstep_correct_g010_vs_g020_seed0/interstep_correct_g020/santa_interstep_correct_g020_seed0.mp4",
+    "g020_shuffled": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/interstep_shuffled_g020/santa_interstep_shuffled_g020_seed0.mp4"
+  },
+  "shape": [
+    81,
+    480,
+    832,
+    3
+  ],
+  "pairwise": {
+    "g010_correct_vs_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.701746940612793,
+      "mse_0_255": 58.36966323852539,
+      "psnr_db": 30.46893173195442,
+      "max_abs_difference": 232.0,
+      "different_values": 59890542,
+      "per_frame_mae": {
+        "minimum": 1.5802667140960693,
+        "mean": 2.701749563217163,
+        "maximum": 3.9849801063537598,
+        "first": 1.5802667140960693,
+        "middle": 2.526095151901245,
+        "final": 3.9849801063537598
+      }
+    },
+    "g020_correct_vs_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.7706496715545654,
+      "mse_0_255": 47.08320617675781,
+      "psnr_db": 31.402143319840327,
+      "max_abs_difference": 231.0,
+      "different_values": 61214633,
+      "per_frame_mae": {
+        "minimum": 1.5898420810699463,
+        "mean": 2.770646810531616,
+        "maximum": 3.601808786392212,
+        "first": 1.5898420810699463,
+        "middle": 2.6554086208343506,
+        "final": 3.5679244995117188
+      }
+    },
+    "baseline_vs_g010_correct": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.764064073562622,
+      "mse_0_255": 58.40241241455078,
+      "psnr_db": 30.466495740861845,
+      "max_abs_difference": 254.0,
+      "different_values": 59794455,
+      "per_frame_mae": {
+        "minimum": 1.5568944215774536,
+        "mean": 2.7640645503997803,
+        "maximum": 3.9761035442352295,
+        "first": 1.5568944215774536,
+        "middle": 2.739499807357788,
+        "final": 3.9761035442352295
+      }
+    },
+    "baseline_vs_g010_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.9503910541534424,
+      "mse_0_255": 64.27468872070312,
+      "psnr_db": 30.050403788156853,
+      "max_abs_difference": 252.0,
+      "different_values": 60228185,
+      "per_frame_mae": {
+        "minimum": 1.593342661857605,
+        "mean": 2.950390577316284,
+        "maximum": 4.110212326049805,
+        "first": 1.593342661857605,
+        "middle": 2.8899688720703125,
+        "final": 4.110212326049805
+      }
+    },
+    "baseline_vs_g020_correct": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 3.259798049926758,
+      "mse_0_255": 82.6541519165039,
+      "psnr_db": 28.958156867579294,
+      "max_abs_difference": 254.0,
+      "different_values": 61040397,
+      "per_frame_mae": {
+        "minimum": 1.5908311605453491,
+        "mean": 3.259793996810913,
+        "maximum": 4.559056282043457,
+        "first": 1.5908311605453491,
+        "middle": 3.189074993133545,
+        "final": 4.559056282043457
+      }
+    },
+    "baseline_vs_g020_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 3.7189626693725586,
+      "mse_0_255": 106.70047760009766,
+      "psnr_db": 27.84913997501334,
+      "max_abs_difference": 255.0,
+      "different_values": 61768390,
+      "per_frame_mae": {
+        "minimum": 1.6243832111358643,
+        "mean": 3.718965530395508,
+        "maximum": 5.030494689941406,
+        "first": 1.6243832111358643,
+        "middle": 3.7119200229644775,
+        "final": 5.030494689941406
+      }
+    }
+  },
+  "distance_to_baseline_diagnostic": {
+    "g010_shuffled_minus_correct_mae": 0.1863269805908203,
+    "g020_shuffled_minus_correct_mae": 0.4591646194458008,
+    "interpretation": "Positive means Correct perturbs the Baseline less than Shuffled. Baseline is not ground truth, so this is only an engineering diagnostic."
+  },
+  "video_statistics": {
+    "baseline": {
+      "standard_deviation": 52.434879302978516,
+      "edge_energy": 13.194692611694336,
+      "temporal_first_difference": 3.1001346111297607,
+      "temporal_second_difference": 4.612634181976318
+    },
+    "g010_correct": {
+      "standard_deviation": 51.91165542602539,
+      "edge_energy": 13.12155818939209,
+      "temporal_first_difference": 3.067828893661499,
+      "temporal_second_difference": 4.54620361328125
+    },
+    "g010_shuffled": {
+      "standard_deviation": 51.63282775878906,
+      "edge_energy": 13.096090316772461,
+      "temporal_first_difference": 3.07218074798584,
+      "temporal_second_difference": 4.547111511230469
+    },
+    "g020_correct": {
+      "standard_deviation": 51.500579833984375,
+      "edge_energy": 13.056493759155273,
+      "temporal_first_difference": 3.0300092697143555,
+      "temporal_second_difference": 4.448696136474609
+    },
+    "g020_shuffled": {
+      "standard_deviation": 50.395816802978516,
+      "edge_energy": 12.968915939331055,
+      "temporal_first_difference": 3.003471851348877,
+      "temporal_second_difference": 4.411544322967529
+    }
+  },
+  "snapshots": {
+    "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/correct_shuffled_comparison/comparison_first.png",
+    "middle": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/correct_shuffled_comparison/comparison_middle.png",
+    "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/correct_shuffled_comparison/comparison_final.png"
+  },
+  "validity": {
+    "all_shapes_equal": true,
+    "all_have_81_frames": true
+  }
+}

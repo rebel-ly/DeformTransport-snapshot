@@ -1,0 +1,920 @@
+[
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/vae_latent_outputs.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/vae_latent_outputs_with_blend_a05.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_184845__santa__soft_wan_gate025_artifact_retry1/outputs/vae_latent_outputs_soft_gate025.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_194114__santa__soft_fusion_ablations/outputs/vae_latent_outputs_soft_gate025_blend_a050.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_194114__santa__soft_fusion_ablations/outputs/vae_latent_outputs_soft_hardmask_replace.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_023755__santa__soft_blend_a025_artifact/outputs/vae_latent_outputs_soft_gate025_blend_a025.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_023755__santa__soft_blend_a025_artifact/outputs/vae_latent_outputs_soft_hardmask_replace.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_164708__santa__confidence_weighted_residual_artifact/outputs/vae_latent_outputs_soft_confidence_wpc_smooth_l010_h025.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_165939__santa__confidence_weighted_residual_artifact_retry1/outputs/vae_latent_outputs_soft_confidence_wpc_smooth_l010_h025.pt",
+    "required_present": [
+      "correct_transport_residual",
+      "shuffled_transport_residual",
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "correct_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/vae_latent_outputs.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/vae_latent_outputs.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_210730__tree__future_visible_soft_gate025/tree_soft_future_visible_gate025.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_a0p250_t0p750_ramp4.pt",
+    "required_present": [
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [
+      "correct_transport_residual",
+      "shuffled_transport_residual"
+    ],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+    "required_present": [
+      "correct_transport_residual",
+      "shuffled_transport_residual",
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "correct_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_232723__tree__highpass_identity_transport/tree_quality_correct_highpass3x3_energy_matched.pt",
+    "required_present": [
+      "correct_transport_residual",
+      "shuffled_transport_residual",
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "correct_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_234033__tree__norm_preserving_direction_transport/tree_quality_correct_norm_preserving_direction.pt",
+    "required_present": [
+      "correct_transport_residual",
+      "shuffled_transport_residual",
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "correct_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_000056__tree__cosine_confidence_gate/tree_quality_correct_cosine_confidence_gate.pt",
+    "required_present": [
+      "correct_transport_residual",
+      "shuffled_transport_residual",
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "correct_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  },
+  {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_002016__tree__motion_conflict_projection/tree_quality_correct_motion_conflict_projection_energy_matched.pt",
+    "required_present": [
+      "correct_transport_residual",
+      "shuffled_transport_residual",
+      "target_latent",
+      "transport_mask"
+    ],
+    "required_missing": [],
+    "target_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "correct_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_transport_residual": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "transport_mask": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "contribution_count": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "latent_frame_indices": [
+      21
+    ],
+    "correct_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "shuffled_fused_latent": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ]
+  }
+]

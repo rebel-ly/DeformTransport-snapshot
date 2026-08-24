@@ -1,0 +1,599 @@
+当前阶段：
+
+Phase0C-4 —
+Correct-vs-Shuffled Operator Differential Decomposition Audit
+
+这是 Phase0C 的最后一个机制级核心审计。
+
+已完成：
+
+Phase0C-1 = PASS
+Phase0C-2 = PASS
+Phase0C-3 CORE = PASS
+Phase0C-3A-R = PASS
+
+Phase0C-3A-R 已确认：
+
+VISIBLE_MIN = 0
+VISIBLE_MAX = 20
+VISIBLE_UNIQUE_COUNT = 21
+VISIBLE_VARIANCE_POPULATION = 40.58002758142311
+
+原 zero-variance explanation 已撤销。
+
+Spearman:
+NOT_COMPUTED_DEPENDENCY_UNAVAILABLE
+non-gating。
+
+==================================================
+1. 核心科学问题
+==================================================
+
+证明：
+
+edited_y_correct - edited_y_identity_shuffled
+
+是否能够完全由：
+
+source-feature correspondence differential
+
+经过相同 frozen V3D write operator
+传播到相同 future winning target cells 所解释。
+
+目标不是再次证明 support 相同。
+
+目标是 differential decomposition。
+
+==================================================
+2. Formal frozen inputs
+==================================================
+
+Formal case:
+
+corrected-v2 Santa
+N = 1257
+T = 81
+latent future slots = 20
+latent H = 60
+latent W = 104
+synthetic C = 4
+variant = V3D
+
+优先复用：
+
+Phase0B-4R：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/
+functional_conditioning/
+20260812_143438__santa_v3d_seed0_import_recovered
+
+其中包括：
+
+correct_edited_y.npy
+identity_shuffled_edited_y.npy
+
+correct_context_tracks.npy
+identity_shuffled_context_tracks.npy
+
+correct_context_visibility.npy
+identity_shuffled_context_visibility.npy
+
+correct_context_depth.npy
+identity_shuffled_context_depth.npy
+
+correct_context_ids.npy
+identity_shuffled_context_ids.npy
+
+correct_track_pos.npy
+identity_shuffled_track_pos.npy
+
+以及 0C-1 已冻结的 winner/arbitration evidence。
+
+禁止使用 N=1277 legacy Santa。
+
+==================================================
+3. Source drift gate
+==================================================
+
+必须再次验证：
+
+/workspace/Wan-Move/wan/modules/trajectory.py
+
+SHA256 =
+
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+以及：
+
+/workspace/Wan-Move/wan/wan_move.py
+
+SHA256 =
+
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+Git HEAD：
+
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+
+任何 source drift：
+
+SOURCE_DRIFT
+STOP。
+
+==================================================
+4. 0C-4A — Frozen write-equation recovery
+==================================================
+
+先只读审计 frozen trajectory.py 中 V3D 的实际：
+
+source feature lookup
+winner selection
+target addressing
+edited_y write equation
+
+必须明确回答：
+
+A. source feature 如何获得？
+
+B. 是 bilinear source sampling 还是 discrete cell sampling？
+
+C. target feature 是直接 replacement 还是 weighted write？
+
+D. 是否使用 target point 与 target-cell-center offset？
+
+E. 如果使用 offset：
+   offset 是否参与 value transformation，
+   还是只参与 candidate/arbitration？
+
+F. 是否存在：
+   alpha blending
+   interpolation
+   splatting weight
+   residual addition
+   normalization
+   patch write
+   channel transform
+
+G. 一个 winning carrier 最终精确写哪些：
+   temporal slot
+   spatial cell
+   channel
+
+不得凭历史理解推断。
+
+必须把真实 write equation 写进：
+
+operator_write_equation.txt
+
+并记录对应 source line numbers。
+
+==================================================
+5. Synthetic source y reconstruction
+==================================================
+
+只能严格使用 Phase0B-4R 已冻结 construction：
+
+shape:
+[1,4,21,60,104]
+
+source slot tau=0：
+
+channel0 = 1
+channel1 = x / 103
+channel2 = y / 59
+channel3 = linear_cell_id / (60*104 - 1)
+
+future slots tau=1..20 = 0
+
+必须与 0C-2 frozen reconstruction exact 一致。
+
+禁止定义新的 synthetic source。
+
+==================================================
+6. Source feature reconstruction
+==================================================
+
+对 Correct 和 Shuffled 分别基于其 t0 source coordinates，
+按照 frozen trajectory.py 的真实 source lookup equation
+重建 source feature。
+
+如果真实代码调用：
+
+_dt_bilinear_source_features
+
+优先：
+
+使用冻结函数本身在 CPU 对同一 deterministic synthetic y
+进行 source-feature computation，
+
+而不是自行写“近似 bilinear”。
+
+允许 CUDA 仅为 normal package import 可见，
+但实际 tensor compute 必须 CPU。
+
+如果无需 import 即可从 frozen evidence 精确恢复，
+也可以 pure CPU offline reconstruction。
+
+必须记录：
+
+SOURCE_FEATURE_SHAPE
+SOURCE_FEATURE_DTYPE
+
+以及：
+
+source_feature_correct
+source_feature_shuffled
+
+之间：
+
+nonzero scalar difference count
+Linf difference
+
+这些仍属于 synthetic harness。
+
+==================================================
+7. Winner mapping
+==================================================
+
+必须复用或严格重建 Phase0C-1 frozen winner mapping。
+
+对每个：
+
+tau = 1..20
+target cell
+
+必须得到：
+
+winning material ID
+
+Correct/Shuffled：
+
+winner IDs 必须 exact equal。
+
+如果不等：
+
+PHASE0C4_STATUS = FAIL
+STOP。
+
+不得改变 arbitration。
+
+==================================================
+8. Predicted differential construction
+==================================================
+
+根据 frozen write equation，
+
+对每个 winning carrier / target cell：
+
+计算理论 predicted differential：
+
+PREDICTED_DELTA
+
+来源只能是：
+
+Correct source-feature value
+minus
+Shuffled source-feature value
+
+再经过 frozen write transformation。
+
+不得使用 actual edited_y difference
+反推出 predicted value。
+
+也就是说 predicted delta 必须独立从：
+
+source coordinates
+synthetic y
+winner mapping
+frozen write equation
+
+构造。
+
+==================================================
+9. Observed differential
+==================================================
+
+定义：
+
+OBSERVED_DELTA =
+correct_edited_y
+-
+identity_shuffled_edited_y
+
+使用已经保存的 0B-4R tensors。
+
+不要重新执行 replace_feature，
+除非 frozen equation recovery 明确证明
+现有 evidence 缺失不可恢复的信息。
+
+==================================================
+10. Differential equality audit
+==================================================
+
+必须比较：
+
+OBSERVED_DELTA
+vs
+PREDICTED_DELTA
+
+分别检查：
+
+A. source slot tau=0
+
+observed delta scalar count
+predicted delta scalar count
+
+预期均为0。
+
+B. future outside write support
+
+observed nonzero
+predicted nonzero
+
+预期均为0。
+
+C. common target support
+
+比较每个：
+
+tau
+cell
+channel
+
+如果 predicted 使用与真实 frozen function
+完全相同的 float32 computation path：
+
+要求 bitwise/exact equality。
+
+如果由于独立数学重建导致不可避免的 floating order difference：
+
+不得事后自行放宽。
+
+报告：
+
+EXACT_EQUAL
+MAX_ABS_RESIDUAL
+MEAN_ABS_RESIDUAL
+NONZERO_RESIDUAL_SCALAR_COUNT
+
+由主对话裁决。
+
+不要自行设置新的 tolerance PASS threshold。
+
+==================================================
+11. Differential support decomposition
+==================================================
+
+报告：
+
+TOTAL_OBSERVED_NONZERO_DIFFERENTIAL_SCALARS
+
+已知 0B-4R：
+27209
+
+必须重新核对。
+
+报告：
+
+TOTAL_PREDICTED_NONZERO_DIFFERENTIAL_SCALARS
+
+OBSERVED_ONLY_NONZERO_SCALARS
+PREDICTED_ONLY_NONZERO_SCALARS
+
+共同 nonzero support count。
+
+还需要报告：
+
+target support cells where:
+all 4 channels equal Correct/Shuffled
+
+target support cells where:
+>=1 channel differs
+
+target support cells where:
+all 4 channels differ
+
+这解释为什么：
+
+9031 * 4 = 36124
+
+但 Correct-vs-Shuffled differential scalar
+只有 27209。
+
+==================================================
+12. Per-channel decomposition
+==================================================
+
+对 synthetic C=4 分别报告：
+
+channel0 differential nonzero count
+channel1 differential nonzero count
+channel2 differential nonzero count
+channel3 differential nonzero count
+
+注意：
+
+channel0 source constant=1，
+
+理论上 source correspondence shuffle
+不应改变 channel0 value。
+
+因此如果 frozen operator 不额外改变它：
+
+channel0 Correct-vs-Shuffled delta
+应为 0。
+
+这是一个很强的 negative control。
+
+但必须以真实结果为准。
+
+channel1/2/3 是 source spatial code，
+预期承载 correspondence differential。
+
+不得把这些 synthetic channels
+解释成真实 Wan latent semantic channels。
+
+==================================================
+13. Per-slot decomposition
+==================================================
+
+对 tau=1..20 报告：
+
+write support cells
+
+observed differential cells
+observed differential scalars
+
+predicted differential cells
+predicted differential scalars
+
+residual scalar count
+max abs residual
+
+==================================================
+14. PASS criteria
+==================================================
+
+如果 frozen computation path 可以 exact 重建，
+
+PASS 必须满足：
+
+SOURCE_DRIFT_GATE = PASS
+
+WINNER_MAPPING_EQUAL = True
+
+SOURCE_SLOT_OBSERVED_DELTA = 0
+
+OUTSIDE_SUPPORT_OBSERVED_DELTA = 0
+
+OUTSIDE_SUPPORT_PREDICTED_DELTA = 0
+
+OBSERVED_NONZERO_DIFFERENTIAL_SCALARS = 27209
+
+OBSERVED_DELTA_EXACT_EQUAL_PREDICTED_DELTA = True
+
+RESIDUAL_NONZERO_SCALARS = 0
+
+以及没有任何 unexplained operator differential。
+
+最终解释：
+
+all observed Correct-vs-Shuffled conditioning
+differences are explained by source-feature correspondence
+differences propagated through the same frozen V3D operator.
+
+如果不能 exact 重建但出现 floating-order residual：
+
+不得自动 PASS。
+
+状态写：
+
+QUALIFIED / REQUIRES_REVIEW
+
+并报告 residual。
+
+==================================================
+15. Non-goals
+==================================================
+
+禁止：
+
+- 跑 video generation
+- instantiate 14B model
+- 修改 trajectory.py
+- 改 operator
+- 调 tolerance
+- 重选 tracks
+- 换 shuffle
+- 换 seed
+- 使用真实 Wan latent
+- 根据 synthetic amplitude 推断真实性能
+- 优化任何结果
+
+==================================================
+16. Output
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0c/
+differential_decomposition/
+<TIMESTAMP>__santa_v3d
+
+至少生成：
+
+PHASE0C4_PROTOCOL_FROZEN.txt
+
+run_phase0c4.py
+
+operator_write_equation.txt
+
+differential_decomposition.json
+
+per_channel_statistics.csv
+per_slot_differential.csv
+
+PHASE0C4_SUMMARY.md
+phase0c4_status.json
+
+SHA256SUMS.txt
+
+==================================================
+17. Summary 固定九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+18. Final stdout
+==================================================
+
+===== PHASE0C-4 OPERATOR DIFFERENTIAL DECOMPOSITION =====
+
+OUT = ...
+
+SOURCE_DRIFT_GATE = ...
+
+WINNER_MAPPING_EQUAL = ...
+
+WRITE_EQUATION =
+...
+
+OBSERVED_NONZERO_DIFFERENTIAL_SCALARS = ...
+PREDICTED_NONZERO_DIFFERENTIAL_SCALARS = ...
+
+OBSERVED_ONLY_NONZERO_SCALARS = ...
+PREDICTED_ONLY_NONZERO_SCALARS = ...
+
+CHANNEL0_OBSERVED_DIFF_SCALARS = ...
+CHANNEL1_OBSERVED_DIFF_SCALARS = ...
+CHANNEL2_OBSERVED_DIFF_SCALARS = ...
+CHANNEL3_OBSERVED_DIFF_SCALARS = ...
+
+DIFFERENTIAL_CELLS_ANY_CHANNEL = ...
+DIFFERENTIAL_CELLS_ALL_CHANNELS = ...
+EQUAL_TARGET_SUPPORT_CELLS = ...
+
+SOURCE_SLOT_DIFFERENTIALS = ...
+OUTSIDE_SUPPORT_DIFFERENTIALS = ...
+
+OBSERVED_PREDICTED_EXACT_EQUAL = ...
+
+RESIDUAL_NONZERO_SCALARS = ...
+MAX_ABS_RESIDUAL = ...
+MEAN_ABS_RESIDUAL = ...
+
+PHASE0C4_STATUS =
+PASS/FAIL/QUALIFIED/ERROR
+
+然后 STOP。
+
+不要进入 Phase0C-5。

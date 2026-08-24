@@ -1,0 +1,26 @@
+{
+  "source": "/workspace/DeformTransport/cases/tree/config.yaml",
+  "source_sha256": "2668ee506c3bc100dbee487cfa2f03a0be12bc909dad1ee7a6eaa1d8f2345a64",
+  "normalized": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_151149__official_tree_runtime_config/config.normalized.yaml",
+  "normalized_sha256": "fc255550e5f24221609506a0b7b6c77973c76d99b30cfe21f7dc5f570d503c02",
+  "policy": "preserve_last_occurrence",
+  "duplicate_positions_1_based": {
+    "use_rgb_frontside": [
+      45,
+      49
+    ],
+    "original_geometry_downsample": [
+      19,
+      47
+    ],
+    "target_faces": [
+      20,
+      48
+    ]
+  },
+  "removed_lines_1_based": [
+    19,
+    20,
+    45
+  ]
+}

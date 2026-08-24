@@ -1,0 +1,6 @@
+RUN_ID: 20260804_234925_autonomous_deformtransport
+job_id: WAN_CLIP_SDPA_E2E_20260805_033251
+任务: Santa真实首帧Wan_CLIP图像编码器SDPA端到端回归
+GPU编号: 3
+GPU_UUID: GPU-111b4686-bb10-d8db-87fd-401b36dcbdf3
+结论边界: 验证首次Baseline失败组件_不是完整视频结果

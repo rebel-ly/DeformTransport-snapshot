@@ -1,0 +1,18 @@
+{
+  "生成时间": "2026-08-05T04:01:22.198837+08:00",
+  "alpha": 0.5,
+  "shape": [
+    1,
+    6,
+    16,
+    60,
+    104
+  ],
+  "finite": true,
+  "masked_L1_vs_target": 0.17702217400074005,
+  "full_correct_masked_L1_vs_target": 0.3540443480014801,
+  "输入SHA256": "f2ad921d3548d1d22acbee4d36896e0c16f9ff576f165dbef3d27b387613345c",
+  "输出SHA256": "92cd027149aeba3191ca85455539a8126a5d2270eb01325ca061b6f2590b7078",
+  "输出": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/correct_blend_alpha0p5_v1/correct_blend_alpha0p5.pt",
+  "结论边界": "工程proxy上的第1轮方法迭代"
+}

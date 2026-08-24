@@ -1,0 +1,116 @@
+{
+  "checks": {
+    "projection_checks_pass": true,
+    "future_checks_pass": true,
+    "target_decode_hashes_equal": true,
+    "evaluation_mask_artifacts_equal": true,
+    "decoded_shapes_equal": true
+  },
+  "all_checks_pass": true,
+  "common_evaluation_region": {
+    "projection_correct": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.1699988162719909,
+      "mean_masked_mse": 0.04653313746790827,
+      "mean_masked_psnr_db": 13.403376591058425
+    },
+    "future_visible_correct": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.16551964587451498,
+      "mean_masked_mse": 0.044245441225759775,
+      "mean_masked_psnr_db": 13.61129132023564
+    },
+    "projection_shuffled": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.24759157443488086,
+      "mean_masked_mse": 0.08948162952323019,
+      "mean_masked_psnr_db": 10.486478958600832
+    },
+    "future_visible_shuffled": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.24864441873850646,
+      "mean_masked_mse": 0.09031810344737252,
+      "mean_masked_psnr_db": 10.446411968749246
+    },
+    "future_correct_l1_change_vs_projection": -0.004479170397475918,
+    "future_correct_mse_change_vs_projection": -0.0022876962421484945
+  },
+  "common_region_sharpness": {
+    "target": {
+      "mean_laplacian_variance": 0.011619757987374876,
+      "mean_sobel": 0.27576660797183894,
+      "mean_high_frequency": 0.013263637579425617
+    },
+    "projection_correct": {
+      "mean_laplacian_variance": 0.002022956378677469,
+      "mean_sobel": 0.1381245321697659,
+      "mean_high_frequency": 0.007105463259152056
+    },
+    "future_visible_correct": {
+      "mean_laplacian_variance": 0.002047590217208145,
+      "mean_sobel": 0.13881104825823395,
+      "mean_high_frequency": 0.0069479009734443676
+    },
+    "laplacian_closeness_to_target": {
+      "projection": 0.009596801608697407,
+      "future_visible": 0.009572167770166732
+    },
+    "sobel_closeness_to_target": {
+      "projection": 0.13764207580207305,
+      "future_visible": 0.13695555971360499
+    },
+    "high_frequency_closeness_to_target": {
+      "projection": 0.006158174320273561,
+      "future_visible": 0.006315736605981249
+    }
+  },
+  "temporal": {
+    "projection": {
+      "target": {
+        "mean_first_order_abs_difference": 0.012154888361692429,
+        "mean_second_order_abs_difference": 0.018790582194924355
+      },
+      "correct": {
+        "mean_first_order_abs_difference": 0.010340433567762375,
+        "mean_second_order_abs_difference": 0.015642059966921806
+      },
+      "shuffled": {
+        "mean_first_order_abs_difference": 0.008502483367919922,
+        "mean_second_order_abs_difference": 0.01320515014231205
+      }
+    },
+    "future_visible": {
+      "target": {
+        "mean_first_order_abs_difference": 0.012154888361692429,
+        "mean_second_order_abs_difference": 0.018790582194924355
+      },
+      "correct": {
+        "mean_first_order_abs_difference": 0.010351397097110748,
+        "mean_second_order_abs_difference": 0.01566459983587265
+      },
+      "shuffled": {
+        "mean_first_order_abs_difference": 0.008761987090110779,
+        "mean_second_order_abs_difference": 0.013542687520384789
+      }
+    }
+  },
+  "visual_outputs": {
+    "projection_comparison": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/target_correct_shuffled.mp4",
+    "future_visible_comparison": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/target_correct_shuffled.mp4",
+    "projection_images": {
+      "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/comparison_first.png",
+      "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/comparison_quarter.png",
+      "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/comparison_mid.png",
+      "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/comparison_three_quarter.png",
+      "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/comparison_final.png"
+    },
+    "future_visible_images": {
+      "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/comparison_first.png",
+      "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/comparison_quarter.png",
+      "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/comparison_mid.png",
+      "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/comparison_three_quarter.png",
+      "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/comparison_final.png"
+    }
+  },
+  "interpretation_boundary": "Lower target-proxy error and closer sharpness are positive VAE-level signals only. Final RealWonder generation has not yet been evaluated."
+}

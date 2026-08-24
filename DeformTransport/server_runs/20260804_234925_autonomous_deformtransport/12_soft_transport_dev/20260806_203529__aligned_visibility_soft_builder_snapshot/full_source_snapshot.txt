@@ -1,0 +1,1434 @@
+================================================================
+FILE: scripts/build_soft_wan_latent_artifact.py
+================================================================
+     1	"""Build a gated soft-transport Wan latent artifact.
+     2	
+     3	The script reuses the exact source and target Wan latents stored by the
+     4	verified hard-transport VAE probe. It does not reload or re-encode the Wan VAE.
+     5	
+     6	The original hard artifact and transport-ready artifact are never modified.
+     7	"""
+     8	
+     9	from __future__ import annotations
+    10	
+    11	import argparse
+    12	import hashlib
+    13	import json
+    14	import time
+    15	from pathlib import Path
+    16	from typing import Any
+    17	
+    18	import torch
+    19	
+    20	from deform_transport.hard_transport import hard_point_transport
+    21	from deform_transport.soft_transport import soft_point_transport
+    22	from deform_transport.transport_ready import validate_transport_ready
+    23	
+    24	
+    25	def parse_args() -> argparse.Namespace:
+    26	    parser = argparse.ArgumentParser()
+    27	    parser.add_argument(
+    28	        "--transport-ready",
+    29	        type=Path,
+    30	        required=True,
+    31	    )
+    32	    parser.add_argument(
+    33	        "--base-vae-artifact",
+    34	        type=Path,
+    35	        required=True,
+    36	    )
+    37	    parser.add_argument(
+    38	        "--output",
+    39	        type=Path,
+    40	        required=True,
+    41	    )
+    42	    parser.add_argument(
+    43	        "--threshold",
+    44	        type=float,
+    45	        default=0.25,
+    46	    )
+    47	    parser.add_argument(
+    48	        "--seed",
+    49	        type=int,
+    50	        default=0,
+    51	    )
+    52	    return parser.parse_args()
+    53	
+    54	
+    55	def sha256(path: Path) -> str:
+    56	    digest = hashlib.sha256()
+    57	
+    58	    with path.open("rb") as handle:
+    59	        for chunk in iter(
+    60	            lambda: handle.read(4 * 1024 * 1024),
+    61	            b"",
+    62	        ):
+    63	            digest.update(chunk)
+    64	
+    65	    return digest.hexdigest()
+    66	
+    67	
+    68	def tensor_stats(tensor: torch.Tensor) -> dict[str, Any]:
+    69	    value = tensor.detach().to(torch.float32)
+    70	
+    71	    return {
+    72	        "shape": list(value.shape),
+    73	        "dtype": str(tensor.dtype),
+    74	        "mean": float(value.mean()),
+    75	        "std": float(value.std()),
+    76	        "min": float(value.min()),
+    77	        "max": float(value.max()),
+    78	        "finite": bool(torch.isfinite(value).all()),
+    79	    }
+    80	
+    81	
+    82	def masked_mean_abs(
+    83	    first: torch.Tensor,
+    84	    second: torch.Tensor,
+    85	    mask: torch.Tensor,
+    86	) -> float:
+    87	    expanded = mask.unsqueeze(0).expand_as(first)
+    88	
+    89	    if not bool(expanded.any()):
+    90	        return 0.0
+    91	
+    92	    return float(
+    93	        torch.abs(first - second)[expanded].mean()
+    94	    )
+    95	
+    96	
+    97	def main() -> None:
+    98	    args = parse_args()
+    99	
+   100	    transport_path = args.transport_ready.resolve()
+   101	    base_path = args.base_vae_artifact.resolve()
+   102	    output_path = args.output.resolve()
+   103	
+   104	    if args.threshold < 0:
+   105	        raise ValueError("threshold must be nonnegative")
+   106	
+   107	    if not transport_path.is_file():
+   108	        raise FileNotFoundError(transport_path)
+   109	
+   110	    if not base_path.is_file():
+   111	        raise FileNotFoundError(base_path)
+   112	
+   113	    if output_path.exists():
+   114	        raise FileExistsError(
+   115	            f"refusing to overwrite existing output: {output_path}"
+   116	        )
+   117	
+   118	    if not torch.cuda.is_available():
+   119	        raise RuntimeError("CUDA is required")
+   120	
+   121	    started = time.perf_counter()
+   122	
+   123	    state = torch.load(
+   124	        transport_path,
+   125	        map_location="cpu",
+   126	        weights_only=False,
+   127	    )
+   128	    validate_transport_ready(state)
+   129	
+   130	    required_continuous = {
+   131	        "source_points_2d_latent_continuous",
+   132	        "points_2d_latent_continuous",
+   133	    }
+   134	
+   135	    missing_continuous = sorted(
+   136	        required_continuous - set(state)
+   137	    )
+   138	
+   139	    if missing_continuous:
+   140	        raise ValueError(
+   141	            "continuous transport-ready fields are missing: "
+   142	            f"{missing_continuous}"
+   143	        )
+   144	
+   145	    base = torch.load(
+   146	        base_path,
+   147	        map_location="cpu",
+   148	        weights_only=True,
+   149	    )
+   150	
+   151	    required_base = {
+   152	        "latent_frame_indices",
+   153	        "source_latent",
+   154	        "target_latent",
+   155	        "correct_fused_latent",
+   156	        "shuffled_fused_latent",
+   157	        "transport_mask",
+   158	        "contribution_count",
+   159	    }
+   160	
+   161	    missing_base = sorted(required_base - set(base))
+   162	
+   163	    if missing_base:
+   164	        raise ValueError(
+   165	            f"base VAE artifact is missing keys: {missing_base}"
+   166	        )
+   167	
+   168	    latent_indices = base["latent_frame_indices"].to(
+   169	        dtype=torch.long,
+   170	        device="cpu",
+   171	    )
+   172	
+   173	    source_latent_cpu = base["source_latent"]
+   174	    target_latent_cpu = base["target_latent"]
+   175	
+   176	    if tuple(source_latent_cpu.shape) != (
+   177	        1,
+   178	        1,
+   179	        16,
+   180	        int(state["latent_height"]),
+   181	        int(state["latent_width"]),
+   182	    ):
+   183	        raise ValueError(
+   184	            f"unexpected source latent shape: "
+   185	            f"{tuple(source_latent_cpu.shape)}"
+   186	        )
+   187	
+   188	    expected_target_shape = (
+   189	        1,
+   190	        int(latent_indices.numel()),
+   191	        16,
+   192	        int(state["latent_height"]),
+   193	        int(state["latent_width"]),
+   194	    )
+   195	
+   196	    if tuple(target_latent_cpu.shape) != expected_target_shape:
+   197	        raise ValueError(
+   198	            f"unexpected target latent shape: "
+   199	            f"{tuple(target_latent_cpu.shape)}"
+   200	        )
+   201	
+   202	    if int(latent_indices.min()) < 0:
+   203	        raise ValueError("latent frame indices must be nonnegative")
+   204	
+   205	    if int(latent_indices.max()) >= state[
+   206	        "points_2d_latent"
+   207	    ].shape[0]:
+   208	        raise ValueError(
+   209	            "latent frame indices exceed transport trajectory"
+   210	        )
+   211	
+   212	    device = torch.device("cuda:0")
+   213	
+   214	    source_grid = (
+   215	        source_latent_cpu[0, 0]
+   216	        .to(device=device, dtype=torch.float32)
+   217	        .contiguous()
+   218	    )
+   219	
+   220	    target_latent = (
+   221	        target_latent_cpu
+   222	        .to(device=device, dtype=torch.float32)
+   223	        .contiguous()
+   224	    )
+   225	
+   226	    common = {
+   227	        "source_grid": source_grid,
+   228	        "source_visible": state[
+   229	            "source_visible"
+   230	        ].to(device),
+   231	        "source_valid": state[
+   232	            "source_valid"
+   233	        ].to(device),
+   234	        "target_valid": state[
+   235	            "projection_valid"
+   236	        ][latent_indices].to(device),
+   237	        "point_id": state["point_id"].to(device),
+   238	        "object_id": state["object_id"].to(device),
+   239	        "seed": args.seed,
+   240	    }
+   241	
+   242	    torch.cuda.reset_peak_memory_stats()
+   243	    torch.cuda.synchronize()
+   244	
+   245	    transport_started = time.perf_counter()
+   246	
+   247	    hard_reference = hard_point_transport(
+   248	        source_uv=state[
+   249	            "source_points_2d_latent"
+   250	        ].to(device),
+   251	        target_uv=state[
+   252	            "points_2d_latent"
+   253	        ][latent_indices].to(device),
+   254	        mode="correct",
+   255	        **common,
+   256	    )
+   257	
+   258	    soft_correct = soft_point_transport(
+   259	        source_uv=state[
+   260	            "source_points_2d_latent_continuous"
+   261	        ].to(device),
+   262	        target_uv=state[
+   263	            "points_2d_latent_continuous"
+   264	        ][latent_indices].to(device),
+   265	        mode="correct",
+   266	        **common,
+   267	    )
+   268	
+   269	    soft_shuffled = soft_point_transport(
+   270	        source_uv=state[
+   271	            "source_points_2d_latent_continuous"
+   272	        ].to(device),
+   273	        target_uv=state[
+   274	            "points_2d_latent_continuous"
+   275	        ][latent_indices].to(device),
+   276	        mode="shuffled",
+   277	        **common,
+   278	    )
+   279	
+   280	    torch.cuda.synchronize()
+   281	
+   282	    transport_seconds = (
+   283	        time.perf_counter() - transport_started
+   284	    )
+   285	
+   286	    base_mask = base["transport_mask"].to(device)
+   287	    base_count = base["contribution_count"].to(device)
+   288	
+   289	    hard_mask = hard_reference["transport_mask"]
+   290	    hard_count = hard_reference["contribution_count"]
+   291	
+   292	    if not torch.equal(base_mask, hard_mask):
+   293	        raise RuntimeError(
+   294	            "recomputed hard mask does not match base VAE artifact"
+   295	        )
+   296	
+   297	    if not torch.equal(base_count, hard_count):
+   298	        raise RuntimeError(
+   299	            "recomputed hard count does not match base VAE artifact"
+   300	        )
+   301	
+   302	    if not torch.equal(
+   303	        soft_correct["transport_mask"],
+   304	        soft_shuffled["transport_mask"],
+   305	    ):
+   306	        raise RuntimeError(
+   307	            "soft Correct and Shuffled masks differ"
+   308	        )
+   309	
+   310	    if not torch.equal(
+   311	        soft_correct["contribution_count"],
+   312	        soft_shuffled["contribution_count"],
+   313	    ):
+   314	        raise RuntimeError(
+   315	            "soft Correct and Shuffled counts differ"
+   316	        )
+   317	
+   318	    correct_transport_weight = soft_correct["transport_weight"]
+   319	    shuffled_transport_weight = soft_shuffled["transport_weight"]
+   320	
+   321	    weight_absolute_difference = torch.abs(
+   322	        correct_transport_weight
+   323	        - shuffled_transport_weight
+   324	    )
+   325	
+   326	    weight_max_abs_difference = float(
+   327	        weight_absolute_difference.max()
+   328	    )
+   329	    weight_mean_abs_difference = float(
+   330	        weight_absolute_difference.mean()
+   331	    )
+   332	
+   333	    weights_allclose = bool(
+   334	        torch.allclose(
+   335	            correct_transport_weight,
+   336	            shuffled_transport_weight,
+   337	            atol=2e-4,
+   338	            rtol=2e-4,
+   339	        )
+   340	    )
+   341	
+   342	    if not weights_allclose:
+   343	        raise RuntimeError(
+   344	            "soft Correct and Shuffled weights are not numerically "
+   345	            "equivalent: "
+   346	            f"max_abs_difference={weight_max_abs_difference}, "
+   347	            f"mean_abs_difference={weight_mean_abs_difference}"
+   348	        )
+   349	
+   350	    if not torch.equal(
+   351	        soft_correct["valid_point_mask"],
+   352	        soft_shuffled["valid_point_mask"],
+   353	    ):
+   354	        raise RuntimeError(
+   355	            "soft Correct and Shuffled valid-point masks differ"
+   356	        )
+   357	
+   358	    raw_soft_mask = soft_correct["transport_mask"]
+   359	    raw_soft_count = soft_correct["contribution_count"]
+   360	    # Geometry is shared between Correct and Shuffled. Use the Correct
+   361	    # accumulation as the canonical spatial weight for both variants.
+   362	    transport_weight = correct_transport_weight
+   363	
+   364	    if bool((hard_mask & ~raw_soft_mask).any()):
+   365	        raise RuntimeError(
+   366	            "legacy Hard support is not a subset of Soft support"
+   367	        )
+   368	
+   369	    soft_only_mask = raw_soft_mask & ~hard_mask
+   370	
+   371	    gated_mask = (
+   372	        hard_mask
+   373	        | (
+   374	            soft_only_mask
+   375	            & (transport_weight >= args.threshold)
+   376	        )
+   377	    )
+   378	
+   379	    # Diagnostic only: independently threshold the Shuffled accumulation.
+   380	    # Correct and Shuffled still use the shared canonical gated_mask below,
+   381	    # ensuring that feature identity is the only ablation variable.
+   382	    shuffled_independent_gated_mask = (
+   383	        hard_mask
+   384	        | (
+   385	            soft_only_mask
+   386	            & (
+   387	                shuffled_transport_weight
+   388	                >= args.threshold
+   389	            )
+   390	        )
+   391	    )
+   392	
+   393	    independent_gated_mask_equal = bool(
+   394	        torch.equal(
+   395	            gated_mask,
+   396	            shuffled_independent_gated_mask,
+   397	        )
+   398	    )
+   399	
+   400	    independent_gated_mask_difference_cells = int(
+   401	        (
+   402	            gated_mask
+   403	            != shuffled_independent_gated_mask
+   404	        ).sum()
+   405	    )
+   406	
+   407	    gated_count = torch.where(
+   408	        gated_mask,
+   409	        raw_soft_count,
+   410	        torch.zeros_like(raw_soft_count),
+   411	    )
+   412	
+   413	    if not torch.equal(
+   414	        gated_mask,
+   415	        gated_count > 0,
+   416	    ):
+   417	        raise RuntimeError(
+   418	            "gated mask/count contract is invalid"
+   419	        )
+   420	
+   421	    raw_correct = (
+   422	        soft_correct["transported_grid"]
+   423	        .unsqueeze(0)
+   424	    )
+   425	
+   426	    raw_shuffled = (
+   427	        soft_shuffled["transported_grid"]
+   428	        .unsqueeze(0)
+   429	    )
+   430	
+   431	    broadcast_mask = gated_mask.unsqueeze(0)
+   432	
+   433	    fused_correct = torch.where(
+   434	        broadcast_mask,
+   435	        raw_correct,
+   436	        target_latent,
+   437	    )
+   438	
+   439	    fused_shuffled = torch.where(
+   440	        broadcast_mask,
+   441	        raw_shuffled,
+   442	        target_latent,
+   443	    )
+   444	
+   445	    for tensor, name in (
+   446	        (raw_correct, "raw_correct"),
+   447	        (raw_shuffled, "raw_shuffled"),
+   448	        (fused_correct, "fused_correct"),
+   449	        (fused_shuffled, "fused_shuffled"),
+   450	        (transport_weight, "transport_weight"),
+   451	    ):
+   452	        if not bool(torch.isfinite(tensor).all()):
+   453	            raise RuntimeError(
+   454	                f"{name} contains NaN or Inf"
+   455	            )
+   456	
+   457	    output_state = {
+   458	        "format_version": 2,
+   459	        "artifact_kind": "wan_vae_soft_transport",
+   460	        "transport_method": (
+   461	            "continuous_bilinear_forward_splat_gate"
+   462	        ),
+   463	        "soft_weight_threshold": float(
+   464	            args.threshold
+   465	        ),
+   466	        "seed": int(args.seed),
+   467	        "latent_frame_indices": (
+   468	            latent_indices.contiguous()
+   469	        ),
+   470	        "source_latent": (
+   471	            source_latent_cpu.detach().cpu().contiguous()
+   472	        ),
+   473	        "target_latent": (
+   474	            target_latent_cpu.detach().cpu().contiguous()
+   475	        ),
+   476	        # Compatibility keys used by pipeline_integration.py.
+   477	        "correct_transported_latent": (
+   478	            raw_correct.detach().cpu().contiguous()
+   479	        ),
+   480	        "shuffled_transported_latent": (
+   481	            raw_shuffled.detach().cpu().contiguous()
+   482	        ),
+   483	        "correct_fused_latent": (
+   484	            fused_correct.detach().cpu().contiguous()
+   485	        ),
+   486	        "shuffled_fused_latent": (
+   487	            fused_shuffled.detach().cpu().contiguous()
+   488	        ),
+   489	        "transport_mask": (
+   490	            gated_mask.detach().cpu().contiguous()
+   491	        ),
+   492	        "contribution_count": (
+   493	            gated_count.detach().cpu().contiguous()
+   494	        ),
+   495	        # Additional audit tensors.
+   496	        "transport_weight": (
+   497	            transport_weight.detach().cpu().contiguous()
+   498	        ),
+   499	        "raw_soft_transport_mask": (
+   500	            raw_soft_mask.detach().cpu().contiguous()
+   501	        ),
+   502	        "raw_soft_contribution_count": (
+   503	            raw_soft_count.detach().cpu().contiguous()
+   504	        ),
+   505	        "hard_reference_mask": (
+   506	            hard_mask.detach().cpu().contiguous()
+   507	        ),
+   508	        "hard_reference_contribution_count": (
+   509	            hard_count.detach().cpu().contiguous()
+   510	        ),
+   511	        "soft_only_mask": (
+   512	            soft_only_mask.detach().cpu().contiguous()
+   513	        ),
+   514	        "shuffled_permutation": (
+   515	            soft_shuffled["permutation"]
+   516	            .detach()
+   517	            .cpu()
+   518	            .contiguous()
+   519	        ),
+   520	        "source_files": {
+   521	            "transport_ready": str(transport_path),
+   522	            "transport_ready_sha256": sha256(
+   523	                transport_path
+   524	            ),
+   525	            "base_vae_artifact": str(base_path),
+   526	            "base_vae_artifact_sha256": sha256(
+   527	                base_path
+   528	            ),
+   529	        },
+   530	    }
+   531	
+   532	    output_path.parent.mkdir(
+   533	        parents=True,
+   534	        exist_ok=True,
+   535	    )
+   536	
+   537	    torch.save(output_state, output_path)
+   538	
+   539	    loaded = torch.load(
+   540	        output_path,
+   541	        map_location="cpu",
+   542	        weights_only=True,
+   543	    )
+   544	
+   545	    if not torch.equal(
+   546	        loaded["transport_mask"],
+   547	        loaded["contribution_count"] > 0,
+   548	    ):
+   549	        raise RuntimeError(
+   550	            "saved artifact broke the mask/count contract"
+   551	        )
+   552	
+   553	    support_hard = int(hard_mask.sum())
+   554	    support_soft = int(raw_soft_mask.sum())
+   555	    support_gated = int(gated_mask.sum())
+   556	
+   557	    report = {
+   558	        "output": str(output_path),
+   559	        "output_sha256": sha256(output_path),
+   560	        "transport_method": output_state[
+   561	            "transport_method"
+   562	        ],
+   563	        "threshold": float(args.threshold),
+   564	        "latent_frame_indices": (
+   565	            latent_indices.tolist()
+   566	        ),
+   567	        "support": {
+   568	            "hard_cells": support_hard,
+   569	            "raw_soft_cells": support_soft,
+   570	            "gated_cells": support_gated,
+   571	            "raw_soft_over_hard": (
+   572	                support_soft / support_hard
+   573	            ),
+   574	            "gated_over_hard": (
+   575	                support_gated / support_hard
+   576	            ),
+   577	            "soft_only_cells": int(
+   578	                soft_only_mask.sum()
+   579	            ),
+   580	            "retained_soft_only_cells": int(
+   581	                (gated_mask & soft_only_mask).sum()
+   582	            ),
+   583	        },
+   584	        "fairness": {
+   585	            "masks_equal": True,
+   586	            "counts_equal": True,
+   587	            "weights_allclose": weights_allclose,
+   588	            "weight_allclose_atol": 2e-4,
+   589	            "weight_allclose_rtol": 2e-4,
+   590	            "weight_max_abs_difference": (
+   591	                weight_max_abs_difference
+   592	            ),
+   593	            "weight_mean_abs_difference": (
+   594	                weight_mean_abs_difference
+   595	            ),
+   596	            "independent_gated_mask_equal": (
+   597	                independent_gated_mask_equal
+   598	            ),
+   599	            "independent_gated_mask_difference_cells": (
+   600	                independent_gated_mask_difference_cells
+   601	            ),
+   602	            "shared_canonical_gated_mask": True,
+   603	            "valid_point_masks_equal": True,
+   604	            "permutations_differ": bool(
+   605	                not torch.equal(
+   606	                    soft_correct["permutation"],
+   607	                    soft_shuffled["permutation"],
+   608	                )
+   609	            ),
+   610	        },
+   611	        "compatibility": {
+   612	            "base_hard_mask_exact": True,
+   613	            "base_hard_count_exact": True,
+   614	            "transport_mask_equals_count_positive": True,
+   615	            "selected_key_shapes_match_target": (
+   616	                tuple(fused_correct.shape)
+   617	                == tuple(target_latent.shape)
+   618	                == tuple(fused_shuffled.shape)
+   619	            ),
+   620	        },
+   621	        "latent_differences": {
+   622	            "correct_vs_shuffled_mean_abs": float(
+   623	                torch.abs(
+   624	                    fused_correct - fused_shuffled
+   625	                ).mean()
+   626	            ),
+   627	            "soft_correct_vs_target_mean_abs": float(
+   628	                torch.abs(
+   629	                    fused_correct - target_latent
+   630	                ).mean()
+   631	            ),
+   632	            "soft_correct_vs_target_gated_mean_abs": (
+   633	                masked_mean_abs(
+   634	                    fused_correct,
+   635	                    target_latent,
+   636	                    gated_mask,
+   637	                )
+   638	            ),
+   639	            "soft_correct_vs_hard_correct_mean_abs": float(
+   640	                torch.abs(
+   641	                    fused_correct
+   642	                    - base[
+   643	                        "correct_fused_latent"
+   644	                    ].to(device)
+   645	                ).mean()
+   646	            ),
+   647	        },
+   648	        "statistics": {
+   649	            "target_latent": tensor_stats(
+   650	                target_latent
+   651	            ),
+   652	            "soft_correct_fused": tensor_stats(
+   653	                fused_correct
+   654	            ),
+   655	            "soft_shuffled_fused": tensor_stats(
+   656	                fused_shuffled
+   657	            ),
+   658	            "transport_weight": tensor_stats(
+   659	                transport_weight
+   660	            ),
+   661	        },
+   662	        "runtime_seconds": {
+   663	            "transport": transport_seconds,
+   664	            "total": (
+   665	                time.perf_counter() - started
+   666	            ),
+   667	        },
+   668	        "gpu_peak_memory_mib": {
+   669	            "allocated": float(
+   670	                torch.cuda.max_memory_allocated()
+   671	                / (1024**2)
+   672	            ),
+   673	            "reserved": float(
+   674	                torch.cuda.max_memory_reserved()
+   675	                / (1024**2)
+   676	            ),
+   677	        },
+   678	    }
+   679	
+   680	    report_path = output_path.with_suffix(
+   681	        ".report.json"
+   682	    )
+   683	
+   684	    report_path.write_text(
+   685	        json.dumps(report, indent=2),
+   686	        encoding="utf-8",
+   687	    )
+   688	
+   689	    print(json.dumps(report, indent=2))
+   690	
+   691	
+   692	if __name__ == "__main__":
+   693	    main()
+
+================================================================
+FILE: deform_transport/soft_transport.py
+================================================================
+     1	"""Normalized bilinear material-point feature transport.
+     2	
+     3	This module is intentionally separate from hard_transport.py so the verified
+     4	nearest-cell implementation remains available as a fixed baseline and ablation.
+     5	"""
+     6	
+     7	from __future__ import annotations
+     8	
+     9	from typing import Literal
+    10	
+    11	import torch
+    12	
+    13	from deform_transport.hard_transport import make_objectwise_feature_permutation
+    14	
+    15	
+    16	TransportMode = Literal["correct", "shuffled"]
+    17	
+    18	
+    19	def _as_device_tensor(
+    20	    value: torch.Tensor,
+    21	    *,
+    22	    device: torch.device,
+    23	    dtype: torch.dtype | None = None,
+    24	) -> torch.Tensor:
+    25	    tensor = torch.as_tensor(value)
+    26	    if type(tensor) is not torch.Tensor:
+    27	        tensor = tensor.as_subclass(torch.Tensor)
+    28	    return tensor.to(device=device, dtype=dtype).contiguous()
+    29	
+    30	
+    31	def _validate_continuous_uv(
+    32	    uv: torch.Tensor,
+    33	    *,
+    34	    height: int,
+    35	    width: int,
+    36	) -> torch.Tensor:
+    37	    """Return validity for finite continuous XY coordinates inside the grid."""
+    38	
+    39	    uv_float = uv.to(torch.float32)
+    40	    return (
+    41	        torch.isfinite(uv_float).all(dim=-1)
+    42	        & (uv_float[..., 0] >= 0)
+    43	        & (uv_float[..., 0] < width)
+    44	        & (uv_float[..., 1] >= 0)
+    45	        & (uv_float[..., 1] < height)
+    46	    )
+    47	
+    48	
+    49	def _bilinear_neighbors(
+    50	    uv: torch.Tensor,
+    51	    *,
+    52	    height: int,
+    53	    width: int,
+    54	) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    55	    """Return four XY cells, bilinear weights, and per-neighbor validity.
+    56	
+    57	    Args:
+    58	        uv: Continuous XY coordinates with shape [..., 2].
+    59	
+    60	    Returns:
+    61	        cells: [..., 4, 2] integer XY cells.
+    62	        weights: [..., 4] bilinear weights.
+    63	        valid: [..., 4] indicating neighbors inside the grid.
+    64	
+    65	    Neighbor order:
+    66	        0: top-left
+    67	        1: top-right
+    68	        2: bottom-left
+    69	        3: bottom-right
+    70	    """
+    71	
+    72	    uv_float = uv.to(torch.float32)
+    73	    x = uv_float[..., 0]
+    74	    y = uv_float[..., 1]
+    75	
+    76	    x0 = torch.floor(x)
+    77	    y0 = torch.floor(y)
+    78	    x1 = x0 + 1
+    79	    y1 = y0 + 1
+    80	
+    81	    dx = x - x0
+    82	    dy = y - y0
+    83	
+    84	    cells = torch.stack(
+    85	        [
+    86	            torch.stack([x0, y0], dim=-1),
+    87	            torch.stack([x1, y0], dim=-1),
+    88	            torch.stack([x0, y1], dim=-1),
+    89	            torch.stack([x1, y1], dim=-1),
+    90	        ],
+    91	        dim=-2,
+    92	    ).to(torch.long)
+    93	
+    94	    weights = torch.stack(
+    95	        [
+    96	            (1.0 - dx) * (1.0 - dy),
+    97	            dx * (1.0 - dy),
+    98	            (1.0 - dx) * dy,
+    99	            dx * dy,
+   100	        ],
+   101	        dim=-1,
+   102	    )
+   103	
+   104	    valid = (
+   105	        (cells[..., 0] >= 0)
+   106	        & (cells[..., 0] < width)
+   107	        & (cells[..., 1] >= 0)
+   108	        & (cells[..., 1] < height)
+   109	        & torch.isfinite(weights)
+   110	        & (weights > 0)
+   111	    )
+   112	
+   113	    return cells, weights, valid
+   114	
+   115	
+   116	def _sample_source_bilinear(
+   117	    source_grid: torch.Tensor,
+   118	    source_uv: torch.Tensor,
+   119	    eligible_source: torch.Tensor,
+   120	) -> tuple[torch.Tensor, torch.Tensor]:
+   121	    """Sample one feature per source point using normalized bilinear sampling."""
+   122	
+   123	    channel_count, height, width = source_grid.shape
+   124	    device = source_grid.device
+   125	
+   126	    cells, weights, neighbor_valid = _bilinear_neighbors(
+   127	        source_uv,
+   128	        height=height,
+   129	        width=width,
+   130	    )
+   131	
+   132	    point_count = source_uv.shape[0]
+   133	    numerator = torch.zeros(
+   134	        (point_count, channel_count),
+   135	        dtype=source_grid.dtype,
+   136	        device=device,
+   137	    )
+   138	    denominator = torch.zeros(
+   139	        point_count,
+   140	        dtype=torch.float32,
+   141	        device=device,
+   142	    )
+   143	
+   144	    for neighbor_index in range(4):
+   145	        valid = eligible_source & neighbor_valid[:, neighbor_index]
+   146	        if not bool(valid.any()):
+   147	            continue
+   148	
+   149	        selected_cells = cells[valid, neighbor_index]
+   150	        selected_weights = weights[valid, neighbor_index]
+   151	
+   152	        sampled = source_grid[
+   153	            :,
+   154	            selected_cells[:, 1],
+   155	            selected_cells[:, 0],
+   156	        ].T
+   157	
+   158	        numerator[valid] += (
+   159	            sampled * selected_weights.to(source_grid.dtype).unsqueeze(1)
+   160	        )
+   161	        denominator[valid] += selected_weights
+   162	
+   163	    source_sample_valid = eligible_source & (denominator > 0)
+   164	
+   165	    point_features = torch.zeros(
+   166	        (point_count, channel_count),
+   167	        dtype=source_grid.dtype,
+   168	        device=device,
+   169	    )
+   170	
+   171	    if bool(source_sample_valid.any()):
+   172	        point_features[source_sample_valid] = (
+   173	            numerator[source_sample_valid]
+   174	            / denominator[source_sample_valid]
+   175	            .to(source_grid.dtype)
+   176	            .unsqueeze(1)
+   177	        )
+   178	
+   179	    return point_features, source_sample_valid
+   180	
+   181	
+   182	def soft_point_transport(
+   183	    source_grid: torch.Tensor,
+   184	    source_uv: torch.Tensor,
+   185	    target_uv: torch.Tensor,
+   186	    source_visible: torch.Tensor,
+   187	    source_valid: torch.Tensor,
+   188	    target_valid: torch.Tensor,
+   189	    point_id: torch.Tensor,
+   190	    *,
+   191	    object_id: torch.Tensor | None = None,
+   192	    mode: TransportMode = "correct",
+   193	    seed: int = 0,
+   194	    eps: float = 1e-8,
+   195	) -> dict[str, torch.Tensor | str | int | float]:
+   196	    """Transport point features using normalized bilinear forward splatting.
+   197	
+   198	    Source features are bilinearly sampled from the initial latent grid.
+   199	    Each valid target point contributes to up to four neighboring target cells.
+   200	    Contributions are normalized by their accumulated spatial weights.
+   201	
+   202	    This first implementation deliberately excludes depth, occlusion confidence,
+   203	    learned fusion, and denoising-time injection so that bilinear assignment can
+   204	    be evaluated as an isolated design variable.
+   205	    """
+   206	
+   207	    if mode not in ("correct", "shuffled"):
+   208	        raise ValueError(f"unsupported transport mode: {mode}")
+   209	    if eps <= 0:
+   210	        raise ValueError("eps must be positive")
+   211	
+   212	    source_grid = torch.as_tensor(source_grid)
+   213	
+   214	    if source_grid.ndim != 3 or not source_grid.dtype.is_floating_point:
+   215	        raise ValueError(
+   216	            "source_grid must be floating point with shape [C, H, W]"
+   217	        )
+   218	
+   219	    channel_count, height, width = source_grid.shape
+   220	    device = source_grid.device
+   221	
+   222	    source_uv = _as_device_tensor(
+   223	        source_uv,
+   224	        device=device,
+   225	        dtype=torch.float32,
+   226	    )
+   227	    target_uv = _as_device_tensor(
+   228	        target_uv,
+   229	        device=device,
+   230	        dtype=torch.float32,
+   231	    )
+   232	    source_visible = _as_device_tensor(
+   233	        source_visible,
+   234	        device=device,
+   235	        dtype=torch.bool,
+   236	    )
+   237	    source_valid = _as_device_tensor(
+   238	        source_valid,
+   239	        device=device,
+   240	        dtype=torch.bool,
+   241	    )
+   242	    target_valid = _as_device_tensor(
+   243	        target_valid,
+   244	        device=device,
+   245	        dtype=torch.bool,
+   246	    )
+   247	    point_id = _as_device_tensor(
+   248	        point_id,
+   249	        device=device,
+   250	        dtype=torch.long,
+   251	    )
+   252	
+   253	    if source_uv.ndim != 2 or source_uv.shape[-1] != 2:
+   254	        raise ValueError("source_uv must have shape [N, 2]")
+   255	
+   256	    point_count = source_uv.shape[0]
+   257	
+   258	    if target_uv.ndim != 3 or target_uv.shape[1:] != (point_count, 2):
+   259	        raise ValueError("target_uv must have shape [T, N, 2]")
+   260	
+   261	    frame_count = target_uv.shape[0]
+   262	
+   263	    if source_visible.shape != (point_count,):
+   264	        raise ValueError("source_visible must have shape [N]")
+   265	    if source_valid.shape != (point_count,):
+   266	        raise ValueError("source_valid must have shape [N]")
+   267	    if target_valid.shape != (frame_count, point_count):
+   268	        raise ValueError("target_valid must have shape [T, N]")
+   269	    if point_id.shape != (point_count,):
+   270	        raise ValueError("point_id must have shape [N]")
+   271	    if torch.unique(point_id).numel() != point_count:
+   272	        raise ValueError("point_id must contain N unique identities")
+   273	
+   274	    if object_id is None:
+   275	        object_id = torch.zeros(
+   276	            point_count,
+   277	            dtype=torch.long,
+   278	            device=device,
+   279	        )
+   280	    else:
+   281	        object_id = _as_device_tensor(
+   282	            object_id,
+   283	            device=device,
+   284	            dtype=torch.long,
+   285	        )
+   286	        if object_id.shape != (point_count,):
+   287	            raise ValueError("object_id must have shape [N]")
+   288	
+   289	    source_continuous_valid = _validate_continuous_uv(
+   290	        source_uv,
+   291	        height=height,
+   292	        width=width,
+   293	    )
+   294	
+   295	    eligible_source = (
+   296	        source_visible
+   297	        & source_valid
+   298	        & source_continuous_valid
+   299	    )
+   300	
+   301	    correct_point_features, source_sample_valid = _sample_source_bilinear(
+   302	        source_grid,
+   303	        source_uv,
+   304	        eligible_source,
+   305	    )
+   306	
+   307	    if mode == "shuffled":
+   308	        permutation = make_objectwise_feature_permutation(
+   309	            source_sample_valid.detach().cpu(),
+   310	            object_id.detach().cpu(),
+   311	            seed=seed,
+   312	        ).to(device)
+   313	        point_features = correct_point_features[permutation]
+   314	    else:
+   315	        permutation = torch.arange(
+   316	            point_count,
+   317	            dtype=torch.long,
+   318	            device=device,
+   319	        )
+   320	        point_features = correct_point_features
+   321	
+   322	    target_continuous_valid = _validate_continuous_uv(
+   323	        target_uv,
+   324	        height=height,
+   325	        width=width,
+   326	    )
+   327	
+   328	    valid_point_mask = (
+   329	        source_sample_valid.unsqueeze(0)
+   330	        & target_valid
+   331	        & target_continuous_valid
+   332	    )
+   333	
+   334	    target_cells, target_weights, target_neighbor_valid = (
+   335	        _bilinear_neighbors(
+   336	            target_uv,
+   337	            height=height,
+   338	            width=width,
+   339	        )
+   340	    )
+   341	
+   342	    flat_cell_count = height * width
+   343	
+   344	    transported_frames = []
+   345	    mask_frames = []
+   346	    count_frames = []
+   347	    weight_frames = []
+   348	
+   349	    for frame_index in range(frame_count):
+   350	        feature_sum = torch.zeros(
+   351	            (channel_count, flat_cell_count),
+   352	            dtype=source_grid.dtype,
+   353	            device=device,
+   354	        )
+   355	        weight_sum = torch.zeros(
+   356	            (1, flat_cell_count),
+   357	            dtype=torch.float32,
+   358	            device=device,
+   359	        )
+   360	        contribution_count = torch.zeros(
+   361	            (1, flat_cell_count),
+   362	            dtype=torch.long,
+   363	            device=device,
+   364	        )
+   365	
+   366	        for neighbor_index in range(4):
+   367	            valid = (
+   368	                valid_point_mask[frame_index]
+   369	                & target_neighbor_valid[frame_index, :, neighbor_index]
+   370	            )
+   371	
+   372	            if not bool(valid.any()):
+   373	                continue
+   374	
+   375	            cells = target_cells[
+   376	                frame_index,
+   377	                valid,
+   378	                neighbor_index,
+   379	            ]
+   380	            weights = target_weights[
+   381	                frame_index,
+   382	                valid,
+   383	                neighbor_index,
+   384	            ]
+   385	
+   386	            linear_index = cells[:, 1] * width + cells[:, 0]
+   387	
+   388	            weighted_features = (
+   389	                point_features[valid].T
+   390	                * weights.to(source_grid.dtype).unsqueeze(0)
+   391	            )
+   392	
+   393	            feature_sum.scatter_add_(
+   394	                1,
+   395	                linear_index.unsqueeze(0).expand(channel_count, -1),
+   396	                weighted_features,
+   397	            )
+   398	
+   399	            weight_sum.scatter_add_(
+   400	                1,
+   401	                linear_index.unsqueeze(0),
+   402	                weights.unsqueeze(0),
+   403	            )
+   404	
+   405	            contribution_count.scatter_add_(
+   406	                1,
+   407	                linear_index.unsqueeze(0),
+   408	                torch.ones(
+   409	                    (1, linear_index.numel()),
+   410	                    dtype=torch.long,
+   411	                    device=device,
+   412	                ),
+   413	            )
+   414	
+   415	        transport_mask = weight_sum > eps
+   416	
+   417	        normalized = feature_sum / weight_sum.clamp_min(eps).to(
+   418	            source_grid.dtype
+   419	        )
+   420	
+   421	        normalized = torch.where(
+   422	            transport_mask.expand_as(normalized),
+   423	            normalized,
+   424	            torch.zeros_like(normalized),
+   425	        )
+   426	
+   427	        transported_frames.append(
+   428	            normalized.reshape(channel_count, height, width)
+   429	        )
+   430	        mask_frames.append(
+   431	            transport_mask.reshape(1, height, width)
+   432	        )
+   433	        count_frames.append(
+   434	            contribution_count.reshape(1, height, width)
+   435	        )
+   436	        weight_frames.append(
+   437	            weight_sum.reshape(1, height, width)
+   438	        )
+   439	
+   440	    result: dict[str, torch.Tensor | str | int | float] = {
+   441	        "mode": mode,
+   442	        "seed": int(seed),
+   443	        "eps": float(eps),
+   444	        "point_features": point_features,
+   445	        "transported_grid": torch.stack(transported_frames),
+   446	        "transport_mask": torch.stack(mask_frames),
+   447	        "contribution_count": torch.stack(count_frames),
+   448	        "transport_weight": torch.stack(weight_frames),
+   449	        "valid_point_mask": valid_point_mask,
+   450	        "source_point_mask": source_sample_valid,
+   451	        "permutation": permutation,
+   452	    }
+   453	
+   454	    if not bool(torch.isfinite(result["point_features"]).all()):
+   455	        raise RuntimeError("soft transport produced non-finite point features")
+   456	    if not bool(torch.isfinite(result["transported_grid"]).all()):
+   457	        raise RuntimeError("soft transport produced NaN or Inf")
+   458	    if not bool(torch.isfinite(result["transport_weight"]).all()):
+   459	        raise RuntimeError("soft transport produced non-finite weights")
+   460	
+   461	    return result
+
+================================================================
+FILE: tests/test_soft_transport.py
+================================================================
+     1	from __future__ import annotations
+     2	
+     3	import unittest
+     4	
+     5	import torch
+     6	
+     7	from deform_transport.soft_transport import (
+     8	    _bilinear_neighbors,
+     9	    soft_point_transport,
+    10	)
+    11	
+    12	
+    13	class SoftPointTransportTest(unittest.TestCase):
+    14	    @staticmethod
+    15	    def _run(source_grid, source_uv, target_uv, **kwargs):
+    16	        point_count = source_uv.shape[0]
+    17	        frame_count = target_uv.shape[0]
+    18	
+    19	        return soft_point_transport(
+    20	            source_grid=source_grid,
+    21	            source_uv=source_uv,
+    22	            target_uv=target_uv,
+    23	            source_visible=torch.ones(point_count, dtype=torch.bool),
+    24	            source_valid=torch.ones(point_count, dtype=torch.bool),
+    25	            target_valid=torch.ones(
+    26	                frame_count,
+    27	                point_count,
+    28	                dtype=torch.bool,
+    29	            ),
+    30	            point_id=torch.arange(point_count),
+    31	            **kwargs,
+    32	        )
+    33	
+    34	    def test_bilinear_neighbor_weights_sum_to_one_interior(self):
+    35	        uv = torch.tensor([[2.25, 3.75]])
+    36	        _, weights, valid = _bilinear_neighbors(
+    37	            uv,
+    38	            height=8,
+    39	            width=8,
+    40	        )
+    41	
+    42	        self.assertTrue(bool(valid.all()))
+    43	        self.assertAlmostEqual(float(weights.sum()), 1.0, places=6)
+    44	
+    45	        expected = torch.tensor([[0.1875, 0.0625, 0.5625, 0.1875]])
+    46	        self.assertTrue(torch.allclose(weights, expected))
+    47	
+    48	    def test_source_bilinear_sampling_matches_linear_grid(self):
+    49	        y = torch.arange(6, dtype=torch.float32).unsqueeze(1)
+    50	        x = torch.arange(8, dtype=torch.float32).unsqueeze(0)
+    51	        grid = (10.0 * y + x).unsqueeze(0)
+    52	
+    53	        source_uv = torch.tensor([[2.25, 3.50]])
+    54	        target_uv = source_uv.unsqueeze(0)
+    55	
+    56	        result = self._run(grid, source_uv, target_uv)
+    57	
+    58	        expected_source_value = 10.0 * 3.50 + 2.25
+    59	
+    60	        self.assertAlmostEqual(
+    61	            float(result["point_features"][0, 0]),
+    62	            expected_source_value,
+    63	            places=5,
+    64	        )
+    65	
+    66	    def test_target_point_splats_to_four_neighbors(self):
+    67	        grid = torch.zeros(1, 6, 8)
+    68	        grid[0, 2, 2] = 4.0
+    69	
+    70	        source_uv = torch.tensor([[2.0, 2.0]])
+    71	        target_uv = torch.tensor([[[3.25, 2.50]]])
+    72	
+    73	        result = self._run(grid, source_uv, target_uv)
+    74	
+    75	        mask = result["transport_mask"][0, 0]
+    76	        weights = result["transport_weight"][0, 0]
+    77	
+    78	        self.assertEqual(int(mask.sum()), 4)
+    79	        self.assertAlmostEqual(float(weights[2, 3]), 0.375, places=6)
+    80	        self.assertAlmostEqual(float(weights[2, 4]), 0.125, places=6)
+    81	        self.assertAlmostEqual(float(weights[3, 3]), 0.375, places=6)
+    82	        self.assertAlmostEqual(float(weights[3, 4]), 0.125, places=6)
+    83	
+    84	        output = result["transported_grid"][0, 0]
+    85	
+    86	        for y, x in [(2, 3), (2, 4), (3, 3), (3, 4)]:
+    87	            self.assertAlmostEqual(float(output[y, x]), 4.0, places=6)
+    88	
+    89	    def test_integer_coordinate_matches_single_cell_behavior(self):
+    90	        grid = torch.arange(
+    91	            1 * 5 * 8,
+    92	            dtype=torch.float32,
+    93	        ).reshape(1, 5, 8)
+    94	
+    95	        source_uv = torch.tensor([[2.0, 2.0]])
+    96	        target_uv = torch.tensor([[[5.0, 3.0]]])
+    97	
+    98	        result = self._run(grid, source_uv, target_uv)
+    99	
+   100	        self.assertEqual(int(result["transport_mask"].sum()), 1)
+   101	        self.assertEqual(
+   102	            float(result["transported_grid"][0, 0, 3, 5]),
+   103	            float(grid[0, 2, 2]),
+   104	        )
+   105	        self.assertAlmostEqual(
+   106	            float(result["transport_weight"][0, 0, 3, 5]),
+   107	            1.0,
+   108	            places=6,
+   109	        )
+   110	
+   111	    def test_collision_is_weight_normalized(self):
+   112	        grid = torch.zeros(1, 5, 8)
+   113	        grid[0, 1, 1] = 2.0
+   114	        grid[0, 1, 2] = 6.0
+   115	
+   116	        source_uv = torch.tensor([[1.0, 1.0], [2.0, 1.0]])
+   117	        target_uv = torch.tensor([[[4.0, 3.0], [4.0, 3.0]]])
+   118	
+   119	        result = self._run(grid, source_uv, target_uv)
+   120	
+   121	        self.assertAlmostEqual(
+   122	            float(result["transported_grid"][0, 0, 3, 4]),
+   123	            4.0,
+   124	            places=6,
+   125	        )
+   126	        self.assertEqual(
+   127	            int(result["contribution_count"][0, 0, 3, 4]),
+   128	            2,
+   129	        )
+   130	        self.assertAlmostEqual(
+   131	            float(result["transport_weight"][0, 0, 3, 4]),
+   132	            2.0,
+   133	            places=6,
+   134	        )
+   135	
+   136	    def test_boundary_renormalization_does_not_pollute_outside(self):
+   137	        grid = torch.ones(1, 5, 8)
+   138	
+   139	        source_uv = torch.tensor([[1.0, 1.0]])
+   140	        target_uv = torch.tensor([[[7.75, 2.25]]])
+   141	
+   142	        result = self._run(grid, source_uv, target_uv)
+   143	
+   144	        self.assertEqual(int(result["transport_mask"].sum()), 2)
+   145	        self.assertTrue(
+   146	            torch.allclose(
+   147	                result["transported_grid"][
+   148	                    result["transport_mask"].expand_as(
+   149	                        result["transported_grid"]
+   150	                    )
+   151	                ],
+   152	                torch.ones(
+   153	                    int(result["transport_mask"].sum()),
+   154	                    dtype=grid.dtype,
+   155	                ),
+   156	            )
+   157	        )
+   158	
+   159	    def test_correct_and_shuffled_have_identical_spatial_contract(self):
+   160	        y = torch.arange(5, dtype=torch.float32).unsqueeze(1)
+   161	        x = torch.arange(8, dtype=torch.float32).unsqueeze(0)
+   162	        grid = (10.0 * y + x).unsqueeze(0)
+   163	
+   164	        source_uv = torch.tensor(
+   165	            [[0.2 + x, 2.25] for x in range(7)],
+   166	            dtype=torch.float32,
+   167	        )
+   168	        target_uv = (
+   169	            source_uv + torch.tensor([0.35, 0.20])
+   170	        ).unsqueeze(0)
+   171	
+   172	        correct = self._run(
+   173	            grid,
+   174	            source_uv,
+   175	            target_uv,
+   176	            mode="correct",
+   177	            seed=0,
+   178	        )
+   179	        shuffled = self._run(
+   180	            grid,
+   181	            source_uv,
+   182	            target_uv,
+   183	            mode="shuffled",
+   184	            seed=0,
+   185	        )
+   186	
+   187	        self.assertTrue(
+   188	            torch.equal(
+   189	                correct["transport_mask"],
+   190	                shuffled["transport_mask"],
+   191	            )
+   192	        )
+   193	        self.assertTrue(
+   194	            torch.equal(
+   195	                correct["contribution_count"],
+   196	                shuffled["contribution_count"],
+   197	            )
+   198	        )
+   199	        self.assertTrue(
+   200	            torch.allclose(
+   201	                correct["transport_weight"],
+   202	                shuffled["transport_weight"],
+   203	            )
+   204	        )
+   205	        self.assertTrue(
+   206	            torch.equal(
+   207	                correct["valid_point_mask"],
+   208	                shuffled["valid_point_mask"],
+   209	            )
+   210	        )
+   211	        self.assertFalse(
+   212	            torch.equal(
+   213	                correct["transported_grid"],
+   214	                shuffled["transported_grid"],
+   215	            )
+   216	        )
+   217	
+   218	    def test_nonfinite_and_out_of_frame_points_are_dropped(self):
+   219	        grid = torch.ones(1, 5, 8)
+   220	
+   221	        source_uv = torch.tensor(
+   222	            [
+   223	                [1.0, 1.0],
+   224	                [float("nan"), 2.0],
+   225	                [-0.1, 3.0],
+   226	            ]
+   227	        )
+   228	        target_uv = torch.tensor(
+   229	            [
+   230	                [
+   231	                    [2.25, 2.25],
+   232	                    [3.0, 2.0],
+   233	                    [4.0, 3.0],
+   234	                ]
+   235	            ]
+   236	        )
+   237	
+   238	        result = self._run(grid, source_uv, target_uv)
+   239	
+   240	        self.assertEqual(int(result["valid_point_mask"].sum()), 1)
+   241	        self.assertTrue(torch.isfinite(result["transported_grid"]).all())
+   242	        self.assertTrue(torch.isfinite(result["transport_weight"]).all())
+   243	
+   244	    def test_mask_matches_positive_weight(self):
+   245	        grid = torch.ones(2, 5, 8)
+   246	
+   247	        source_uv = torch.tensor([[1.25, 1.25], [3.50, 2.50]])
+   248	        target_uv = torch.tensor(
+   249	            [
+   250	                [[2.25, 2.25], [4.50, 3.25]],
+   251	                [[3.00, 2.00], [5.25, 3.50]],
+   252	            ]
+   253	        )
+   254	
+   255	        result = self._run(grid, source_uv, target_uv)
+   256	
+   257	        self.assertTrue(
+   258	            torch.equal(
+   259	                result["transport_mask"],
+   260	                result["transport_weight"] > result["eps"],
+   261	            )
+   262	        )
+   263	        self.assertTrue(
+   264	            bool((result["contribution_count"] >= 0).all())
+   265	        )
+   266	
+   267	
+   268	if __name__ == "__main__":
+   269	    unittest.main()

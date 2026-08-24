@@ -1,0 +1,38 @@
+{
+  "phase": "Phase 0D-2F / F2-R",
+  "per_sample_f2_data_valid": true,
+  "id_join_coverage": "1257/1257",
+  "r1": {
+    "formal_positive_subgroup_evidence": "PRESENT",
+    "positive_subgroup_language": "DT-FULL is numerically better than RW within this pre-existing subgroup under the corrected-v2 seed0 evaluation.",
+    "positive_subgroup_survives_zero_visible_control": true,
+    "motion_fragmentation_relation": "HIGH_MOTION_REMAINS_BAD_WHEN_STABLE"
+  },
+  "r2": {
+    "rw_coarse_high_tcmar_explained_by_holes": "NOT_SUPPORTED",
+    "rw_appearance_metric_alignment_hypothesis": "UNRESOLVED",
+    "limitation": "The preserved F2 condition TC-MAR pipeline double-normalized RGB before Lab conversion; the support-subset comparison is internally comparable but absolute condition TC-MAR is limited."
+  },
+  "r3": {
+    "representation_support_comparable": false,
+    "representation_temporal_semantics_comparable": false,
+    "condition_tcme_causal_interpretation_valid": false,
+    "rw_metric_advantage_already_present_in_conditioning_motion": "UNRESOLVED_REPRESENTATION_ASYMMETRY"
+  },
+  "r4": {
+    "tree_asset_lineage_resolved": true,
+    "tree_geometry_visibility_timeline_alignment": "PASS",
+    "tree_best_alignment_offset": 0,
+    "tree_historical_motion_evidence_status": "LEGACY_BUT_TIMELINE_COMPATIBLE"
+  },
+  "frag_prune": {
+    "rule": "retain switch_count < 3; do not additionally remove zero-future-visible carriers",
+    "priority": "HIGH",
+    "structural_only": true
+  },
+  "future_frozen_subgroups": ["ALL", "HIGH_MOTION_Q4", "FRAGMENTED_SWITCH_GE3", "Q4_AND_FRAGMENTED", "Q4_AND_STABLE", "ZERO_SWITCH_POSITIVE_VISIBLE"],
+  "first_gpu_screening_proposal": ["WM-0", "DT-FRAG-PRUNE", "DT-GRID100-CENTER"],
+  "phase0d2f_f2r_status": "PASS_WITH_LIMITATIONS",
+  "proceed_to_f3": true,
+  "no_generation_performed": true
+}

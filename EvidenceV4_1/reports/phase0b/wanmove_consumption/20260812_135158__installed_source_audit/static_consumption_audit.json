@@ -1,0 +1,837 @@
+{
+  "git_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+  "git_status": [
+    " M wan/modules/trajectory.py",
+    " M wan/wan_move.py",
+    "?? Wan-Move/",
+    "?? nohup.out"
+  ],
+  "sha256": {
+    "wan_move.py": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857",
+    "trajectory.py": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae"
+  },
+  "extracted_functions": [
+    "_dt_bilinear_source_features",
+    "_dt_load_sidecars",
+    "_dt_mode",
+    "_dt_original_replace",
+    "create_pos_feature_map",
+    "replace_feature"
+  ],
+  "generate_found": true,
+  "pattern_hits": {
+    "wan_move.py": {
+      "create_pos_feature_map": [
+        {
+          "line": 24,
+          "text": "from .modules.trajectory import replace_feature, get_video_track_video, create_pos_feature_map"
+        },
+        {
+          "line": 279,
+          "text": "track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)"
+        }
+      ],
+      "replace_feature": [
+        {
+          "line": 24,
+          "text": "from .modules.trajectory import replace_feature, get_video_track_video, create_pos_feature_map"
+        },
+        {
+          "line": 281,
+          "text": "edited_y = replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]"
+        }
+      ],
+      "track_pos": [
+        {
+          "line": 279,
+          "text": "track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)"
+        },
+        {
+          "line": 281,
+          "text": "edited_y = replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]"
+        }
+      ],
+      "track_feats": [
+        {
+          "line": 279,
+          "text": "track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)"
+        },
+        {
+          "line": 280,
+          "text": "track_feats = track_feats.permute(3, 0, 1, 2)"
+        }
+      ],
+      "current_pos": [],
+      "h_source": [],
+      "w_source": [],
+      "h_target": [],
+      "w_target": [],
+      "torch.randperm": [],
+      "manual_seed": [
+        {
+          "line": 228,
+          "text": "seed_g.manual_seed(seed)"
+        },
+        {
+          "line": 278,
+          "text": "torch.manual_seed(seed)"
+        }
+      ],
+      "torch.Generator": [
+        {
+          "line": 227,
+          "text": "seed_g = torch.Generator(device=self.device)"
+        }
+      ],
+      "DT_TRANSPORT_VARIANT": [],
+      "_dt_bilinear_source_features": [],
+      "depth": [],
+      "source": [],
+      "target": [
+        {
+          "line": 57,
+          "text": "Id of target GPU device"
+        },
+        {
+          "line": 216,
+          "text": "# Scale tracks to match the target video dimensions"
+        }
+      ]
+    },
+    "trajectory.py": {
+      "create_pos_feature_map": [
+        {
+          "line": 171,
+          "text": "def create_pos_feature_map("
+        },
+        {
+          "line": 734,
+          "text": "\"create_pos_feature_map \""
+        },
+        {
+          "line": 1317,
+          "text": "track_video, track_pos = create_pos_feature_map("
+        },
+        {
+          "line": 1448,
+          "text": "feature_map, track_pos = create_pos_feature_map("
+        }
+      ],
+      "replace_feature": [
+        {
+          "line": 698,
+          "text": "def replace_feature("
+        }
+      ],
+      "track_pos": [
+        {
+          "line": 224,
+          "text": "track_pos = ("
+        },
+        {
+          "line": 339,
+          "text": "track_pos["
+        },
+        {
+          "line": 346,
+          "text": "track_pos["
+        },
+        {
+          "line": 436,
+          "text": "track_pos,"
+        },
+        {
+          "line": 442,
+          "text": "track_pos,"
+        },
+        {
+          "line": 451,
+          "text": "== track_pos.shape[0]"
+        },
+        {
+          "line": 454,
+          "text": "n = track_pos.shape[1]"
+        },
+        {
+          "line": 457,
+          "text": "track_pos = track_pos["
+        },
+        {
+          "line": 465,
+          "text": "track_pos["
+        },
+        {
+          "line": 533,
+          "text": "track_pos["
+        },
+        {
+          "line": 543,
+          "text": "track_pos["
+        },
+        {
+          "line": 700,
+          "text": "track_pos: torch.Tensor,"
+        },
+        {
+          "line": 716,
+          "text": "track_pos,"
+        },
+        {
+          "line": 741,
+          "text": "or track_pos.shape[0]"
+        },
+        {
+          "line": 749,
+          "text": "n = track_pos.shape[1]"
+        },
+        {
+          "line": 760,
+          "text": "track_pos = track_pos["
+        },
+        {
+          "line": 845,
+          "text": "track_pos.shape[2]"
+        },
+        {
+          "line": 859,
+          "text": "track_pos["
+        },
+        {
+          "line": 871,
+          "text": "track_pos["
+        },
+        {
+          "line": 911,
+          "text": "track_pos["
+        },
+        {
+          "line": 923,
+          "text": "track_pos["
+        },
+        {
+          "line": 1301,
+          "text": "-  track_pos: torch.Tensor, the position embeddings, [N, T', 2], 2 = height, width"
+        },
+        {
+          "line": 1317,
+          "text": "track_video, track_pos = create_pos_feature_map("
+        },
+        {
+          "line": 1321,
+          "text": "return track_video.permute(3, 0, 1, 2), track_pos, pred_tracks, pred_visibility"
+        },
+        {
+          "line": 1448,
+          "text": "feature_map, track_pos = create_pos_feature_map("
+        },
+        {
+          "line": 1461,
+          "text": "return feature_map, track_pos"
+        }
+      ],
+      "track_feats": [],
+      "current_pos": [
+        {
+          "line": 464,
+          "text": "current_pos = ("
+        },
+        {
+          "line": 474,
+          "text": "(current_pos[..., 0] >= 0)"
+        },
+        {
+          "line": 476,
+          "text": "(current_pos[..., 1] >= 0)"
+        },
+        {
+          "line": 513,
+          "text": "current_pos["
+        },
+        {
+          "line": 523,
+          "text": "current_pos["
+        }
+      ],
+      "h_source": [
+        {
+          "line": 532,
+          "text": "h_source = ("
+        },
+        {
+          "line": 557,
+          "text": "h_source,"
+        }
+      ],
+      "w_source": [
+        {
+          "line": 542,
+          "text": "w_source = ("
+        },
+        {
+          "line": 558,
+          "text": "w_source,"
+        }
+      ],
+      "h_target": [
+        {
+          "line": 512,
+          "text": "h_target = ("
+        },
+        {
+          "line": 566,
+          "text": "h_target,"
+        }
+      ],
+      "w_target": [
+        {
+          "line": 522,
+          "text": "w_target = ("
+        },
+        {
+          "line": 567,
+          "text": "w_target,"
+        }
+      ],
+      "torch.randperm": [
+        {
+          "line": 240,
+          "text": "torch.randperm(n)["
+        },
+        {
+          "line": 257,
+          "text": "torch.randperm(n)["
+        },
+        {
+          "line": 459,
+          "text": "torch.randperm(n),"
+        },
+        {
+          "line": 756,
+          "text": "perm = torch.randperm("
+        }
+      ],
+      "manual_seed": [],
+      "torch.Generator": [],
+      "DT_TRANSPORT_VARIANT": [
+        {
+          "line": 74,
+          "text": "\"DT_TRANSPORT_VARIANT\","
+        },
+        {
+          "line": 727,
+          "text": "f\"DT_TRANSPORT_VARIANT=\""
+        }
+      ],
+      "_dt_bilinear_source_features": [
+        {
+          "line": 573,
+          "text": "def _dt_bilinear_source_features("
+        },
+        {
+          "line": 891,
+          "text": "_dt_bilinear_source_features("
+        }
+      ],
+      "depth": [
+        {
+          "line": 89,
+          "text": "depth_path = os.environ.get("
+        },
+        {
+          "line": 100,
+          "text": "not depth_path"
+        },
+        {
+          "line": 109,
+          "text": "depth_np = np.load("
+        },
+        {
+          "line": 110,
+          "text": "depth_path"
+        },
+        {
+          "line": 118,
+          "text": "depth_np.ndim == 3"
+        },
+        {
+          "line": 119,
+          "text": "and depth_np.shape[0] == 1"
+        },
+        {
+          "line": 121,
+          "text": "depth_np = depth_np[0]"
+        },
+        {
+          "line": 123,
+          "text": "if depth_np.shape != ("
+        },
+        {
+          "line": 128,
+          "text": "f\"depth sidecar shape \""
+        },
+        {
+          "line": 129,
+          "text": "f\"{depth_np.shape}, \""
+        },
+        {
+          "line": 142,
+          "text": "depth = ("
+        },
+        {
+          "line": 145,
+          "text": "depth_np"
+        },
+        {
+          "line": 166,
+          "text": "depth,"
+        },
+        {
+          "line": 373,
+          "text": "depth, ids = ("
+        },
+        {
+          "line": 394,
+          "text": "\"depth\":"
+        },
+        {
+          "line": 395,
+          "text": "depth["
+        },
+        {
+          "line": 791,
+          "text": "depth = ("
+        },
+        {
+          "line": 793,
+          "text": "\"depth\""
+        },
+        {
+          "line": 838,
+          "text": "depth_sampled = ("
+        },
+        {
+          "line": 839,
+          "text": "depth["
+        },
+        {
+          "line": 854,
+          "text": "depth_sampled.shape[0]"
+        },
+        {
+          "line": 1051,
+          "text": "depth_sampled["
+        },
+        {
+          "line": 1125,
+          "text": "# depth-aware 3x3 local source-condition patch."
+        },
+        {
+          "line": 1162,
+          "text": "depth_sampled["
+        }
+      ],
+      "source": [
+        {
+          "line": 532,
+          "text": "h_source = ("
+        },
+        {
+          "line": 542,
+          "text": "w_source = ("
+        },
+        {
+          "line": 557,
+          "text": "h_source,"
+        },
+        {
+          "line": 558,
+          "text": "w_source,"
+        },
+        {
+          "line": 573,
+          "text": "def _dt_bilinear_source_features("
+        },
+        {
+          "line": 575,
+          "text": "source_xy,"
+        },
+        {
+          "line": 589,
+          "text": "source_xy = ("
+        },
+        {
+          "line": 590,
+          "text": "source_xy"
+        },
+        {
+          "line": 602,
+          "text": "source_xy[:, 0]"
+        },
+        {
+          "line": 610,
+          "text": "source_xy[:, 1]"
+        },
+        {
+          "line": 890,
+          "text": "source_features = ("
+        },
+        {
+          "line": 891,
+          "text": "_dt_bilinear_source_features("
+        },
+        {
+          "line": 900,
+          "text": "source_features = None"
+        },
+        {
+          "line": 957,
+          "text": "# exactly one source material identity per target cell."
+        },
+        {
+          "line": 1084,
+          "text": "source_features["
+        },
+        {
+          "line": 1091,
+          "text": "source_h = int("
+        },
+        {
+          "line": 1097,
+          "text": "source_w = int("
+        },
+        {
+          "line": 1108,
+          "text": "source_h,"
+        },
+        {
+          "line": 1109,
+          "text": "source_w,"
+        },
+        {
+          "line": 1125,
+          "text": "# depth-aware 3x3 local source-condition patch."
+        },
+        {
+          "line": 1137,
+          "text": "source_h0 = int("
+        },
+        {
+          "line": 1143,
+          "text": "source_w0 = int("
+        },
+        {
+          "line": 1193,
+          "text": "source_h = ("
+        },
+        {
+          "line": 1194,
+          "text": "source_h0"
+        },
+        {
+          "line": 1198,
+          "text": "source_w = ("
+        },
+        {
+          "line": 1199,
+          "text": "source_w0"
+        },
+        {
+          "line": 1214,
+          "text": "0 <= source_h < H"
+        },
+        {
+          "line": 1215,
+          "text": "and 0 <= source_w < W"
+        },
+        {
+          "line": 1231,
+          "text": "source_h,"
+        },
+        {
+          "line": 1232,
+          "text": "source_w,"
+        },
+        {
+          "line": 1244,
+          "text": "source_h,"
+        },
+        {
+          "line": 1245,
+          "text": "source_w,"
+        },
+        {
+          "line": 1265,
+          "text": "source_h,"
+        },
+        {
+          "line": 1266,
+          "text": "source_w,"
+        }
+      ],
+      "target": [
+        {
+          "line": 507,
+          "text": "t_target = ("
+        },
+        {
+          "line": 512,
+          "text": "h_target = ("
+        },
+        {
+          "line": 522,
+          "text": "w_target = ("
+        },
+        {
+          "line": 565,
+          "text": "t_target,"
+        },
+        {
+          "line": 566,
+          "text": "h_target,"
+        },
+        {
+          "line": 567,
+          "text": "w_target,"
+        },
+        {
+          "line": 910,
+          "text": "target_h = ("
+        },
+        {
+          "line": 922,
+          "text": "target_w = ("
+        },
+        {
+          "line": 937,
+          "text": "(target_h >= 0)"
+        },
+        {
+          "line": 939,
+          "text": "(target_w >= 0)"
+        },
+        {
+          "line": 957,
+          "text": "# exactly one source material identity per target cell."
+        },
+        {
+          "line": 971,
+          "text": "target_h["
+        },
+        {
+          "line": 977,
+          "text": "target_w["
+        },
+        {
+          "line": 1027,
+          "text": "# to target latent-cell center."
+        },
+        {
+          "line": 1127,
+          "text": "# Every target latent cell still has exactly one"
+        },
+        {
+          "line": 1149,
+          "text": "target_h0 = int("
+        },
+        {
+          "line": 1150,
+          "text": "target_h["
+        },
+        {
+          "line": 1155,
+          "text": "target_w0 = int("
+        },
+        {
+          "line": 1156,
+          "text": "target_w["
+        },
+        {
+          "line": 1204,
+          "text": "target_h0"
+        },
+        {
+          "line": 1209,
+          "text": "target_w0"
+        },
+        {
+          "line": 1328,
+          "text": "target_frame_num: int,"
+        },
+        {
+          "line": 1338,
+          "text": "- target_frame_num: int, the number of frames to resize to"
+        },
+        {
+          "line": 1344,
+          "text": "- resized_tracks: torch.Tensor, the resized tracks, [target_frame_num, N, 2]"
+        },
+        {
+          "line": 1345,
+          "text": "- resized_visibility: torch.Tensor, the resized visibility, [target_frame_num, N]"
+        },
+        {
+          "line": 1381,
+          "text": "new_tracks = torch.zeros(target_frame_num, num_tracks, 2, device=device, dtype=dtype)"
+        },
+        {
+          "line": 1382,
+          "text": "new_visibility = torch.ones(target_frame_num, num_tracks, device=device, dtype=torch.bool)"
+        },
+        {
+          "line": 1387,
+          "text": "target_frame_num -= 1"
+        },
+        {
+          "line": 1390,
+          "text": "if target_frame_num <= num_frames:"
+        },
+        {
+          "line": 1391,
+          "text": "t_down = num_frames / target_frame_num"
+        },
+        {
+          "line": 1392,
+          "text": "frame_idxs = [int((i - 1) * t_down + 1) for i in range(1, target_frame_num + 1)]"
+        },
+        {
+          "line": 1402,
+          "text": "t_repeat = target_frame_num / num_frames"
+        },
+        {
+          "line": 1403,
+          "text": "target_frame_idxs = [int((i - 1) * t_repeat + 1) for i in range(1, num_frames + 1)]"
+        },
+        {
+          "line": 1404,
+          "text": "for i, target_frame_idx in enumerate(target_frame_idxs):"
+        },
+        {
+          "line": 1405,
+          "text": "next_target_frame_idx = target_frame_idxs[i + 1] if i + 1 < len(target_frame_idxs) else target_frame_num + 1"
+        },
+        {
+          "line": 1407,
+          "text": "new_tracks[target_frame_idx:next_target_frame_idx] = get_xy_from_hw(img_tracks[new_frame_idx])"
+        },
+        {
+          "line": 1409,
+          "text": "if target_frame_idx == next_target_frame_idx:"
+        },
+        {
+          "line": 1410,
+          "text": "new_tracks[target_frame_idx] = get_xy_from_hw(img_tracks[new_frame_idx])"
+        },
+        {
+          "line": 1413,
+          "text": "for j in range(target_frame_idx, next_target_frame_idx):"
+        },
+        {
+          "line": 1414,
+          "text": "new_tracks[j] = (1 - (next_target_frame_idx - j) / (next_target_frame_idx - target_frame_idx)) * get_xy_from_hw(img_tracks[new_frame_idx]) + (next_target_frame_idx - j) / (next_target_frame_idx - target_frame_idx) * get_xy_from_hw(img_tracks[next_new_frame_idx])"
+        },
+        {
+          "line": 1423,
+          "text": "target_frame_num: int,"
+        },
+        {
+          "line": 1435,
+          "text": "- target_frame_num: int, the number of frames to resize to"
+        },
+        {
+          "line": 1447,
+          "text": "resized_tracks, resized_visibility = resize_tracks(img_tracks, target_frame_num, t_down_strategy, device, dtype)"
+        },
+        {
+          "line": 1472,
+          "text": "- image (Image): target image to draw on."
+        }
+      ]
+    }
+  },
+  "coordinate_difference_candidates": [
+    {
+      "line": 1287,
+      "text": "- model: torch.nn.Module, the model for tracking, CoTracker"
+    },
+    {
+      "line": 1292,
+      "text": "- pos_emb_dim: int, the dimension of the position embeddings"
+    },
+    {
+      "line": 1294,
+      "text": "- track_num: int, the number of tracks to use"
+    },
+    {
+      "line": 1300,
+      "text": "-  track_video: torch.Tensor, the track video, [pos_emb_dim, T', H', W']"
+    },
+    {
+      "line": 1301,
+      "text": "-  track_pos: torch.Tensor, the position embeddings, [N, T', 2], 2 = height, width"
+    },
+    {
+      "line": 1302,
+      "text": "-  pred_tracks: the predicted point trajectories"
+    },
+    {
+      "line": 1337,
+      "text": "- img_tracks: torch.Tensor, the tracks, [T, N, height, width]"
+    },
+    {
+      "line": 1338,
+      "text": "- target_frame_num: int, the number of frames to resize to"
+    },
+    {
+      "line": 1344,
+      "text": "- resized_tracks: torch.Tensor, the resized tracks, [target_frame_num, N, 2]"
+    },
+    {
+      "line": 1345,
+      "text": "- resized_visibility: torch.Tensor, the resized visibility, [target_frame_num, N]"
+    },
+    {
+      "line": 1387,
+      "text": "target_frame_num -= 1"
+    },
+    {
+      "line": 1392,
+      "text": "frame_idxs = [int((i - 1) * t_down + 1) for i in range(1, target_frame_num + 1)]"
+    },
+    {
+      "line": 1403,
+      "text": "target_frame_idxs = [int((i - 1) * t_repeat + 1) for i in range(1, num_frames + 1)]"
+    },
+    {
+      "line": 1414,
+      "text": "new_tracks[j] = (1 - (next_target_frame_idx - j) / (next_target_frame_idx - target_frame_idx)) * get_xy_from_hw(img_tracks[new_frame_idx]) + (next_target_frame_idx - j) / (next_target_frame_idx - target_frame_idx) * get_xy_from_hw(img_tracks[next_new_frame_idx])"
+    },
+    {
+      "line": 1434,
+      "text": "- img_tracks: torch.Tensor, the tracks, [T, N, height, width]"
+    },
+    {
+      "line": 1435,
+      "text": "- target_frame_num: int, the number of frames to resize to"
+    },
+    {
+      "line": 1437,
+      "text": "- pos_emb_dim: int, the dimension of the position embeddings"
+    },
+    {
+      "line": 1443,
+      "text": "- feature_map: torch.Tensor, the feature map, [T', H', W', pos_emb_dim]"
+    },
+    {
+      "line": 1472,
+      "text": "- image (Image): target image to draw on."
+    },
+    {
+      "line": 1533,
+      "text": "blend_img = track[:, :, :3] * alpha + rgb * (1 - alpha)"
+    },
+    {
+      "line": 1577,
+      "text": "draw.ellipse((track_coord[0] - circle_size, track_coord[1] - circle_size, track_coord[0] + circle_size, track_coord[1] + circle_size), fill=color_map[n % len(color_map)])"
+    }
+  ]
+}

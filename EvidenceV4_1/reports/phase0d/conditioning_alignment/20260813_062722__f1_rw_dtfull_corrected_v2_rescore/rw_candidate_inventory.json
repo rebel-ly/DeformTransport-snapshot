@@ -1,0 +1,6 @@
+{
+  "bounded_search_scope":"Santa RealWonder historical run/evidence under DeformTransport server_runs plus existing system_eval_audit.",
+  "candidate_count":1,
+  "candidates":[{"candidate_rw_video":"/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4","sha256":"1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7","frame_count":81,"frame_shape":[81,480,832,3],"case":"Santa","action":"Wind blows the hanging clothes; gentle continuous rhythmic airflow; static camera","simulation_source":"official_santa_81f_aligned_final_sim_20260806_234410","timeline":"81 aligned simulation frames; stdout records all 81 simulation frames loaded","generation":"seed=0; eval_degradation=0.5; local_attn_size=21; checkpoint step=000800.pt","runner_log":"baseline/inference_command.txt; baseline/stdout.log; output_video_validation.json"}],
+  "selection":"Only complete 81-frame Santa baseline candidate; selection is lineage-based, not metric-based."
+}

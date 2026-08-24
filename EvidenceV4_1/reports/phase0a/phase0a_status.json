@@ -1,0 +1,25 @@
+{
+  "phase": "Phase0A",
+  "name": "Asset / Domain / Lineage and Visibility Contract Audit",
+  "status": "CLOSED_WITH_LIMITATION",
+  "decision": {
+    "asset_lineage": "PASS",
+    "visibility_boolean_lineage": "PASS",
+    "old_corrected_bridge_temporal_contract": "FAIL",
+    "canonical_aligned_contract": "PASS",
+    "corrected_v2_bridge": "PASS",
+    "raster_frontmost_support_semantics": "PASS",
+    "stable_perceptual_visibility_semantics": "FAIL",
+    "real_image_visibility_semantics": "UNRESOLVED"
+  },
+  "formal_bridge_for_future_audits": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline",
+  "rejected_bridge": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility",
+  "proceed_to_phase0b": true,
+  "phase0b_guardrails": [
+    "Do not use the rejected 1277-point bridge.",
+    "Use the corrected-v2 1257-point true-source aligned bridge.",
+    "Treat visibility as raster-defined/frontmost-support visibility.",
+    "Do not call it stable perceptual visibility ground truth.",
+    "All future causal comparisons must share the same step0..800 authoritative timeline."
+  ]
+}

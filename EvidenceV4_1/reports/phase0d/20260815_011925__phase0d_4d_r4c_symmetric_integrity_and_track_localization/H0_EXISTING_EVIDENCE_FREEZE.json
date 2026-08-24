@@ -1,0 +1,24 @@
+{
+  "evidence_freeze": [
+    {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/SEED0_TO_SEED1_ARM_LINEAGE_AUDIT.json",
+      "sha256": "6c875fbbe7a6d34534b0380af7c997163983e1a798e45d4c7e93066de622d594"
+    },
+    {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_004423__phase0d_4d_r3m_r4a_evaluator_lineage_recovery/SEED0_AUTHORITATIVE_METRIC_PROVENANCE.json",
+      "sha256": "d9d5b9dc08cfb3057d7413758dd23ccae4df52ffef3253aaf21e7998056a612c"
+    },
+    {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/SEED1_PRIMARY_TCME_RESULTS.json",
+      "sha256": "8ef74527cdf0849ae1b6cc8da2e7c42fe42a56256105ab417e00cb6e9ce9d090"
+    },
+    {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/SEED1_SECONDARY_TCMAR_RESULTS.json",
+      "sha256": "dc70f6b46ba140428a2d2fd4724d1cde44b8668f981d9e0ead2d3e913cbcedac"
+    },
+    {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/PHASE0C_RUNTIME_GRID_REAUDIT.json",
+      "sha256": "9e5c5f246e53b73e2574722f9b9647c2e43edd3eb2043210a55c1d898ec67b67"
+    }
+  ]
+}

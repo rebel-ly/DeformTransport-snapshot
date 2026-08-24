@@ -1,0 +1,6 @@
+/workspace/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/workspace/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/workspace/Wan-Move/wan/__init__.py
+/workspace/Wan-Move/wan/wan_move.py

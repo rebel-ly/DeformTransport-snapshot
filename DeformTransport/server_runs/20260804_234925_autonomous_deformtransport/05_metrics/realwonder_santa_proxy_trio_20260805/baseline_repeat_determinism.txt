@@ -1,0 +1,19 @@
+文件逐字节相同=true
+{
+  "说明": "GT只用于离线评测；本脚本不生成或修改模型输入",
+  "参考视频": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_032928/santa_baseline_seed0.mp4",
+  "预测视频": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_034305/santa_baseline_seed0.mp4",
+  "帧数": 21,
+  "分辨率": [
+    480,
+    832
+  ],
+  "使用mask": false,
+  "平均PSNR_dB": Infinity,
+  "平均SSIM": 1.0,
+  "时序差分L1": 0.0,
+  "未计算": [
+    "LPIPS",
+    "FVD"
+  ]
+}

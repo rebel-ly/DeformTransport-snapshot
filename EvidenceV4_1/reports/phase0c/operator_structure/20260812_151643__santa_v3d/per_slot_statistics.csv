@@ -1,0 +1,3 @@
+condition,tau,candidate_count,unique_target_cells,collision_cells,collision_carriers,max_multiplicity,selected_winner_count,unique_winner_material_id_count,candidate_to_winner_retention_ratio,invalid_or_nonpositive_depth_candidates
+Correct,1,768,718,49,99,3,718,718,0.9348958333333334,0
+Identity-Shuffled,1,768,718,49,99,3,718,718,0.9348958333333334,0

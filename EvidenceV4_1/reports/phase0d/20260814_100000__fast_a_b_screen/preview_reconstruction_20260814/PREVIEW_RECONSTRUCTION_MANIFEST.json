@@ -1,0 +1,576 @@
+{
+  "producer": "infer_sim.py:load_sim_frames",
+  "producer_semantics": "sorted frame_*.png; RGB convert; resize(832,480); normalize [-1,1] for SDEdit VAE input",
+  "original_preview_persisted": false,
+  "frame_count": 81,
+  "timeline": "frame i -> simulation step 10*i; steps 0..800; no step810",
+  "frames": [
+    {
+      "frame_index": 0,
+      "simulation_step": 0,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0000.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0000.png",
+      "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7"
+    },
+    {
+      "frame_index": 1,
+      "simulation_step": 10,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0001.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0001.png",
+      "sha256": "df65f42a00ab6da7bdd6a310f9a4ee63a81ef7c7f1fa76ba5149675cb22ea7a6"
+    },
+    {
+      "frame_index": 2,
+      "simulation_step": 20,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0002.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0002.png",
+      "sha256": "7b09e6ef692cdebe8c53e42edaee203c00686c0958cb6018123a5dbb8699be5a"
+    },
+    {
+      "frame_index": 3,
+      "simulation_step": 30,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0003.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0003.png",
+      "sha256": "4994c7a975a98d27e744c4850fd689e1c24e64f5dff3078ecf4b3d8ee83cb963"
+    },
+    {
+      "frame_index": 4,
+      "simulation_step": 40,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0004.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0004.png",
+      "sha256": "75f026b6d72d4e12e4d0f143a72f0d03ccfa55f08201ddea11187d3bfeac99a5"
+    },
+    {
+      "frame_index": 5,
+      "simulation_step": 50,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0005.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0005.png",
+      "sha256": "973c19f5aa71721eed48108105e970bcf44c64e72c9ea2fd0c7631a66997f111"
+    },
+    {
+      "frame_index": 6,
+      "simulation_step": 60,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0006.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0006.png",
+      "sha256": "01a615566f39e01c11c4f16f462ad811545eaab7ed9a6eee45320d6513a6981c"
+    },
+    {
+      "frame_index": 7,
+      "simulation_step": 70,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0007.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0007.png",
+      "sha256": "8aa90afab66ebd95a8102c46d35c2e34c9d107ea2d9783c801f75d23e38fef8f"
+    },
+    {
+      "frame_index": 8,
+      "simulation_step": 80,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0008.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0008.png",
+      "sha256": "1ae9ba3272f20ed98569e14e470a41ca5ef7a04df9058b3cc217bfedcd032f8b"
+    },
+    {
+      "frame_index": 9,
+      "simulation_step": 90,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0009.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0009.png",
+      "sha256": "ab4e1825a7ed06e644371adfe08201f7a7b633ccbf2f05a7bd310800bbb09164"
+    },
+    {
+      "frame_index": 10,
+      "simulation_step": 100,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0010.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0010.png",
+      "sha256": "10bc8972bf8bb5c170c044ab986c0bc80f4604e134b0a1dccf4ab4953e27dce3"
+    },
+    {
+      "frame_index": 11,
+      "simulation_step": 110,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0011.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0011.png",
+      "sha256": "02b6b8f564751f360fdd49b7c55435af8be595641c82fe195405211a58648b6c"
+    },
+    {
+      "frame_index": 12,
+      "simulation_step": 120,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0012.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0012.png",
+      "sha256": "dc8cbf52803d02ab130398e6a8a0f177a2aca02659f6bd23e4d18122c992b9b6"
+    },
+    {
+      "frame_index": 13,
+      "simulation_step": 130,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0013.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0013.png",
+      "sha256": "8f8582f79a4d37387d32d4267e2c75d716d1434124e9995324930dd8c3db240b"
+    },
+    {
+      "frame_index": 14,
+      "simulation_step": 140,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0014.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0014.png",
+      "sha256": "40e61ca495658c099b832c563a944f78176c90abecc31f7ac6eceae6576f86ac"
+    },
+    {
+      "frame_index": 15,
+      "simulation_step": 150,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0015.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0015.png",
+      "sha256": "4a098963c01ac978d8f67ac3cb74dc5696fa0e3cd595ea0a52ad55934adedc42"
+    },
+    {
+      "frame_index": 16,
+      "simulation_step": 160,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0016.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0016.png",
+      "sha256": "dce6aa22cec67cc5fddb8b0785c7fbe767969401f95ec4249f2f315115a3b9d8"
+    },
+    {
+      "frame_index": 17,
+      "simulation_step": 170,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0017.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0017.png",
+      "sha256": "495776bf6fad3fa40e31a182f7777e887ba4d9677534fd570c096ffc2f9a6a56"
+    },
+    {
+      "frame_index": 18,
+      "simulation_step": 180,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0018.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0018.png",
+      "sha256": "3d17040103f745659c534cf860f2a65ac75bcc73129a58fe2cc7166241557671"
+    },
+    {
+      "frame_index": 19,
+      "simulation_step": 190,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0019.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0019.png",
+      "sha256": "b6880503be0bac15341f06a20f8f09be77c2e3540232d859731f332545d3ce95"
+    },
+    {
+      "frame_index": 20,
+      "simulation_step": 200,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0020.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0020.png",
+      "sha256": "d8ddb1bfb90e33097d89656600ebd34d213864c2a2b98fb6b38f054c2c89b85a"
+    },
+    {
+      "frame_index": 21,
+      "simulation_step": 210,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0021.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0021.png",
+      "sha256": "11fbdeeb3ad44ea72c7bed053587f887b44981b34764d571e869a8412b7a5d1a"
+    },
+    {
+      "frame_index": 22,
+      "simulation_step": 220,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0022.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0022.png",
+      "sha256": "1edabe81e92d103f252fbf0639e0c8f0d3a29f2f7bcef894b6f1d82f141193ce"
+    },
+    {
+      "frame_index": 23,
+      "simulation_step": 230,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0023.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0023.png",
+      "sha256": "36e4729426f6c300598db7efb9aca4662ec93a83ab92479fd8bb99fcc35866f4"
+    },
+    {
+      "frame_index": 24,
+      "simulation_step": 240,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0024.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0024.png",
+      "sha256": "8fed4b4fe347058942926aa9a006423853246763b5b7f71aaff7c7d2d1695b9c"
+    },
+    {
+      "frame_index": 25,
+      "simulation_step": 250,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0025.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0025.png",
+      "sha256": "bd62423cec71addc6ca8188e507cf1806f30d5605099875e40e416d58b5fc584"
+    },
+    {
+      "frame_index": 26,
+      "simulation_step": 260,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0026.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0026.png",
+      "sha256": "9ac03c39e3ec4dc473a33896c762a4c43f9074fd823f521b9e7a374fc8ddf9b5"
+    },
+    {
+      "frame_index": 27,
+      "simulation_step": 270,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0027.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0027.png",
+      "sha256": "3edd71032e03469ab1ef8924003dc912e67b96c4e58d4d994b9b0d99e6d84171"
+    },
+    {
+      "frame_index": 28,
+      "simulation_step": 280,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0028.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0028.png",
+      "sha256": "e811cf767853e5d38508d58bee007df28e40dd59b3b25df287d785f37b250823"
+    },
+    {
+      "frame_index": 29,
+      "simulation_step": 290,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0029.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0029.png",
+      "sha256": "31aff52b9baf210726944c70be22f4cf45896034843fcf8f22fb44bb5686b507"
+    },
+    {
+      "frame_index": 30,
+      "simulation_step": 300,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0030.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0030.png",
+      "sha256": "a399c3c74cd3fde44cf6aee71c9e614f59c3df573edec7dc3884aa5ddf3cb710"
+    },
+    {
+      "frame_index": 31,
+      "simulation_step": 310,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0031.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0031.png",
+      "sha256": "ce04517a2e8419d8860bebadafefd35c7cf2a3475a565272f93db5fbc6dfe45e"
+    },
+    {
+      "frame_index": 32,
+      "simulation_step": 320,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0032.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0032.png",
+      "sha256": "c0f6ed1eb5c5a952b9fccd25fbe7c57b1551ca8202f74cf2bd8483a878b55b24"
+    },
+    {
+      "frame_index": 33,
+      "simulation_step": 330,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0033.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0033.png",
+      "sha256": "03b1b2a51444851ad3dea1afe5a7c6e3386608c74b7a700432723062c7e73bed"
+    },
+    {
+      "frame_index": 34,
+      "simulation_step": 340,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0034.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0034.png",
+      "sha256": "d5d751c08fb8dec49e0a7ca73f41a0505248908c666723bbbc719469062ffc4a"
+    },
+    {
+      "frame_index": 35,
+      "simulation_step": 350,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0035.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0035.png",
+      "sha256": "cfd43f38a80df7d2e291d684f46d13d81b578446ca163baf75f5c73a2b995d64"
+    },
+    {
+      "frame_index": 36,
+      "simulation_step": 360,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0036.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0036.png",
+      "sha256": "cb19405fcbda55311d476f10bf18794720d66bd4a8f7f9df1d7bf2a4ef67d7b6"
+    },
+    {
+      "frame_index": 37,
+      "simulation_step": 370,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0037.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0037.png",
+      "sha256": "2bb4b0bc58d316e26215c55a79ec1a94db7a76b61afaa3560028ad3f532c2515"
+    },
+    {
+      "frame_index": 38,
+      "simulation_step": 380,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0038.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0038.png",
+      "sha256": "2f489599a072f0b572fb65d77fe424abf187eccf9262c4899c057b87a8dea1a5"
+    },
+    {
+      "frame_index": 39,
+      "simulation_step": 390,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0039.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0039.png",
+      "sha256": "7e3e27e622ddc9c51d14a07a85a521c5d1925f74cba8dd17b0cccd46049312c7"
+    },
+    {
+      "frame_index": 40,
+      "simulation_step": 400,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0040.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0040.png",
+      "sha256": "5035a47abb63104fbd7175da87fd312ac62bf8d425b7f65715ef8489fa83bfda"
+    },
+    {
+      "frame_index": 41,
+      "simulation_step": 410,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0041.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0041.png",
+      "sha256": "2f2b65eae12b2a4499513b18f38f65d85354e55cee997dcaae3a37007f2f80fb"
+    },
+    {
+      "frame_index": 42,
+      "simulation_step": 420,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0042.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0042.png",
+      "sha256": "8385a6284e3db85c34b78599f27dbe416050fdd7eea27371bb62f368d5be8c99"
+    },
+    {
+      "frame_index": 43,
+      "simulation_step": 430,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0043.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0043.png",
+      "sha256": "77aeb5a034289e12cf26add4c94867cf31dc6c0f6da972bccaa0662bbf347abd"
+    },
+    {
+      "frame_index": 44,
+      "simulation_step": 440,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0044.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0044.png",
+      "sha256": "832213a6d000d5028a70dcf2495f842d86d3b84af0a29bcec798898afac3ddb3"
+    },
+    {
+      "frame_index": 45,
+      "simulation_step": 450,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0045.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0045.png",
+      "sha256": "edde5b9e0361e50783c85e23f7c80e521a996c4bd2d08aea2b547f257469bb11"
+    },
+    {
+      "frame_index": 46,
+      "simulation_step": 460,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0046.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0046.png",
+      "sha256": "e8c429592571fcdab29d13b02c5c415c6947267e11e6a722147be5b51a68dcc0"
+    },
+    {
+      "frame_index": 47,
+      "simulation_step": 470,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0047.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0047.png",
+      "sha256": "2cd07a52eae8d172418e766191658ce5eb46d93c8624fc9f0f7b58554e21d121"
+    },
+    {
+      "frame_index": 48,
+      "simulation_step": 480,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0048.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0048.png",
+      "sha256": "9746e20c78c0a1cd6b73b76a9c74743db9e3e98b85e9d61dc9b2e7a4114d60c9"
+    },
+    {
+      "frame_index": 49,
+      "simulation_step": 490,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0049.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0049.png",
+      "sha256": "d00cab0c6bee59019d1134618c443ce567bfdcf8acb1995113a52e726fd7754c"
+    },
+    {
+      "frame_index": 50,
+      "simulation_step": 500,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0050.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0050.png",
+      "sha256": "4d6838424b578725de241e402d18d023e16207ff75a957ad9909aadd72dab2ed"
+    },
+    {
+      "frame_index": 51,
+      "simulation_step": 510,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0051.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0051.png",
+      "sha256": "1a7984b244472352bea2389a89f787884e2d93226490768f1d345b81ac16a700"
+    },
+    {
+      "frame_index": 52,
+      "simulation_step": 520,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0052.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0052.png",
+      "sha256": "eacdb43d5e6e0fbfb8a03a6727580a25ac3a8606a2bba776db02428b4f0c9249"
+    },
+    {
+      "frame_index": 53,
+      "simulation_step": 530,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0053.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0053.png",
+      "sha256": "c7fc7a4bb4532ca072796f20550f09c05a2b516dd2676ffca7964961eee895ba"
+    },
+    {
+      "frame_index": 54,
+      "simulation_step": 540,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0054.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0054.png",
+      "sha256": "00d5c325f6dc824d489afbf605060bcab843151d8fb49f463eae275ed8fea7d3"
+    },
+    {
+      "frame_index": 55,
+      "simulation_step": 550,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0055.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0055.png",
+      "sha256": "bb0b248a125e92e04a0e830b4d91ba96a45be847f2a809c5a57873f14386791c"
+    },
+    {
+      "frame_index": 56,
+      "simulation_step": 560,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0056.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0056.png",
+      "sha256": "e43606ca4df1b2a6abf576800b732da42b89751f8b4581b13bb738ccac53e5f2"
+    },
+    {
+      "frame_index": 57,
+      "simulation_step": 570,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0057.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0057.png",
+      "sha256": "2878de123080e037848e8135d638383282bc1243347bf7d23ad3ca57d5ed34ce"
+    },
+    {
+      "frame_index": 58,
+      "simulation_step": 580,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0058.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0058.png",
+      "sha256": "c13678352a11c13accc2e955fb479cde3299736f01eca15e48da52842bf289c6"
+    },
+    {
+      "frame_index": 59,
+      "simulation_step": 590,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0059.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0059.png",
+      "sha256": "5dbeefd9de2709702dfd68670cab721b8a7911a672e620eb86010f913225d1da"
+    },
+    {
+      "frame_index": 60,
+      "simulation_step": 600,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0060.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0060.png",
+      "sha256": "feb46ba49907c0a45fc1971f8388e461f71fd45347a88aa41d5bbb5af131ae0c"
+    },
+    {
+      "frame_index": 61,
+      "simulation_step": 610,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0061.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0061.png",
+      "sha256": "536213b9862a1db87526f18f3c812ce6e33c5349d7d923f607f0ee3527253405"
+    },
+    {
+      "frame_index": 62,
+      "simulation_step": 620,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0062.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0062.png",
+      "sha256": "82a2129ee8dce67a14478e421ee44ff8af9b43eb24ec428cf4b38600d1c31223"
+    },
+    {
+      "frame_index": 63,
+      "simulation_step": 630,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0063.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0063.png",
+      "sha256": "8a9bcf6d880d4b7ab7f4b5c13683cf92a8a054f6110ff01e27d7a8b5176ce510"
+    },
+    {
+      "frame_index": 64,
+      "simulation_step": 640,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0064.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0064.png",
+      "sha256": "3c06df2b45fd14691facff031a13a1e16b53c7a518febf4e0ccabd7d83f0a79d"
+    },
+    {
+      "frame_index": 65,
+      "simulation_step": 650,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0065.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0065.png",
+      "sha256": "4749eca33a06f7fdafe163db54518e74f97bde084ab407ec49fab93790cb1a80"
+    },
+    {
+      "frame_index": 66,
+      "simulation_step": 660,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0066.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0066.png",
+      "sha256": "2257878a6bae7baac9ade16eef51c044304bc5ac3ee87ba506af6ca209875896"
+    },
+    {
+      "frame_index": 67,
+      "simulation_step": 670,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0067.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0067.png",
+      "sha256": "c0a164f0f9512296bf051d41611d23ec55bb67fb760f75e635793c5baa4749b3"
+    },
+    {
+      "frame_index": 68,
+      "simulation_step": 680,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0068.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0068.png",
+      "sha256": "2c39419082cc6f3eba7851eb3b394b59e248a846f0964a52c508fc1821159e4a"
+    },
+    {
+      "frame_index": 69,
+      "simulation_step": 690,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0069.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0069.png",
+      "sha256": "03af3201389fdc2c04915f63cab0470531877eab03b8d3bda42bb4b3cdc1eda4"
+    },
+    {
+      "frame_index": 70,
+      "simulation_step": 700,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0070.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0070.png",
+      "sha256": "144cbd08173bc2965bc27f25f4c28ef920e0a626562a24347a76ae115242bb88"
+    },
+    {
+      "frame_index": 71,
+      "simulation_step": 710,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0071.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0071.png",
+      "sha256": "5a66b897cf0a0ca6c0cabf3871ebeb6006ebeaa5ce3be385c02697786449f333"
+    },
+    {
+      "frame_index": 72,
+      "simulation_step": 720,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0072.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0072.png",
+      "sha256": "429a65b8510d9f2b28f98c9f70929d37d55640777ec0e3de94817605b8b3a546"
+    },
+    {
+      "frame_index": 73,
+      "simulation_step": 730,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0073.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0073.png",
+      "sha256": "18e99d545e3185d9191602b923caa96439ec1d8daae47a49c09574fc4121673d"
+    },
+    {
+      "frame_index": 74,
+      "simulation_step": 740,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0074.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0074.png",
+      "sha256": "5d606ee35e60745c2ff79edae9749cef0f3a79fafa2a76d6bc0870bbdf5d1b8c"
+    },
+    {
+      "frame_index": 75,
+      "simulation_step": 750,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0075.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0075.png",
+      "sha256": "b071514f3ace162228fbe00b3447468ac775c4b34614f2d310266dd27920c8db"
+    },
+    {
+      "frame_index": 76,
+      "simulation_step": 760,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0076.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0076.png",
+      "sha256": "2a65db4943a2f0af31a464975cd3e337f28178c0ceed93b880c3c2d58731e90c"
+    },
+    {
+      "frame_index": 77,
+      "simulation_step": 770,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0077.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0077.png",
+      "sha256": "b0e98d8af655bae109657f0e364af9e3e3e51c02c2b73f547ccfdcfe6bc1f75f"
+    },
+    {
+      "frame_index": 78,
+      "simulation_step": 780,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0078.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0078.png",
+      "sha256": "68bf6388415bf36a17f3d0fb45d560679efde1cfd7f75679eedb5dd6c18aefeb"
+    },
+    {
+      "frame_index": 79,
+      "simulation_step": 790,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0079.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0079.png",
+      "sha256": "7392dc5404eefac5ade7374497c56a4e3ff825c991be91c2d9e8bc0decd6a764"
+    },
+    {
+      "frame_index": 80,
+      "simulation_step": 800,
+      "source_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0080.png",
+      "reconstructed_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/frame_0080.png",
+      "sha256": "000d4f477aa5330753297f6e8de6a08d57f6e6e342d4e37504cacded7a00c444"
+    }
+  ]
+}

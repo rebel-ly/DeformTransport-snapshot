@@ -1,0 +1,92 @@
+{
+  "DT_TRANSPORT_VARIANT": "v3d",
+  "checkpoint": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/Wan-Move-14B-480P",
+  "command": [
+    "bash",
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172755__santa_v3d_contract_recovery/formal_run_corrected_v2_v3d.sh",
+    "0",
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA"
+  ],
+  "depth": {
+    "dtype": "float32",
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "sha256": "032d738bb2d01bbff88b78f63a2b56fa76c52d985caf3542c22f9dc573879ce1",
+    "shape": [
+      81,
+      1257
+    ]
+  },
+  "dtype": "bf16",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "1",
+    "DT_TRACK_DEPTH_PATH": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "DT_TRACK_IDS_PATH": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "DT_TRANSPORT_VARIANT": "v3d"
+  },
+  "environment_base": {
+    "DT_TRACK_DEPTH_PATH": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "DT_TRACK_IDS_PATH": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "DT_TRANSPORT_VARIANT": "v3d"
+  },
+  "execution_mode": "CROSS_DEVICE_PARALLEL",
+  "formal_track_count": 1257,
+  "frame_num": 81,
+  "gpu_physical_index": 1,
+  "gpu_uuid": "GPU-0e2857f8-18bc-0f5b-c1ff-5b67f892cd60",
+  "guidance_cfg": 5.0,
+  "material_ids": {
+    "dtype": "int64",
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+    "shape": [
+      1257
+    ]
+  },
+  "mp4_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA/santa_correct_v3d_seed000.mp4",
+  "output_dir": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA",
+  "prompt": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/prompt.txt",
+    "sha256": "6be4051b8f80209ab8b005969fb77112e357bfc39fd21e09ab70193b5cfe077c",
+    "text": "Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement."
+  },
+  "resolution": "832x480",
+  "run_id": "A",
+  "runner_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172755__santa_v3d_contract_recovery/formal_run_corrected_v2_v3d.sh",
+  "runner_sha256": "d04328094314cff752f8e6b82b16a77fe8c1f2dc8b1316b7e22fe473d8856147",
+  "sample_shift": 3.0,
+  "sample_steps": 40,
+  "scheduler": "unipc",
+  "seed": 0,
+  "source_image": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+    "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+    "source_provenance": "official Santa aligned final simulation resized input image; 480x832 source-domain image used by existing Wan-Move runner."
+  },
+  "source_sha256": {
+    "trajectory.py": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+    "wan_move.py": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857"
+  },
+  "start_time_utc": "2026-08-12T17:38:14.225299+00:00",
+  "tracks": {
+    "dtype": "float32",
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+    "sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+    "shape": [
+      1,
+      81,
+      1257,
+      2
+    ]
+  },
+  "visibility": {
+    "dtype": "bool",
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+    "sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+    "shape": [
+      1,
+      81,
+      1257
+    ]
+  },
+  "wan_move_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa"
+}

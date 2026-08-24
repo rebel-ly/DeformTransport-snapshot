@@ -1,0 +1,14 @@
+{
+  "status": "NOT_CONSTRUCTED",
+  "reason": "The supplied SHA-pinned evaluator has no external configuration or invocation parameter that can bind corrected-v2 N=1257 sidecars or DT_FULL. Constructing such a contract requires changing source-resident CASES/method_paths/expectations.",
+  "requested_binding": {
+    "eval_n": 1257,
+    "ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+    "tracks_sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+    "visibility_sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+    "rw_video_sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+    "dtfull_video_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935"
+  },
+  "evaluator_source_modification_required": true,
+  "evaluator_source_modified": false
+}

@@ -1,0 +1,114 @@
+--- /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_184615__soft_wan_weight_tolerance_patch/build_soft_wan_latent_artifact_before.py	2026-08-05 18:46:15.000000000 +0000
++++ scripts/build_soft_wan_latent_artifact.py	2026-08-05 18:46:28.000000000 +0000
+@@ -315,12 +315,36 @@
+             "soft Correct and Shuffled counts differ"
+         )
+ 
+-    if not torch.equal(
+-        soft_correct["transport_weight"],
+-        soft_shuffled["transport_weight"],
+-    ):
++    correct_transport_weight = soft_correct["transport_weight"]
++    shuffled_transport_weight = soft_shuffled["transport_weight"]
++
++    weight_absolute_difference = torch.abs(
++        correct_transport_weight
++        - shuffled_transport_weight
++    )
++
++    weight_max_abs_difference = float(
++        weight_absolute_difference.max()
++    )
++    weight_mean_abs_difference = float(
++        weight_absolute_difference.mean()
++    )
++
++    weights_allclose = bool(
++        torch.allclose(
++            correct_transport_weight,
++            shuffled_transport_weight,
++            atol=2e-4,
++            rtol=2e-4,
++        )
++    )
++
++    if not weights_allclose:
+         raise RuntimeError(
+-            "soft Correct and Shuffled weights differ"
++            "soft Correct and Shuffled weights are not numerically "
++            "equivalent: "
++            f"max_abs_difference={weight_max_abs_difference}, "
++            f"mean_abs_difference={weight_mean_abs_difference}"
+         )
+ 
+     if not torch.equal(
+@@ -333,7 +357,9 @@
+ 
+     raw_soft_mask = soft_correct["transport_mask"]
+     raw_soft_count = soft_correct["contribution_count"]
+-    transport_weight = soft_correct["transport_weight"]
++    # Geometry is shared between Correct and Shuffled. Use the Correct
++    # accumulation as the canonical spatial weight for both variants.
++    transport_weight = correct_transport_weight
+ 
+     if bool((hard_mask & ~raw_soft_mask).any()):
+         raise RuntimeError(
+@@ -350,6 +376,34 @@
+         )
+     )
+ 
++    # Diagnostic only: independently threshold the Shuffled accumulation.
++    # Correct and Shuffled still use the shared canonical gated_mask below,
++    # ensuring that feature identity is the only ablation variable.
++    shuffled_independent_gated_mask = (
++        hard_mask
++        | (
++            soft_only_mask
++            & (
++                shuffled_transport_weight
++                >= args.threshold
++            )
++        )
++    )
++
++    independent_gated_mask_equal = bool(
++        torch.equal(
++            gated_mask,
++            shuffled_independent_gated_mask,
++        )
++    )
++
++    independent_gated_mask_difference_cells = int(
++        (
++            gated_mask
++            != shuffled_independent_gated_mask
++        ).sum()
++    )
++
+     gated_count = torch.where(
+         gated_mask,
+         raw_soft_count,
+@@ -530,7 +584,22 @@
+         "fairness": {
+             "masks_equal": True,
+             "counts_equal": True,
+-            "weights_equal": True,
++            "weights_allclose": weights_allclose,
++            "weight_allclose_atol": 2e-4,
++            "weight_allclose_rtol": 2e-4,
++            "weight_max_abs_difference": (
++                weight_max_abs_difference
++            ),
++            "weight_mean_abs_difference": (
++                weight_mean_abs_difference
++            ),
++            "independent_gated_mask_equal": (
++                independent_gated_mask_equal
++            ),
++            "independent_gated_mask_difference_cells": (
++                independent_gated_mask_difference_cells
++            ),
++            "shared_canonical_gated_mask": True,
+             "valid_point_masks_equal": True,
+             "permutations_differ": bool(
+                 not torch.equal(

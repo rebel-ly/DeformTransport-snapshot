@@ -1,0 +1,5 @@
+# Install on top of the verified deformtransport-stage1 environment.
+# The VAE itself only needs einops; Hugging Face + Xet is used solely to fetch
+# the single 508 MB weight file without downloading the full Wan repository.
+einops==0.8.2
+huggingface_hub[hf_xet]==1.26.0

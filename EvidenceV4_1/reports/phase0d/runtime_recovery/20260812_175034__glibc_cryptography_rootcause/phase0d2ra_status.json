@@ -1,0 +1,16 @@
+{
+  "cryptography_rust_so": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so",
+  "cryptography_version": "50.0.0",
+  "dashscope_functionally_required_for_formal_run": false,
+  "dashscope_import_style": "UNCONDITIONAL",
+  "dashscope_version": "1.26.6",
+  "formal_prompt_extension_enabled": false,
+  "generation_rerun": false,
+  "launcher_exitcode_capture": "REQUIRES_FIX",
+  "local_compatible_cryptography_candidate": "NONE_FOUND_IN_BOUNDED_SEARCH",
+  "max_required_glibc": "2.28",
+  "phase": "Phase0D-2R-A",
+  "recommended_minimal_recovery": "R2",
+  "status": "ROOT_CAUSE_IDENTIFIED",
+  "system_glibc": "2.17"
+}

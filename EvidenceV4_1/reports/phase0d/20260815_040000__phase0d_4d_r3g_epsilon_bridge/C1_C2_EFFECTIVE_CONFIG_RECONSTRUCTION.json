@@ -1,0 +1,20 @@
+{
+  "common_fields_exact": true,
+  "only_intended_difference": "TRANSPORT_CARRIER_SET_K0_VS_K1257_CORRECT",
+  "c1_effective_k_evidence_level": "LAUNCH_ATTESTED",
+  "c2_effective_k_evidence_level": "LAUNCH_ATTESTED",
+  "c1_start_index_evidence_level": "RUNTIME_OBSERVED",
+  "c2_start_index_evidence_level": "LAUNCH_ATTESTED",
+  "shared_preview_tensor_sha256": "ed1fb8069bd65ce27edd825061943a414df7df14e33197ba771b987e9dcc4e14",
+  "shared_epsilon_tensor_sha256_runtime_audit": "0a71855c890fb782a642a1722043e64c8c8d243edc09a959365e6298fb15cfdd",
+  "start_index": 15,
+  "scheduler": "FlowUniPCMultistepScheduler",
+  "start_sigma": 0.8329627513885498,
+  "seed": 0,
+  "steps": 40,
+  "shift": 3.0,
+  "dtype": "bf16",
+  "transport_variant": "v3d",
+  "evaluation_n": 1257,
+  "scientific_results_inspected": false
+}

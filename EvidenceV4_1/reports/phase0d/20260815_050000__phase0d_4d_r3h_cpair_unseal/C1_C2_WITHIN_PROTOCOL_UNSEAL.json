@@ -1,0 +1,14 @@
+{
+  "c1_engineering": "PASS_NORMAL_COMPLETION",
+  "c2_engineering": "PASS_NORMAL_COMPLETION",
+  "c1_denoise_steps_runtime": "25/25",
+  "c2_denoise_steps_runtime": "25/25",
+  "runtime_step_count_match": true,
+  "material_ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "common_config_exact": true,
+  "only_intended_difference": "K0 vs Correct-K1257",
+  "within_protocol_validity": "PASS_LAUNCH_AND_RUNTIME_ATTESTED",
+  "within_protocol_result_seal": "OPEN",
+  "cross_protocol_result_seal": "CLOSED"
+}

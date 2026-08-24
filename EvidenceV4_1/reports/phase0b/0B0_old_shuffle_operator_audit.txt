@@ -1,0 +1,65 @@
+===== PHASE0B-0 OLD SHUFFLE OPERATOR AUDIT =====
+correct EXISTS = True PATH = /workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_material_tracks_correct.npy
+shuffled EXISTS = True PATH = /workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_material_tracks_identity_shuffled_seed0.npy
+perm EXISTS = True PATH = /workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_identity_shuffle_perm_seed0.npy
+vis_correct EXISTS = True PATH = /workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_material_visibility_correct.npy
+vis_shuffled EXISTS = True PATH = /workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_material_visibility_identity_shuffled_seed0.npy
+report EXISTS = True PATH = /workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/identity_shuffled_report.json
+
+===== SHAPES =====
+CORRECT_SHAPE = (1, 81, 1277, 2)
+SHUFFLED_SHAPE = (1, 81, 1277, 2)
+PERM_SHAPE = (1277,)
+VIS_CORRECT_SHAPE = (1, 81, 1277)
+VIS_SHUFFLED_SHAPE = (1, 81, 1277)
+
+===== PERMUTATION INVARIANTS =====
+N = 1277
+PERM_IS_1D = True
+PERM_LENGTH_EQ_N = True
+PERM_MIN = 0
+PERM_MAX = 1276
+PERM_IN_RANGE = True
+PERM_UNIQUE = True
+FIXED_POINT_COUNT = 0
+DERANGEMENT = True
+
+===== VISIBILITY =====
+VISIBILITY_EXACT_EQUAL = True
+VISIBILITY_MISMATCH_COUNT = 0
+
+===== TRACK SHUFFLE ALGEBRA =====
+shuffled == correct[:,:,perm,:] = False
+  mean_l2 = 158.06529235839844
+  max_l2 = 465.7418518066406
+shuffled == correct[:,:,inverse_perm,:] = False
+  mean_l2 = 159.98399353027344
+  max_l2 = 465.7418518066406
+
+===== CORRECT vs SHUFFLED RAW DIFFERENCE =====
+FRAME 0 nonzero= 1277 mean_l2= 153.6324462890625 max_l2= 353.8353271484375
+FRAME 1 nonzero= 0 mean_l2= 0.0 max_l2= 0.0
+FRAME 40 nonzero= 0 mean_l2= 0.0 max_l2= 0.0
+FRAME 80 nonzero= 0 mean_l2= 0.0 max_l2= 0.0
+
+===== LEGACY SHUFFLE REPORT =====
+{
+  "seed": 0,
+  "n_tracks": 1277,
+  "fixed_points": 0,
+  "source_coordinates_permuted_only": true,
+  "future_tracks_identical": true,
+  "visibility_identical": true,
+  "point_ids_unchanged": true
+}
+
+===== CORRECTED-V2 FORMAL INPUT =====
+santa_material_point_ids.npy EXISTS = True
+santa_material_source_vae_cell_ids.npy EXISTS = True
+santa_material_tracks_correct_raw_aligned.npy EXISTS = True
+santa_material_tracks_correct.npy EXISTS = True
+santa_material_visibility_correct.npy EXISTS = True
+FROZEN_CORRECTED_V2_CONTRACT.txt EXISTS = True
+report.json EXISTS = True
+
+===== END PHASE0B-0 OLD SHUFFLE OPERATOR AUDIT =====

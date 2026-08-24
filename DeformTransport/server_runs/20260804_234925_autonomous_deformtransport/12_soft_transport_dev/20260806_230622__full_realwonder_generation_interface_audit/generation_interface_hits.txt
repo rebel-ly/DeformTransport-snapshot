@@ -1,0 +1,1059 @@
+
+================================================================
+FILE: /workspace/DeformTransport/infer_sim.py
+================================================================
+     2	
+     3	Based on infer_flow.py with SDEdit support added. Loads simulation data
+     4	(structured noise, frames, masks) from a simulation output directory and
+     5	uses CausalInferencePipelineSDEdit for simulation-guided video generation.
+     6	
+     7	Example usage:
+     8	    python infer_sim.py \
+     9	        --checkpoint_path /path/to/model.pt \
+    10	        --sim_data_path result/tree/25-01_21-35-02/final_sim \
+    11	        --output_path ./output.mp4
+    12	"""
+    13	
+    14	import argparse
+    15	import os
+    16	from pathlib import Path
+    17	
+    18	import numpy as np
+    19	import torch
+    20	from einops import rearrange
+    21	from omegaconf import OmegaConf
+    22	from PIL import Image
+    23	import imageio
+    24	
+    25	from deform_transport.pipeline_integration import (
+    26	    load_precomputed_transport_latent,
+    27	    load_precomputed_transport_residual,
+    28	)
+    29	from vidgen import (
+    30	    WanImageEncoder,
+    31	    WanVideoVAE,
+    32	    WanVideoUnit_ImageEmbedderCLIP,
+    33	    WanVideoUnit_ImageEmbedderVAE,
+    34	    set_seed,
+    35	    apply_config_overrides,
+    36	    gpu,
+    37	    get_cuda_free_memory_gb,
+    38	    DynamicSwapInstaller,
+    39	    load_noise,
+    40	    load_first_frame,
+    41	    CausalInferencePipelineSDEdit
+    42	)
+    43	
+    44	def load_sim_frames(frames_dir, height=480, width=832):
+    45	    """Load simulation frames from a directory of PNGs.
+    46	
+    47	    Returns:
+    48	        Tensor of shape [1, C, T, H, W] normalized to [-1, 1].
+    49	    """
+    50	    frames_dir = Path(frames_dir)
+    51	    frame_files = sorted(frames_dir.glob("frame_*.png"))
+--
+    73	    Returns:
+    74	        Tensor of shape [1, target_frames, H, W] (bool).
+    75	    """
+    76	    masks = torch.load(mask_path, map_location="cpu", weights_only=True)  # [T_mask, H, W]
+    77	    T_mask = masks.shape[0]
+    78	    if T_mask != target_frames:
+    79	        # Nearest-neighbor temporal resize
+    80	        indices = torch.linspace(0, T_mask - 1, steps=target_frames).round().long().clamp(0, T_mask - 1)
+    81	        masks = masks[indices]
+    82	    return masks.unsqueeze(0)  # [1, T, H, W]
+    83	
+    84	
+    85	def main():
+    86	    parser = argparse.ArgumentParser(description="I2V Flow Inference with SDEdit from Simulation")
+    87	    parser.add_argument("--checkpoint_path", type=str, required=True, help="Path to the checkpoint file")
+    88	    parser.add_argument("--sim_data_path", type=str, required=True,
+    89	                        help="Path to simulation final_sim directory (contains noises.npy, frames/, masks, etc.)")
+    90	    parser.add_argument("--output_path", type=str, default="./output_sim.mp4", help="Output video path")
+    91	    parser.add_argument("--use_ema", action="store_true", help="Whether to use EMA parameters")
+    92	    parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    93	    parser.add_argument("--eval_degradation", type=float, default=0.5,
+    94	                        help="Degradation level for noise (0.0 = pure structured noise)")
+    95	    parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
+    96	    parser.add_argument(
+    97	        "--transport_latent_path",
+    98	        type=str,
+    99	        default=None,
+   100	        help=(
+   101	            "Optional VAE transport artifact produced by "
+   102	            "scripts/run_wan_vae_transport_probe.py"
+   103	        ),
+   104	    )
+   105	    parser.add_argument(
+   106	        "--transport_mode",
+   107	        choices=("correct", "shuffled", "flow", "blend"),
+   108	        default="correct",
+   109	        help="Which precomputed transport condition to use",
+   110	    )
+   111	    parser.add_argument(
+   112	        "--transport_injection_mode",
+   113	        choices=("replace", "inter_step_residual"),
+   114	        default="replace",
+   115	        help=(
+   116	            "replace preserves the existing precomputed-latent "
+   117	            "behavior; inter_step_residual keeps the fresh runtime "
+   118	            "sim_latent and injects an artifact-local residual "
+   119	            "between denoising steps"
+   120	        ),
+   121	    )
+   122	    parser.add_argument(
+   123	        "--transport_injection_scale",
+   124	        type=float,
+   125	        default=1.0,
+   126	        help="Scale applied to an inter-step transport residual",
+   127	    )
+   128	    parser.add_argument(
+   129	        "--transport_injection_step",
+   130	        type=int,
+   131	        default=0,
+   132	        help=(
+   133	            "Denoising-step index after which the residual is "
+   134	            "injected, before re-noising to the next step"
+   135	        ),
+   136	    )
+   137	
+   138	    args, additional_args = parser.parse_known_args()
+   139	
+   140	    if args.transport_injection_scale < 0:
+   141	        raise ValueError(
+   142	            "--transport_injection_scale must be nonnegative"
+   143	        )
+   144	
+   145	    if (
+   146	        args.transport_injection_mode
+   147	        == "inter_step_residual"
+   148	        and not args.transport_latent_path
+   149	    ):
+   150	        raise ValueError(
+   151	            "--transport_latent_path is required for "
+   152	            "inter_step_residual injection"
+   153	        )
+   154	
+   155	    device = torch.device("cuda")
+   156	    set_seed(args.seed)
+   157	
+   158	    print(f'Free VRAM {get_cuda_free_memory_gb(gpu)} GB')
+   159	    low_memory = get_cuda_free_memory_gb(gpu) < 40
+   160	
+   161	    torch.set_grad_enabled(False)
+   162	
+   163	    sim_data_path = Path(args.sim_data_path)
+   164	
+   165	    # -------------------------------------------------------------------------
+   166	    # Load simulation config for SDEdit parameters
+   167	    # -------------------------------------------------------------------------
+   168	    sim_config_path = sim_data_path / "config.yaml"
+   169	    sim_config = OmegaConf.load(sim_config_path)
+   170	    denoising_step_list = list(sim_config.denoising_step_list)
+   171	    mask_dropin_step = int(sim_config.mask_dropin_step)
+   172	    num_output_frames = int(sim_config.num_output_frames)
+   173	    print(f"Loaded from config.yaml: denoising_step_list={denoising_step_list}, mask_dropin_step={mask_dropin_step}, num_output_frames={num_output_frames}")
+   174	
+   175	    # -------------------------------------------------------------------------
+   176	    # Build config
+--
+   193	            "timestep_shift": 5.0,
+   194	        },
+   195	    }
+   196	    config = OmegaConf.create(DEFAULT_CONFIG)
+   197	    config = apply_config_overrides(config, additional_args)
+   198	
+   199	    # Create output directory
+   200	    output_dir = os.path.dirname(args.output_path)
+   201	    if output_dir:
+   202	        os.makedirs(output_dir, exist_ok=True)
+   203	
+   204	    # -------------------------------------------------------------------------
+   205	    # Initialize pipeline (SDEdit version)
+   206	    # -------------------------------------------------------------------------
+   207	    pipeline = CausalInferencePipelineSDEdit(config, device=device)
+   208	
+   209	    # Load checkpoint
+   210	    if args.checkpoint_path:
+   211	        state_dict = torch.load(args.checkpoint_path, map_location="cpu")
+   212	        key = 'generator_ema' if args.use_ema else 'generator'
+   213	        gen_state_dict = state_dict[key]
+   214	        try:
+   215	            pipeline.generator.load_state_dict(gen_state_dict)
+   216	        except:
+   217	            gen_state_dict = {k.replace('._fsdp_wrapped_module', ''): v for k, v in gen_state_dict.items()}
+   218	            pipeline.generator.load_state_dict(gen_state_dict)
+   219	
+   220	    pipeline = pipeline.to(dtype=torch.bfloat16)
+   221	    if low_memory:
+   222	        DynamicSwapInstaller.install_model(pipeline.text_encoder, device=gpu)
+   223	    else:
+   224	        pipeline.text_encoder.to(device=gpu)
+   225	    pipeline.generator.to(device=gpu)
+   226	    pipeline.vae.to(device=gpu)
+   227	
+   228	    # Setup I2V flow processors
+   229	    pipeline.processor_dtype = torch.float32
+   230	    pipeline.processor_device = gpu
+   231	    pipeline.processor_vae = WanVideoVAE().to(device=pipeline.processor_device, dtype=pipeline.processor_dtype)
+   232	    pipeline.processor_ienc = WanImageEncoder().to(device=pipeline.processor_device, dtype=pipeline.processor_dtype)
+   233	
+   234	    pipeline.processor_vae.requires_grad_(False)
+   235	    pipeline.processor_ienc.requires_grad_(False)
+   236	
+   237	    for p in pipeline.processor_vae.parameters():
+   238	        p.data = p.data.to(dtype=pipeline.processor_dtype)
+   239	    for b in pipeline.processor_vae.buffers():
+   240	        b.data = b.data.to(dtype=pipeline.processor_dtype)
+   241	
+--
+   289	            print(f"Warning: mask_dropin_step={mask_dropin_step} but mask file not found: {mask_file}")
+   290	            print("  Proceeding without mask dropin.")
+   291	
+   292	    # 6. Load franka/mesh masks (for weak sdedit on manipulator region)
+   293	    sim_franka_masks = None
+   294	    franka_mask_file = sim_data_path / "mesh_masks_downsampled.pt"
+   295	    if franka_mask_file.exists():
+   296	        franka_masks_raw = load_sim_masks(str(franka_mask_file), target_frames=num_output_frames)
+   297	        if franka_masks_raw.any():
+   298	            sim_franka_masks = franka_masks_raw.to(device=device)
+   299	            print(f"Loading franka masks from: {franka_mask_file}")
+   300	            print(f"  Franka mask shape: {sim_franka_masks.shape}")
+   301	        else:
+   302	            print(f"Franka masks are all False, skipping franka mask sdedit.")
+   303	
+   304	    # -------------------------------------------------------------------------
+   305	    # Prepare tensors
+   306	    # -------------------------------------------------------------------------
+   307	    structured_noise = noise_data['structured_noise'].unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+   308	    structured_noise_sde = noise_data.get('structured_noise_sde')
+   309	    if structured_noise_sde is not None:
+   310	        structured_noise_sde = structured_noise_sde.unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+   311	
+   312	    # Encode simulation frames to latent space for SDEdit
+   313	    sim_latent = None
+   314	    transport_residual = None
+   315	    if pipeline.sdedit:
+   316	        print("Encoding simulation frames to latent space...")
+   317	        sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
+   318	        sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
+   319	        sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+   320	        print(f"  sim_latent shape: {sim_latent.shape}")
+   321	
+   322	        if args.transport_latent_path:
+   323	            if args.transport_injection_mode == "replace":
+   324	                print(
+   325	                    f"Loading {args.transport_mode} transported "
+   326	                    "sim_latent from: "
+   327	                    f"{args.transport_latent_path}"
+   328	                )
+   329	                sim_latent = load_precomputed_transport_latent(
+   330	                    args.transport_latent_path,
+   331	                    mode=args.transport_mode,
+   332	                    reference_latent=sim_latent,
+   333	                )
+   334	                print(
+   335	                    "  transported sim_latent shape: "
+   336	                    f"{sim_latent.shape}"
+   337	                )
+   338	            else:
+   339	                print(
+   340	                    f"Loading {args.transport_mode} artifact-local "
+   341	                    "transport residual from: "
+   342	                    f"{args.transport_latent_path}"
+   343	                )
+   344	                transport_residual = (
+   345	                    load_precomputed_transport_residual(
+   346	                        args.transport_latent_path,
+   347	                        mode=args.transport_mode,
+   348	                        reference_latent=sim_latent,
+   349	                    )
+   350	                )
+   351	
+   352	                residual_float = transport_residual.to(
+   353	                    torch.float32
+   354	                )
+   355	
+   356	                print(
+   357	                    "  transport residual shape: "
+   358	                    f"{transport_residual.shape}"
+   359	                )
+   360	                print(
+   361	                    "  transport residual scale: "
+   362	                    f"{args.transport_injection_scale}"
+   363	                )
+   364	                print(
+   365	                    "  transport residual step: "
+   366	                    f"{args.transport_injection_step}"
+   367	                )
+   368	                print(
+   369	                    "  transport residual mean_abs: "
+   370	                    f"{float(residual_float.abs().mean()):.8f}"
+   371	                )
+   372	                print(
+   373	                    "  transport residual max_abs: "
+   374	                    f"{float(residual_float.abs().max()):.8f}"
+   375	                )
+   376	
+   377	        # Trim or pad sim_latent to match noise frames
+   378	        if sim_latent.shape[1] > num_output_frames:
+   379	            sim_latent = sim_latent[:, :num_output_frames]
+   380	        elif sim_latent.shape[1] < num_output_frames:
+   381	            # Pad by repeating last frame
+   382	            pad_size = num_output_frames - sim_latent.shape[1]
+   383	            sim_latent = torch.cat([
+   384	                sim_latent,
+   385	                sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
+   386	            ], dim=1)
+   387	        print(f"  sim_latent shape (after align): {sim_latent.shape}")
+   388	
+   389	    # Prepare batch for I2V processors
+   390	    pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+   391	    batch = {
+   392	        'input_image': input_image.unsqueeze(0),  # [1, C, H, W]
+   393	        'end_image': None,
+   394	        'height': 480,
+   395	        'width': 832,
+   396	        'num_frames': pixel_num_frames,
+   397	    }
+   398	
+   399	    # -------------------------------------------------------------------------
+   400	    # Generate video
+   401	    # -------------------------------------------------------------------------
+   402	    print("Generating video...")
+   403	    video, _ = pipeline.inference(
+   404	        noise=structured_noise,
+   405	        text_prompts=[prompt],
+   406	        return_latents=True,
+   407	        batch_sample=batch,
+   408	        sim_latent=sim_latent,
+   409	        sim_masks=sim_masks,
+   410	        sim_franka_masks=sim_franka_masks,
+   411	        transport_residual=transport_residual,
+   412	        transport_residual_scale=(
+   413	            args.transport_injection_scale
+   414	        ),
+   415	        transport_residual_step=(
+   416	            args.transport_injection_step
+   417	        ),
+   418	        low_memory=low_memory,
+   419	        device=device,
+   420	        structured_noise_sde=structured_noise_sde,
+   421	    )
+   422	
+   423	    # Process output
+   424	    video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+   425	    video = (255.0 * video[0]).to(torch.uint8)
+   426	
+   427	    # Clear VAE cache
+   428	    pipeline.vae.model.clear_cache()
+   429	
+   430	    # Save the video
+   431	    print(f"Saving video to: {args.output_path}")
+   432	    imageio.mimwrite(args.output_path, video.numpy(), fps=10)
+   433	    print("Done!")
+   434	
+   435	if __name__ == "__main__":
+   436	    main()
+
+================================================================
+FILE: /workspace/DeformTransport/deform_transport/pipeline_integration.py
+================================================================
+     1	"""Validated boundary for injecting precomputed transport into RealWonder."""
+     2	
+     3	from __future__ import annotations
+     4	
+     5	from pathlib import Path
+     6	from typing import Literal
+     7	
+     8	import torch
+     9	
+    10	
+    11	TransportCondition = Literal["correct", "shuffled", "flow", "blend"]
+    12	
+    13	_LATENT_KEYS = {
+    14	    "correct": "correct_fused_latent",
+    15	    "shuffled": "shuffled_fused_latent",
+    16	    "flow": "flow_fused_latent",
+    17	    "blend": "blend_fused_latent",
+    18	}
+    19	
+    20	_RAW_TRANSPORT_KEYS = {
+    21	    "correct": "correct_transported_latent",
+    22	    "shuffled": "shuffled_transported_latent",
+    23	}
+    24	
+    25	_EXPLICIT_RESIDUAL_KEYS = {
+    26	    "correct": "correct_transport_residual",
+    27	    "shuffled": "shuffled_transport_residual",
+    28	}
+    29	
+    30	
+    31	def load_precomputed_transport_residual(
+    32	    artifact_path: str | Path,
+    33	    *,
+    34	    mode: TransportCondition,
+    35	    reference_latent: torch.Tensor,
+    36	) -> torch.Tensor:
+    37	    """Load an artifact-local masked transport residual.
+    38	
+    39	    The residual is computed entirely inside the artifact:
+    40	
+    41	        transported_latent - artifact_target_latent
+    42	
+    43	    It is then moved to the device and dtype of the freshly encoded
+    44	    RealWonder reference latent. The artifact target is deliberately not
+    45	    assumed to be numerically identical to the runtime VAE encoding.
+    46	    """
+    47	
+    48	    if mode not in _RAW_TRANSPORT_KEYS:
+    49	        raise ValueError(
+    50	            "residual transport currently supports only "
+    51	            f"'correct' and 'shuffled', received: {mode}"
+    52	        )
+    53	
+    54	    if reference_latent.ndim != 5:
+    55	        raise ValueError(
+    56	            "reference_latent must have shape [B,T,C,H,W]"
+    57	        )
+    58	
+    59	    path = Path(artifact_path)
+    60	
+    61	    if not path.is_file():
+    62	        raise FileNotFoundError(path)
+    63	
+    64	    state = torch.load(
+    65	        path,
+--
+    75	    raw_key = _RAW_TRANSPORT_KEYS[mode]
+    76	
+    77	    transported = state.get(raw_key)
+    78	    target = state.get("target_latent")
+    79	
+    80	    for tensor, label in (
+    81	        (transported, raw_key),
+    82	        (target, "target_latent"),
+    83	    ):
+    84	        if not isinstance(tensor, torch.Tensor):
+    85	            raise ValueError(
+    86	                f"transport artifact is missing tensor {label!r}"
+    87	            )
+    88	
+    89	        if tensor.ndim != 5:
+    90	            raise ValueError(
+    91	                f"{label} must have shape [B,T,C,H,W]"
+    92	            )
+    93	
+    94	        if tuple(tensor.shape) != tuple(
+    95	            reference_latent.shape
+    96	        ):
+    97	            raise ValueError(
+    98	                f"{label} shape {tuple(tensor.shape)} does not "
+    99	                "match freshly encoded sim_latent "
+   100	                f"{tuple(reference_latent.shape)}"
+   101	            )
+   102	
+   103	        if (
+   104	            not tensor.dtype.is_floating_point
+   105	            or not bool(torch.isfinite(tensor).all())
+   106	        ):
+   107	            raise ValueError(
+   108	                f"{label} must be a finite floating-point tensor"
+   109	            )
+   110	
+   111	    if tuple(transported.shape) != tuple(target.shape):
+   112	        raise ValueError(
+   113	            "transported latent and target latent shapes differ"
+   114	        )
+   115	
+   116	    frame_count = transported.shape[1]
+   117	    height = transported.shape[3]
+   118	    width = transported.shape[4]
+   119	
+   120	    mask = state.get("transport_mask")
+   121	    count = state.get("contribution_count")
+   122	
+   123	    expected_mask_shape = (
+--
+   164	
+   165	    explicit_residual_key = (
+   166	        _EXPLICIT_RESIDUAL_KEYS[mode]
+   167	    )
+   168	
+   169	    explicit_residual = state.get(
+   170	        explicit_residual_key
+   171	    )
+   172	
+   173	    if explicit_residual is not None:
+   174	        if not isinstance(
+   175	            explicit_residual,
+   176	            torch.Tensor,
+   177	        ):
+   178	            raise ValueError(
+   179	                f"{explicit_residual_key} must be a tensor"
+   180	            )
+   181	
+   182	        if tuple(explicit_residual.shape) != tuple(
+   183	            reference_latent.shape
+   184	        ):
+   185	            raise ValueError(
+   186	                f"{explicit_residual_key} shape "
+   187	                f"{tuple(explicit_residual.shape)} does not "
+   188	                "match freshly encoded sim_latent "
+   189	                f"{tuple(reference_latent.shape)}"
+   190	            )
+   191	
+   192	        if (
+   193	            not explicit_residual.dtype.is_floating_point
+   194	            or not bool(
+   195	                torch.isfinite(
+   196	                    explicit_residual
+   197	                ).all()
+   198	            )
+   199	        ):
+   200	            raise ValueError(
+   201	                f"{explicit_residual_key} must be a "
+   202	                "finite floating-point tensor"
+   203	            )
+   204	
+   205	        residual = explicit_residual.to(
+   206	            torch.float32
+   207	        )
+   208	    else:
+   209	        # Backward-compatible path for historical artifacts.
+   210	        residual = (
+   211	            transported.to(torch.float32)
+   212	            - target.to(torch.float32)
+   213	        )
+   214	
+   215	    mask_5d = (
+   216	        mask.unsqueeze(0)
+   217	        .expand_as(residual)
+   218	    )
+   219	
+   220	    residual = torch.where(
+   221	        mask_5d,
+   222	        residual,
+   223	        torch.zeros_like(residual),
+   224	    )
+   225	
+   226	    if not bool(torch.isfinite(residual).all()):
+   227	        raise ValueError(
+   228	            "computed transport residual contains NaN or Inf"
+   229	        )
+   230	
+   231	    return residual.to(
+   232	        device=reference_latent.device,
+   233	        dtype=reference_latent.dtype,
+   234	    ).contiguous()
+   235	
+   236	
+   237	def load_precomputed_transport_latent(
+   238	    artifact_path: str | Path,
+   239	    *,
+   240	    mode: TransportCondition,
+   241	    reference_latent: torch.Tensor,
+   242	) -> torch.Tensor:
+   243	    """Load a fused latent and match the existing RealWonder ``sim_latent``.
+   244	
+   245	    The artifact is produced by ``run_wan_vae_transport_probe.py``. Requiring
+   246	    exact agreement with the freshly encoded reference prevents an artifact
+   247	    from a different case, frame count, resolution, or latent layout from
+   248	    silently entering the diffusion pipeline.
+   249	    """
+   250	
+   251	    if mode not in _LATENT_KEYS:
+   252	        raise ValueError(f"unsupported transport mode: {mode}")
+   253	    if reference_latent.ndim != 5:
+   254	        raise ValueError("reference_latent must have shape [B,T,C,H,W]")
+   255	
+   256	    path = Path(artifact_path)
+   257	    if not path.is_file():
+   258	        raise FileNotFoundError(path)
+   259	    state = torch.load(path, map_location="cpu", weights_only=True)
+   260	    if not isinstance(state, dict):
+   261	        raise ValueError("transport artifact must contain a dictionary")
+   262	
+   263	    key = _LATENT_KEYS[mode]
+   264	    selected = state.get(key)
+   265	    if not isinstance(selected, torch.Tensor):
+   266	        raise ValueError(f"transport artifact is missing tensor {key!r}")
+   267	    if selected.ndim != 5 or tuple(selected.shape) != tuple(reference_latent.shape):
+   268	        raise ValueError(
+   269	            f"{key} shape {tuple(selected.shape)} does not match freshly encoded "
+   270	            f"sim_latent {tuple(reference_latent.shape)}"
+   271	        )
+   272	    if not selected.dtype.is_floating_point or not bool(torch.isfinite(selected).all()):
+   273	        raise ValueError(f"{key} must be a finite floating-point tensor")
+   274	
+   275	    frame_count, height, width = selected.shape[1], selected.shape[3], selected.shape[4]
+   276	    mask = state.get("transport_mask")
+   277	    count = state.get("contribution_count")
+   278	    if not isinstance(mask, torch.Tensor) or tuple(mask.shape) != (
+   279	        frame_count,
+   280	        1,
+   281	        height,
+   282	        width,
+   283	    ):
+   284	        raise ValueError("transport_mask does not match the selected latent")
+   285	    if mask.dtype != torch.bool:
+   286	        raise ValueError("transport_mask must be boolean")
+   287	    if not isinstance(count, torch.Tensor) or tuple(count.shape) != tuple(mask.shape):
+   288	        raise ValueError("contribution_count does not match transport_mask")
+   289	    if count.dtype.is_floating_point or bool((count < 0).any()):
+   290	        raise ValueError("contribution_count must contain nonnegative integers")
+   291	    if not torch.equal(mask, count > 0):
+   292	        raise ValueError("transport_mask must equal contribution_count > 0")
+   293	
+   294	    return selected.to(
+
+================================================================
+FILE: /workspace/DeformTransport/vidgen/pipeline_sdedit.py
+================================================================
+     1	"""Causal inference pipeline with SDEdit support for simulation-guided video generation.
+     2	
+     3	Based on vidgen/pipeline.py (CausalInferencePipeline) with SDEdit logic from
+     4	causal_inference_sdedit.py. This file is kept separate to avoid modifying the
+     5	cleaned vidgen module.
+     6	"""
+     7	
+     8	from typing import List, Optional
+     9	import torch
+    10	
+    11	from vidgen.models import WanDiffusionWrapper, WanI2VDiffusionWrapper, WanTextEncoder, WanVAEWrapper
+    12	from vidgen.memory import gpu, get_cuda_free_memory_gb, move_model_to_device_with_memory_preservation
+    13	from vidgen.utils import extract_subdim
+    14	
+    15	
+    16	def apply_transport_residual(
+    17	    clean_latent: torch.Tensor,
+    18	    transport_residual: torch.Tensor,
+    19	    scale: float,
+    20	) -> torch.Tensor:
+    21	    """Add a transport residual without changing the input dtype."""
+    22	
+    23	    if tuple(clean_latent.shape) != tuple(
+    24	        transport_residual.shape
+    25	    ):
+    26	        raise ValueError(
+    27	            "clean latent and transport residual shapes differ"
+    28	        )
+    29	
+    30	    if scale < 0:
+    31	        raise ValueError(
+    32	            "transport residual scale must be nonnegative"
+    33	        )
+    34	
+    35	    if not bool(torch.isfinite(transport_residual).all()):
+    36	        raise ValueError(
+    37	            "transport residual contains NaN or Inf"
+    38	        )
+    39	
+    40	    if scale == 0:
+    41	        return clean_latent
+    42	
+    43	    return (
+    44	        clean_latent.to(torch.float32)
+    45	        + float(scale)
+    46	        * transport_residual.to(torch.float32)
+    47	    ).to(dtype=clean_latent.dtype)
+    48	
+    49	
+    50	class CausalInferencePipelineSDEdit(torch.nn.Module):
+    51	    """Pipeline for causal video generation inference with SDEdit support."""
+    52	
+    53	    def __init__(self, args, device, generator=None, text_encoder=None, vae=None,
+    54	                 use_separate_encode_vae=False):
+    55	        super().__init__()
+    56	
+    57	        if args.i2v_flow:
+    58	            self.i2v_flow = True
+    59	            Wrapper = WanI2VDiffusionWrapper
+    60	        else:
+    61	            self.i2v_flow = False
+    62	            Wrapper = WanDiffusionWrapper
+    63	
+    64	        # Initialize models
+    65	        self.generator = Wrapper(
+    66	            **getattr(args, "model_kwargs", {}), is_causal=True) if generator is None else generator
+    67	        self.text_encoder = WanTextEncoder() if text_encoder is None else text_encoder
+    68	        self.vae = WanVAEWrapper() if vae is None else vae
+    69	
+    70	        # Separate VAE for encoding sim_latents to avoid cache conflicts
+    71	        # with the decoder's streaming cache on self.vae
+    72	        if use_separate_encode_vae:
+    73	            self.encode_vae = WanVAEWrapper()
+    74	        else:
+    75	            self.encode_vae = self.vae
+    76	
+    77	        # Initialize causal hyperparameters
+    78	        self.scheduler = self.generator.get_scheduler()
+    79	        self.denoising_step_list = torch.tensor(args.denoising_step_list, dtype=torch.long)
+    80	
+    81	        # Detect SDEdit mode: if the first denoising step < total scheduler steps,
+    82	        # we start from a noised version of sim_latent instead of pure noise.
+    83	        if self.denoising_step_list[0] < len(self.scheduler.timesteps):
+    84	            self.sdedit = True
+    85	        else:
+    86	            self.sdedit = False
+    87	
+    88	        if args.warp_denoising_step:
+    89	            timesteps = torch.cat((self.scheduler.timesteps.cpu(), torch.tensor([0], dtype=torch.float32)))
+    90	            self.denoising_step_list = timesteps[1000 - self.denoising_step_list]
+    91	
+    92	        if self.sdedit:
+    93	            self.mask_dropin_step = getattr(args, "mask_dropin_step", -1)
+    94	            # Franka mask SDEdit: default to last denoising step (weak sdedit)
+    95	            self.franka_step = getattr(args, "franka_step", len(args.denoising_step_list) - 1)
+    96	        else:
+    97	            self.mask_dropin_step = -1
+    98	            self.franka_step = -1
+    99	
+   100	        self.num_transformer_blocks = 30
+   101	        self.frame_seq_length = 1560
+   102	        self.kv_cache1 = None
+   103	        self.args = args
+   104	        self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
+   105	        self.independent_first_frame = args.independent_first_frame
+   106	        self.local_attn_size = self.generator.model.local_attn_size
+   107	
+   108	        print(f"KV inference with {self.num_frame_per_block} frames per block")
+   109	        print(f"SDEdit enabled: {self.sdedit}")
+   110	        if self.sdedit:
+   111	            print(f"  mask_dropin_step: {self.mask_dropin_step}")
+   112	            # print(f"  franka_step: {self.franka_step}")
+   113	
+   114	        if self.num_frame_per_block > 1:
+   115	            self.generator.model.num_frame_per_block = self.num_frame_per_block
+   116	
+   117	    def inference(
+   118	        self,
+   119	        noise: torch.Tensor,
+   120	        text_prompts: List[str],
+   121	        initial_latent: Optional[torch.Tensor] = None,
+   122	        sim_latent: Optional[torch.Tensor] = None,
+   123	        sim_masks: Optional[torch.Tensor] = None,
+   124	        sim_franka_masks: Optional[torch.Tensor] = None,
+   125	        transport_residual: Optional[torch.Tensor] = None,
+   126	        transport_residual_scale: float = 0.0,
+   127	        transport_residual_step: int = 0,
+   128	        return_latents: bool = False,
+   129	        batch_sample=None,
+   130	        profile: bool = False,
+   131	        low_memory: bool = False,
+   132	        skip_decoding: bool = False,
+   133	        structured_noise_sde: Optional[torch.Tensor] = None,
+   134	        device=None,
+   135	    ) -> torch.Tensor:
+   136	        """Perform causal video generation inference with optional SDEdit.
+   137	
+   138	        Args:
+   139	            noise: Input noise [B, T, C, H, W].
+   140	            text_prompts: List of text prompts.
+   141	            initial_latent: Optional initial latent for I2V.
+   142	            sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+   143	            sim_masks: Object masks [B, T, H, W] (True = object region to keep generated).
+   144	            sim_franka_masks: Franka/mesh masks [B, T, H, W] (True = franka region, weak sdedit).
+   145	            transport_residual: Artifact-local masked latent residual [B,T,C,H,W].
+   146	            transport_residual_scale: Residual strength.
+   147	            transport_residual_step: Step index after which to inject the residual.
+   148	            return_latents: Whether to return latents alongside decoded video.
+   149	            batch_sample: Batch dict for processor conditioning.
+   150	            structured_noise_sde: Deterministic SDE noise from simulation.
+   151	            device: Device to use.
+   152	        """
+   153	        batch_size, num_frames, num_channels, height, width = noise.shape
+   154	
+   155	        if not self.independent_first_frame or (self.independent_first_frame and initial_latent is not None):
+   156	            assert num_frames % self.num_frame_per_block == 0
+   157	            num_blocks = num_frames // self.num_frame_per_block
+   158	        else:
+   159	            assert (num_frames - 1) % self.num_frame_per_block == 0
+   160	            num_blocks = (num_frames - 1) // self.num_frame_per_block
+   161	
+   162	        num_input_frames = initial_latent.shape[1] if initial_latent is not None else 0
+   163	        num_output_frames = num_frames + num_input_frames
+   164	
+   165	        # Text encoding
+   166	        conditional_dict = self.text_encoder(text_prompts=text_prompts)
+   167	
+   168	        # Process additional conditioning (I2V flow processors)
+   169	        if hasattr(self, "processors"):
+   170	            for unit in self.processors:
+   171	                input_data = {"device": device, "torch_dtype": self.processor_dtype}
+--
+   202	            init_start.record()
+   203	
+   204	        # Initialize KV cache
+   205	        if self.kv_cache1 is None:
+   206	            self._initialize_kv_cache(batch_size=batch_size, dtype=noise.dtype, device=noise.device)
+   207	            self._initialize_crossattn_cache(batch_size=batch_size, dtype=noise.dtype, device=noise.device)
+   208	        else:
+   209	            for block_index in range(self.num_transformer_blocks):
+   210	                self.crossattn_cache[block_index]["is_init"] = False
+   211	            for block_index in range(len(self.kv_cache1)):
+   212	                self.kv_cache1[block_index]["global_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+   213	                self.kv_cache1[block_index]["local_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+   214	
+   215	        ############################################################
+   216	        ########################## SDEdit ##########################
+   217	        bg_noise = None
+   218	        bg_noise_franka = None
+   219	        use_franka_sdedit = (
+   220	            self.franka_step >= 0
+   221	            and sim_franka_masks is not None
+   222	            and sim_franka_masks.any()
+   223	        )
+   224	
+   225	        if self.sdedit:
+   226	            assert sim_latent is not None, "sim_latent is required for SDEdit mode"
+   227	            assert noise.shape == sim_latent.shape, (
+   228	                f"noise shape {noise.shape} != sim_latent shape {sim_latent.shape}"
+   229	            )
+   230	
+   231	            if transport_residual is not None:
+   232	                if tuple(transport_residual.shape) != tuple(
+   233	                    sim_latent.shape
+   234	                ):
+   235	                    raise ValueError(
+   236	                        "transport_residual shape "
+   237	                        f"{tuple(transport_residual.shape)} "
+   238	                        "does not match sim_latent "
+   239	                        f"{tuple(sim_latent.shape)}"
+   240	                    )
+   241	
+   242	                if not bool(
+   243	                    torch.isfinite(
+   244	                        transport_residual
+   245	                    ).all()
+   246	                ):
+   247	                    raise ValueError(
+   248	                        "transport_residual contains NaN or Inf"
+   249	                    )
+   250	
+   251	                if transport_residual_scale < 0:
+   252	                    raise ValueError(
+   253	                        "transport_residual_scale must be "
+   254	                        "nonnegative"
+   255	                    )
+   256	
+   257	                if not (
+   258	                    0
+   259	                    <= transport_residual_step
+   260	                    < len(self.denoising_step_list) - 1
+   261	                ):
+   262	                    raise ValueError(
+   263	                        "transport_residual_step must identify "
+   264	                        "a denoising step that has a following step"
+   265	                    )
+   266	
+   267	            # Add noise to simulated latent at the first denoising step
+   268	            sdedit_dropin_step = self.denoising_step_list[0]
+   269	            noise = self.scheduler.add_noise(
+   270	                sim_latent.flatten(0, 1),
+   271	                noise.flatten(0, 1),
+   272	                sdedit_dropin_step * torch.ones(
+   273	                    [batch_size * noise.size(1)], device=noise.device, dtype=torch.long
+   274	                )
+   275	            ).unflatten(0, noise.shape[:2])
+   276	
+   277	            # Prepare background noise for mask dropin
+   278	            if self.mask_dropin_step > 0:
+   279	                mask_dropin_step_diffusion = self.denoising_step_list[self.mask_dropin_step]
+   280	                bg_noise = self.scheduler.add_noise(
+   281	                    sim_latent.flatten(0, 1),
+   282	                    noise.flatten(0, 1),
+   283	                    mask_dropin_step_diffusion * torch.ones(
+   284	                        [batch_size * noise.size(1)], device=noise.device, dtype=torch.long
+   285	                    )
+   286	                ).unflatten(0, noise.shape[:2])
+   287	
+   288	            # Prepare franka mask background noise (weak sdedit at a late step)
+   289	            if use_franka_sdedit and self.franka_step < len(self.denoising_step_list):
+   290	                franka_step_diffusion = self.denoising_step_list[self.franka_step]
+   291	                bg_noise_franka = self.scheduler.add_noise(
+   292	                    sim_latent.flatten(0, 1),
+   293	                    noise.flatten(0, 1),
+   294	                    franka_step_diffusion * torch.ones(
+   295	                        [batch_size * noise.size(1)], device=noise.device, dtype=torch.long
+   296	                    )
+   297	                ).unflatten(0, noise.shape[:2])
+   298	        ############################################################
+   299	
+   300	        # Cache context feature
+   301	        current_start_frame = 0
+   302	        if initial_latent is not None:
+   303	            timestep = torch.ones([batch_size, 1], device=noise.device, dtype=torch.int64) * 0
+   304	            if self.independent_first_frame:
+   305	                assert (num_input_frames - 1) % self.num_frame_per_block == 0
+   306	                num_input_blocks = (num_input_frames - 1) // self.num_frame_per_block
+   307	                output[:, :1] = initial_latent[:, :1]
+   308	                self.generator(
+   309	                    noisy_image_or_video=initial_latent[:, :1],
+   310	                    conditional_dict=conditional_dict,
+   311	                    timestep=timestep * 0,
+   312	                    kv_cache=self.kv_cache1,
+   313	                    crossattn_cache=self.crossattn_cache,
+   314	                    current_start=current_start_frame * self.frame_seq_length,
+   315	                )
+   316	                current_start_frame += 1
+--
+   350	
+   351	            noisy_input = noise[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   352	            if full_y is not None:
+   353	                curr_y = full_y[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   354	
+   355	            # Prepare mask/background for this block
+   356	            bg_noisy_input = None
+   357	            mask_current = None
+   358	            bg_noisy_input_franka = None
+   359	            mask_current_franka = None
+   360	
+   361	            if self.sdedit and self.mask_dropin_step > 0 and bg_noise is not None:
+   362	                bg_noisy_input = bg_noise[
+   363	                    :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   364	                if sim_masks is not None:
+   365	                    mask_current = sim_masks[
+   366	                        :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   367	
+   368	            if use_franka_sdedit and bg_noise_franka is not None:
+   369	                bg_noisy_input_franka = bg_noise_franka[
+   370	                    :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   371	                mask_current_franka = sim_franka_masks[
+   372	                    :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   373	
+   374	            transport_residual_current = None
+   375	
+   376	            if transport_residual is not None:
+   377	                residual_start = (
+   378	                    current_start_frame
+   379	                    - num_input_frames
+   380	                )
+   381	                residual_end = (
+   382	                    residual_start
+   383	                    + current_num_frames
+   384	                )
+   385	                transport_residual_current = (
+   386	                    transport_residual[
+   387	                        :,
+   388	                        residual_start:residual_end,
+   389	                    ]
+   390	                )
+   391	
+   392	            # Spatial denoising loop
+   393	            for index, current_timestep in enumerate(self.denoising_step_list):
+   394	                print(f"current_timestep: {current_timestep}")
+   395	                timestep = torch.ones([batch_size, current_num_frames], device=noise.device, dtype=torch.int64) * current_timestep
+   396	
+   397	                # Mask drop-in: replace background with sim-noised latent
+   398	                if (
+   399	                    self.mask_dropin_step > 0
+   400	                    and self.mask_dropin_step == index
+   401	                    and mask_current is not None
+   402	                    and bg_noisy_input is not None
+   403	                ):
+   404	                    # mask_current is True for object region (keep generated),
+   405	                    # False for background (replace with simulation)
+   406	                    noisy_input = torch.where(mask_current.unsqueeze(2), noisy_input, bg_noisy_input)
+   407	
+   408	                # Franka mask drop-in: where franka mask is True, replace with
+   409	                # sim-noised latent (weak sdedit to keep structure close to simulation)
+   410	                if (
+   411	                    use_franka_sdedit
+   412	                    and self.franka_step == index
+   413	                    and mask_current_franka is not None
+   414	                    and bg_noisy_input_franka is not None
+   415	                ):
+   416	                    noisy_input = torch.where(mask_current_franka.unsqueeze(2), bg_noisy_input_franka, noisy_input)
+   417	
+   418	                if index < len(self.denoising_step_list) - 1:
+   419	                    _, denoised_pred = self.generator(
+   420	                        noisy_image_or_video=noisy_input,
+   421	                        conditional_dict=conditional_dict,
+   422	                        curr_y=curr_y,
+   423	                        timestep=timestep,
+   424	                        kv_cache=self.kv_cache1,
+   425	                        crossattn_cache=self.crossattn_cache,
+   426	                        current_start=current_start_frame * self.frame_seq_length
+   427	                    )
+   428	
+   429	                    if (
+   430	                        transport_residual_current
+   431	                        is not None
+   432	                        and index
+   433	                        == transport_residual_step
+   434	                        and transport_residual_scale != 0
+   435	                    ):
+   436	                        print(
+   437	                            "Applying inter-step transport "
+   438	                            f"residual: block_start="
+   439	                            f"{current_start_frame}, "
+   440	                            f"step_index={index}, "
+   441	                            f"scale="
+   442	                            f"{transport_residual_scale}"
+   443	                        )
+   444	
+   445	                        denoised_pred = (
+   446	                            apply_transport_residual(
+   447	                                denoised_pred,
+   448	                                transport_residual_current,
+   449	                                transport_residual_scale,
+   450	                            )
+   451	                        )
+   452	
+   453	                    next_timestep = self.denoising_step_list[index + 1]
+   454	                    if structured_noise_sde is not None:
+   455	                        sde_noise = extract_subdim(structured_noise_sde, 16, return_complement=False, channel_dim=2)
+   456	                        sde_noise = sde_noise[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   457	                    else:
+   458	                        sde_noise = torch.randn_like(noisy_input)
+   459	                    noisy_input = self.scheduler.add_noise(
+   460	                        denoised_pred.flatten(0, 1),
+   461	                        sde_noise.flatten(0, 1),
+   462	                        next_timestep * torch.ones([batch_size * current_num_frames], device=noise.device, dtype=torch.long)
+   463	                    ).unflatten(0, denoised_pred.shape[:2])
+   464	                else:
+   465	                    _, denoised_pred = self.generator(
+   466	                        noisy_image_or_video=noisy_input,
+   467	                        conditional_dict=conditional_dict,
+   468	                        curr_y=curr_y,
+   469	                        timestep=timestep,
+   470	                        kv_cache=self.kv_cache1,
+   471	                        crossattn_cache=self.crossattn_cache,
+   472	                        current_start=current_start_frame * self.frame_seq_length
+   473	                    )
+   474	
+   475	            # Record output
+   476	            output[:, current_start_frame:current_start_frame + current_num_frames] = denoised_pred
+   477	            if full_y is not None:
+   478	                curr_y = full_y[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+   479	
+   480	            # Update KV cache with clean context
+   481	            context_timestep = torch.ones_like(timestep) * self.args.context_noise
+   482	            self.generator(
+   483	                noisy_image_or_video=denoised_pred,
+   484	                conditional_dict=conditional_dict,
+   485	                curr_y=curr_y,
+   486	                timestep=context_timestep,
+   487	                kv_cache=self.kv_cache1,
+   488	                crossattn_cache=self.crossattn_cache,
+   489	                current_start=current_start_frame * self.frame_seq_length,
+   490	            )
+   491	
+   492	            if profile:
+   493	                block_end.record()
+   494	                torch.cuda.synchronize()
+   495	                block_times.append(block_start.elapsed_time(block_end))
+   496	
+   497	            current_start_frame += current_num_frames
+   498	
+   499	        if profile:
+   500	            diffusion_end.record()
+   501	            torch.cuda.synchronize()
+   502	            diffusion_time = diffusion_start.elapsed_time(diffusion_end)
+   503	            init_time = init_start.elapsed_time(init_end)
+   504	            vae_start.record()
+   505	
+   506	        # Decode output
+   507	        video = None

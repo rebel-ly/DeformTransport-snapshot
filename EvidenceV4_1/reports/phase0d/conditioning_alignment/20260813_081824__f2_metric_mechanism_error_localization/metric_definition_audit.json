@@ -1,0 +1,31 @@
+{
+  "evaluator": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "TC_MAR_AVAILABLE": true,
+  "TC_ME_AVAILABLE": true,
+  "TC_CDE_AVAILABLE": false,
+  "TC_MAR": {
+    "per_sample_unit": "carrier mean across valid anchors",
+    "patch_size": "8x8 bilinear; offsets -3.5..3.5",
+    "color_space": [
+      "CIELAB patch mean Euclidean distance",
+      "RGB patch L1 mean"
+    ],
+    "aggregation": "per-anchor patch error -> per-carrier mean -> carrier mean/median/p95",
+    "visibility": "corrected-v2 visibility at anchor AND valid source/future bounds/finite coordinates",
+    "timeline": "anchors 4,8,...,80",
+    "coordinate_mapping": "source 480x832; future evaluator 464x832; x identity, y*=464/480",
+    "direction": "lower_is_better"
+  },
+  "TC_ME": {
+    "formal_per_sample_unit": "transition mean EPE across supported carriers",
+    "expanded_diagnostic_unit": "per-transition/per-carrier EPE",
+    "EPE": "L2 norm of RAFT-predicted flow minus corrected-v2 reference displacement/2 at carrier center/2",
+    "flow_source": "torchvision RAFT Large C_T_SKHT_V2 cached weights; adjacent RGB frames resized area to 240x416; bilinear flow sample",
+    "aggregation": "per-carrier EPE -> transition mean -> 80-transition mean/median/p95",
+    "visibility_filtering": "visible and finite at both adjacent frames; inbound 240x416 centers",
+    "timeline": "transitions 0..79",
+    "direction": "lower_is_better"
+  },
+  "formulas_changed": false
+}

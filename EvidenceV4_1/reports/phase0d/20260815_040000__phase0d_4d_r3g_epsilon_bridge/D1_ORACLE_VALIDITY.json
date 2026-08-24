@@ -1,0 +1,10 @@
+{
+  "actual_sigma_index0": 0.9996664524078369,
+  "actual_timestep_index0": 999,
+  "d1_signal_coeff_at_index0": 0.00033354759216308594,
+  "sigma0_equals_one_exactly": false,
+  "d1_test_design_validity": "FAIL_FALSE_SIGMA0_EQUALS_ONE_PREMISE",
+  "d1_canonical_bridge_oracle": "INVALIDATED",
+  "d1_canonical_bridge_fail_reclassified": "INVALID_EXACT_ORACLE_NONZERO_PREVIEW_COEFFICIENT",
+  "basis": "CURRENT formal FlowUniPCMultistepScheduler runtime-equivalent 40-step shift=3 dump; no historical hand-derived schedule used."
+}

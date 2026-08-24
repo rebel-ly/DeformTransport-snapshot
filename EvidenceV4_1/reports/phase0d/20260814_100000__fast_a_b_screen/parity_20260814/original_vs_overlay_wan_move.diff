@@ -1,0 +1,48 @@
+--- /mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/wan_move.py	2026-08-11 10:57:06.000000000 +0800
++++ experimental/20260814__wanmove_preview_sdedit_overlay/wan/wan_move.py	2026-08-14 13:00:51.000000000 +0800
+@@ -146,7 +146,10 @@
+                  n_prompt="",
+                  seed=-1,
+                  offload_model=True,
+-                 eval_bench=True):
++                 eval_bench=True,
++                 preview_latent=None,
++                 initial_epsilon=None,
++                 start_index=None):
+         r"""
+         Generates video frames from input image and text prompt using diffusion process.
+ 
+@@ -234,6 +237,15 @@
+             generator=seed_g,
+             device=self.device)
+ 
++        # Experimental opt-in Preview-SDEdit path; unset arguments preserve the original branch.
++        if (preview_latent is None) != (start_index is None):
++            raise ValueError("preview_latent and start_index must be supplied together")
++        if initial_epsilon is not None:
++            initial_epsilon = initial_epsilon.to(self.device, dtype=torch.float32)
++            if tuple(initial_epsilon.shape) != tuple(noise.shape):
++                raise ValueError("initial_epsilon shape is incompatible with formal noise shape")
++            noise = initial_epsilon
++
+         msk = torch.ones(1, 81, lat_h, lat_w, device=self.device)
+         msk[:, 1:] = 0
+         msk = torch.concat([
+@@ -300,6 +312,17 @@
+                 sample_scheduler.set_timesteps(
+                     sampling_steps, device=self.device, shift=shift)
+                 timesteps = sample_scheduler.timesteps # torch.Size([40])
++                if preview_latent is not None:
++                    if tuple(preview_latent.shape) != tuple(noise.shape):
++                        raise ValueError("preview_latent shape is incompatible with formal noise shape")
++                    if not 0 <= start_index < len(timesteps):
++                        raise ValueError("start_index is outside the formal schedule")
++                    sample_scheduler.set_begin_index(start_index)
++                    latent_preview = preview_latent.to(self.device, dtype=torch.float32)
++                    noise = sample_scheduler.add_noise(
++                        latent_preview.unsqueeze(0), noise.unsqueeze(0),
++                        timesteps[start_index].reshape(1).to(torch.int64))[0]
++                    timesteps = timesteps[start_index:]
+             elif sample_solver == 'dpm++':
+                 sample_scheduler = FlowDPMSolverMultistepScheduler(
+                     num_train_timesteps=self.num_train_timesteps,

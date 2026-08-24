@@ -1,0 +1,8 @@
+{
+  "candidate_evaluator": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py", "sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "evaluator_video_domain": "464x832 RGB (H x W); eval_v3.py:260-282 converts only 480x832 inputs by bicubic resize to 464x832; otherwise asserts 464x832.",
+  "track_to_eval_mapping": "eval_v3.py:956-965 preserves x and applies y'=y*(464/480).", "patch_domain": "8x8, bilinear offsets -3.5..+3.5 in evaluator RGB domain (PROTOCOL_FROZEN.txt).",
+  "n1277_formal_path_hits": 2, "n1277_hits": ["eval_v3.py CASES.santa expect.n=1277", "run_v3_joint_eval.sh CASES.santa expect.n=1277"],
+  "corrected_v2_compatible": false, "evaluator_compatibility": "UNRESOLVED_NEEDS_NEW_WRAPPER", "evaluation_domain_resolved": false,
+  "reason": "The frozen evaluator asserts 1277 whereas the formal corrected-v2 set is 1257. No evaluator was run or modified."
+}

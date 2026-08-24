@@ -1,0 +1,1 @@
+# Phase0C-1 executed from this frozen audit harness; see operator_structure_audit.json and PHASE0C1_SUMMARY.md.\n

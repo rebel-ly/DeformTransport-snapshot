@@ -1,0 +1,129 @@
+{
+  "case": "santa",
+  "metric_name": "TC-ME: Track-Conditioned Motion Error",
+  "reference": "persistent material trajectory projected displacement; NOT simulation-RAFT flow",
+  "protocol": {
+    "frame_alignment": "frame-index",
+    "generated_domain": "832x464",
+    "raft_input": "416x240",
+    "realwonder_mapping": "832x480 -> bicubic 832x464 -> area 416x240",
+    "wanmove_mapping": "832x464 -> area 416x240",
+    "track_mapping": "x_raft=x_480*0.5; y_raft=y_480*0.5",
+    "reference_displacement": "(P[t+1]-P[t])*0.5",
+    "sampling": "bilinear RAFT-flow sampling at true source material point",
+    "validity": "visibility[t] AND visibility[t+1]",
+    "bootstrap": {
+      "unit": "transition",
+      "n_transitions": 80,
+      "resamples": 10000,
+      "seed": 0
+    }
+  },
+  "selected_tracks": 1277,
+  "visible_tracks_per_transition": {
+    "min": 1277,
+    "max": 1277,
+    "mean": 1277.0
+  },
+  "methods": {
+    "rw": {
+      "transition_level_epe": {
+        "n": 80,
+        "mean": 0.5621128710918128,
+        "median": 0.44823676347732544,
+        "p95": 1.1949747681617735
+      },
+      "transition_level_magnitude_error": {
+        "n": 80,
+        "mean": 0.4842569137923419,
+        "median": 0.38208432495594025,
+        "p95": 1.1533522844314574
+      },
+      "pooled_track_transition_epe": {
+        "n": 102160,
+        "mean": 0.5621128699325006,
+        "median": 0.3608027249574661,
+        "p95": 1.7805326759815217
+      },
+      "pooled_track_transition_magnitude_error": {
+        "n": 102160,
+        "mean": 0.4842569086729648,
+        "median": 0.25850194692611694,
+        "p95": 1.6921535372734064
+      }
+    },
+    "correct": {
+      "transition_level_epe": {
+        "n": 80,
+        "mean": 0.6146068110130727,
+        "median": 0.5576924085617065,
+        "p95": 1.1723814427852626
+      },
+      "transition_level_magnitude_error": {
+        "n": 80,
+        "mean": 0.5738116198219358,
+        "median": 0.5111661553382874,
+        "p95": 1.059140479564666
+      },
+      "pooled_track_transition_epe": {
+        "n": 102160,
+        "mean": 0.6146068115064711,
+        "median": 0.3693994879722595,
+        "p95": 1.9983187794685302
+      },
+      "pooled_track_transition_magnitude_error": {
+        "n": 102160,
+        "mean": 0.5738116165343319,
+        "median": 0.3207145035266876,
+        "p95": 1.9542221784591665
+      }
+    },
+    "shuffled": {
+      "transition_level_epe": {
+        "n": 80,
+        "mean": 0.5682743184268475,
+        "median": 0.468198299407959,
+        "p95": 1.6857228100299835
+      },
+      "transition_level_magnitude_error": {
+        "n": 80,
+        "mean": 0.5226123647764325,
+        "median": 0.41297300159931183,
+        "p95": 1.5258082807064055
+      },
+      "pooled_track_transition_epe": {
+        "n": 102160,
+        "mean": 0.5682743164632346,
+        "median": 0.315068781375885,
+        "p95": 1.9062736272811827
+      },
+      "pooled_track_transition_magnitude_error": {
+        "n": 102160,
+        "mean": 0.5226123613459274,
+        "median": 0.2668616473674774,
+        "p95": 1.8076718270778656
+      }
+    }
+  },
+  "system_test": {
+    "definition": "RealWonder mean TC-ME - Correct mean TC-ME per transition; positive means Correct better",
+    "paired_mean_difference": -0.05249393992125988,
+    "paired_median_difference": -0.018666714429855347,
+    "fraction_rw_worse_than_correct": 0.4375,
+    "bootstrap_95_ci": [
+      -0.11809360251296312,
+      0.006257420598994917
+    ],
+    "decision": "TIE"
+  },
+  "correct_vs_shuffled": {
+    "definition": "Shuffled - Correct per-transition mean TC-ME",
+    "paired_mean_difference": -0.04633249258622527,
+    "paired_median_difference": -0.05222766101360321,
+    "fraction_shuffled_worse": 0.15,
+    "bootstrap_95_ci": [
+      -0.09733178510796278,
+      0.0002776258299126951
+    ]
+  }
+}

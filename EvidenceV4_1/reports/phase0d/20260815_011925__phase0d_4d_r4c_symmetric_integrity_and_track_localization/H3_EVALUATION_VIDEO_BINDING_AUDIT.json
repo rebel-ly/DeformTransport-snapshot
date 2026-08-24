@@ -1,0 +1,48 @@
+{
+  "H3_SEED0": "PASS",
+  "H3_SEED1": "PASS",
+  "arms": {
+    "seed0_C1": {
+      "accepted_raw_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_050000__phase0d_4d_r3h_cpair_unseal/C1_tcme_primary.json",
+      "accepted_video_sha256": "23d88d8e7b261869bd10ee0ed74b6a4f1ace4feca7f524962e3d64e0d7b2fa93",
+      "actual_sha256": "23d88d8e7b261869bd10ee0ed74b6a4f1ace4feca7f524962e3d64e0d7b2fa93",
+      "binding": "PASS",
+      "generation_video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/c1_gpu1/c1_provisional_k0_seed000.mp4"
+    },
+    "seed0_C2": {
+      "accepted_raw_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_050000__phase0d_4d_r3h_cpair_unseal/C2_tcme_primary.json",
+      "accepted_video_sha256": "d1de650b0c2b2a02db54176d55ac04f661dfecd03a201d2dbfecb07f79c78dbf",
+      "actual_sha256": "d1de650b0c2b2a02db54176d55ac04f661dfecd03a201d2dbfecb07f79c78dbf",
+      "binding": "PASS",
+      "generation_video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/c2_gpu0/c2_provisional_correct_v3d_seed000.mp4"
+    },
+    "seed0_CS": {
+      "accepted_raw_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_050000__phase0d_4d_r3h_cpair_unseal/CS_tcme_primary.json",
+      "accepted_video_sha256": "2c38e1308f30aff23f85b40035d930f20d8fde91d483da7cc756eef4fa5d812e",
+      "actual_sha256": "2c38e1308f30aff23f85b40035d930f20d8fde91d483da7cc756eef4fa5d812e",
+      "binding": "PASS",
+      "generation_video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_070000__phase0d_4d_r3j_corrected_v2_shuffle/cs_gpu0/cs_preview_shuffled_v3d_seed000.mp4"
+    },
+    "seed1_C1": {
+      "accepted_raw_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/PRIMARY_RAW/C1/raw.json",
+      "accepted_video_sha256": "cb1f81c25549b9fccedcb5473f6453cce2fe5982d4b2687fc9ac1975b17e7a1a",
+      "actual_sha256": "cb1f81c25549b9fccedcb5473f6453cce2fe5982d4b2687fc9ac1975b17e7a1a",
+      "binding": "PASS",
+      "generation_video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/c1_seed1_gpu0/c1_preview_k0_v3d_seed001.mp4"
+    },
+    "seed1_C2": {
+      "accepted_raw_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/PRIMARY_RAW/C2/raw.json",
+      "accepted_video_sha256": "fb1b15389debe03dc4254917cca222ace6324d384e7cbca98dcd7f1828d57122",
+      "actual_sha256": "fb1b15389debe03dc4254917cca222ace6324d384e7cbca98dcd7f1828d57122",
+      "binding": "PASS",
+      "generation_video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/c2_seed1_gpu0/c2_preview_correct_v3d_seed001.mp4"
+    },
+    "seed1_CS": {
+      "accepted_raw_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/PRIMARY_RAW/CS/raw.json",
+      "accepted_video_sha256": "451492647274dba81709e03952b159b5ecba341d9fd5d97cdd03d688839e60e2",
+      "actual_sha256": "451492647274dba81709e03952b159b5ecba341d9fd5d97cdd03d688839e60e2",
+      "binding": "PASS",
+      "generation_video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/cs_seed1_gpu0/cs_preview_shuffled_v3d_seed001.mp4"
+    }
+  }
+}

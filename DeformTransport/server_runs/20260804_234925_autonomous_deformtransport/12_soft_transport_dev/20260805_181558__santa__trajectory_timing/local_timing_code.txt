@@ -1,0 +1,115 @@
+=== LOCAL GENESIS SIMULATOR REFERENCES ===
+simulation/genesis_simulator.py:38:        self.simulation_steps = self.simulated_frames_num * self.frame_steps
+simulation/genesis_simulator.py:51:            self.fg_pcs.append({
+simulation/genesis_simulator.py:91:            self.all_obj_info.append({
+simulation/genesis_simulator.py:190:            self.obj_materials.append(obj_material)
+simulation/genesis_simulator.py:191:            self.obj_vis_modes.append(obj_vis_mode)
+simulation/genesis_simulator.py:233:        if self.config.get('export_point_trajectories', False):
+simulation/genesis_simulator.py:244:    def simulate_step(self, sid, output_folder):
+simulation/genesis_simulator.py:249:        self.scene.step()
+simulation/genesis_simulator.py:266:                updated_all_obj_points.append(updated_points)
+simulation/genesis_simulator.py:276:                # updated_all_obj_points.append(updated_points)
+simulation/genesis_simulator.py:295:                updated_all_obj_points.append(updated_points)
+simulation/genesis_simulator.py:311:        if self.config.get('debug', False) and sid == self.simulation_steps - 1:
+simulation/genesis_simulator.py:317:    def simulation_pc_render(self):
+simulation/genesis_simulator.py:323:        for sid in tqdm(range(self.simulation_steps)):
+simulation/genesis_simulator.py:337:                self.simulated_frames.append(current_frame)
+simulation/genesis_simulator.py:338:                self.simualted_masks.append(current_points_mask)
+simulation/genesis_simulator.py:339:                self.simualted_mesh_masks.append(current_mesh_mask)
+simulation/genesis_simulator.py:371:            closest_indices.append(chunk_closest)
+simulation/genesis_simulator.py:511:            all_vertices.append(verts_transformed)
+simulation/genesis_simulator.py:512:            all_faces.append(faces_offset)
+simulation/genesis_simulator.py:513:            all_colors.append(vertex_colors)
+case_simulation.py:65:        time_averaged_masks.append(masks_downsampled[i : i + 4, :, :].mean(dim=0, keepdim=True))
+case_simulation.py:109:export_point_trajectories = config.get('export_point_trajectories', False)
+case_simulation.py:110:if debug or export_point_trajectories:
+case_simulation.py:113:if export_point_trajectories:
+case_simulation.py:118:        os.path.join(final_sim_folder, "point_trajectories.pt"),
+scripts/run_realwonder_trajectory_probe.py:49:    points_3d = object_state["points_3d"]
+scripts/run_realwonder_trajectory_probe.py:50:    points_uv = object_state["points_uv"]
+scripts/run_realwonder_trajectory_probe.py:52:        [object_state["initial_points_3d"].unsqueeze(0), points_3d[:-1]], dim=0
+scripts/run_realwonder_trajectory_probe.py:55:        [object_state["initial_points_uv"].unsqueeze(0), points_uv[:-1]], dim=0
+scripts/run_realwonder_trajectory_probe.py:57:    displacement_3d = torch.linalg.vector_norm(points_3d - previous_3d, dim=-1)
+scripts/run_realwonder_trajectory_probe.py:58:    displacement_uv = torch.linalg.vector_norm(points_uv - previous_uv, dim=-1)
+scripts/run_realwonder_trajectory_probe.py:59:    signed_displacement_3d = points_3d - previous_3d
+scripts/run_realwonder_trajectory_probe.py:60:    signed_displacement_uv = points_uv - previous_uv
+scripts/run_realwonder_trajectory_probe.py:77:        for frame_index in range(points_3d.shape[0])
+scripts/run_realwonder_trajectory_probe.py:92:    current_uv = object_state["points_uv"]
+scripts/run_realwonder_trajectory_probe.py:94:    initial_uv = object_state["initial_points_uv"]
+scripts/run_realwonder_trajectory_probe.py:134:            frame_metrics.append(
+scripts/run_realwonder_trajectory_probe.py:148:            frame_metrics.append(
+scripts/run_realwonder_trajectory_probe.py:201:            "export_point_trajectories": True,
+scripts/run_realwonder_trajectory_probe.py:232:            flow_source_point_indices.append(None)
+scripts/run_realwonder_trajectory_probe.py:234:            flow_source_point_indices.append(
+scripts/run_realwonder_trajectory_probe.py:242:        flows.append(flow)
+scripts/run_realwonder_trajectory_probe.py:256:    trajectory_path = simulator.save_point_trajectories(
+scripts/run_realwonder_trajectory_probe.py:257:        output_dir / "point_trajectories.pt"
+scripts/run_realwonder_trajectory_probe.py:283:            object_state["initial_points_3d"], simulator_initial
+scripts/run_realwonder_trajectory_probe.py:285:        object_reports.append(
+scripts/run_realwonder_trajectory_probe.py:289:                "point_count": int(object_state["points_3d"].shape[1]),
+scripts/run_realwonder_trajectory_probe.py:297:                    torch.isfinite(object_state["points_3d"]).all()
+scripts/run_realwonder_trajectory_probe.py:312:        object_point_offset += int(object_state["points_3d"].shape[1])
+scripts/run_realwonder_trajectory_probe.py:336:        "frame_ids": export["frame_ids"].tolist(),
+scripts/run_realwonder_trajectory_probe.py:337:        "simulation_steps": export["simulation_steps"].tolist(),
+
+=== LOCAL GIT DIFF: GENESIS SIMULATOR ===
+diff --git a/simulation/genesis_simulator.py b/simulation/genesis_simulator.py
+index ab3e329..d5539ff 100644
+--- a/simulation/genesis_simulator.py
++++ b/simulation/genesis_simulator.py
+@@ -16,6 +16,7 @@ from simulation.utils import (
+     pose_to_transform_matrix,
+ )
+ from simulation.case_simulation.case_handler import get_case_handler
++from deform_transport.trajectory import PointTrajectoryRecorder
+ import time
+ from simulation.utils import save_gif_from_image_folder
+ 
+@@ -227,6 +228,17 @@ class DiffSim(nn.Module):
+             else:
+                 raise NotImplementedError("The current material is not supported for now")
+ 
++        self.trajectory_recorder = None
++        self.point_trajectory_export = None
++        if self.config.get('export_point_trajectories', False):
++            self.trajectory_recorder = PointTrajectoryRecorder(
++                [pc['points'] for pc in self.fg_pcs_from_3d],
++                material_types=self.material_type,
++                camera=self.svr.current_camera,
++                binding_indices=self.closest_indices,
++                image_size=self.svr.target_size[0],
++            )
++
+         print("genesis scene construction finished")
+         
+     def simulate_step(self, sid, output_folder):
+@@ -314,6 +326,13 @@ class DiffSim(nn.Module):
+             if sid % self.frame_steps == 0:
+                 self.svr.update_fg_obj_info(all_obj_points)
+                 frame_id = sid // self.frame_steps
++                if self.trajectory_recorder is not None:
++                    self.trajectory_recorder.record(
++                        frame_id=frame_id,
++                        simulation_step=sid,
++                        object_points=all_obj_points,
++                        camera=self.svr.current_camera,
++                    )
+                 current_frame, current_points_mask, current_mesh_mask = self.svr.render(frame_id = frame_id, save = self.config.get('debug', False), mask = True)
+                 self.simulated_frames.append(current_frame)
+                 self.simualted_masks.append(current_points_mask)
+@@ -326,6 +345,8 @@ class DiffSim(nn.Module):
+             save_gif_from_image_folder(self.output_folder / "gs_frames", self.output_folder / "simulated_frames_gs.gif")
+             save_video_from_pil(self.simulated_frames, self.output_folder / "simulated_frames.mp4", fps=10)
+             save_gif_from_image_folder(self.output_folder / "render" / "flow_image", self.output_folder / "flow_image.gif")
++        if self.trajectory_recorder is not None:
++            self.point_trajectory_export = self.trajectory_recorder.state_dict()
+         return self.simulated_frames, self.simualted_masks, self.simualted_mesh_masks
+ 
+     def map_pc_to_particles(self, obj_idx):
+@@ -497,4 +518,4 @@ class DiffSim(nn.Module):
+         faces = torch.from_numpy(np.vstack(all_faces)).to(self.device, dtype=torch.int32)
+         colors = torch.from_numpy(np.vstack(all_colors)).to(self.device, dtype=torch.float32)
+         
+-        return vertices, faces, colors
+\ No newline at end of file
++        return vertices, faces, colors

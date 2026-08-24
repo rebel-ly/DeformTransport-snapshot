@@ -1,0 +1,14 @@
+{
+  "status": "TREE_FORMAL_LAUNCH_ERROR",
+  "stage": "Python import before model/GPU load",
+  "correct_exit_code": 1,
+  "shuffled_exit_code": 1,
+  "correct_output_created": false,
+  "shuffled_output_created": false,
+  "error_type": "ImportError",
+  "error": "/lib64/libc.so.6: version `GLIBC_2.18` not found, required by cryptography/hazmat/bindings/_rust.abi3.so imported through dashscope",
+  "environment_mutated": false,
+  "retry_performed_after_import_error": false,
+  "tree_bridge_status": "TREE_BRIDGE_GO",
+  "next_required_action": "Provide the known compatible Wan-Move runtime/container or repair the existing environment outside this frozen run; then create a new timestamped formal batch rather than overwriting this failed batch."
+}

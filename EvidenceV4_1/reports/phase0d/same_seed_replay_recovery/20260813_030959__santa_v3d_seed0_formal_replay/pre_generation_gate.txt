@@ -1,0 +1,29 @@
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae  wan/modules/trajectory.py
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857  wan/wan_move.py
+61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19  wan/utils/prompt_extend.py
+edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3  /workspace/tools/miniforge3/envs/wan-move/bin/python
+c444b496c536fa40e18cd3596c2a2e899b838e664fc36fa20255da31050e7097  /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/runtime_recovery/20260813_025331__wanmove_python_runtime_binding/run_with_formal_wanmove_python.sh
+/workspace/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/workspace/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+PROMPT_OK
+DASHSCOPE_LOADED=False
+CONFIG_OK
+GENERATE_OK
+/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy (1, 81, 1257, 2) float32
+/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy (1, 81, 1257) bool
+/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy (1257,) int64
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy (81, 1257) float32
+a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929  /workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy
+5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff  /workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy
+f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8  /workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy
+032d738bb2d01bbff88b78f63a2b56fa76c52d985caf3542c22f9dc573879ce1  /workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy
+00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7  /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png
+139:        "--sample_solver",
+152:        "--sample_guide_scale",
+407:                        sample_solver=args.sample_solver,
+409:                        guide_scale=args.sample_guide_scale,
+505:            sample_solver=args.sample_solver,
+507:            guide_scale=args.sample_guide_scale,

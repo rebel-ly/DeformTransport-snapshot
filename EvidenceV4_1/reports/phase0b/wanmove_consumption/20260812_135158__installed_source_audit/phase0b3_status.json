@@ -1,0 +1,20 @@
+{
+  "phase": "Phase0B-3",
+  "status": "PASS",
+  "wan_move_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+  "installed_sha256": {
+    "wan_move.py": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857",
+    "trajectory.py": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae"
+  },
+  "source_feature_lookup": "PASS",
+  "future_target_placement": "PASS",
+  "source_target_delta_encoding": "NOT_DETECTED",
+  "consecutive_velocity_encoding": "NOT_DETECTED",
+  "source_relative_motion_encoding": "NOT_DETECTED",
+  "trajectory_rng_pairing": "PASS",
+  "diffusion_noise_pairing": "PASS",
+  "full_polyline_kinematic_invariance": "FAIL",
+  "generator_consumed_motion_invariance": "PASS",
+  "generator_consumed_motion_confound": "NOT_DETECTED",
+  "proceed_to_phase0b4": true
+}

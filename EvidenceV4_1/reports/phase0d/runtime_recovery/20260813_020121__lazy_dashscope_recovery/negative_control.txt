@@ -1,0 +1,27 @@
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/utils/prompt_extend.py", line 233, in __init__
+    import dashscope
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/__init__.py", line 17, in <module>
+    from dashscope.aigc.code_generation import CodeGeneration
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/aigc/__init__.py", line 3, in <module>
+    from .conversation import Conversation, History, HistoryItem
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/aigc/conversation.py", line 14, in <module>
+    from dashscope.client.base_api import BaseApi
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/client/base_api.py", line 13, in <module>
+    from dashscope.api_entities.api_request_factory import _build_api_request
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/api_entities/api_request_factory.py", line 7, in <module>
+    from dashscope.api_entities.http_request import HttpRequest
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/api_entities/http_request.py", line 28, in <module>
+    from dashscope.api_entities.encryption import Encryption
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope/api_entities/encryption.py", line 9, in <module>
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/primitives/ciphers/__init__.py", line 11, in <module>
+    from cryptography.hazmat.primitives.ciphers.base import (
+  File "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/primitives/ciphers/base.py", line 10, in <module>
+    from cryptography.hazmat.bindings._rust import openssl as rust_openssl
+ImportError: /lib64/libc.so.6: version `GLIBC_2.18' not found (required by /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so)

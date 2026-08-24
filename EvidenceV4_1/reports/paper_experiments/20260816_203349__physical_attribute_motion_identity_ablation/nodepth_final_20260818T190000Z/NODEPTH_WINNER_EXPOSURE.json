@@ -1,0 +1,20 @@
+{
+  "c2_collision_winner_map_sha256": "33440b484a17d5d6a4c195a2345e0b08c89bca6976b5d700aebedbb9a9e27440",
+  "c2_winner_map_sha256": "53a42abab8359276cc5b890e55eac87f355e7225ea9d08564eb78768c5811fac",
+  "candidate_count_per_cell_identical": true,
+  "collision_flag_per_cell_identical": true,
+  "depth_collision_candidates_total": 1592,
+  "depth_collision_cells_total": 788,
+  "nodepth_collision_winner_map_sha256": "02d2765c4ab11270ed90413f21cf3104cd3a2fed91db8e12184677663c10201e",
+  "nodepth_exposure_consistency": "PASS",
+  "nodepth_winner_changed_cells": 328,
+  "nodepth_winner_changed_fraction_all_writes": 0.03659897344342781,
+  "nodepth_winner_changed_fraction_collision": 0.41624365482233505,
+  "nodepth_winner_map_sha256": "edc4908ee63d7a69b0440f770aa596ef7c34fcc03d0e6e242e9260914e403c2a",
+  "nodepth_winner_unchanged_cells": 460,
+  "noncollision_winner_changed_cells": 0,
+  "noncollision_write_cells": 8174,
+  "serialization_specification": "latent_t,latent_y,latent_x,winner_material_id\\n; UTF-8; LF; ascending numeric canonical key",
+  "target_cell_key_set_identical": true,
+  "total_joined_rows": 8962
+}

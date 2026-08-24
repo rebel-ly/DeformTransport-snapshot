@@ -1,0 +1,27 @@
+{
+  "H2_SEED0": "PASS",
+  "H2_SEED1": "PASS",
+  "arms": {
+    "C1": {
+      "fallback_detected": false,
+      "seed0_export_contract_pass": true,
+      "seed1_export_contract_pass": true,
+      "seed1_runtime_script": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/run_c1_seed1_inside.sh",
+      "seed1_runtime_script_sha256": "fa622eaa2e6b8321604d7403d8b9d0503bb27b14fc272027d99324895a84897f"
+    },
+    "C2": {
+      "fallback_detected": false,
+      "seed0_export_contract_pass": true,
+      "seed1_export_contract_pass": true,
+      "seed1_runtime_script": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/run_c2_seed1_inside.sh",
+      "seed1_runtime_script_sha256": "c1ad6929dd339bf5d228ab9087a5996a8187adcae7afb0b2bcb35f565e2ef31a"
+    },
+    "CS": {
+      "fallback_detected": false,
+      "seed0_export_contract_pass": true,
+      "seed1_export_contract_pass": true,
+      "seed1_runtime_script": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/run_cs_seed1_inside.sh",
+      "seed1_runtime_script_sha256": "cb7d5ec479daf8cc77e648cfc41a4ce6e8af2edc42fc2424a74b8cb7a24f0d8f"
+    }
+  }
+}

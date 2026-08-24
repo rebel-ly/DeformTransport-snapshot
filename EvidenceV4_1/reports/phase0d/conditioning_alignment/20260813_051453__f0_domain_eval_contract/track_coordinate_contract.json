@@ -1,0 +1,10 @@
+{
+  "tracks_path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+  "tracks_sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+  "visibility_sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+  "ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "shape": [1,81,1257,2], "dtype": "float32", "x_min": 275.3367919921875, "x_max": 820.7277221679688, "y_min": 45.36772155761719, "y_max": 415.47467041015625,
+  "track_coord_domain": "480x832 pixel video domain (H x W)",
+  "source_track_domain_to_generator_mapping": "wan/wan_move.py:216-220: x'=x*(w/img.width); y'=y*(h/img.height). Formal raw image and requested generator target are both 480x832, so this is identity (scale_w=scale_h=1).",
+  "track_coord_domain_resolved": true
+}

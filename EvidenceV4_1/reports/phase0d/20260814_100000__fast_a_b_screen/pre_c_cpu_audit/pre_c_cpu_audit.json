@@ -1,0 +1,296 @@
+{
+  "cpu_only": true,
+  "cuda_visible_devices": "",
+  "omp_threads": "1",
+  "dt_edited_y_lineage": {
+    "script": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_081824__f2_metric_mechanism_error_localization/scripts/diagnose_rgb_condition.py",
+    "input_frames": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_081824__f2_metric_mechanism_error_localization/dt_edited_y_decoded_frames",
+    "frame_count": 81,
+    "timeline": "decoded VAE edited_y frames 0000..0080; inherited corrected-v2 S0..S800 track timeline",
+    "historical_preprocessing": "cv2 uint8 -> float32 /255 -> frozen evaluator to_common /255",
+    "corrected_preprocessing": "cv2 uint8 -> frozen evaluator to_common /255 exactly once",
+    "historical_tcmar": {
+      "n": 1110,
+      "mean": 65.74260475842897,
+      "median": 67.40938186645508,
+      "p95": 85.65652286529541
+    },
+    "corrected_tcmar": {
+      "n": 1110,
+      "mean": 37.896401310344025,
+      "median": 40.52331829071045,
+      "p95": 56.75405697345733
+    },
+    "DT_EDITED_Y_65_74_SAME_DOUBLE_DIV255_BUG": true
+  },
+  "formal_evaluator_contamination": {
+    "historical_f2_buggy_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_081824__f2_metric_mechanism_error_localization/scripts/diagnose_rgb_condition.py",
+    "frozen_corrected_v2_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+    "historical_calls_predivision": true,
+    "formal_read_video_common_passes_uint8_to_to_common": true,
+    "FORMAL_EVALUATOR_AFFECTED_BY_DOUBLE_DIV255": false,
+    "rw_dt_condition_tcme": {
+      "rw": 0.8946881631311656,
+      "dt_edited_y": 1.5050048806385061,
+      "affected_by_same_diagnostic_rgb_preprocessing": true,
+      "formal_endpoint_tcme_affected": false
+    }
+  },
+  "sigma_independence": {
+    "scheduler_source": "/workspace/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay/wan/utils/fm_solvers_unipc.py",
+    "formula": "sigmas=shift*linspace(1,1/steps,steps)/(1+(shift-1)*linspace(...)); timesteps=sigmas*1000",
+    "steps": 40,
+    "shift": 3.0,
+    "schedule": [
+      {
+        "index": 0,
+        "timestep": 1000.0,
+        "sigma": 1.0
+      },
+      {
+        "index": 1,
+        "timestep": 991.5254237288135,
+        "sigma": 0.9915254237288135
+      },
+      {
+        "index": 2,
+        "timestep": 982.758620689655,
+        "sigma": 0.982758620689655
+      },
+      {
+        "index": 3,
+        "timestep": 973.684210526316,
+        "sigma": 0.9736842105263159
+      },
+      {
+        "index": 4,
+        "timestep": 964.2857142857144,
+        "sigma": 0.9642857142857144
+      },
+      {
+        "index": 5,
+        "timestep": 954.5454545454546,
+        "sigma": 0.9545454545454546
+      },
+      {
+        "index": 6,
+        "timestep": 944.4444444444443,
+        "sigma": 0.9444444444444443
+      },
+      {
+        "index": 7,
+        "timestep": 933.9622641509433,
+        "sigma": 0.9339622641509433
+      },
+      {
+        "index": 8,
+        "timestep": 923.0769230769231,
+        "sigma": 0.9230769230769231
+      },
+      {
+        "index": 9,
+        "timestep": 911.764705882353,
+        "sigma": 0.911764705882353
+      },
+      {
+        "index": 10,
+        "timestep": 900.0,
+        "sigma": 0.9
+      },
+      {
+        "index": 11,
+        "timestep": 887.7551020408164,
+        "sigma": 0.8877551020408164
+      },
+      {
+        "index": 12,
+        "timestep": 874.9999999999999,
+        "sigma": 0.8749999999999999
+      },
+      {
+        "index": 13,
+        "timestep": 861.7021276595746,
+        "sigma": 0.8617021276595745
+      },
+      {
+        "index": 14,
+        "timestep": 847.8260869565219,
+        "sigma": 0.8478260869565218
+      },
+      {
+        "index": 15,
+        "timestep": 833.3333333333334,
+        "sigma": 0.8333333333333334
+      },
+      {
+        "index": 16,
+        "timestep": 818.1818181818182,
+        "sigma": 0.8181818181818182
+      },
+      {
+        "index": 17,
+        "timestep": 802.3255813953488,
+        "sigma": 0.8023255813953488
+      },
+      {
+        "index": 18,
+        "timestep": 785.7142857142857,
+        "sigma": 0.7857142857142857
+      },
+      {
+        "index": 19,
+        "timestep": 768.2926829268293,
+        "sigma": 0.7682926829268294
+      },
+      {
+        "index": 20,
+        "timestep": 750.0,
+        "sigma": 0.75
+      },
+      {
+        "index": 21,
+        "timestep": 730.7692307692308,
+        "sigma": 0.7307692307692308
+      },
+      {
+        "index": 22,
+        "timestep": 710.5263157894736,
+        "sigma": 0.7105263157894737
+      },
+      {
+        "index": 23,
+        "timestep": 689.1891891891893,
+        "sigma": 0.6891891891891893
+      },
+      {
+        "index": 24,
+        "timestep": 666.6666666666667,
+        "sigma": 0.6666666666666667
+      },
+      {
+        "index": 25,
+        "timestep": 642.8571428571429,
+        "sigma": 0.6428571428571429
+      },
+      {
+        "index": 26,
+        "timestep": 617.6470588235295,
+        "sigma": 0.6176470588235295
+      },
+      {
+        "index": 27,
+        "timestep": 590.909090909091,
+        "sigma": 0.5909090909090909
+      },
+      {
+        "index": 28,
+        "timestep": 562.5,
+        "sigma": 0.5625
+      },
+      {
+        "index": 29,
+        "timestep": 532.2580645161291,
+        "sigma": 0.5322580645161291
+      },
+      {
+        "index": 30,
+        "timestep": 500.0000000000001,
+        "sigma": 0.5000000000000001
+      },
+      {
+        "index": 31,
+        "timestep": 465.5172413793105,
+        "sigma": 0.4655172413793105
+      },
+      {
+        "index": 32,
+        "timestep": 428.57142857142867,
+        "sigma": 0.42857142857142866
+      },
+      {
+        "index": 33,
+        "timestep": 388.88888888888897,
+        "sigma": 0.38888888888888895
+      },
+      {
+        "index": 34,
+        "timestep": 346.1538461538462,
+        "sigma": 0.3461538461538462
+      },
+      {
+        "index": 35,
+        "timestep": 300.0000000000002,
+        "sigma": 0.3000000000000002
+      },
+      {
+        "index": 36,
+        "timestep": 250.00000000000017,
+        "sigma": 0.25000000000000017
+      },
+      {
+        "index": 37,
+        "timestep": 195.6521739130436,
+        "sigma": 0.19565217391304363
+      },
+      {
+        "index": 38,
+        "timestep": 136.36363636363646,
+        "sigma": 0.13636363636363646
+      },
+      {
+        "index": 39,
+        "timestep": 71.42857142857144,
+        "sigma": 0.07142857142857144
+      }
+    ],
+    "index14": {
+      "index": 14,
+      "timestep": 847.8260869565219,
+      "sigma": 0.8478260869565218
+    },
+    "index15": {
+      "index": 15,
+      "timestep": 833.3333333333334,
+      "sigma": 0.8333333333333334
+    },
+    "index16": {
+      "index": 16,
+      "timestep": 818.1818181818182,
+      "sigma": 0.8181818181818182
+    },
+    "rw_sigma_source": "canonical RW FlowMatch scheduler warp mapping, independently documented in PHASE0D_4C_ENGINEERING_GATE.md",
+    "RW_WAN_SIGMA_ZERO_ERROR_INDEPENDENTLY_DERIVED": true
+  },
+  "enabled_path_interface": {
+    "preview_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_wan_vae_latent_e1_832x480.npy",
+    "preview_shape": [
+      1,
+      16,
+      21,
+      60,
+      104
+    ],
+    "preview_dtype": "float32",
+    "preview_finite": true,
+    "shared_epsilon_frozen": false,
+    "epsilon_check": "interface/required C,T,H,W shape verified; final shared epsilon intentionally deferred until disabled-path parity PASS",
+    "flow_start_formula": "x_start=(1-sigma)*preview_latent + sigma*epsilon",
+    "start_index": 15,
+    "sigma": 0.8333333333333334,
+    "source_static_gate": {
+      "preview_latent_argument": true,
+      "initial_epsilon_argument": true,
+      "start_index_argument": true,
+      "set_begin_index_call": true,
+      "history_reset_implemented_by_set_timesteps": true
+    },
+    "ENABLED_PATH_START_STATE_SANITY": "UNRESOLVED_NO_FINAL_EPSILON_AND_NO_SCHEDULER_RUNTIME_PROBE"
+  },
+  "source_sha256": {
+    "historical_diagnostic": "02e90ed0c50d2935240f52027880fbace510350bbf0bad0bebccf7ea9ed2f65c",
+    "formal_evaluator": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+    "scheduler": "0dec8c7ed17f6f2049275c6848113314da6ccec1c8db5bdc89df43c05c6038d9",
+    "overlay_wan_move": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7",
+    "preview_latent": "9d71791f70fa519001708d0986c4b1cee297941b8f66a3d1a15e03ef8ce8bb8f"
+  }
+}

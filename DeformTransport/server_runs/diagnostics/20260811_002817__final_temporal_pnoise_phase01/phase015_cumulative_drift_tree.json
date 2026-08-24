@@ -1,0 +1,287 @@
+{
+  "case": "tree",
+  "metric": "TC-CDE",
+  "strict_all_frame_tracks": 121,
+  "anchors": {
+    "4": {
+      "rw_cde_px": 1.4276458612949154,
+      "v3d_cde_px": 0.5023544222019158,
+      "rw_minus_v3d": 0.9252914390929996,
+      "ci": [
+        0.7821237694355084,
+        1.0674728232745443
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 0.727604329586029,
+      "rw_cde_over_net_motion": 1.962118425143478,
+      "v3d_cde_over_net_motion": 0.6904225301789102
+    },
+    "8": {
+      "rw_cde_px": 2.4174794947899754,
+      "v3d_cde_px": 0.7762134721955544,
+      "rw_minus_v3d": 1.6412660225944211,
+      "ci": [
+        1.3815166208370422,
+        1.8973289428112332
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 2.6424026489257812,
+      "rw_cde_over_net_motion": 0.914879303414548,
+      "v3d_cde_over_net_motion": 0.2937529117718336
+    },
+    "12": {
+      "rw_cde_px": 4.427267983534437,
+      "v3d_cde_px": 1.1562718424967673,
+      "rw_minus_v3d": 3.270996141037669,
+      "ci": [
+        2.71488483677712,
+        3.8271018764868527
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 5.28433084487915,
+      "rw_cde_over_net_motion": 0.8378105219934778,
+      "v3d_cde_over_net_motion": 0.21881140232112217
+    },
+    "16": {
+      "rw_cde_px": 5.921181132748438,
+      "v3d_cde_px": 2.124339666564927,
+      "rw_minus_v3d": 3.796841466183511,
+      "ci": [
+        3.119936443846225,
+        4.47776766466506
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 8.419363021850586,
+      "rw_cde_over_net_motion": 0.7032813666997525,
+      "v3d_cde_over_net_motion": 0.25231596037035997
+    },
+    "20": {
+      "rw_cde_px": 6.951843869168509,
+      "v3d_cde_px": 2.7765611907442462,
+      "rw_minus_v3d": 4.175282678424264,
+      "ci": [
+        3.4258314872950146,
+        4.929399164678034
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 11.923127174377441,
+      "rw_cde_over_net_motion": 0.5830554155379539,
+      "v3d_cde_over_net_motion": 0.23287189259467264
+    },
+    "24": {
+      "rw_cde_px": 9.863550275160652,
+      "v3d_cde_px": 3.445450060862556,
+      "rw_minus_v3d": 6.418100214298096,
+      "ci": [
+        5.280918572368774,
+        7.5780317332639076
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 15.739866256713867,
+      "rw_cde_over_net_motion": 0.6266603612945781,
+      "v3d_cde_over_net_motion": 0.21889957669703156
+    },
+    "28": {
+      "rw_cde_px": 11.968544151939275,
+      "v3d_cde_px": 4.521549675422172,
+      "rw_minus_v3d": 7.446994476517102,
+      "ci": [
+        6.074495324117731,
+        8.850066645100192
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 19.85811996459961,
+      "rw_cde_over_net_motion": 0.6027027822006912,
+      "v3d_cde_over_net_motion": 0.22769273644648053
+    },
+    "32": {
+      "rw_cde_px": 13.55105239091932,
+      "v3d_cde_px": 5.080512130822765,
+      "rw_minus_v3d": 8.470540260096554,
+      "ci": [
+        6.777463802238074,
+        10.181879998679305
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 24.31720733642578,
+      "rw_cde_over_net_motion": 0.5572618682500035,
+      "v3d_cde_over_net_motion": 0.20892662798546152
+    },
+    "36": {
+      "rw_cde_px": 17.641893130769024,
+      "v3d_cde_px": 5.698513403377465,
+      "rw_minus_v3d": 11.94337972739156,
+      "ci": [
+        9.695467815764045,
+        14.157747367371114
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 29.12403106689453,
+      "rw_cde_over_net_motion": 0.605750388407691,
+      "v3d_cde_over_net_motion": 0.19566362191719405
+    },
+    "40": {
+      "rw_cde_px": 20.56747352020541,
+      "v3d_cde_px": 6.470889975699005,
+      "rw_minus_v3d": 14.096583544506403,
+      "ci": [
+        11.386578200099184,
+        16.7701069161617
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 34.40480422973633,
+      "rw_cde_over_net_motion": 0.597808183498652,
+      "v3d_cde_over_net_motion": 0.1880809997490457
+    },
+    "44": {
+      "rw_cde_px": 22.36271571305228,
+      "v3d_cde_px": 8.512665329434626,
+      "rw_minus_v3d": 13.850050383617651,
+      "ci": [
+        10.785255799438504,
+        16.849288725433816
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 39.313873291015625,
+      "rw_cde_over_net_motion": 0.5688250442156971,
+      "v3d_cde_over_net_motion": 0.21653082275614954
+    },
+    "48": {
+      "rw_cde_px": 28.731389275634992,
+      "v3d_cde_px": 9.173766794267806,
+      "rw_minus_v3d": 19.557622481367183,
+      "ci": [
+        15.5676039335333,
+        23.584795523280008
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 43.055728912353516,
+      "rw_cde_over_net_motion": 0.6673069995893486,
+      "v3d_cde_over_net_motion": 0.21306727411217224
+    },
+    "52": {
+      "rw_cde_px": 30.355264302978117,
+      "v3d_cde_px": 9.65547881864124,
+      "rw_minus_v3d": 20.69978548433688,
+      "ci": [
+        16.59531332859108,
+        24.744931540982826
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 46.83563995361328,
+      "rw_cde_over_net_motion": 0.6481231885171725,
+      "v3d_cde_over_net_motion": 0.2061566539542146
+    },
+    "56": {
+      "rw_cde_px": 30.84694013466384,
+      "v3d_cde_px": 10.200550454660796,
+      "rw_minus_v3d": 20.64638968000305,
+      "ci": [
+        16.505862908474597,
+        24.696533973934503
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 50.48822021484375,
+      "rw_cde_over_net_motion": 0.6109730151587857,
+      "v3d_cde_over_net_motion": 0.2020382261694737
+    },
+    "60": {
+      "rw_cde_px": 31.391698931357116,
+      "v3d_cde_px": 10.160527538311575,
+      "rw_minus_v3d": 21.23117139304554,
+      "ci": [
+        17.012066933379167,
+        25.380827707870903
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 52.66022872924805,
+      "rw_cde_over_net_motion": 0.5961177854497589,
+      "v3d_cde_over_net_motion": 0.19294499441982693
+    },
+    "64": {
+      "rw_cde_px": 31.027443965459767,
+      "v3d_cde_px": 10.62779056712218,
+      "rw_minus_v3d": 20.39965339833759,
+      "ci": [
+        16.221288988197493,
+        24.5101194845184
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 52.61884307861328,
+      "rw_cde_over_net_motion": 0.5896641231564962,
+      "v3d_cde_over_net_motion": 0.20197689544872952
+    },
+    "68": {
+      "rw_cde_px": 30.864192954192777,
+      "v3d_cde_px": 10.345720485159994,
+      "rw_minus_v3d": 20.518472469032783,
+      "ci": [
+        16.414893798405227,
+        24.60783546545436
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 50.98019790649414,
+      "rw_cde_over_net_motion": 0.6054153224513301,
+      "v3d_cde_over_net_motion": 0.20293605968607076
+    },
+    "72": {
+      "rw_cde_px": 31.62317137346742,
+      "v3d_cde_px": 9.798413629208438,
+      "rw_minus_v3d": 21.82475774425899,
+      "ci": [
+        17.659359719634736,
+        25.960058277929683
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 48.85719299316406,
+      "rw_cde_over_net_motion": 0.6472572294092301,
+      "v3d_cde_over_net_motion": 0.20055211994228567
+    },
+    "76": {
+      "rw_cde_px": 30.974546106021126,
+      "v3d_cde_px": 9.14524645413998,
+      "rw_minus_v3d": 21.829299651881147,
+      "ci": [
+        17.71468343106245,
+        25.896201737007765
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 46.82786560058594,
+      "rw_cde_over_net_motion": 0.6614554327591124,
+      "v3d_cde_over_net_motion": 0.19529496672224045
+    },
+    "80": {
+      "rw_cde_px": 29.130018841299155,
+      "v3d_cde_px": 8.751360181812355,
+      "rw_minus_v3d": 20.3786586594868,
+      "ci": [
+        16.495548702328083,
+        24.205652450209396
+      ],
+      "decision": "WIN",
+      "physics_net_displacement_px": 45.01432418823242,
+      "rw_cde_over_net_motion": 0.6471277613652208,
+      "v3d_cde_over_net_motion": 0.19441278614375207
+    }
+  },
+  "early_4_40": {
+    "rw": 9.473793181052997,
+    "v3d": 3.255265584038737,
+    "rw_minus_v3d": 6.2185275970142575,
+    "ci": [
+      5.129696258671964,
+      7.313214037483175
+    ],
+    "decision": "WIN"
+  },
+  "late_44_80": {
+    "rw": 29.73073815981266,
+    "v3d": 9.637152025275899,
+    "rw_minus_v3d": 20.09358613453676,
+    "ci": [
+      16.138844809303606,
+      24.01098620854286
+    ],
+    "decision": "WIN"
+  }
+}

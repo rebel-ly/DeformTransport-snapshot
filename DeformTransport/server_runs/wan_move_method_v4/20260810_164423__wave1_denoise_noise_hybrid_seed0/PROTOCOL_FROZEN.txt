@@ -1,0 +1,59 @@
+DeformTransport V4 Wave-1.
+Development cases only: Santa + Tree.
+SandHouse is NOT used for method selection because its outcome has already been inspected.
+
+All variants use the frozen V3D material-condition transport:
+persistent material identity + target depth z-buffer +
+continuous bilinear source-condition feature sampling.
+
+Common generation contract:
+Wan-Move-14B-480P
+81 frames
+seed = 0
+UniPC
+40 sampling steps
+shift = 3.0
+CFG = 5.0
+bf16
+t5_cpu
+offload_model = True
+same input RGB
+same prompt
+same Correct material trajectories
+same visibility
+same depth
+same persistent material IDs
+
+V4A-D20:
+For denoising steps 0..7 only,
+compute clean estimate x0 = z_t - sigma_t * v_t,
+apply deterministic V3D material transport to x0,
+then convert back using v'_t = (z_t - x0') / sigma_t.
+Center latent cells only. Hard intervention. No alpha sweep.
+
+V4A-D40:
+Same as V4A-D20 but denoising steps 0..15.
+No result-dependent duration tuning.
+
+V4B-NOISE:
+Before denoising, transport the initial Gaussian noise along
+persistent material trajectories.
+Depth-aware deterministic z-buffer.
+3x3 local noise support.
+Fixed interpolation:
+noise' = noise + 0.2 * (T(noise) - noise).
+No theta sweep.
+
+V4C-HYBRID:
+V4B-NOISE plus V4A-D20.
+
+No candidate parameters may be changed after inspecting generated results.
+
+Primary selection:
+1. reject a candidate if TC-ME significantly regresses vs frozen V3D
+   on either development case;
+2. among motion-safe candidates, minimize TC-MAR Lab;
+3. report RealWonder gap closure but do not change parameters using it.
+
+RealWonder is an external system baseline; backbone differences mean
+system comparison is not a causal attribution test.

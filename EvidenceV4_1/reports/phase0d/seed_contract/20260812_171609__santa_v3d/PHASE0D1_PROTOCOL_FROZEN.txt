@@ -1,0 +1,573 @@
+当前阶段：
+
+Phase0D-1 —
+Formal Seed / Generation / Evaluation Contract Audit
+
+Phase0C 已正式 CLOSED：
+
+PHASE0C_STATUS = PASS
+PROCEED_TO_PHASE0D = True
+
+本阶段禁止运行正式 GPU generation。
+
+==================================================
+1. Phase0D scientific question
+==================================================
+
+Phase0D 要测量 frozen Wan-Move 在完全相同 formal
+Correct conditioning 下，仅由随机 seed 改变产生的
+video/output metric variability。
+
+在实际多 seed generation 前，必须冻结：
+
+1. formal Correct input
+2. formal generation command/config
+3. seed-consumption map
+4. conditioning seed invariance
+5. formal evaluation reference/metric contract
+6. reusable cached output inventory
+
+==================================================
+2. Formal case
+==================================================
+
+只允许：
+
+corrected-v2 Santa
+
+N = 1257
+T = 81
+simulation steps = 0,10,...,800
+
+历史 N=1277 Santa：
+
+LEGACY / REJECTED
+
+任何 formal generation/evaluation 不得读取
+N=1277 bridge。
+
+==================================================
+3. Previous-stage gate
+==================================================
+
+必须读取：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0c/
+phase0c_status.json
+
+要求：
+
+status == PASS
+proceed_to_phase0d == true
+
+否则：
+
+PREVIOUS_STAGE_GATE = FAIL
+STOP。
+
+==================================================
+4. Formal seed preregistration
+==================================================
+
+冻结：
+
+SEEDS = [0,1,2,3,4]
+
+Same-seed replay seed：
+
+DETERMINISM_SEED = 0
+
+后续禁止根据视频质量重新选 seed。
+
+如 seed 工程运行失败：
+
+保留失败 evidence；
+修复工程问题后仍运行原 seed。
+
+==================================================
+5. Formal input lineage
+==================================================
+
+锁定 corrected-v2 formal tracks：
+
+tracks
+visibility
+depth
+material IDs
+source image
+
+记录每项：
+
+path
+shape
+dtype
+SHA256
+source provenance
+
+验证：
+
+N=1257
+T=81
+frame0=true source
+timeline=0..800
+
+禁止重新导出。
+
+==================================================
+6. Frozen Wan-Move source
+==================================================
+
+验证：
+
+GIT HEAD =
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+
+trajectory.py SHA256 =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py SHA256 =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+任何 drift：
+
+SOURCE_DRIFT
+STOP。
+
+同时记录 git status，
+因为已知 local critical files historically modified。
+
+==================================================
+7. Formal generation contract
+==================================================
+
+找到当前实际用于 Wan-Move V3D generation 的：
+
+entrypoint
+command
+config
+checkpoint/model path
+input image
+tracks
+visibility
+depth
+material IDs
+
+冻结并报告：
+
+output resolution
+output frame count
+fps
+inference steps
+scheduler
+guidance / CFG
+negative prompt（如有）
+text prompt（如有）
+DT_TRANSPORT_VARIANT
+trajectory sampling parameters
+VAE parameters
+any resize/crop
+dtype
+device mapping
+all relevant environment variables
+
+不得凭历史值推断。
+必须从当前代码/config/command evidence 获取。
+
+生成：
+
+formal_generation_contract.json
+
+==================================================
+8. Seed-consumption audit
+==================================================
+
+沿 formal generation call path 搜索并分类：
+
+torch.manual_seed
+torch.cuda.manual_seed*
+torch.Generator
+torch.randn
+torch.rand
+torch.randperm
+random.*
+numpy.random / np.random
+
+生成：
+
+seed_consumption_map.md
+
+每一个 RNG site 标注：
+
+file
+function
+line
+RNG API
+consumed seed/global state
+whether it can affect generator-consumed conditioning
+whether it can affect diffusion noise
+whether it can affect output postprocessing
+
+必须特别确认：
+
+A. diffusion initial noise
+
+B. create_pos_feature_map randperm
+
+C. replace_feature randperm
+
+D. whether track_feats affects generator output
+
+E. whether any additional global RNG is consumed
+after trajectory conditioning
+
+==================================================
+9. Conditioning seed-invariance audit
+==================================================
+
+目标：
+
+确认 changing formal seed does not alter
+generator-consumed V3D conditioning except through
+diffusion/random generation path。
+
+禁止 instantiate WanMove 14B。
+
+优先使用 CPU functional harness / frozen functions。
+
+对：
+
+seed = 0,1,2,3,4
+
+验证：
+
+target support
+winner IDs
+winning depths
+carrier contribution
+final write positions
+
+是否 exact invariant。
+
+如果能够以 existing/synthetic functional harness
+运行 frozen create_pos_feature_map / replace_feature：
+
+报告各 seed：
+
+edited_y SHA256
+
+并检查：
+
+CONDITIONING_EDITED_Y_EXACT_EQUAL_ACROSS_SEEDS
+
+如果只能从源码/已冻结 operator algebra 得出，
+标记 evidence level：
+
+STATIC/ALGEBRAIC
+
+不得伪装成 FUNCTIONAL。
+
+需要明确：
+
+trajectory internal RNG 是否真正影响
+generator-consumed conditioning。
+
+==================================================
+10. Formal evaluator contract
+==================================================
+
+寻找后续 formal video comparison 实际应使用的 evaluator。
+
+优先审查现有历史 evaluation scripts，
+但不要复用历史 rejected N=1277 outputs。
+
+必须锁定：
+
+REFERENCE_VIDEO / GT
+reference provenance
+
+frame alignment
+number of evaluated frames
+
+resolution / resize / crop
+
+global metric definition
+
+local/mask metric definition
+
+LPIPS implementation/model
+SSIM implementation
+PSNR implementation
+
+任何 additional metric
+
+mask provenance
+
+如果已有正式 evaluator：
+
+记录 script path + SHA256。
+
+必须明确：
+
+simulation RGB 是否只是 engineering proxy，
+还是 formal reference。
+
+不得自动把 simulation RGB 当 GT。
+
+如果 formal reference lineage 无法确定：
+
+FORMAL_EVALUATION_CONTRACT = UNRESOLVED
+
+并禁止进入 GPU multi-seed generation，
+除非 pairwise-only seed floor 被主对话重新授权。
+
+==================================================
+11. FVD handling
+==================================================
+
+检查现有 evaluator 是否包含 FVD。
+
+如果当前 formal case 是 single clip / five seeds，
+不得自行定义 per-seed FVD。
+
+可记录：
+
+FVD_SINGLE_CLIP_SEED_FLOOR =
+NOT_APPLICABLE
+
+除非已有独立合法 protocol。
+
+==================================================
+12. Cached formal output inventory
+==================================================
+
+只在以下相关目录有界搜索：
+
+/workspace/DeformTransport/server_runs
+/workspace/DeformTransport_EvidenceV4_1
+
+寻找可能存在：
+
+corrected-v2 Santa
+Wan-Move
+V3D
+Correct
+seed 0/1/2/3/4
+
+生成：
+
+cached_formal_run_inventory.json
+
+对每个候选记录：
+
+path
+mtime
+file size
+seed
+input lineage
+source code lineage
+generation config lineage
+
+只有全部匹配 frozen formal contract，
+才可：
+
+REUSABLE = True
+
+否则：
+
+REUSABLE = False
+reason = ...
+
+禁止删除任何历史 run。
+
+==================================================
+13. GPU resource preflight
+==================================================
+
+只执行：
+
+nvidia-smi -i 2
+
+记录 GPU2：
+
+name
+memory total
+memory used
+memory free
+running processes
+
+本阶段禁止开始 generation。
+
+==================================================
+14. Phase0D-2/3 frozen future protocol
+==================================================
+
+仅写入 protocol，不执行。
+
+Phase0D-2:
+
+same formal Correct condition
+same seed=0
+
+Run A
+Run B
+
+比较：
+
+decoded RGB frame tensor
+而不是只比较 mp4 file hash。
+
+必须报告：
+
+frame count
+shape
+dtype
+decoded frame SHA
+pixel scalar mismatches
+max abs pixel difference
+
+如果 decoded tensors exact equal：
+
+SAME_SEED_DETERMINISM = PASS
+
+如果不 exact：
+
+不得自动失败或设 tolerance；
+进入 diagnostic review。
+
+--------------------------------------------------
+
+Phase0D-3:
+
+fixed seeds:
+
+0,1,2,3,4
+
+只运行 frozen formal Correct condition。
+
+如果 0D-2 Run A/B 中已有一个合法 seed0，
+正式 seed0 复用其中预注册的 Run A，
+不要额外第三次生成。
+
+输出至少包括：
+
+A. per-seed formal-reference metrics
+
+B. 10 pairwise seed-to-seed video metrics
+
+C. per-metric:
+mean
+std
+min
+max
+range
+
+不得删除 outlier seed。
+
+==================================================
+15. Stop rules
+==================================================
+
+Phase0D-1 FAIL/STOP if:
+
+- previous Phase0C gate fails
+- formal input is not corrected-v2 N=1257
+- source drift
+- formal generation entrypoint unresolved
+- critical config unresolved
+- formal evaluator/reference lineage contradictory
+- cached artifact is mistaken for formal without lineage
+
+Phase0D-1 can be:
+
+PASS
+PASS_WITH_EVALUATION_LIMITATION
+UNRESOLVED
+FAIL
+ERROR
+
+不得为了进入 GPU generation 强行 PASS。
+
+==================================================
+16. Output
+==================================================
+
+创建 timestamped：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+seed_contract/
+<TIMESTAMP>__santa_v3d
+
+至少生成：
+
+PHASE0D1_PROTOCOL_FROZEN.txt
+formal_input_contract.json
+formal_generation_contract.json
+seed_consumption_map.md
+conditioning_seed_invariance.json
+formal_evaluation_contract.json
+cached_formal_run_inventory.json
+gpu2_preflight.txt
+PHASE0D1_SUMMARY.md
+phase0d1_status.json
+SHA256SUMS.txt
+
+==================================================
+17. Summary 固定九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+18. Final stdout
+==================================================
+
+===== PHASE0D-1 FORMAL SEED CONTRACT AUDIT =====
+
+OUT = ...
+
+PREVIOUS_STAGE_GATE = ...
+
+FORMAL_INPUT_CONTRACT = ...
+FORMAL_TRACK_COUNT = ...
+FORMAL_TIMELINE = ...
+
+WAN_MOVE_SOURCE_GATE = ...
+
+SEEDS = [0,1,2,3,4]
+DETERMINISM_SEED = 0
+
+GENERATION_ENTRYPOINT = ...
+GENERATION_CONTRACT = ...
+
+DIFFUSION_SEED_SITE = ...
+TRAJECTORY_RNG_SITES = ...
+ADDITIONAL_OUTPUT_AFFECTING_RNG_SITES = ...
+
+CONDITIONING_SEED_INVARIANCE_EVIDENCE_LEVEL = ...
+CONDITIONING_EDITED_Y_EXACT_EQUAL_ACROSS_SEEDS = ...
+
+FORMAL_REFERENCE = ...
+FORMAL_EVALUATION_CONTRACT = ...
+
+FVD_SINGLE_CLIP_SEED_FLOOR = ...
+
+REUSABLE_CACHED_FORMAL_RUNS = ...
+
+GPU2_PREFLIGHT = ...
+
+PHASE0D1_STATUS = ...
+
+PROCEED_TO_PHASE0D2 = True/False
+
+然后 STOP。
+
+不得运行 Phase0D-2。
+不得运行任何正式 Wan-Move generation。

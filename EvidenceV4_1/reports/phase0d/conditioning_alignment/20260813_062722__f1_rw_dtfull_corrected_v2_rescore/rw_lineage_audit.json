@@ -1,0 +1,10 @@
+{
+  "rw_canonical_output":"/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4","rw_mp4_sha":"1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+  "rw_source_lineage":"PASS: inference_command and stdout name formal source image /official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png, SHA 00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7.",
+  "rw_action_lineage":"PASS: stdout prompt exactly matches formal Santa action prompt.",
+  "rw_physics_lineage":"PASS: command and stdout consume same authoritative official_santa aligned final_sim and load its 81 simulation frames/noises.",
+  "rw_timeline":"PASS: 81 frames; saved validation shape [81,480,832,3]; stdout says Loaded 81 simulation frames. Existing system_eval_audit identifies it as the canonical exact aligned 81-frame baseline.",
+  "rw_n1277_runtime_load_count":0, "rw_n1277_generator_consumption_count":0,
+  "rw_lineage":"PASS", "rw_existing_video_reusable":true,
+  "lineage_note":"RealWonder did not require N=1257 tracks as a generation input; reuse is established by source/action/physics/timeline compatibility."
+}

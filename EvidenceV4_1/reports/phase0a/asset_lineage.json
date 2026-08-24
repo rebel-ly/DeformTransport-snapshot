@@ -1,0 +1,56 @@
+{
+  "phase": "Phase0A",
+  "status": "CLOSED_WITH_LIMITATION",
+  "repository": {
+    "path": "/workspace/DeformTransport",
+    "git_head_at_archive": "b49252d08a745d621d40ec9aab66605d27edc554"
+  },
+  "raw_simulation": {
+    "chain_dir": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719",
+    "point_trajectories": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/point_trajectories.pt",
+    "source_raster": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flow_source_point_indices.npy",
+    "source_raster_sha256": "9a7b02d53099c06fe00313d39ff94330c1f794ea80f6ac76eb95e478073f62aa",
+    "raw_temporal_semantics": "source=step0; old future frames=steps10..810"
+  },
+  "transport_ready": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt",
+    "sha256": "154a08e074abcb6aa458b08cfd37c033dbc8245ffe02d182524e9bc275252723",
+    "source_visible_definition": "unique frontmost material IDs in source raster intersected with source_valid",
+    "point_count": 28264,
+    "source_visible_count": 19126
+  },
+  "canonical_aligned_contract": {
+    "aligned_transport_ready": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_transport_ready.pt",
+      "sha256": "712a23054b6a8253c05a078586a4d5d9ae905b7459ffbff66c741ba87efbe6de"
+    },
+    "aligned_visibility_contract": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_visibility_contract.pt",
+      "sha256": "ff7da6ffa65a053d56452509de1014932f0242243db8d822bb83c89214ee087c"
+    },
+    "builder_report": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/report.json",
+      "sha256": "e198d5a69e3fb492b7a3208584d17a2eef7bf03b831603a26175d634059a6754",
+      "checks_passed": "27/27"
+    },
+    "timeline": "frames 0..80 = simulation steps 0,10,...,800"
+  },
+  "failed_bridge": {
+    "path": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility",
+    "status": "FAILED_AUDIT_ARTIFACT",
+    "reason": "geometry used old future steps10..810 while visibility used aligned steps0..800; source-cell sampling was therefore performed at step10 rather than true source step0",
+    "track_count": 1277
+  },
+  "corrected_v2_bridge": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline",
+    "status": "PASS",
+    "track_count": 1257,
+    "tracks_raw_sha256": "fb2657167f716f3b1aabdd150ccf4f68e57fe24d7aeffe49d0dff3be2826b82b",
+    "tracks_filled_sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+    "visibility_sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+    "point_ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+    "source_cell_ids_sha256": "82533afc75667d7fe6ea883bcb5640a41551e2afbe7b29ada3a79f429d3684f9",
+    "contract_sha256": "e8c45b1f1c71291f977f2b425b2d0348bf0ec4e71d0c1d4002170452c6092c53",
+    "report_sha256": "3d918bf258bfa83f6575419e6ed8f3f09f5aafbba1f0321dbb56108eec3d799f"
+  }
+}

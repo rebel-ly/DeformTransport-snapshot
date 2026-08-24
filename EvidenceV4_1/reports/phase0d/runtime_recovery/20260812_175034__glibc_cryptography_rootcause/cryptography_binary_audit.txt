@@ -1,0 +1,85 @@
+PATH=/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so
+SIZE=14359400
+SHA256=6341b79868fe0e94c49de17aa0be3adca2ba66834b7816b26dff6f70d1ab6709
+
+file: /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=bd924d2bbbcdb542d726489b458204ba752a3400, not stripped
+
+
+ldd: 	linux-vdso.so.1 =>  (0x00007ffc8e574000)
+	libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00007fc53e94c000)
+	libpthread.so.0 => /lib64/libpthread.so.0 (0x00007fc53e730000)
+	libdl.so.2 => /lib64/libdl.so.2 (0x00007fc53e52c000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007fc53e15f000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fc53f66b000)
+/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so: /lib64/libc.so.6: version `GLIBC_2.18' not found (required by /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so)
+/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so: /lib64/libc.so.6: version `GLIBC_2.25' not found (required by /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so)
+/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so: /lib64/libc.so.6: version `GLIBC_2.28' not found (required by /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography/hazmat/bindings/_rust.abi3.so)
+
+
+readelf version info:
+  0a0:   0 (*local*)       0 (*local*)       6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0a4:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0a8:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0ac:   2 (GLIBC_2.2.5)   7 (GLIBC_2.3)     2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0b0:   2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0b4:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0b8:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0bc:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0c0:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0c4:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  0c8:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  0cc:   3 (GLIBC_2.14)    8 (GLIBC_2.12)    2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  0d0:   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0d4:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0d8:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0dc:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   9 (GLIBC_2.2.5)
+  0e0:   9 (GLIBC_2.2.5)   9 (GLIBC_2.2.5)   9 (GLIBC_2.2.5)   9 (GLIBC_2.2.5)
+  0e4:   7 (GLIBC_2.3)     2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0e8:   a (GLIBC_2.17)    2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0ec:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0f0:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0f4:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  0f8:   b (GLIBC_2.3.4)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  0fc:   c (GLIBC_2.3.2)   c (GLIBC_2.3.2)   c (GLIBC_2.3.2)   6 (GLIBC_2.2.5)
+  0x00a0:   Name: GLIBC_2.2.5  Flags: none  Version: 9
+  0x00b0:   Name: GLIBC_2.2.5  Flags: none  Version: 2
+  0x00c0:   Name: GLIBC_2.3  Flags: none  Version: 7
+  0x00d0:   Name: GLIBC_2.3.4  Flags: none  Version: 11
+  0x00e0:   Name: GLIBC_2.7  Flags: none  Version: 13
+  0x00f0:   Name: GLIBC_2.12  Flags: none  Version: 8
+  0x0080:   Name: GLIBC_2.2.5  Flags: none  Version: 6
+  0x0090:   Name: GLIBC_2.3.2  Flags: none  Version: 12
+  0x0100:   Name: GLIBC_2.14  Flags: none  Version: 3
+  0x0110:   Name: GLIBC_2.17  Flags: none  Version: 10
+  0x0120:   Name: GLIBC_2.18  Flags: none  Version: 17
+  0x0130:   Name: GLIBC_2.25  Flags: none  Version: 14
+  0x0140:   Name: GLIBC_2.28  Flags: none  Version: 16
+  0x0150:   Name: GLIBC_2.3  Flags: none  Version: 5
+  01c:   0 (*local*)       2 (GLIBC_2.2.5)   0 (*local*)       0 (*local*)    
+  004:   2 (GLIBC_2.2.5)   3 (GLIBC_2.14)    2 (GLIBC_2.2.5)   4 (GCC_3.0)    
+  008:   5 (GLIBC_2.3)     0 (*local*)       0 (*local*)       0 (*local*)    
+  10c:   6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  11c:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  12c:   2 (GLIBC_2.2.5)   e (GLIBC_2.25)    a (GLIBC_2.17)    2 (GLIBC_2.2.5)
+  13c:   2 (GLIBC_2.2.5)  10 (GLIBC_2.28)    e (GLIBC_2.25)   11 (GLIBC_2.18) 
+  014:   0 (*local*)       2 (GLIBC_2.2.5)   0 (*local*)       0 (*local*)    
+  018:   0 (*local*)       2 (GLIBC_2.2.5)   0 (*local*)       0 (*local*)    
+  038:   0 (*local*)       2 (GLIBC_2.2.5)   0 (*local*)       0 (*local*)    
+  040:   0 (*local*)       0 (*local*)       0 (*local*)       2 (GLIBC_2.2.5)
+  100:   6 (GLIBC_2.2.5)   c (GLIBC_2.3.2)   c (GLIBC_2.3.2)   6 (GLIBC_2.2.5)
+  104:   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  108:   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  110:   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)
+  114:   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   c (GLIBC_2.3.2)
+  118:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  120:   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  124:   d (GLIBC_2.7)     2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  128:   2 (GLIBC_2.2.5)   6 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)   2 (GLIBC_2.2.5)
+  130:   4 (GCC_3.0)       0 (*local*)       6 (GLIBC_2.2.5)   4 (GCC_3.0)    
+  134:   4 (GCC_3.0)       2 (GLIBC_2.2.5)   f (GCC_3.3)       6 (GLIBC_2.2.5)
+  138:   2 (GLIBC_2.2.5)   b (GLIBC_2.3.4)   2 (GLIBC_2.2.5)   7 (GLIBC_2.3)  
+  144:   4 (GCC_3.0)       4 (GCC_3.0)       4 (GCC_3.0)       2 (GLIBC_2.2.5)
+  148:   2 (GLIBC_2.2.5)   1 (*global*)      1 (*global*)      1 (*global*)   
+
+MAX_REQUIRED_GLIBC_VERSION=GLIBC_2.28
+CONTAINS_GLIBC_2.18=True

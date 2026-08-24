@@ -1,0 +1,4 @@
+correct latent_loader_exact=True residual_loader_exact=True residual_mean_abs= 0.01225193589925766
+shuffled latent_loader_exact=True residual_loader_exact=True residual_mean_abs= 0.01370509434491396
+mask_count_contract=True
+TREE_QUALITY_PRODUCTION_LOADER_OK

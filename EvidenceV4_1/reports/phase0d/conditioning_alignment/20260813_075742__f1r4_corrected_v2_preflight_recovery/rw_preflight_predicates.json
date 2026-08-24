@@ -1,0 +1,383 @@
+{
+  "method": "rw",
+  "predicates": [
+    {
+      "PREDICATE_NAME": "ids_exists",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.ids_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "PATH_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "ids_sha",
+      "EXPECTED": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+      "ACTUAL": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.ids_sha256",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "ids_container",
+      "EXPECTED": "ndarray/.npy",
+      "ACTUAL": "ndarray/.npy",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.ids_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "ids_shape",
+      "EXPECTED": [
+        1257
+      ],
+      "ACTUAL": [
+        1257
+      ],
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding + evaluation contract",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "SHAPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "ids_dtype",
+      "EXPECTED": "int64",
+      "ACTUAL": "int64",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding + evaluation contract",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DTYPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "ids_n",
+      "EXPECTED": 1257,
+      "ACTUAL": 1257,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.n",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "SHAPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_exists",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.tracks_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "PATH_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_sha",
+      "EXPECTED": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+      "ACTUAL": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.tracks_sha256",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_container",
+      "EXPECTED": "ndarray/.npy",
+      "ACTUAL": "ndarray/.npy",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.tracks_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_shape",
+      "EXPECTED": [
+        1,
+        81,
+        1257,
+        2
+      ],
+      "ACTUAL": [
+        1,
+        81,
+        1257,
+        2
+      ],
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:790-832",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "SHAPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_dtype",
+      "EXPECTED": "float32",
+      "ACTUAL": "float32",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:787-798 casts float32",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DTYPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_n",
+      "EXPECTED": 1257,
+      "ACTUAL": 1257,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.n",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "SHAPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_t",
+      "EXPECTED": 81,
+      "ACTUAL": 81,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:808-826",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "TIMELINE_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_exists",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.visibility_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "PATH_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_sha",
+      "EXPECTED": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+      "ACTUAL": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.visibility_sha256",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_container",
+      "EXPECTED": "ndarray/.npy",
+      "ACTUAL": "ndarray/.npy",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.visibility_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_shape",
+      "EXPECTED": [
+        1,
+        81,
+        1257
+      ],
+      "ACTUAL": [
+        1,
+        81,
+        1257
+      ],
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:799-826",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "SHAPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_dtype",
+      "EXPECTED": "bool",
+      "ACTUAL": "bool",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:799-806 casts bool",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DTYPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_n",
+      "EXPECTED": 1257,
+      "ACTUAL": 1257,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.n",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "SHAPE_EXPECTATION",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "visibility_t",
+      "EXPECTED": 81,
+      "ACTUAL": 81,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:799-826",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "TIMELINE_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "timeline",
+      "EXPECTED": 81,
+      "ACTUAL": 81,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py ANCHORS/motion transitions",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "TIMELINE_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "coordinate_domain",
+      "EXPECTED": [
+        480,
+        832
+      ],
+      "ACTUAL": [
+        480,
+        832
+      ],
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:838-883",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "COORDINATE_MAPPING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "track_to_eval_mapping",
+      "EXPECTED": "x identity; y*=464/480",
+      "ACTUAL": "x identity; y*=464/480",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "eval_v3.py:956-965",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "COORDINATE_MAPPING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "patch_bounds_valid_tracks",
+      "EXPECTED": 1110,
+      "ACTUAL": 1110,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.valid_tracks",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "patch_bounds_observations",
+      "EXPECTED": 9766,
+      "ACTUAL": 9766,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.obs",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "expect_n",
+      "EXPECTED": 1257,
+      "ACTUAL": 1257,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.n",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "CASE_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "expect_lab",
+      "EXPECTED": 21.16497305149358,
+      "ACTUAL": 21.16497305149358,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.lab",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "expect_rgb",
+      "EXPECTED": 0.14329059195071162,
+      "ACTUAL": 0.14329059195071162,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.rgb",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "expect_tcme",
+      "EXPECTED": 0.7040501053065034,
+      "ACTUAL": 0.7040501053065034,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.expect.tcme",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "DATA_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "method_keys",
+      "EXPECTED": [
+        "rw",
+        "old_correct",
+        "dt_full"
+      ],
+      "ACTUAL": [
+        "rw",
+        "old_correct",
+        "dt_full"
+      ],
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "method_binding.candidate_labels + eval_v3.py:169-199",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "METHOD_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "video_exists",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "method_binding.rw_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "PATH_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "method_label",
+      "EXPECTED": "rw",
+      "ACTUAL": "rw",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "method_binding.candidate_labels",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "METHOD_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "video_path",
+      "EXPECTED": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "ACTUAL": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "method_binding.rw_path",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "METHOD_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "video_sha",
+      "EXPECTED": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+      "ACTUAL": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "method_binding.rw_sha256",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "METHOD_BINDING",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "video_decode",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+      "SOURCE_LINE_OR_JSON_PATH": "read_video_common",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "VIDEO_DOMAIN",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "frame_count",
+      "EXPECTED": 81,
+      "ACTUAL": 81,
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+      "SOURCE_LINE_OR_JSON_PATH": "read_video_common",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "VIDEO_DOMAIN",
+      "STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "frame_hw",
+      "EXPECTED": [
+        464,
+        832
+      ],
+      "ACTUAL": [
+        464,
+        832
+      ],
+      "SOURCE_FILE": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+      "SOURCE_LINE_OR_JSON_PATH": "read_video_common",
+      "ROOT_CAUSE_CLASS_IF_FAIL": "VIDEO_DOMAIN",
+      "STATUS": "PASS"
+    }
+  ],
+  "fail_predicates": [],
+  "first_fail_predicate": null,
+  "status": "PASS"
+}

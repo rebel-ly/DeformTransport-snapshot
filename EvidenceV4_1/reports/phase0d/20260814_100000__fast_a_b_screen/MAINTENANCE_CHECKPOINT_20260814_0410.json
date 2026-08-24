@@ -1,0 +1,35 @@
+{
+  "checkpoint_status": "MAINTENANCE_SAFE_CHECKPOINT",
+  "phase": "Phase0D-4B-Final / 4C",
+  "policy": {
+    "c1_launched": false,
+    "c2_launched": false,
+    "new_c_generation_launched_before_maintenance": false,
+    "server_side_codex_executed": false,
+    "server_llm_api_used": false,
+    "existing_remote_helper_processes_killed": false,
+    "local_codex_only_policy": "PRESERVED"
+  },
+  "completed_steps": ["preview reconstruction timeline PASS", "B0 historical 65.71 lineage source audit"],
+  "in_progress_steps": ["B4-B6 read-only scheduler source trace"],
+  "not_started_steps": ["B1", "B2", "B3", "B7", "C1", "C2", "A0", "A1"],
+  "statuses": {
+    "OLD_65_71_LINEAGE_STATUS": "PASS_SOURCE_LOCATED_CANONICAL_SIM_FRAMES_STEP0_800; concrete historical double-/255 cause",
+    "CANONICAL_PREVIEW_TCMAR_STATUS": "NOT_STARTED",
+    "R2_STATUS": "NOT_STARTED",
+    "DOMAIN_CONTRACT_STATUS": "PREVIOUSLY_RECOVERED",
+    "PREVIEW_VAE_STATUS": "NOT_STARTED",
+    "RW_SIGMA_STATUS": "SOURCE_TRACE_IN_PROGRESS",
+    "WAN_SIGMA_MAPPING_STATUS": "SOURCE_TRACE_IN_PROGRESS",
+    "UNIPC_INTERMEDIATE_START_STATUS": "SOURCE_TRACE_IN_PROGRESS",
+    "PAIRED_INITIAL_NOISE_STATUS": "NOT_STARTED",
+    "A_DIAGNOSTIC_STATUS": "NOT_STARTED_NON_BLOCKING",
+    "C_PREVIEW_SDEDIT_READY": false
+  },
+  "completed_artifacts": [
+    {"path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814/PREVIEW_RECONSTRUCTION_MANIFEST.json", "sha256": "11a184392508a5a96597a85b3030c6995506d6c12c3a7111e8e6b8aae8dc575b", "size_bytes": 44279, "completion_status": "COMPLETE_VALID"},
+    {"path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/PHASE0D_4_RECOVERY_FAST_PATH.md", "sha256": "ae319367209464a39dc0bc44995fa85456272377391278330743daef7d576e26", "size_bytes": 2009, "completion_status": "COMPLETE_VALID"}
+  ],
+  "current_phase_jobs": [],
+  "incomplete_outputs_marked": true
+}

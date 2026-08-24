@@ -1,0 +1,20 @@
+{
+  "run_id": "20260804_234925_autonomous_deformtransport",
+  "snapshot_date": "2026-08-05",
+  "timezone": "Asia/Shanghai",
+  "mode": "人工接管与现场固化",
+  "project_complete": false,
+  "stage": "proxy完整生成对照已完成；官方4帧物理smoke通过；官方81帧chain在final_sim组装失败",
+  "host": "gpu3",
+  "user": "liuyu_qyh",
+  "project_host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport",
+  "project_container_path": "/workspace/DeformTransport",
+  "container": "deformtransport-dev",
+  "git": {"branch": "feature/trajectory-probe", "head": "c98b2724563a64d96186d1bf4e6f9b8952ed9f48", "dirty": true, "commit_or_cleanup_performed": false},
+  "active_processes": [{"pid": 291997, "role": "唯一GPU watcher", "state": "S (sleeping)", "action": "保持原状"}],
+  "inactive_pids": {"89794": "81帧chain已退出，exit_code=1", "86928": "旧安装进程已退出", "86942": "旧安装进程已退出"},
+  "official_81f_chain": {"directory": "04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719", "pid": 89794, "running": false, "exit_code": 1, "last_stage": "03_assemble_final_sim", "simulation_81_frames_completed": true, "failure": "torchvision.io.write_video需要PyAV，但生成环境未安装PyAV", "final_sim_contract_complete": false, "restart_performed": false},
+  "official_81f_trio": {"directory": "04_smoke/OFFICIAL_SANTA_81F_TRIO_20260805_050719", "status": "PREPARED_NOT_STARTED", "scheduler_started": false},
+  "environments": {"generator": "/workspace/tools/miniforge3/envs/realwonder-gen", "simulation_venv": "/workspace/tools/venvs/deformtransport-sim", "opengl_prefix": "/workspace/tools/conda-libs/deformtransport-gl", "genesis_commit": "3aa206cd84729bc7cc14fb4007aeb95a0bead7aa", "torch": "2.5.1+cu121", "cuda_runtime": "12.1", "opencv_headless": "4.9.0.80"},
+  "claim_boundary": {"proxy_is_future_gt": false, "better_than_realwonder_proven": false, "better_than_flow_proven": false, "robot_case_complete": false, "visual_review_complete": false}
+}

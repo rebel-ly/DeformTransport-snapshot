@@ -1,0 +1,233 @@
+{
+  "stage": "transport_region_local_evaluation",
+  "coverage": {
+    "transport_core_global_fraction": 0.16657763532763534,
+    "transport_dilated_global_fraction": 0.20012662234884457,
+    "transport_core_selected_frames": {
+      "0": 0.21394230769230768,
+      "20": 0.1891025641025641,
+      "40": 0.16810897435897437,
+      "60": 0.14294871794871794,
+      "80": 0.12628205128205128
+    }
+  },
+  "metrics_against_simulation_target": {
+    "transport_core": {
+      "realwonder_baseline": {
+        "l1": 28.932937622070312,
+        "mse": 3039.735595703125,
+        "psnr": 13.302445517068737,
+        "temporal_change_error": 16.223155975341797,
+        "gradient_error": 9.296701570333088,
+        "selected_frame_l1": {
+          "0": 4.504509925842285,
+          "20": 26.22488021850586,
+          "40": 30.517255783081055,
+          "60": 37.22673034667969,
+          "80": 41.68556213378906
+        }
+      },
+      "balanced_correct": {
+        "l1": 31.379167556762695,
+        "mse": 3085.386474609375,
+        "psnr": 13.237707894912669,
+        "temporal_change_error": 16.291135787963867,
+        "gradient_error": 8.82786410065591,
+        "selected_frame_l1": {
+          "0": 4.499356269836426,
+          "20": 28.686542510986328,
+          "40": 33.13302993774414,
+          "60": 40.12504196166992,
+          "80": 43.46135711669922
+        }
+      },
+      "balanced_shuffled": {
+        "l1": 36.242279052734375,
+        "mse": 3359.401123046875,
+        "psnr": 12.868184978047324,
+        "temporal_change_error": 16.40078353881836,
+        "gradient_error": 8.618467179072256,
+        "selected_frame_l1": {
+          "0": 4.5154500007629395,
+          "20": 32.60964584350586,
+          "40": 39.271522521972656,
+          "60": 46.51325225830078,
+          "80": 50.371917724609375
+        }
+      },
+      "quality_correct": {
+        "l1": 29.512283325195312,
+        "mse": 3041.124755859375,
+        "psnr": 13.300461243245776,
+        "temporal_change_error": 16.105533599853516,
+        "gradient_error": 9.062920638105009,
+        "selected_frame_l1": {
+          "0": 4.502629280090332,
+          "20": 26.910747528076172,
+          "40": 31.07668685913086,
+          "60": 37.76784133911133,
+          "80": 42.006832122802734
+        }
+      }
+    },
+    "transport_dilated_8px": {
+      "realwonder_baseline": {
+        "l1": 27.488847732543945,
+        "mse": 2794.391845703125,
+        "psnr": 13.667930555484059,
+        "temporal_change_error": 14.657794952392578,
+        "gradient_error": 9.79470605413215,
+        "selected_frame_l1": {
+          "0": 4.759949684143066,
+          "20": 25.1746768951416,
+          "40": 28.861295700073242,
+          "60": 34.26958084106445,
+          "80": 38.068199157714844
+        }
+      },
+      "balanced_correct": {
+        "l1": 29.75153923034668,
+        "mse": 2848.6533203125,
+        "psnr": 13.584407618342958,
+        "temporal_change_error": 14.811392784118652,
+        "gradient_error": 9.389664171649017,
+        "selected_frame_l1": {
+          "0": 4.741886615753174,
+          "20": 27.5725040435791,
+          "40": 31.49457359313965,
+          "60": 37.322818756103516,
+          "80": 38.838531494140625
+        }
+      },
+      "balanced_shuffled": {
+        "l1": 33.82943344116211,
+        "mse": 3067.47998046875,
+        "psnr": 13.26298623829202,
+        "temporal_change_error": 14.906760215759277,
+        "gradient_error": 9.18214714968569,
+        "selected_frame_l1": {
+          "0": 4.765979766845703,
+          "20": 30.974544525146484,
+          "40": 36.701011657714844,
+          "60": 42.78562545776367,
+          "80": 44.43395233154297
+        }
+      },
+      "quality_correct": {
+        "l1": 28.0634708404541,
+        "mse": 2803.909912109375,
+        "psnr": 13.65316304962128,
+        "temporal_change_error": 14.585229873657227,
+        "gradient_error": 9.579988319013879,
+        "selected_frame_l1": {
+          "0": 4.742272853851318,
+          "20": 25.884836196899414,
+          "40": 29.4495849609375,
+          "60": 35.00870132446289,
+          "80": 37.959556579589844
+        }
+      }
+    },
+    "background_outside_dilated": {
+      "realwonder_baseline": {
+        "l1": 10.46218490600586,
+        "mse": 506.453857421875,
+        "psnr": 21.08540477568298,
+        "temporal_change_error": 1.0079011917114258,
+        "gradient_error": 8.423566164053813,
+        "selected_frame_l1": {
+          "0": 3.7489640712738037,
+          "20": 8.826148986816406,
+          "40": 10.793039321899414,
+          "60": 12.131548881530762,
+          "80": 12.890094757080078
+        }
+      },
+      "balanced_correct": {
+        "l1": 10.498064041137695,
+        "mse": 506.28564453125,
+        "psnr": 21.086847475028954,
+        "temporal_change_error": 1.0746451616287231,
+        "gradient_error": 8.408557244133824,
+        "selected_frame_l1": {
+          "0": 3.733349561691284,
+          "20": 8.834059715270996,
+          "40": 10.79311466217041,
+          "60": 12.155525207519531,
+          "80": 13.072340965270996
+        }
+      },
+      "balanced_shuffled": {
+        "l1": 10.468241691589355,
+        "mse": 506.70556640625,
+        "psnr": 21.08324685615645,
+        "temporal_change_error": 1.0900098085403442,
+        "gradient_error": 8.389714870437215,
+        "selected_frame_l1": {
+          "0": 3.7459230422973633,
+          "20": 8.845966339111328,
+          "40": 10.768118858337402,
+          "60": 12.099010467529297,
+          "80": 13.003841400146484
+        }
+      },
+      "quality_correct": {
+        "l1": 10.42331600189209,
+        "mse": 502.1121826171875,
+        "psnr": 21.12279602191763,
+        "temporal_change_error": 1.0342127084732056,
+        "gradient_error": 8.396444223309436,
+        "selected_frame_l1": {
+          "0": 3.75091814994812,
+          "20": 8.810750007629395,
+          "40": 10.729406356811523,
+          "60": 12.082191467285156,
+          "80": 12.879152297973633
+        }
+      }
+    }
+  },
+  "pairwise_metrics": {
+    "transport_core": {
+      "balanced_correct_vs_shuffled_l1": 13.577932357788086,
+      "baseline_vs_balanced_correct_l1": 13.754128456115723,
+      "baseline_vs_quality_correct_l1": 7.0623321533203125
+    },
+    "transport_dilated_8px": {
+      "balanced_correct_vs_shuffled_l1": 12.545927047729492,
+      "baseline_vs_balanced_correct_l1": 13.145940780639648,
+      "baseline_vs_quality_correct_l1": 6.938329219818115
+    },
+    "background_outside_dilated": {
+      "balanced_correct_vs_shuffled_l1": 2.5798768997192383,
+      "baseline_vs_balanced_correct_l1": 2.7206645011901855,
+      "baseline_vs_quality_correct_l1": 2.154949188232422
+    }
+  },
+  "correct_vs_shuffled_improvement": {
+    "transport_core": {
+      "l1_improvement_percent": 13.418337982817258,
+      "mse_improvement_percent": 8.156651688827711,
+      "temporal_error_improvement_percent": 0.6685519054316601,
+      "gradient_error_improvement_percent": -2.4296306667167062
+    },
+    "transport_dilated_8px": {
+      "l1_improvement_percent": 12.054278762628151,
+      "mse_improvement_percent": 7.133760009830953,
+      "temporal_error_improvement_percent": 0.6397596141635358,
+      "gradient_error_improvement_percent": -2.260005405929809
+    }
+  },
+  "checks": {
+    "balanced_quality_masks_equal": true,
+    "latent_mask_shape": true,
+    "video_mask_shape": true,
+    "core_mask_nonempty": true,
+    "dilated_mask_nonempty": true,
+    "correct_better_than_shuffled_core_l1": true
+  },
+  "all_checks_pass": true,
+  "transport_mask_overlay": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/transport_region_evaluation/transport_mask_overlay.png",
+  "transport_region_contact_sheet": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/transport_region_evaluation/five_way_transport_region_crops.png",
+  "interpretation_boundary": "The simulation video is a coarse mechanism reference, not real-world RGB ground truth."
+}

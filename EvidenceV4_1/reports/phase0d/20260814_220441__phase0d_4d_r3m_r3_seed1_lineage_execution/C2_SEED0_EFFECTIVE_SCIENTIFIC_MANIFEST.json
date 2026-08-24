@@ -1,0 +1,100 @@
+{
+  "FORMAL_DIFFUSION_SEED": 0,
+  "actual_sigma_index15": 0.8329627513885498,
+  "actual_timestep_index15": 832,
+  "arm": "C2",
+  "decoded_output_geometry": [
+    832,
+    464
+  ],
+  "dtype": "bf16",
+  "effective_denoise_steps": 25,
+  "evaluation": {
+    "N": 1257,
+    "binding": "corrected-v2 N=1257",
+    "evaluator": {
+      "path": "/workspace/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+      "sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08"
+    },
+    "ids": {
+      "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+      "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8"
+    }
+  },
+  "external_epsilon": {
+    "dtype": "float32",
+    "file_sha256": "20911e4d396115ea12ab1c7715202c7321dd8104fe114d7515d2321485b9e288",
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/R3_SHARED_EPSILON_58x104.npy",
+    "semantic_role": "deterministic consequence of FORMAL_DIFFUSION_SEED",
+    "shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "tensor_sha256": "0a71855c890fb782a642a1722043e64c8c8d243edc09a959365e6298fb15cfdd"
+  },
+  "formal_overlay": {
+    "generate_sha256": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+    "wan_move_sha256": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7"
+  },
+  "frame_count": 81,
+  "generation_geometry": [
+    832,
+    480
+  ],
+  "latent_geometry": [
+    58,
+    104
+  ],
+  "model_checkpoint_dir": "/workspace/Wan-Move/Wan-Move-14B-480P",
+  "preview": {
+    "dtype": "float32",
+    "file_sha256": "0110c684d4c70a3d4d6f78889f50f569e1110091a1cac980ebccb78dbced2d31",
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/WAN_FORMAL_PREVIEW_LATENT_58x104.npy",
+    "shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "tensor_sha256": "cc1a218f5559eb342ee8541e54eede52a0a7f2e181c347f30c8c012126d691ad"
+  },
+  "prompt": "Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement.",
+  "prompt_sha256": "af733a4009132dcb0007116d5108be74d136fdf29a63e8a558567ee4462651e3",
+  "scheduler": {
+    "class": "FlowUniPCMultistepScheduler",
+    "num_inference_steps": 40,
+    "shift": 3.0
+  },
+  "source": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+    "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7"
+  },
+  "start_index": 15,
+  "transport": {
+    "K": 1257,
+    "depth": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+      "sha256": "032d738bb2d01bbff88b78f63a2b56fa76c52d985caf3542c22f9dc573879ce1"
+    },
+    "ids": {
+      "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+      "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8"
+    },
+    "implementation": "corrected-v2 material transport",
+    "tracks": {
+      "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+      "sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929"
+    },
+    "visibility": {
+      "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+      "sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff"
+    }
+  },
+  "transport_variant": "v3d",
+  "vae_checkpoint": {
+    "path": "/workspace/Wan-Move/Wan-Move-14B-480P/Wan2.1_VAE.pth",
+    "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+  }
+}

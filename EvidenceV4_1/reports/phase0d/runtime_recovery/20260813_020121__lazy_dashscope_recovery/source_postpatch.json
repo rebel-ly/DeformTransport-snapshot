@@ -1,0 +1,13 @@
+{
+  "git_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+  "prompt_extend_patched_sha256": "61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19",
+  "trajectory_sha256": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+  "wan_move_sha256": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857",
+  "files_changed_by_recovery": ["wan/utils/prompt_extend.py"],
+  "lines_added": 8,
+  "lines_removed": 7,
+  "recovery_scope_gate": "PASS",
+  "trajectory_sha_unchanged": true,
+  "wan_move_sha_unchanged": true,
+  "git_status_after_recovery": ["M wan/modules/trajectory.py", "M wan/utils/prompt_extend.py", "M wan/wan_move.py", "?? Wan-Move/", "?? nohup.out"]
+}

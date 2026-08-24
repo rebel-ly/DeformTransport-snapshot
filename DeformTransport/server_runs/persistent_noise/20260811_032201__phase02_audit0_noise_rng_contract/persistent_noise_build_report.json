@@ -1,0 +1,588 @@
+{
+  "santa": {
+    "a0": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noises.npy",
+    "track": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_material_tracks_correct.npy",
+    "visibility": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility/santa_material_visibility_correct.npy",
+    "shape": [
+      81,
+      60,
+      104,
+      32
+    ],
+    "a1": {
+      "path": "/workspace/DeformTransport/server_runs/persistent_noise/20260811_032201__phase02_audit0_noise_rng_contract/variants/santa/A1_full_persistent_noises.npy",
+      "frame0_bitwise_equal_a0": true,
+      "non_anchor_frames_bitwise_equal_a0": true,
+      "changed_spatial_cells_total": 9111,
+      "stats": [
+        {
+          "latent_index": 1,
+          "pixel_frame": 4,
+          "visible_points": 738,
+          "changed_cells": 692,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 2,
+          "pixel_frame": 8,
+          "visible_points": 700,
+          "changed_cells": 635,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 3,
+          "pixel_frame": 12,
+          "visible_points": 656,
+          "changed_cells": 596,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 4,
+          "pixel_frame": 16,
+          "visible_points": 627,
+          "changed_cells": 575,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 5,
+          "pixel_frame": 20,
+          "visible_points": 607,
+          "changed_cells": 567,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 6,
+          "pixel_frame": 24,
+          "visible_points": 553,
+          "changed_cells": 519,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 7,
+          "pixel_frame": 28,
+          "visible_points": 546,
+          "changed_cells": 503,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 8,
+          "pixel_frame": 32,
+          "visible_points": 547,
+          "changed_cells": 494,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 9,
+          "pixel_frame": 36,
+          "visible_points": 522,
+          "changed_cells": 472,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 10,
+          "pixel_frame": 40,
+          "visible_points": 495,
+          "changed_cells": 451,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 11,
+          "pixel_frame": 44,
+          "visible_points": 489,
+          "changed_cells": 450,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 12,
+          "pixel_frame": 48,
+          "visible_points": 472,
+          "changed_cells": 433,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 13,
+          "pixel_frame": 52,
+          "visible_points": 456,
+          "changed_cells": 414,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 14,
+          "pixel_frame": 56,
+          "visible_points": 417,
+          "changed_cells": 378,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 15,
+          "pixel_frame": 60,
+          "visible_points": 401,
+          "changed_cells": 358,
+          "max_distinct_ancestries_per_target": 4
+        },
+        {
+          "latent_index": 16,
+          "pixel_frame": 64,
+          "visible_points": 379,
+          "changed_cells": 350,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 17,
+          "pixel_frame": 68,
+          "visible_points": 356,
+          "changed_cells": 328,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 18,
+          "pixel_frame": 72,
+          "visible_points": 342,
+          "changed_cells": 313,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 19,
+          "pixel_frame": 76,
+          "visible_points": 320,
+          "changed_cells": 293,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 20,
+          "pixel_frame": 80,
+          "visible_points": 320,
+          "changed_cells": 290,
+          "max_distinct_ancestries_per_target": 2
+        }
+      ]
+    },
+    "a2": {
+      "path": "/workspace/DeformTransport/server_runs/persistent_noise/20260811_032201__phase02_audit0_noise_rng_contract/variants/santa/A2_block3_reanchored_noises.npy",
+      "frame0_bitwise_equal_a0": true,
+      "non_anchor_frames_bitwise_equal_a0": true,
+      "changed_spatial_cells_total": 5520,
+      "stats": [
+        {
+          "block_anchor_latent": 0,
+          "block_anchor_pixel": 0,
+          "latent_index": 1,
+          "pixel_frame": 4,
+          "anchor_and_target_visible_points": 738,
+          "changed_cells": 692,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 0,
+          "block_anchor_pixel": 0,
+          "latent_index": 2,
+          "pixel_frame": 8,
+          "anchor_and_target_visible_points": 700,
+          "changed_cells": 635,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 3,
+          "block_anchor_pixel": 12,
+          "latent_index": 4,
+          "pixel_frame": 16,
+          "anchor_and_target_visible_points": 498,
+          "changed_cells": 465,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 3,
+          "block_anchor_pixel": 12,
+          "latent_index": 5,
+          "pixel_frame": 20,
+          "anchor_and_target_visible_points": 477,
+          "changed_cells": 450,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 6,
+          "block_anchor_pixel": 24,
+          "latent_index": 7,
+          "pixel_frame": 28,
+          "anchor_and_target_visible_points": 424,
+          "changed_cells": 393,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 6,
+          "block_anchor_pixel": 24,
+          "latent_index": 8,
+          "pixel_frame": 32,
+          "anchor_and_target_visible_points": 411,
+          "changed_cells": 382,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 9,
+          "block_anchor_pixel": 36,
+          "latent_index": 10,
+          "pixel_frame": 40,
+          "anchor_and_target_visible_points": 408,
+          "changed_cells": 377,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 9,
+          "block_anchor_pixel": 36,
+          "latent_index": 11,
+          "pixel_frame": 44,
+          "anchor_and_target_visible_points": 386,
+          "changed_cells": 358,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 12,
+          "block_anchor_pixel": 48,
+          "latent_index": 13,
+          "pixel_frame": 52,
+          "anchor_and_target_visible_points": 383,
+          "changed_cells": 355,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 12,
+          "block_anchor_pixel": 48,
+          "latent_index": 14,
+          "pixel_frame": 56,
+          "anchor_and_target_visible_points": 352,
+          "changed_cells": 326,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 15,
+          "block_anchor_pixel": 60,
+          "latent_index": 16,
+          "pixel_frame": 64,
+          "anchor_and_target_visible_points": 321,
+          "changed_cells": 296,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 15,
+          "block_anchor_pixel": 60,
+          "latent_index": 17,
+          "pixel_frame": 68,
+          "anchor_and_target_visible_points": 297,
+          "changed_cells": 278,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 18,
+          "block_anchor_pixel": 72,
+          "latent_index": 19,
+          "pixel_frame": 76,
+          "anchor_and_target_visible_points": 279,
+          "changed_cells": 260,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 18,
+          "block_anchor_pixel": 72,
+          "latent_index": 20,
+          "pixel_frame": 80,
+          "anchor_and_target_visible_points": 272,
+          "changed_cells": 253,
+          "max_distinct_ancestries_per_target": 2
+        }
+      ]
+    }
+  },
+  "tree": {
+    "a0": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noises.npy",
+    "track": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/tree_material_tracks_correct.npy",
+    "visibility": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/tree_material_visibility_correct.npy",
+    "shape": [
+      81,
+      60,
+      104,
+      32
+    ],
+    "a1": {
+      "path": "/workspace/DeformTransport/server_runs/persistent_noise/20260811_032201__phase02_audit0_noise_rng_contract/variants/tree/A1_full_persistent_noises.npy",
+      "frame0_bitwise_equal_a0": true,
+      "non_anchor_frames_bitwise_equal_a0": true,
+      "changed_spatial_cells_total": 7812,
+      "stats": [
+        {
+          "latent_index": 1,
+          "pixel_frame": 4,
+          "visible_points": 668,
+          "changed_cells": 645,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 2,
+          "pixel_frame": 8,
+          "visible_points": 662,
+          "changed_cells": 562,
+          "max_distinct_ancestries_per_target": 4
+        },
+        {
+          "latent_index": 3,
+          "pixel_frame": 12,
+          "visible_points": 625,
+          "changed_cells": 559,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "latent_index": 4,
+          "pixel_frame": 16,
+          "visible_points": 581,
+          "changed_cells": 513,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 5,
+          "pixel_frame": 20,
+          "visible_points": 552,
+          "changed_cells": 494,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 6,
+          "pixel_frame": 24,
+          "visible_points": 513,
+          "changed_cells": 455,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 7,
+          "pixel_frame": 28,
+          "visible_points": 466,
+          "changed_cells": 417,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 8,
+          "pixel_frame": 32,
+          "visible_points": 440,
+          "changed_cells": 383,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 9,
+          "pixel_frame": 36,
+          "visible_points": 412,
+          "changed_cells": 363,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 10,
+          "pixel_frame": 40,
+          "visible_points": 393,
+          "changed_cells": 346,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 11,
+          "pixel_frame": 44,
+          "visible_points": 370,
+          "changed_cells": 320,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 12,
+          "pixel_frame": 48,
+          "visible_points": 367,
+          "changed_cells": 327,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 13,
+          "pixel_frame": 52,
+          "visible_points": 342,
+          "changed_cells": 310,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 14,
+          "pixel_frame": 56,
+          "visible_points": 345,
+          "changed_cells": 305,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 15,
+          "pixel_frame": 60,
+          "visible_points": 337,
+          "changed_cells": 306,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 16,
+          "pixel_frame": 64,
+          "visible_points": 332,
+          "changed_cells": 295,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 17,
+          "pixel_frame": 68,
+          "visible_points": 327,
+          "changed_cells": 305,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 18,
+          "pixel_frame": 72,
+          "visible_points": 338,
+          "changed_cells": 310,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 19,
+          "pixel_frame": 76,
+          "visible_points": 337,
+          "changed_cells": 304,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "latent_index": 20,
+          "pixel_frame": 80,
+          "visible_points": 336,
+          "changed_cells": 293,
+          "max_distinct_ancestries_per_target": 3
+        }
+      ]
+    },
+    "a2": {
+      "path": "/workspace/DeformTransport/server_runs/persistent_noise/20260811_032201__phase02_audit0_noise_rng_contract/variants/tree/A2_block3_reanchored_noises.npy",
+      "frame0_bitwise_equal_a0": true,
+      "non_anchor_frames_bitwise_equal_a0": true,
+      "changed_spatial_cells_total": 5112,
+      "stats": [
+        {
+          "block_anchor_latent": 0,
+          "block_anchor_pixel": 0,
+          "latent_index": 1,
+          "pixel_frame": 4,
+          "anchor_and_target_visible_points": 668,
+          "changed_cells": 645,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 0,
+          "block_anchor_pixel": 0,
+          "latent_index": 2,
+          "pixel_frame": 8,
+          "anchor_and_target_visible_points": 662,
+          "changed_cells": 562,
+          "max_distinct_ancestries_per_target": 4
+        },
+        {
+          "block_anchor_latent": 3,
+          "block_anchor_pixel": 12,
+          "latent_index": 4,
+          "pixel_frame": 16,
+          "anchor_and_target_visible_points": 542,
+          "changed_cells": 485,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 3,
+          "block_anchor_pixel": 12,
+          "latent_index": 5,
+          "pixel_frame": 20,
+          "anchor_and_target_visible_points": 513,
+          "changed_cells": 462,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 6,
+          "block_anchor_pixel": 24,
+          "latent_index": 7,
+          "pixel_frame": 28,
+          "anchor_and_target_visible_points": 412,
+          "changed_cells": 375,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 6,
+          "block_anchor_pixel": 24,
+          "latent_index": 8,
+          "pixel_frame": 32,
+          "anchor_and_target_visible_points": 396,
+          "changed_cells": 351,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 9,
+          "block_anchor_pixel": 36,
+          "latent_index": 10,
+          "pixel_frame": 40,
+          "anchor_and_target_visible_points": 354,
+          "changed_cells": 315,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 9,
+          "block_anchor_pixel": 36,
+          "latent_index": 11,
+          "pixel_frame": 44,
+          "anchor_and_target_visible_points": 335,
+          "changed_cells": 292,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 12,
+          "block_anchor_pixel": 48,
+          "latent_index": 13,
+          "pixel_frame": 52,
+          "anchor_and_target_visible_points": 301,
+          "changed_cells": 279,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 12,
+          "block_anchor_pixel": 48,
+          "latent_index": 14,
+          "pixel_frame": 56,
+          "anchor_and_target_visible_points": 295,
+          "changed_cells": 266,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 15,
+          "block_anchor_pixel": 60,
+          "latent_index": 16,
+          "pixel_frame": 64,
+          "anchor_and_target_visible_points": 298,
+          "changed_cells": 265,
+          "max_distinct_ancestries_per_target": 2
+        },
+        {
+          "block_anchor_latent": 15,
+          "block_anchor_pixel": 60,
+          "latent_index": 17,
+          "pixel_frame": 68,
+          "anchor_and_target_visible_points": 293,
+          "changed_cells": 274,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 18,
+          "block_anchor_pixel": 72,
+          "latent_index": 19,
+          "pixel_frame": 76,
+          "anchor_and_target_visible_points": 305,
+          "changed_cells": 278,
+          "max_distinct_ancestries_per_target": 3
+        },
+        {
+          "block_anchor_latent": 18,
+          "block_anchor_pixel": 72,
+          "latent_index": 20,
+          "pixel_frame": 80,
+          "anchor_and_target_visible_points": 299,
+          "changed_cells": 263,
+          "max_distinct_ancestries_per_target": 2
+        }
+      ]
+    }
+  }
+}

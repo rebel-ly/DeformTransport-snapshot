@@ -1,0 +1,15 @@
+{
+  "formal_wanmove_python": "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+  "python_sha256": "edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3",
+  "python_version": "Python 3.11.0",
+  "sys_prefix": "/workspace/tools/miniforge3/envs/wan-move",
+  "torch_version": "2.5.1+cu121",
+  "torch_cuda_version": "12.1",
+  "wan_move_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+  "trajectory_sha256": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+  "wan_move_sha256": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857",
+  "prompt_extend_sha256": "61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19",
+  "container_hostname": "gpu3",
+  "critical_package_manifest": "candidate_dependency_matrix.json",
+  "full_package_manifest": "candidate_pip_list.json"
+}

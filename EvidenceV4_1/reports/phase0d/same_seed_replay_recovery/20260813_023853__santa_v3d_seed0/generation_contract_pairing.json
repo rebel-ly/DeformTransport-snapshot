@@ -1,0 +1,5 @@
+{
+  "generation_semantic_contract_equal": "NOT_EVALUATED_NEW_BLOCKER_BEFORE_CONTAINER_WRAPPER",
+  "run_contract_pairing": "NOT_EVALUATED_NEW_BLOCKER_BEFORE_GENERATION",
+  "reason": "Container /usr/bin/python 3.8 cannot import wan because easydict is absent. Protocol requires stop and forbids automatic installation or a second dependency recovery."
+}

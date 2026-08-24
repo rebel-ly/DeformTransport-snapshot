@@ -1,0 +1,11 @@
+RUN_ID: 20260804_234925_autonomous_deformtransport
+job_id: FINAL_SIM_NOISE_RECON_20260805_031213
+任务: Santa_21帧proxy使用项目原NoiseWarper与官方RAFT重建structured_noise
+GPU编号: 2
+GPU_UUID: GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf
+调度分类: SHAREABLE_SHORT
+seed: 0
+timeout秒: 600
+输入目录: /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1
+输出: noises.npy与flows.npy及noise_generation_report.json
+结论边界: 有损工程proxy_不是原始final_sim或future_GT

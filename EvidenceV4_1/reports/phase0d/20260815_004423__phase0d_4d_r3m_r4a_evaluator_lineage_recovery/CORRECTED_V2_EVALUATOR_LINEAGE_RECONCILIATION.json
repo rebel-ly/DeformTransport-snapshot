@@ -1,0 +1,15 @@
+{
+  "MANIFEST_EVALUATOR_PROVENANCE_MISMATCH": true,
+  "incorrect_manifest_evaluator_path": "/workspace/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "incorrect_manifest_evaluator_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "incorrect_manifest_evaluator_n": 1277,
+  "CORRECTED_V2_PRIMARY_EVALUATOR_RECOVERED": true,
+  "AUTHORITATIVE_EVALUATOR_PATH": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+  "AUTHORITATIVE_EVALUATOR_SHA256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "AUTHORITATIVE_EVAL_N": 1257,
+  "AUTHORITATIVE_EVAL_IDS_SHA256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "SEED1_PLANNED_MANIFEST_EVALUATOR_FIELD": "PROVENANCE_METADATA_ERROR",
+  "GENERATION_VALIDITY_IMPACT": "NONE",
+  "SEED1_GENERATION_RERUN_REQUIRED": false,
+  "science_seal": "CLOSED_R4A_STOP_RULE"
+}

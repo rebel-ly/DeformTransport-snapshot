@@ -1,0 +1,152 @@
+{
+  "lamp": {
+    "status": "success",
+    "returncode": 0,
+    "elapsed_sec": 73.58055210113525,
+    "log": "/workspace/DeformTransport/server_runs/20260808_031551__case_initialization_audit/lamp.log",
+    "result": {
+      "case": "lamp",
+      "module": "simulation.case_simulation.lamp",
+      "class": "Lamp",
+      "import_ok": true,
+      "class_found": true,
+      "signature": "(config, all_obj_info, device)",
+      "required_args": [
+        "config",
+        "all_obj_info",
+        "device"
+      ],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": null,
+      "error": null,
+      "import_sec": 61.984710693359375,
+      "source_file": "/workspace/DeformTransport/simulation/case_simulation/lamp.py"
+    }
+  },
+  "persimmon": {
+    "status": "success",
+    "returncode": 0,
+    "elapsed_sec": 83.40452837944031,
+    "log": "/workspace/DeformTransport/server_runs/20260808_031551__case_initialization_audit/persimmon.log",
+    "result": {
+      "case": "persimmon",
+      "module": "simulation.case_simulation.persimmon",
+      "class": "Persimmon",
+      "import_ok": true,
+      "class_found": true,
+      "signature": "(config, all_obj_info, device)",
+      "required_args": [
+        "config",
+        "all_obj_info",
+        "device"
+      ],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": null,
+      "error": null,
+      "import_sec": 70.86108756065369,
+      "source_file": "/workspace/DeformTransport/simulation/case_simulation/persimmon.py"
+    }
+  },
+  "sand_house": {
+    "status": "success",
+    "returncode": 0,
+    "elapsed_sec": 71.48032569885254,
+    "log": "/workspace/DeformTransport/server_runs/20260808_031551__case_initialization_audit/sand_house.log",
+    "result": {
+      "case": "sand_house",
+      "module": "simulation.case_simulation.sand_house",
+      "class": "SandHouse",
+      "import_ok": true,
+      "class_found": true,
+      "signature": "(config, all_obj_info, device)",
+      "required_args": [
+        "config",
+        "all_obj_info",
+        "device"
+      ],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": null,
+      "error": null,
+      "import_sec": 61.41323447227478,
+      "source_file": "/workspace/DeformTransport/simulation/case_simulation/sand_house.py"
+    }
+  },
+  "santa_cloth": {
+    "status": "success",
+    "returncode": 0,
+    "elapsed_sec": 76.04148769378662,
+    "log": "/workspace/DeformTransport/server_runs/20260808_031551__case_initialization_audit/santa_cloth.log",
+    "result": {
+      "case": "santa_cloth",
+      "module": "simulation.case_simulation.santa_cloth",
+      "class": "SantaCloth",
+      "import_ok": true,
+      "class_found": true,
+      "signature": "(config, all_obj_info, device)",
+      "required_args": [
+        "config",
+        "all_obj_info",
+        "device"
+      ],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": null,
+      "error": null,
+      "import_sec": 66.50016689300537,
+      "source_file": "/workspace/DeformTransport/simulation/case_simulation/santa_cloth.py"
+    }
+  },
+  "tree": {
+    "status": "success",
+    "returncode": 0,
+    "elapsed_sec": 94.06220889091492,
+    "log": "/workspace/DeformTransport/server_runs/20260808_031551__case_initialization_audit/tree.log",
+    "result": {
+      "case": "tree",
+      "module": "simulation.case_simulation.tree",
+      "class": "Tree",
+      "import_ok": true,
+      "class_found": true,
+      "signature": "(config, all_obj_info, device)",
+      "required_args": [
+        "config",
+        "all_obj_info",
+        "device"
+      ],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": null,
+      "error": null,
+      "import_sec": 84.81043696403503,
+      "source_file": "/workspace/DeformTransport/simulation/case_simulation/tree.py"
+    }
+  },
+  "two_duck": {
+    "status": "success",
+    "returncode": 0,
+    "elapsed_sec": 84.11721467971802,
+    "log": "/workspace/DeformTransport/server_runs/20260808_031551__case_initialization_audit/two_duck.log",
+    "result": {
+      "case": "two_duck",
+      "module": "simulation.case_simulation.two_duck",
+      "class": "TwoDuck",
+      "import_ok": true,
+      "class_found": true,
+      "signature": "(config, all_obj_info, device)",
+      "required_args": [
+        "config",
+        "all_obj_info",
+        "device"
+      ],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": null,
+      "error": null,
+      "import_sec": 70.08123779296875,
+      "source_file": "/workspace/DeformTransport/simulation/case_simulation/two_duck.py"
+    }
+  }
+}

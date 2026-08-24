@@ -1,0 +1,46 @@
+{
+  "任务": "真实CUDA材料点transport重算与artifact一致性验证",
+  "状态": "通过",
+  "GPU": {
+    "名称": "NVIDIA L40",
+    "CUDA_VISIBLE_DEVICES": "2"
+  },
+  "输入": {
+    "transport_ready": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt",
+    "transport_ready_SHA256": "45d25b1901e621e575a83ffb1a351306c2ed4980b8a5988f70e6caef56cc123b",
+    "latent_artifact": "/workspace/DeformTransport/artifacts/transport_validation/santa_cloth_21f/wan_vae/vae_latent_outputs.pt",
+    "latent_artifact_SHA256": "f2ad921d3548d1d22acbee4d36896e0c16f9ff576f165dbef3d27b387613345c",
+    "seed": 0
+  },
+  "规模": {
+    "点数": 28264,
+    "latent帧": 6,
+    "latent_shape": [
+      6,
+      16,
+      60,
+      104
+    ]
+  },
+  "检查": {
+    "Correct_mask一致": true,
+    "Correct_count一致": true,
+    "Shuffled_mask一致": true,
+    "Correct有限": true,
+    "Shuffled有限": true,
+    "Correct与Shuffled不同": true
+  },
+  "与历史artifact最大绝对差": {
+    "Correct": 0.0,
+    "Shuffled": 0.0
+  },
+  "运行秒数": {
+    "Correct": 0.9416419729968766,
+    "Shuffled": 0.013160542992409319,
+    "总计": 1.4177862069918774
+  },
+  "显存MiB": {
+    "峰值已分配": 26.36083984375,
+    "峰值已保留": 30.0
+  }
+}

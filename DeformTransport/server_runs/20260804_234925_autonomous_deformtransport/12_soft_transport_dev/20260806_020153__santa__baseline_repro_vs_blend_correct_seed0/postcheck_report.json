@@ -1,0 +1,67 @@
+{
+  "paths": {
+    "historical_baseline": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRIO_MANUAL_20260805_021601/baseline/santa_official_baseline_seed0.mp4",
+    "current_baseline": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_020153__santa__baseline_repro_vs_blend_correct_seed0/baseline_current/santa_current_baseline_seed0.mp4",
+    "blend_correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_020153__santa__baseline_repro_vs_blend_correct_seed0/blend_correct_a050/santa_soft_blend_a050_correct_seed0.mp4"
+  },
+  "video_shapes": {
+    "historical_baseline": [
+      81,
+      480,
+      832,
+      3
+    ],
+    "current_baseline": [
+      81,
+      480,
+      832,
+      3
+    ],
+    "blend_correct": [
+      81,
+      480,
+      832,
+      3
+    ]
+  },
+  "historical_vs_current_baseline": {
+    "shape_equal": true,
+    "decoded_frames_exactly_equal": true,
+    "mean_abs_pixel_difference_0_255": 0.0,
+    "max_abs_pixel_difference_0_255": 0.0,
+    "mse_0_255": 0.0,
+    "psnr_db": Infinity,
+    "different_values": 0,
+    "per_frame_mae": {
+      "minimum": 0.0,
+      "mean": 0.0,
+      "maximum": 0.0,
+      "first": 0.0,
+      "middle": 0.0,
+      "final": 0.0
+    }
+  },
+  "current_baseline_vs_blend_correct": {
+    "shape_equal": true,
+    "decoded_frames_exactly_equal": false,
+    "mean_abs_pixel_difference_0_255": 5.304938793182373,
+    "max_abs_pixel_difference_0_255": 255.0,
+    "mse_0_255": 326.3015441894531,
+    "psnr_db": 22.994612318199323,
+    "different_values": 61262216,
+    "per_frame_mae": {
+      "minimum": 1.6313092708587646,
+      "mean": 5.304929256439209,
+      "maximum": 7.270091533660889,
+      "first": 1.6313092708587646,
+      "middle": 4.940764427185059,
+      "final": 7.270091533660889
+    }
+  },
+  "output_validity": {
+    "current_baseline_81_frames": true,
+    "blend_correct_81_frames": true,
+    "current_baseline_noncollapsed_std": 52.43482927035887,
+    "blend_correct_noncollapsed_std": 51.98498582617296
+  }
+}

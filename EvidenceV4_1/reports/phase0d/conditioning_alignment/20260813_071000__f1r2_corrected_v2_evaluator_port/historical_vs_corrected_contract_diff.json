@@ -1,0 +1,15 @@
+{
+  "allowed_dataset_binding_diffs_required_by_target": [
+    {"field": "expect.n", "historical": 1277, "corrected_v2": 1257, "allowed_class": "DATASET_BINDING", "source_location": "eval_v3.py:77-84"},
+    {"field": "tracks path/SHA", "historical": "source-resident legacy bridge path", "corrected_v2": "authoritative corrected-v2 SHA a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929", "allowed_class": "DATASET_BINDING", "source_location": "eval_v3.py:65-70"},
+    {"field": "visibility path/SHA", "historical": "source-resident legacy bridge path", "corrected_v2": "authoritative corrected-v2 SHA 5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff", "allowed_class": "DATASET_BINDING", "source_location": "eval_v3.py:71-75"}
+  ],
+  "allowed_method_binding_diffs_required_by_target": [
+    {"field": "method binding", "historical": "rw/old_correct/v3s-v3e only", "corrected_v2": "RW canonical plus DT_FULL Replay A", "allowed_class": "METHOD_BINDING", "source_location": "eval_v3.py:169-199"}
+  ],
+  "forbidden_metric_semantic_diffs_observed": [],
+  "allowed_dataset_binding_diff_count": 3,
+  "allowed_method_binding_diff_count": 1,
+  "forbidden_metric_semantic_diff_count": 0,
+  "portability_result": "BLOCKED: all required permitted binding changes are source-resident and evaluator exposes no external config injection. Applying them would change evaluator source SHA, prohibited by F1-R2 hard gate."
+}

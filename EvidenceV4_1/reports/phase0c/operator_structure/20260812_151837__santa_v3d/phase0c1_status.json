@@ -1,0 +1,29 @@
+{
+  "aggregates": {
+    "CARRIERS_N": 1257,
+    "CARRIERS_WITH_ANY_CONTRIBUTION": 1102,
+    "GLOBAL_MAX_MULTIPLICITY": 3,
+    "MAX_WIN_COUNT": 20,
+    "MEAN_WIN_COUNT_PER_CARRIER": 7.1845664280031825,
+    "P50_WIN_COUNT": 6.0,
+    "P95_WIN_COUNT": 19.0,
+    "TOTAL_CANDIDATE_ASSIGNMENTS": 9766,
+    "TOTAL_COLLISION_CARRIERS": 1457,
+    "TOTAL_COLLISION_CELLS": 722,
+    "TOTAL_FUTURE_SLOTS": 20,
+    "TOTAL_UNIQUE_TARGET_WRITES": 9031,
+    "ZERO_CONTRIBUTION_CARRIERS": 155
+  },
+  "invariants": {
+    "collision_structure_mismatches": 0,
+    "per_carrier_contribution_mismatches": 0,
+    "target_cell_structure_mismatches": 0,
+    "winner_id_mismatches": 0,
+    "winning_depth_mismatches": 0,
+    "zero_contribution_set_equal": true
+  },
+  "phase": "Phase0C-1",
+  "proceed_to_phase0c2": true,
+  "source_drift": "PASS",
+  "status": "PASS"
+}

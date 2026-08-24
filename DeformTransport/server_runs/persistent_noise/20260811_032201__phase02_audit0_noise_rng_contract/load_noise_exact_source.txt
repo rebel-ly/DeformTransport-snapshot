@@ -1,0 +1,63 @@
+
+================================================================================
+load_noise
+================================================================================
+module = vidgen.utils
+file   = /workspace/DeformTransport/vidgen/utils.py
+def load_noise(
+    noise_path: str,
+    target_frames: int = 21,
+    channel_dim: int = 16,
+    downsample_mode: str = "nearest",
+    eval_degradation: float = 0.0,
+):
+    """Load and prepare structured noise from a .npy file.
+
+    Args:
+        noise_path: Path to noise.npy file with shape [T, H, W, C] = [81, 60, 104, noise_dim]
+        target_frames: Number of target frames after downsampling
+        channel_dim: Number of channels for structured noise (rest goes to SDE noise)
+        downsample_mode: Temporal downsampling mode ('nearest', 'blend', etc.)
+        eval_degradation: Blend ratio with random noise (0.0 = pure structured noise)
+
+    Returns:
+        dict with keys: structured_noise, structured_noise_sde, degradation
+    """
+    noise_path = Path(noise_path)
+    if not noise_path.exists():
+        raise FileNotFoundError(f"Noise file not found: {noise_path}")
+
+    noise_array = np.load(noise_path, allow_pickle=False)
+    if noise_array.ndim != 4:
+        raise ValueError(f"Noise array must be 4D, got {noise_array.shape}")
+
+    noise_tensor = torch.from_numpy(noise_array).to(torch.float32)
+
+    # Ensure tensor layout is [frames, channels, height, width]
+    noise_tensor = noise_tensor.permute(0, 3, 1, 2).contiguous()
+
+    # Temporal downsampling
+    noise_tensor = get_downtemp_noise(noise_tensor, target_frames, mode=downsample_mode)
+
+    # Blend with random noise if degradation > 0
+    if eval_degradation > 0.0:
+        noise_tensor = mix_new_noise(noise_tensor, eval_degradation)
+
+    # Split into structured noise and SDE noise (deterministic slicing, not random)
+    structured_noise = noise_tensor[:, :channel_dim]
+    if noise_tensor.shape[1] > channel_dim:
+        structured_noise_sde = noise_tensor[:, channel_dim:]
+    else:
+        structured_noise_sde = None
+
+    return {
+        "structured_noise": structured_noise,
+        "structured_noise_sde": structured_noise_sde,
+        "degradation": eval_degradation,
+    }
+
+
+================================================================================
+extract_subdim
+================================================================================
+NOT EXPOSED

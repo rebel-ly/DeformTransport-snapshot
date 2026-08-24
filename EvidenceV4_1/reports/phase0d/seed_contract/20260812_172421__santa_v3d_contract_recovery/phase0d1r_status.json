@@ -1,0 +1,14 @@
+{
+  "N1277_PATH_HITS": 0,
+  "conditioning_seed_invariance": "FAIL",
+  "corrected_v2_runner_contract": "PASS",
+  "formal_input_gate": "PASS",
+  "formal_reference_quality_metrics": "UNRESOLVED_NO_GT_REFERENCE",
+  "pairwise_evaluation_contract": "PASS",
+  "phase": "Phase0D-1R",
+  "phase0d_scope": "PAIRWISE_OUTPUT_STOCHASTICITY_ONLY",
+  "previous_0d1_record_preserved": true,
+  "proceed_to_phase0d2": false,
+  "source_gate": "PASS",
+  "status": "FAIL"
+}

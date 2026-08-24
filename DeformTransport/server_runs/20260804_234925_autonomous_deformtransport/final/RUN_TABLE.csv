@@ -1,0 +1,7 @@
+实验ID,案例,变体,seed,GPU,状态,输出目录
+CPU_VALIDATION_20260805,全项目,CPU测试与静态验收,不适用,CPU,通过,02_validation
+HISTORICAL_WAN_VAE_PROXY,Santa21f,Correct与Shuffled,0,历史环境,仅审计已有结果,artifacts/transport_validation/santa_cloth_21f/wan_vae
+WAN_VAE_GPU_SMOKE_QUEUED,Santa21f,Target/Correct/Shuffled真实VAE解码,0,待分配,排队,04_smoke/wan_vae_transport_gpu_smoke_queued
+REALWONDER_BASELINE_QUEUED,Santa21f,Baseline,0,待分配,阻塞于final_sim,04_smoke/baseline_smoke_queued
+DT_TRANSPORT_GPU_PARITY_20260805_015718,Santa21f,真实CUDA Correct与Shuffled transport重算,0,GPU2_SHAREABLE,通过,04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718
+WAN_VAE_E2E_21F_20260805_022223,Santa21f video proxy v3,真实VAE编码_Correct与Shuffled_transport_六路解码,0,GPU2_SHAREABLE,通过_非完整RealWonder生成,04_smoke/WAN_VAE_E2E_21F_20260805_022223

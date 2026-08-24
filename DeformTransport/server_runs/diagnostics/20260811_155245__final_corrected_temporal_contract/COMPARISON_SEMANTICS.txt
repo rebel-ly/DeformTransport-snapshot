@@ -1,0 +1,12 @@
+Santa:
+  rw  = corrected Identity-Shuffled
+  v3d = corrected Correct
+  Positive rw-v3d means Correct is better.
+
+Tree:
+  rw  = RealWonder A0
+  v3d = Persistent-Noise A2
+  Positive rw-v3d means A2 is better.
+
+Do NOT average Santa and Tree effects together:
+they answer different scientific questions.

@@ -1,0 +1,62 @@
+Geometry-Only Region Diagnostics — Frozen Before Region Error Inspection
+
+R1. Return-after-Occlusion
+    Definition:
+    material identity is source-visible, becomes physically invisible
+    at least once, and is visible again at the evaluation endpoint.
+    Existing support construction is authoritative.
+
+    Santa n=237: ELIGIBLE
+    Tree  n=180: ELIGIBLE
+
+R2. Latent-Cell Collision / Transport Ambiguity
+    At each anchor t, map every physically visible in-frame material point
+    from 832x480 pixel coordinates to the 104x60 latent lattice:
+
+        cx = floor(x / 8)
+        cy = floor(y / 8)
+
+    Multiplicity m(t,c) is the number of distinct material identities
+    occupying the same latent cell.
+
+    Non-collision: m = 1
+    Collision:     m >= 2
+
+    Region membership uses geometry only and never generated-video error.
+
+R3. Projected Local Deformation
+    Source neighborhoods are frozen at t=0 using k=8 nearest
+    source-visible material identities.
+
+    For material point i at anchor t:
+
+        D_i(t) =
+        median_j | log( d_ij(t) / d_ij(0) ) |
+
+    using currently valid neighbors and at least 4 valid neighbors.
+
+    This is explicitly named PROJECTED local deformation,
+    not full 3D material strain.
+
+    Within each case and anchor:
+      High deformation = top 25% D_i(t)
+      Low deformation  = bottom 25% D_i(t)
+
+    Thresholds are geometry-derived and fixed before inspecting
+    generation errors.
+
+Excluded:
+    Return-after-Out-of-View.
+    Santa support=0.
+    Tree support=0.
+    No statistical inference will be reported.
+
+Primary metric inside eligible regions:
+    TC-MAR.
+
+Companions:
+    TC-ME only after frozen RAFT result becomes available.
+
+Bootstrap unit:
+    whole material identity whenever the subgroup contains repeated
+    temporal observations from the same track.

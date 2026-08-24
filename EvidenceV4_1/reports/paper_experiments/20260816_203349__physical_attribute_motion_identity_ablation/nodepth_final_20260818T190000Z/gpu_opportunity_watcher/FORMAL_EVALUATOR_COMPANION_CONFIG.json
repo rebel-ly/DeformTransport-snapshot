@@ -1,0 +1,8 @@
+{
+  "authoritative_evaluator": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+  "authoritative_evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "companion_wrapper": "/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/post_sc_formal_closure/eval_sc_per_track.py",
+  "formal_evaluator_lineage": "accepted clean-SC corrected-v2 companion wrapper importing authoritative evaluator",
+  "raft_lineage": "load_raft_cached(cuda:0), corrected-v2 tracks/visibility/material IDs, 240x416 crop, formal transition mean TC-ME",
+  "reference_arm": "clean SC"
+}

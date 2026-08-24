@@ -1,0 +1,16 @@
+{
+  "association_interpretation": "FIXED_MATERIAL_TRACK_CROSS_SEED_ASSOCIATION",
+  "identity": {
+    "pearson": 0.2459405398845997,
+    "spearman": 0.21955695489667987
+  },
+  "not_diffusion_seed_uncertainty_estimate": true,
+  "transport": {
+    "pearson": -0.004246328785170132,
+    "spearman": -0.08049778911291881
+  },
+  "wrong_vs_off": {
+    "pearson": 0.051709181938673555,
+    "spearman": 0.09824050672925631
+  }
+}

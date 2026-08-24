@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py", line 20, in <module>
+    from deform_transport.hard_transport import hard_point_transport
+ModuleNotFoundError: No module named 'deform_transport'

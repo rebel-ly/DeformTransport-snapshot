@@ -1,0 +1,136 @@
+Development cases:
+Santa + Tree only.
+
+SandHouse remains held-out and is NOT used for V3 method selection.
+
+Candidate set:
+V3S
+V3B
+V3C
+V3D
+V3E
+
+Reference for V3 development:
+Old Correct Wan-Move seed0.
+
+RealWonder:
+reported as a system-level baseline only.
+It is NOT used to select the V3 winner.
+
+
+APPEARANCE = frozen TC-MAR
+
+- common future-video domain: 832x464
+- RealWonder 832x480:
+  torch bicubic -> 464x832
+  align_corners=False
+  antialias=False
+- source appearance:
+  authoritative aligned input image in 832x480
+- patch:
+  8x8
+  offsets -3.5 ... +3.5
+  exact bilinear sampling
+- anchors:
+  4,8,...,80
+- evaluation support:
+  authoritative FULL Correct material tracks + visibility
+  identical support for every candidate
+- aggregation:
+  observation -> material-track mean
+- paired bootstrap:
+  unit = material track
+  n = 10000
+  seed = 0
+- lower TC-MAR is better
+
+
+MOTION = frozen TC-ME
+
+- generated video motion:
+  torchvision RAFT-Large C_T_SKHT_V2
+- common video:
+  832x464
+- RAFT input:
+  torch area -> 240x416
+  then official RAFT transforms
+- physics reference:
+  DIRECT persistent material displacement
+  NOT simulation RAFT
+
+  q_i,t = (x_i,t / 2, y_i,t / 2)
+
+  d_i,t =
+  (P_i,t+1 - P_i,t) / 2
+
+- validity:
+  visibility[t] & visibility[t+1]
+- evaluation support:
+  identical across methods
+- transition metric:
+  mean EPE
+- paired bootstrap:
+  unit = transition
+  n = 10000
+  seed = 0
+- lower TC-ME is better
+
+
+FROZEN METHOD SELECTION
+
+Step 1: Motion safety.
+
+For each case compute:
+
+candidate TC-ME - OldCorrect TC-ME
+
+If lower bound of 95% CI > 0:
+candidate has significant motion regression
+and is rejected.
+
+
+Step 2: Appearance.
+
+For every motion-safe candidate compute:
+
+OldCorrect TC-MAR Lab - candidate TC-MAR Lab
+
+IMPROVE:
+95% CI lower > 0
+
+REGRESS:
+95% CI upper < 0
+
+otherwise:
+TIE
+
+
+Step 3: Priority.
+
+Tier 3:
+Santa IMPROVE
+Tree IMPROVE
+
+Tier 2:
+one IMPROVE
+one TIE
+
+Tier 1:
+Santa TIE
+Tree TIE
+
+Any significant appearance REGRESS:
+reject.
+
+
+Step 4:
+within the same tier only,
+tie-break using unweighted mean relative
+TC-MAR Lab improvement over Santa + Tree.
+
+
+Step 5:
+if no candidate survives,
+report NO_WINNER.
+
+Do NOT introduce another metric after observing results.

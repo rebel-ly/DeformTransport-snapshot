@@ -1,0 +1,16 @@
+{
+  "invariants": {
+    "candidate_count_mismatches": 0,
+    "collision_count_mismatches": 0,
+    "phase0c1_total_win_count_exact": true,
+    "target_valid_count_mismatches": 0,
+    "visible_count_mismatches": 0,
+    "win_count_mismatches": 0,
+    "zero_cause_class_mismatches": 0,
+    "zero_contribution_set_equal": true
+  },
+  "phase": "Phase0C-3",
+  "proceed_to_phase0c4": true,
+  "status": "PASS",
+  "visible_vs_win_spearman_status": "UNDEFINED_CONSTANT_VISIBLE_SLOT_COUNT"
+}

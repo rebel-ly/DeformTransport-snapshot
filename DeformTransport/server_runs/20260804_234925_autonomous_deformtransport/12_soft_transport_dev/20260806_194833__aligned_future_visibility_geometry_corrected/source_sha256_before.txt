@@ -1,0 +1,1 @@
+c4651d613fb6164595bc73a0b02db9c1c4da5626ceae4dc281314cfee52d3ad9  scripts/diagnose_aligned_visibility_transport_geometry.py

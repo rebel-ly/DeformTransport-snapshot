@@ -1,0 +1,21 @@
+类别,名称,路径,类型,存在,可读,大小字节,SHA256,状态,说明
+模型,RealWonder distilled,model_staging/ckpts/Realwonder-Distilled-AR-I2V-Flow/sink_size=1-attn_size=21-frame_per_block=3-denoising_steps=4/step=000800.pt,文件,是,是,18774247788,3a60efeea42e2f533945a867001e5d4a0f297cfee8c246f1ed8342ba4f0e6f85,通过,归档元数据含generator和generator_ema
+模型,Wan VAE,model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth,文件,是,是,507609880,38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981,通过,官方来源校验一致
+模型,Wan diffusion,model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/diffusion_pytorch_model.safetensors,文件,是,是,3128957992,4ec199076538b946935ebcb3ba808d3c427e638f29519a3c3c98d31d821e5eed,通过,当前RealWonder不直接加载
+模型,CLIP,model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth,文件,是,是,4772359047,628c9998b613391f193eb67ff68da9667d75f492911e4eb3decf23460a158c38,通过,生成必需
+模型,UMT5,model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/models_t5_umt5-xxl-enc-bf16.pth,文件,是,是,11361920418,7cace0da2b446bbbbc57d031ab6cf163a3d59b366da94e5afe36745b746fd81d,通过,生成必需
+软链接,ckpts,DeformTransport/ckpts,软链接,是,容器内是,0,,通过,宿主断链但容器解析正确
+软链接,wan_models,DeformTransport/wan_models,软链接,是,容器内是,0,,通过,宿主断链但容器解析正确
+Transport,Santa transport_ready,artifacts/transport_validation/santa_cloth_21f/transport_ready.pt,文件,是,是,34229269,2bb3d0fe4beff3a6ef7e6d66fa8f5438f5bb0172264dfb561cb7254368fa6664,结构通过,外部路径失效
+Transport,Santa VAE latent,artifacts/transport_validation/santa_cloth_21f/wan_vae/vae_latent_outputs.pt,文件,是,是,12947637,见00_audit/vae_artifact_sha256.txt,结构通过,6个latent时刻
+案例,lamp,cases/lamp,目录,是,是,0,,不完整,无final_sim与GT
+案例,persimmon,cases/persimmon,目录,是,是,0,,不完整,无final_sim与GT
+案例,sand_house,cases/sand_house,目录,是,是,0,,不完整,无demo_data final_sim与GT
+案例,santa_cloth,cases/santa_cloth,目录,是,是,0,,不完整,风驱布料且无final_sim与GT
+案例,tree,cases/tree,目录,是,是,0,,不完整,无final_sim与GT
+案例,two_duck,cases/two_duck,目录,是,是,0,,不完整,无demo_data final_sim与GT
+评测,imageio,realwonder-gen,Python包,是,是,0,,通过,版本2.37.4
+评测,imageio-ffmpeg,realwonder-gen,Python包,是,是,0,,通过,版本0.6.0并自带ffmpeg7.0.2
+评测,LPIPS,realwonder-gen,Python包,否,否,0,,缺失,最终评测阶段再处理
+评测,FVD实现,项目,代码,否,否,0,,缺失,当前无GT且不阻塞生成
+机器人,完整机器人可变形案例,允许搜索范围,案例,否,否,0,,缺失,只有Franka XML与不完整配置

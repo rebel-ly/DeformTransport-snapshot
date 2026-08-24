@@ -1,0 +1,8 @@
+{
+  "phase": "Phase0C-4",
+  "status": "PASS",
+  "source_drift": "PASS",
+  "winner_mapping_equal": true,
+  "observed_predicted_exact_equal": true,
+  "proceed_to_phase0c5": false
+}

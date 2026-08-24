@@ -1,0 +1,32 @@
+
+================================================================================
+get_downtemp_noise
+================================================================================
+file = /workspace/DeformTransport/vidgen/utils.py
+def get_downtemp_noise(noise, target_length, mode="nearest"):
+    """Downsample noise temporally using specified mode."""
+    assert mode in {"nearest", "blend", "blend_norm", "randn"}, mode
+    if mode == "nearest":
+        return _temporal_resize_nearest(noise, target_length)
+    if mode == "blend":
+        return downsamp_mean(noise, target_length)
+    if mode == "blend_norm":
+        return normalized_noises(downsamp_mean(noise, target_length))
+    if mode == "randn":
+        return torch.randn(target_length, *noise.shape[1:], device=noise.device, dtype=noise.dtype)
+    raise AssertionError("unreachable")
+
+
+================================================================================
+mix_new_noise
+================================================================================
+file = /workspace/DeformTransport/vidgen/utils.py
+def mix_new_noise(noise, alpha):
+    """Blend existing noise with freshly sampled Gaussian noise."""
+    if isinstance(noise, torch.Tensor):
+        return blend_noise(noise, torch.randn_like(noise), alpha)
+    elif isinstance(noise, np.ndarray):
+        return blend_noise(noise, np.random.randn(*noise.shape), alpha)
+    else:
+        raise TypeError(f"Unsupported input type: {type(noise)}. Expected PyTorch Tensor or NumPy array.")
+

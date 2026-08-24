@@ -1,0 +1,30 @@
+CASE=sand_house
+SEED=0
+
+V1_STATUS=FROZEN
+V2_FORMULA_STATUS=FROZEN_BEFORE_VIDEO_GENERATION
+
+V2_A=confidence_prior_v0 * V1_actual_condition_residual
+
+V2_B=restore_scale * confidence_prior_v0 * V1_actual_condition_residual
+
+V1_correct_scale=0.75
+V1_shuffled_scale=0.710907468820995
+
+common_reference_energy=0.015910381451249123
+
+V2B_correct_restore_scale=5.576124846581137
+V2B_shuffled_restore_scale=5.520618856116664
+
+V2_artifact_inference_scale=1.0
+
+same_geometry_gate_correct_shuffled=true
+same_transport_mask=true
+same_contribution_count=true
+same_seed=true
+same_noise=true
+same_checkpoint=true
+same_simulation=true
+
+SandHouse_outcome_used_to_define_V2_AB=false
+formula_must_not_change_after_generation=true

@@ -1,0 +1,9 @@
+run_id: 20260804_234925_autonomous_deformtransport
+task: OFFICIAL_SANTA_81F_TRIO
+physical_gpu: 2
+order: [Baseline, Correct, Shuffled]
+seed: 0
+checkpoint_key: generator
+input_chain: OFFICIAL_SANTA_81F_CHAIN_20260805_050719
+fairness: "同case、同GPU、同seed、同noise、同prompt、同config、同checkpoint；仅transport条件不同"
+timeout_seconds_per_variant: 3600

@@ -1,0 +1,9 @@
+{
+  "attempted":true,
+  "kind":"shape-only static/source assessment; no real diffusion tensor and no second VAE invocation",
+  "synthetic_postprocess_probe":"NOT_RUN: cache_video consumes supplied tensor shape and cannot explain a 480-to-464 change; no explicit transform exists there.",
+  "vae_decode_shape_probe":"NOT_RUN after the single permitted VAE-only probe was consumed by the import-binding failure.",
+  "output_464_shape_probe":"UNRESOLVED",
+  "evaluation_nonblocking_conditions":{"final_rgb_measured_464x832":true,"evaluator_expected_464x832":true,"track_mapping_y_464_over_480":true,"evaluation_contract_latent_independent":true,"n1277_runtime_contamination":false},
+  "final_output_464_cause":"UNRESOLVED_NONBLOCKING_FOR_EVALUATION"
+}

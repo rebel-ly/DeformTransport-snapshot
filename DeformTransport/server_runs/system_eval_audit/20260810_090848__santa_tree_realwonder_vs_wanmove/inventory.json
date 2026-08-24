@@ -1,0 +1,214 @@
+{
+  "audit_kind": "CPU-only readiness audit; no metrics executed",
+  "created_at": "2026-08-10T09:08:48+08:00",
+  "generated_domain": {
+    "width": 832,
+    "height": 464,
+    "coordinate_mapping_from_aligned_832x480": "x_out=x_in; y_out=y_in*464/480",
+    "image_transform": "RGB uint8 -> float32 [0,1] NCHW -> torch.nn.functional.interpolate(size=(464,832), mode='bicubic', align_corners=False, antialias=False) -> clamp [0,1] -> metric color conversion as required",
+    "not_a_crop": true
+  },
+  "santa": {
+    "realwonder": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+      "bytes": 1044407,
+      "frames": 81,
+      "width": 832,
+      "height": 480,
+      "fps": 10.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "canonical_basis": "Exact aligned 81-frame Santa final_sim; explicit inference_command; later authoritative local/RAFT/selector audits all reference this artifact.",
+      "provenance": [
+        "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/inference_command.txt",
+        "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/input_sha256.txt",
+        "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/output_video_validation.json"
+      ]
+    },
+    "wanmove_correct": {
+      "path": "server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/correct/santa_formal_correct_seed0.mp4",
+      "sha256": "1c20d32c82049e0cb5fd8f19b08957b4e5b0b70020267c357293cc568d43cf14",
+      "bytes": 7118088,
+      "frames": 81,
+      "width": 832,
+      "height": 464,
+      "fps": 16.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "provenance": "server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/correct/run.sh"
+    },
+    "wanmove_identity_shuffled": {
+      "path": "server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/shuffled/santa_formal_identity_shuffled_seed0.mp4",
+      "sha256": "489e1c7570827e748609cf25914aa4fea8060f84047e7f7342c015325f07d638",
+      "bytes": 6584616,
+      "frames": 81,
+      "width": 832,
+      "height": 464,
+      "fps": 16.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "provenance": "server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/shuffled/run.sh"
+    },
+    "geometry_aligned_simulation_proxy": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/simulation.mp4",
+      "sha256": "ae20167d32e79c4f85edf62402e6fff7edf41286cd259fdb79d05dd7a54b54ac",
+      "bytes": 1433705,
+      "frames": 81,
+      "width": 832,
+      "height": 480,
+      "fps": 8.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/aligned_build_report.json"
+    },
+    "reference_flow": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/flows.npy",
+      "sha256": "80694c4842530d98dc69fcce3a44af9a25d69e08d32f64545df76b62de425a1e",
+      "bytes": 31948928,
+      "shape": [80, 2, 240, 416],
+      "dtype": "float16",
+      "coordinate_domain": "Consecutive 832x480 RGB frames area-resized to 416x240 before RAFT; vector units are 416x240-grid pixels.",
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noise_generation_report.json"
+    },
+    "raw_physics_raster_flow": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flows.npy",
+      "sha256": "f32045e27ae4447d5877563306c43c647583a29e71d9ac21b8d1609a5f93f33b",
+      "bytes": 169869440,
+      "shape": [81, 2, 512, 512],
+      "dtype": "float32",
+      "coordinate_domain": "Raw 512x512 renderer/physics raster domain; not the frozen 416x240 RAFT reference and not directly comparable to generated-video RAFT without a separately frozen conversion contract.",
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/report.json"
+    },
+    "correct_tracks": {
+      "path": "server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_tracks_correct.npy",
+      "sha256": "b8b34ee8265fac9d79ddbf567883906c981865c14c48eee80f505d812eaa4148",
+      "bytes": 827624,
+      "shape": [1, 81, 1277, 2],
+      "dtype": "float32",
+      "coordinate_domain": "832x480 aligned pixel XY",
+      "provenance": "server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/report.json"
+    },
+    "visibility": {
+      "path": "server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_visibility_correct.npy",
+      "sha256": "c1c3c2801891e5acc720dae9f7949bf1505848ca3848b5446e034220867bfd4d",
+      "bytes": 103565,
+      "shape": [1, 81, 1277],
+      "dtype": "bool",
+      "provenance": "server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/report.json"
+    },
+    "historical_local_support": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_232607__full_generation_compatible_candidates/quality_ramp4_full_generation.pt",
+      "sha256": "4050d43f3aa1deb5a6e0560b7ce6a18b774aa101ee26fd1550788d8514b59f47",
+      "mask_key": "transport_mask",
+      "historical_shape": [21, 1, 60, 104],
+      "warning": "Historical RealWonder latent-transport support, not automatically frozen as the support for the new Wan-Move system comparison."
+    }
+  },
+  "tree": {
+    "realwonder": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_203228__tree__realwonder_baseline_seed0/tree_realwonder_baseline_seed0.mp4",
+      "sha256": "0ca0d75abff004a68155bd3c9e8da653dc76deea57d06559631aed685f72e0ef",
+      "bytes": 1770295,
+      "frames": 81,
+      "width": 832,
+      "height": 480,
+      "fps": 10.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "canonical_basis": "Explicitly named realwonder_baseline_record_only in authoritative Tree bridge report; generated from the exact Tree aligned final_sim and repeatedly used by Tree comparison audits.",
+      "provenance": [
+        "server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/report.json",
+        "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_203228__tree__realwonder_baseline_seed0/stdout.log",
+        "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_203228__tree__realwonder_baseline_seed0/git_head.txt"
+      ],
+      "provenance_limitation": "The baseline directory does not retain an inference_command.txt; checkpoint/config are evidenced by generation logs and neighboring frozen Tree generation lineage, but the exact launch command was not archived."
+    },
+    "wanmove_correct": {
+      "path": "server_runs/wan_move_formal/20260810_073902__tree_correct_vs_identity_shuffled_seed0/correct/tree_formal_correct_seed0.mp4",
+      "sha256": "b7c6bccdb29b589552bcf65eeea193c0861460edf2fe796fbb3738edcf1a1d13",
+      "bytes": 6891572,
+      "frames": 81,
+      "width": 832,
+      "height": 464,
+      "fps": 16.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "provenance": "server_runs/wan_move_formal/20260810_073902__tree_correct_vs_identity_shuffled_seed0/correct/run.sh"
+    },
+    "wanmove_identity_shuffled": {
+      "path": "server_runs/wan_move_formal/20260810_073902__tree_correct_vs_identity_shuffled_seed0/shuffled/tree_formal_identity_shuffled_seed0.mp4",
+      "sha256": "d0a2a8240b83f48ef25213d14a67d892ee906db72ba1142c7886b9b73e04f5be",
+      "bytes": 7495476,
+      "frames": 81,
+      "width": 832,
+      "height": 464,
+      "fps": 16.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "provenance": "server_runs/wan_move_formal/20260810_073902__tree_correct_vs_identity_shuffled_seed0/shuffled/run.sh"
+    },
+    "geometry_aligned_simulation_proxy": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/simulation.mp4",
+      "sha256": "34f52f91715cd87b64251a8efaaff12491dcb58ac1323810f62ee27c543ef4c0",
+      "bytes": 538515,
+      "frames": 81,
+      "width": 832,
+      "height": 480,
+      "fps": 10.0,
+      "decoded_frames": 81,
+      "decode_success": true,
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/aligned_build_report.json"
+    },
+    "reference_flow": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/flows.npy",
+      "sha256": "0aec760b7e4bc19eb25c60f3c5bb8327b90f01c2ee27fee7c9bb3f838afc04b9",
+      "bytes": 31948928,
+      "shape": [80, 2, 240, 416],
+      "dtype": "float16",
+      "coordinate_domain": "Consecutive 832x480 RGB frames area-resized to 416x240 before RAFT; vector units are 416x240-grid pixels.",
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noise_generation_report.json"
+    },
+    "raw_physics_raster_flow": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/flows.npy",
+      "sha256": "b5c5b4cf8aa28631a21566bdb1ad723c6853a0b5c3bb1f24fed742775977ba25",
+      "bytes": 167772288,
+      "shape": [80, 2, 512, 512],
+      "dtype": "float32",
+      "coordinate_domain": "Raw 512x512 source-raster physics flow for S0->S2, then consecutive aligned future states through S160; source-point raster indices are retained beside it. Not the frozen 416x240 RAFT reference.",
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/posthoc_physics_validation.json"
+    },
+    "correct_tracks": {
+      "path": "server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/tree_material_tracks_correct.npy",
+      "sha256": "4bd0ef63d4c55dadb4c6d84788fed1c88aed8e7f4a34bac59760406066e585ef",
+      "bytes": 462152,
+      "shape": [1, 81, 713, 2],
+      "dtype": "float32",
+      "coordinate_domain": "832x480 aligned pixel XY",
+      "provenance": "server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/report.json"
+    },
+    "visibility": {
+      "path": "server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/tree_material_visibility_correct.npy",
+      "sha256": "c572d440402c96c9d1ce7c6db650e19b00be74ab21c5b1c6647e06c5f5cf3d8c",
+      "bytes": 57881,
+      "shape": [1, 81, 713],
+      "dtype": "bool",
+      "provenance": "server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/report.json"
+    },
+    "historical_local_support": {
+      "path": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+      "sha256": "fdec761d9349eefc147370e6873c351e06232be70482f0f936c3b5624db163ec",
+      "mask_key": "transport_mask",
+      "historical_shape": [21, 1, 60, 104],
+      "provenance": "server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_221342__tree__quality_transport_region_local_metrics/report.json",
+      "warning": "Historical RealWonder latent-transport support, not automatically frozen as the support for the new Wan-Move system comparison."
+    }
+  },
+  "standard_video_quality_implementations": {
+    "lpips": false,
+    "fvd": false,
+    "dino": false,
+    "other_no_reference_metric": false,
+    "existing_reference_metrics": ["RGB MAE/L1", "MSE/PSNR", "Gaussian-window SSIM", "temporal-difference L1", "spatial-gradient error", "RAFT motion diagnostics"]
+  }
+}

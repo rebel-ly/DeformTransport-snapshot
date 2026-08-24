@@ -1,0 +1,34 @@
+{
+  "seed0_vs_authoritative": {
+    "equal": true,
+    "different": 0,
+    "max": 0.0,
+    "mean": 0.0
+  },
+  "seed1_vs_existing": {
+    "equal": true,
+    "different": 0,
+    "max": 0.0,
+    "mean": 0.0
+  },
+  "seed1_vs_seed0": {
+    "equal": false,
+    "different": 2026752,
+    "max": 7.010202407836914,
+    "mean": 1.126625657081604
+  },
+  "seed1_roundtrip": {
+    "equal": true,
+    "different": 0,
+    "max": 0.0,
+    "mean": 0.0
+  },
+  "shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "dtype": "torch.float32",
+  "finite": true
+}

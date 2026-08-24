@@ -1,0 +1,106 @@
+{
+  "SOURCE_MODE": "overlay",
+  "absent_exports": [
+    "PYTHONHASHSEED",
+    "CUBLAS_WORKSPACE_CONFIG"
+  ],
+  "arm": "B2_G1",
+  "authoritative_dry_run": "ACTUAL_PYTHON=/workspace/tools/miniforge3/envs/wan-move/bin/python\nDT_TRANSPORT_VARIANT=v3d\nDT_TRACK_IDS_PATH=/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy\nDT_TRACK_DEPTH_PATH=/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy\nOUTPUT_DIR=/tmp/canonical_gate\nCOMMAND: /workspace/tools/miniforge3/envs/wan-move/bin/python generate.py --task wan-move-i2v --size 480\\*832 --frame_num 81 --ckpt_dir /workspace/Wan-Move/Wan-Move-14B-480P --image /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png --track /workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy --track_visibility /workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy --prompt Wind\\ blows\\ the\\ hanging\\ clothes.\\ The\\ motion\\ is\\ gentle\\,\\ continuous\\,\\ and\\ rhythmic\\,\\ driven\\ by\\ shifting\\ airflow.\\ Static\\ camera\\,\\ eye-level\\ frontal\\ view\\,\\ natural\\ fabric\\ movement. --base_seed 0 --sample_steps 40 --sample_shift 3.0 --t5_cpu --offload_model True --dtype bf16 --save_file /tmp/canonical_gate/santa_correct_v3d_seed000.mp4",
+  "authoritative_runner": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/runtime_recovery/20260813_025331__wanmove_python_runtime_binding/run_with_formal_wanmove_python.sh",
+    "sha256": "c444b496c536fa40e18cd3596c2a2e899b838e664fc36fa20255da31050e7097"
+  },
+  "checkpoint": {
+    "path": "/workspace/Wan-Move/Wan-Move-14B-480P/Wan2.1_VAE.pth",
+    "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+  },
+  "cli": {
+    "checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P",
+    "dtype": "bf16",
+    "frame_num": 81,
+    "guidance": 5.0,
+    "num_inference_steps": 40,
+    "offload_model": true,
+    "scheduler": "unipc",
+    "seed": 0,
+    "shift": 3.0,
+    "size": "480*832",
+    "t5_cpu": true,
+    "task": "wan-move-i2v"
+  },
+  "cwd": "/workspace/Wan-Move",
+  "decoded_resolution": "832x464",
+  "depth": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "sha256": "032d738bb2d01bbff88b78f63a2b56fa76c52d985caf3542c22f9dc573879ce1"
+  },
+  "effective_env": {
+    "CUDA_VISIBLE_DEVICES": "1",
+    "DT_TRACK_DEPTH_PATH": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "DT_TRACK_IDS_PATH": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "DT_TRANSPORT_VARIANT": "v3d",
+    "PYTHONPATH": "/workspace/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay:/workspace/Wan-Move:${PYTHONPATH}"
+  },
+  "exports": {
+    "DT_TRACK_DEPTH_PATH": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "DT_TRACK_IDS_PATH": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "DT_TRANSPORT_VARIANT": "v3d"
+  },
+  "generation_resolution": "832x480",
+  "gpu": {
+    "driver_version": "535.129.03",
+    "index": "1",
+    "model": "NVIDIA L40",
+    "uuid": "GPU-0e2857f8-18bc-0f5b-c1ff-5b67f892cd60"
+  },
+  "ids": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8"
+  },
+  "launcher": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/corrected_parity_20260814/run_single_launcher.sh",
+    "sha256": "a9b54a657986689a7f8b5545f5996e61830303b81009ec192954a0d89258174e"
+  },
+  "preview_sdedit": {
+    "enabled": false,
+    "initial_epsilon": null,
+    "preview_latent": null,
+    "start_index": null
+  },
+  "prompt": "Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement.",
+  "prompt_sha256": "af733a4009132dcb0007116d5108be74d136fdf29a63e8a558567ee4462651e3",
+  "python": {
+    "path": "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+    "sha256": "edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3"
+  },
+  "runtime": {
+    "CONTAINER": "deformtransport-dev",
+    "CUDA_VERSION": "12.1",
+    "CUDNN_BENCHMARK": false,
+    "CUDNN_DETERMINISTIC": false,
+    "HOSTNAME": "gpu3",
+    "TF32_CUDNN": true,
+    "TF32_MATMUL": true,
+    "TORCH_VERSION": "2.5.1+cu121",
+    "UID_GID": "10011:10011"
+  },
+  "source_provenance": {
+    "generate_sha256": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+    "root": "/workspace/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay",
+    "scheduler_sha256": "0dec8c7ed17f6f2049275c6848113314da6ccec1c8db5bdc89df43c05c6038d9",
+    "scheduler_source": "/workspace/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay/wan/utils/fm_solvers_unipc.py",
+    "wan_move_sha256": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7"
+  },
+  "source_rgb": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+    "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7"
+  },
+  "tracks": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+    "sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929"
+  },
+  "visibility": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+    "sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff"
+  }
+}

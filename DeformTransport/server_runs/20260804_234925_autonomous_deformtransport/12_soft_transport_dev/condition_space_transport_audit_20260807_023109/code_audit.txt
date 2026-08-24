@@ -1,0 +1,503 @@
+========== GIT STATUS ==========
+ M .gitignore
+ M case_simulation.py
+ M demo_web/simulation/utils.py
+ M demo_web/simulation_engine.py
+ M infer_sim.py
+ M simulation/case_simulation/__init__.py
+ M simulation/genesis_simulator.py
+ M simulation/utils.py
+ M vidgen/pipeline_sdedit.py
+ M wan/modules/attention.py
+?? PROJECT_MAP.md
+?? UPSTREAM.md
+?? deform_transport/
+?? docs/
+?? requirements-stage1-wsl-blackwell.txt
+?? requirements-stage1-wsl.txt
+?? requirements-vae-only-wsl.txt
+?? scripts/
+?? server_env/
+?? server_runs/
+?? tests/
+
+========== SOURCE HASHES ==========
+1416472f3f8b0fcaf8948e7d12d46c7e90d1292b0859990616fc14485b5aafce  infer_sim.py
+89f5bd871d28ba5489c047b1e9f80fcc161cac31b3a91d0f10194b7ed317e133  vidgen/pipeline_sdedit.py
+c1128c28356d08373db116dc0fae4c696ed32f8de1d3be1fe041b872de9141a4  deform_transport/pipeline_integration.py
+
+========== INFER CLI ==========
+102-            "scripts/run_wan_vae_transport_probe.py"
+103-        ),
+104-    )
+105-    parser.add_argument(
+106-        "--transport_mode",
+107-        choices=("correct", "shuffled", "flow", "blend"),
+108-        default="correct",
+109-        help="Which precomputed transport condition to use",
+110-    )
+111-    parser.add_argument(
+112:        "--transport_injection_mode",
+113-        choices=("replace", "inter_step_residual"),
+114-        default="replace",
+115-        help=(
+116-            "replace preserves the existing precomputed-latent "
+117-            "behavior; inter_step_residual keeps the fresh runtime "
+118-            "sim_latent and injects an artifact-local residual "
+119-            "between denoising steps"
+120-        ),
+121-    )
+122-    parser.add_argument(
+123-        "--transport_injection_scale",
+124-        type=float,
+125-        default=1.0,
+126-        help="Scale applied to an inter-step transport residual",
+127-    )
+128-    parser.add_argument(
+129-        "--transport_injection_step",
+130-        type=int,
+131-        default=0,
+132-        help=(
+133-            "Denoising-step index after which the residual is "
+134-            "injected, before re-noising to the next step"
+135-        ),
+136-    )
+137-
+138-    args, additional_args = parser.parse_known_args()
+139-
+140-    if args.transport_injection_scale < 0:
+141-        raise ValueError(
+142-            "--transport_injection_scale must be nonnegative"
+143-        )
+144-
+145-    if (
+146:        args.transport_injection_mode
+147-        == "inter_step_residual"
+148-        and not args.transport_latent_path
+149-    ):
+150-        raise ValueError(
+151-            "--transport_latent_path is required for "
+152-            "inter_step_residual injection"
+153-        )
+154-
+155-    device = torch.device("cuda")
+156-    set_seed(args.seed)
+157-
+158-    print(f'Free VRAM {get_cuda_free_memory_gb(gpu)} GB')
+159-    low_memory = get_cuda_free_memory_gb(gpu) < 40
+160-
+161-    torch.set_grad_enabled(False)
+162-
+163-    sim_data_path = Path(args.sim_data_path)
+164-
+165-    # -------------------------------------------------------------------------
+166-    # Load simulation config for SDEdit parameters
+167-    # -------------------------------------------------------------------------
+168-    sim_config_path = sim_data_path / "config.yaml"
+169-    sim_config = OmegaConf.load(sim_config_path)
+170-    denoising_step_list = list(sim_config.denoising_step_list)
+171-    mask_dropin_step = int(sim_config.mask_dropin_step)
+--
+313-    sim_latent = None
+314-    transport_residual = None
+315-    if pipeline.sdedit:
+316-        print("Encoding simulation frames to latent space...")
+317-        sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
+318-        sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
+319-        sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+320-        print(f"  sim_latent shape: {sim_latent.shape}")
+321-
+322-        if args.transport_latent_path:
+323:            if args.transport_injection_mode == "replace":
+324-                print(
+325-                    f"Loading {args.transport_mode} transported "
+326-                    "sim_latent from: "
+327-                    f"{args.transport_latent_path}"
+328-                )
+329-                sim_latent = load_precomputed_transport_latent(
+330-                    args.transport_latent_path,
+331-                    mode=args.transport_mode,
+332-                    reference_latent=sim_latent,
+333-                )
+334-                print(
+335-                    "  transported sim_latent shape: "
+336-                    f"{sim_latent.shape}"
+337-                )
+338-            else:
+339-                print(
+340-                    f"Loading {args.transport_mode} artifact-local "
+341-                    "transport residual from: "
+342-                    f"{args.transport_latent_path}"
+343-                )
+344-                transport_residual = (
+345-                    load_precomputed_transport_residual(
+346-                        args.transport_latent_path,
+347-                        mode=args.transport_mode,
+348-                        reference_latent=sim_latent,
+
+========== RESIDUAL LOADING ==========
+
+========== SIM LATENT ==========
+285-            sim_masks = load_sim_masks(mask_file, target_frames=num_output_frames)
+286-            sim_masks = sim_masks.to(device=device)
+287-            print(f"  Object mask shape: {sim_masks.shape}")
+288-        else:
+289-            print(f"Warning: mask_dropin_step={mask_dropin_step} but mask file not found: {mask_file}")
+290-            print("  Proceeding without mask dropin.")
+291-
+292-    # 6. Load franka/mesh masks (for weak sdedit on manipulator region)
+293-    sim_franka_masks = None
+294-    franka_mask_file = sim_data_path / "mesh_masks_downsampled.pt"
+295-    if franka_mask_file.exists():
+296-        franka_masks_raw = load_sim_masks(str(franka_mask_file), target_frames=num_output_frames)
+297-        if franka_masks_raw.any():
+298-            sim_franka_masks = franka_masks_raw.to(device=device)
+299-            print(f"Loading franka masks from: {franka_mask_file}")
+300-            print(f"  Franka mask shape: {sim_franka_masks.shape}")
+301-        else:
+302-            print(f"Franka masks are all False, skipping franka mask sdedit.")
+303-
+304-    # -------------------------------------------------------------------------
+305-    # Prepare tensors
+306-    # -------------------------------------------------------------------------
+307-    structured_noise = noise_data['structured_noise'].unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+308-    structured_noise_sde = noise_data.get('structured_noise_sde')
+309-    if structured_noise_sde is not None:
+310-        structured_noise_sde = structured_noise_sde.unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+311-
+312-    # Encode simulation frames to latent space for SDEdit
+313-    sim_latent = None
+314-    transport_residual = None
+315-    if pipeline.sdedit:
+316-        print("Encoding simulation frames to latent space...")
+317-        sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
+318-        sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
+319-        sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+320:        print(f"  sim_latent shape: {sim_latent.shape}")
+321-
+322-        if args.transport_latent_path:
+323-            if args.transport_injection_mode == "replace":
+324-                print(
+325-                    f"Loading {args.transport_mode} transported "
+326-                    "sim_latent from: "
+327-                    f"{args.transport_latent_path}"
+328-                )
+329-                sim_latent = load_precomputed_transport_latent(
+330-                    args.transport_latent_path,
+331-                    mode=args.transport_mode,
+332-                    reference_latent=sim_latent,
+333-                )
+334-                print(
+335:                    "  transported sim_latent shape: "
+336-                    f"{sim_latent.shape}"
+337-                )
+338-            else:
+339-                print(
+340-                    f"Loading {args.transport_mode} artifact-local "
+341-                    "transport residual from: "
+342-                    f"{args.transport_latent_path}"
+343-                )
+344-                transport_residual = (
+345-                    load_precomputed_transport_residual(
+346-                        args.transport_latent_path,
+347-                        mode=args.transport_mode,
+348-                        reference_latent=sim_latent,
+349-                    )
+350-                )
+351-
+352-                residual_float = transport_residual.to(
+353-                    torch.float32
+354-                )
+355-
+356-                print(
+357-                    "  transport residual shape: "
+358-                    f"{transport_residual.shape}"
+359-                )
+360-                print(
+361-                    "  transport residual scale: "
+362-                    f"{args.transport_injection_scale}"
+363-                )
+364-                print(
+365-                    "  transport residual step: "
+366-                    f"{args.transport_injection_step}"
+367-                )
+368-                print(
+369-                    "  transport residual mean_abs: "
+370-                    f"{float(residual_float.abs().mean()):.8f}"
+371-                )
+372-                print(
+373-                    "  transport residual max_abs: "
+374-                    f"{float(residual_float.abs().max()):.8f}"
+375-                )
+376-
+377-        # Trim or pad sim_latent to match noise frames
+378-        if sim_latent.shape[1] > num_output_frames:
+379-            sim_latent = sim_latent[:, :num_output_frames]
+380-        elif sim_latent.shape[1] < num_output_frames:
+381-            # Pad by repeating last frame
+382-            pad_size = num_output_frames - sim_latent.shape[1]
+383-            sim_latent = torch.cat([
+384-                sim_latent,
+385-                sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
+386-            ], dim=1)
+387:        print(f"  sim_latent shape (after align): {sim_latent.shape}")
+388-
+389-    # Prepare batch for I2V processors
+390-    pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+391-    batch = {
+392-        'input_image': input_image.unsqueeze(0),  # [1, C, H, W]
+393-        'end_image': None,
+394-        'height': 480,
+395-        'width': 832,
+396-        'num_frames': pixel_num_frames,
+397-    }
+398-
+399-    # -------------------------------------------------------------------------
+400-    # Generate video
+401-    # -------------------------------------------------------------------------
+402-    print("Generating video...")
+403-    video, _ = pipeline.inference(
+404-        noise=structured_noise,
+405-        text_prompts=[prompt],
+406-        return_latents=True,
+407-        batch_sample=batch,
+408-        sim_latent=sim_latent,
+409-        sim_masks=sim_masks,
+410-        sim_franka_masks=sim_franka_masks,
+411-        transport_residual=transport_residual,
+412-        transport_residual_scale=(
+413-            args.transport_injection_scale
+414-        ),
+415-        transport_residual_step=(
+416-            args.transport_injection_step
+417-        ),
+418-        low_memory=low_memory,
+419-        device=device,
+420-        structured_noise_sde=structured_noise_sde,
+421-    )
+422-
+423-    # Process output
+424-    video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+425-    video = (255.0 * video[0]).to(torch.uint8)
+426-
+427-    # Clear VAE cache
+428-    pipeline.vae.model.clear_cache()
+429-
+430-    # Save the video
+431-    print(f"Saving video to: {args.output_path}")
+432-    imageio.mimwrite(args.output_path, video.numpy(), fps=10)
+433-    print("Done!")
+434-
+435-if __name__ == "__main__":
+436-    main()
+
+========== PIPELINE CALL ==========
+368-                print(
+369-                    "  transport residual mean_abs: "
+370-                    f"{float(residual_float.abs().mean()):.8f}"
+371-                )
+372-                print(
+373-                    "  transport residual max_abs: "
+374-                    f"{float(residual_float.abs().max()):.8f}"
+375-                )
+376-
+377-        # Trim or pad sim_latent to match noise frames
+378-        if sim_latent.shape[1] > num_output_frames:
+379-            sim_latent = sim_latent[:, :num_output_frames]
+380-        elif sim_latent.shape[1] < num_output_frames:
+381-            # Pad by repeating last frame
+382-            pad_size = num_output_frames - sim_latent.shape[1]
+383-            sim_latent = torch.cat([
+384-                sim_latent,
+385-                sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
+386-            ], dim=1)
+387-        print(f"  sim_latent shape (after align): {sim_latent.shape}")
+388-
+389-    # Prepare batch for I2V processors
+390-    pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+391-    batch = {
+392-        'input_image': input_image.unsqueeze(0),  # [1, C, H, W]
+393-        'end_image': None,
+394-        'height': 480,
+395-        'width': 832,
+396-        'num_frames': pixel_num_frames,
+397-    }
+398-
+399-    # -------------------------------------------------------------------------
+400-    # Generate video
+401-    # -------------------------------------------------------------------------
+402-    print("Generating video...")
+403:    video, _ = pipeline.inference(
+404-        noise=structured_noise,
+405-        text_prompts=[prompt],
+406-        return_latents=True,
+407-        batch_sample=batch,
+408-        sim_latent=sim_latent,
+409-        sim_masks=sim_masks,
+410-        sim_franka_masks=sim_franka_masks,
+411-        transport_residual=transport_residual,
+412-        transport_residual_scale=(
+413-            args.transport_injection_scale
+414-        ),
+415-        transport_residual_step=(
+416-            args.transport_injection_step
+417-        ),
+418-        low_memory=low_memory,
+419-        device=device,
+420-        structured_noise_sde=structured_noise_sde,
+421-    )
+422-
+423-    # Process output
+424-    video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+425-    video = (255.0 * video[0]).to(torch.uint8)
+426-
+427-    # Clear VAE cache
+428-    pipeline.vae.model.clear_cache()
+429-
+430-    # Save the video
+431-    print(f"Saving video to: {args.output_path}")
+432-    imageio.mimwrite(args.output_path, video.numpy(), fps=10)
+433-    print("Done!")
+434-
+435-if __name__ == "__main__":
+436-    main()
+
+========== PIPELINE INFERENCE SIGNATURE ==========
+102-        self.kv_cache1 = None
+103-        self.args = args
+104-        self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
+105-        self.independent_first_frame = args.independent_first_frame
+106-        self.local_attn_size = self.generator.model.local_attn_size
+107-
+108-        print(f"KV inference with {self.num_frame_per_block} frames per block")
+109-        print(f"SDEdit enabled: {self.sdedit}")
+110-        if self.sdedit:
+111-            print(f"  mask_dropin_step: {self.mask_dropin_step}")
+112-            # print(f"  franka_step: {self.franka_step}")
+113-
+114-        if self.num_frame_per_block > 1:
+115-            self.generator.model.num_frame_per_block = self.num_frame_per_block
+116-
+117:    def inference(
+118-        self,
+119-        noise: torch.Tensor,
+120-        text_prompts: List[str],
+121-        initial_latent: Optional[torch.Tensor] = None,
+122-        sim_latent: Optional[torch.Tensor] = None,
+123-        sim_masks: Optional[torch.Tensor] = None,
+124-        sim_franka_masks: Optional[torch.Tensor] = None,
+125-        transport_residual: Optional[torch.Tensor] = None,
+126-        transport_residual_scale: float = 0.0,
+127-        transport_residual_step: int = 0,
+128-        return_latents: bool = False,
+129-        batch_sample=None,
+130-        profile: bool = False,
+131-        low_memory: bool = False,
+132-        skip_decoding: bool = False,
+133-        structured_noise_sde: Optional[torch.Tensor] = None,
+134-        device=None,
+135-    ) -> torch.Tensor:
+136-        """Perform causal video generation inference with optional SDEdit.
+137-
+138-        Args:
+139-            noise: Input noise [B, T, C, H, W].
+140-            text_prompts: List of text prompts.
+141-            initial_latent: Optional initial latent for I2V.
+142-            sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+143-            sim_masks: Object masks [B, T, H, W] (True = object region to keep generated).
+144-            sim_franka_masks: Franka/mesh masks [B, T, H, W] (True = franka region, weak sdedit).
+145-            transport_residual: Artifact-local masked latent residual [B,T,C,H,W].
+146-            transport_residual_scale: Residual strength.
+147-            transport_residual_step: Step index after which to inject the residual.
+148-            return_latents: Whether to return latents alongside decoded video.
+149-            batch_sample: Batch dict for processor conditioning.
+150-            structured_noise_sde: Deterministic SDE noise from simulation.
+151-            device: Device to use.
+152-        """
+153-        batch_size, num_frames, num_channels, height, width = noise.shape
+154-
+155-        if not self.independent_first_frame or (self.independent_first_frame and initial_latent is not None):
+156-            assert num_frames % self.num_frame_per_block == 0
+157-            num_blocks = num_frames // self.num_frame_per_block
+158-        else:
+159-            assert (num_frames - 1) % self.num_frame_per_block == 0
+160-            num_blocks = (num_frames - 1) // self.num_frame_per_block
+161-
+162-        num_input_frames = initial_latent.shape[1] if initial_latent is not None else 0
+163-        num_output_frames = num_frames + num_input_frames
+164-
+165-        # Text encoding
+166-        conditional_dict = self.text_encoder(text_prompts=text_prompts)
+167-
+168-        # Process additional conditioning (I2V flow processors)
+169-        if hasattr(self, "processors"):
+170-            for unit in self.processors:
+171-                input_data = {"device": device, "torch_dtype": self.processor_dtype}
+172-                for key in unit.input_params:
+173-                    input_data[key] = batch_sample.get(key) if batch_sample else None
+174-                for key in unit.onload_model_names:
+175-                    if key == "image_encoder":
+176-                        input_data["image_encoder"] = self.processor_ienc
+177-                    if key == "vae":
+178-                        input_data["vae"] = self.processor_vae
+179-                unit_output = unit.process(**input_data)
+180-                for k, v in unit_output.items():
+181-                    conditional_dict[k] = v.to(dtype=torch.bfloat16) if isinstance(v, torch.Tensor) else v
+182-
+183-        if low_memory:
+184-            gpu_memory_preservation = get_cuda_free_memory_gb(gpu) + 5
+185-            move_model_to_device_with_memory_preservation(
+186-                self.text_encoder, target_device=gpu, preserved_memory_gb=gpu_memory_preservation)
+187-
+188-        output = torch.zeros([batch_size, num_output_frames, num_channels, height, width],
+189-                             device=noise.device, dtype=noise.dtype)
+190-
+191-        # Profiling setup
+192-        if profile:
+193-            init_start = torch.cuda.Event(enable_timing=True)
+194-            init_end = torch.cuda.Event(enable_timing=True)
+195-            diffusion_start = torch.cuda.Event(enable_timing=True)
+196-            diffusion_end = torch.cuda.Event(enable_timing=True)
+197-            vae_start = torch.cuda.Event(enable_timing=True)
+198-            vae_end = torch.cuda.Event(enable_timing=True)
+199-            block_times = []
+200-            block_start = torch.cuda.Event(enable_timing=True)
+201-            block_end = torch.cuda.Event(enable_timing=True)
+202-            init_start.record()
+203-
+204-        # Initialize KV cache
+205-        if self.kv_cache1 is None:
+206-            self._initialize_kv_cache(batch_size=batch_size, dtype=noise.dtype, device=noise.device)
+207-            self._initialize_crossattn_cache(batch_size=batch_size, dtype=noise.dtype, device=noise.device)
+208-        else:
+209-            for block_index in range(self.num_transformer_blocks):
+210-                self.crossattn_cache[block_index]["is_init"] = False
+211-            for block_index in range(len(self.kv_cache1)):
+212-                self.kv_cache1[block_index]["global_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+213-                self.kv_cache1[block_index]["local_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+214-
+215-        ############################################################
+216-        ########################## SDEdit ##########################
+217-        bg_noise = None
+218-        bg_noise_franka = None
+219-        use_franka_sdedit = (
+220-            self.franka_step >= 0
+221-            and sim_franka_masks is not None
+222-            and sim_franka_masks.any()
+223-        )
+224-
+225-        if self.sdedit:
+226-            assert sim_latent is not None, "sim_latent is required for SDEdit mode"
+227-            assert noise.shape == sim_latent.shape, (
+228-                f"noise shape {noise.shape} != sim_latent shape {sim_latent.shape}"
+229-            )
+230-
+231-            if transport_residual is not None:
+232-                if tuple(transport_residual.shape) != tuple(
+233-                    sim_latent.shape
+234-                ):
+235-                    raise ValueError(
+236-                        "transport_residual shape "
+237-                        f"{tuple(transport_residual.shape)} "
+
+========== CURRENT INTER-STEP INJECTION ==========

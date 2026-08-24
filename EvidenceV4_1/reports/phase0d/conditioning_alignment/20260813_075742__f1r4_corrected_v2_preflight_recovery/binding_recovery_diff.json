@@ -1,0 +1,59 @@
+{
+  "previous_manifest": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/corrected_v2_binding_manifest.json",
+  "previous_sha256": "2826e5c845519fa4913dd2fdbefbdb73eb830d0f9b9e568880abe9584430690c",
+  "recovered_manifest": "binding_recovery_manifest.json",
+  "recovered_sha256": "65f97286862e2193790a44fad20b9fc73c7c81aa4e8fa788e886c825d98f264f",
+  "changes": [
+    {
+      "field": "name",
+      "class": "METADATA",
+      "previous": "corrected_v2_n1257_rw_dtfull",
+      "recovered": "f1r4_recovered_corrected_v2_n1257_rw_dtfull"
+    },
+    {
+      "field": "dataset_binding.tracks_sha256",
+      "class": "DATA_BINDING",
+      "previous": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33df7fdebfb51929",
+      "recovered": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929"
+    },
+    {
+      "field": "dataset_binding.expect.lab",
+      "class": "DATA_BINDING",
+      "previous": 21.271405488892093,
+      "recovered": 21.16497305149358
+    },
+    {
+      "field": "dataset_binding.expect.rgb",
+      "class": "DATA_BINDING",
+      "previous": 0.14561786886907022,
+      "recovered": 0.14329059195071162
+    },
+    {
+      "field": "dataset_binding.expect.tcme",
+      "class": "DATA_BINDING",
+      "previous": 0.6146068110130727,
+      "recovered": 0.7040501053065034
+    },
+    {
+      "field": "method_binding.suite_path",
+      "class": "PATH_BINDING",
+      "previous": "F1-R3 formal_suite",
+      "recovered": "F1-R4 formal_suite"
+    },
+    {
+      "field": "output_binding.out_path",
+      "class": "OUTPUT_BINDING",
+      "previous": "F1-R3 runtime/corrected_v2",
+      "recovered": "F1-R4 runtime/formal"
+    }
+  ],
+  "invariants": [
+    "builder source unchanged",
+    "original evaluator unchanged",
+    "N=1257",
+    "sidecar paths and contents unchanged",
+    "video contents unchanged",
+    "metric semantic regions unchanged",
+    "mapping/timeline/visibility unchanged"
+  ]
+}

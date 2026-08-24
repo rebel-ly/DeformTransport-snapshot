@@ -1,0 +1,9 @@
+{
+  "preflight":"GPU1 NVIDIA L40: 7 MiB used / 46068 MiB, 0% utilization before probe.",
+  "formal_python":"/workspace/tools/miniforge3/envs/wan-move/bin/python", "source_image_sha256":"00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+  "probe_contract":"ONE VAE-only attempt on CUDA_VISIBLE_DEVICES=1; formal source RGB preprocessing and 80 zero future frames; excluded T5, CLIP, 14B transformer, and diffusion sampling.",
+  "source_preprocessed_shape":"[3,81,480,832] expected by exact probe expression", "vae_encode_return_type":"UNOBSERVED", "raw_vae_latent_shape":"UNRESOLVED", "transport_input_y_shape":"UNRESOLVED", "real_transport_latent_hw":"UNRESOLVED",
+  "probe_result":"NO_STRUCTURED_TENSOR_OUTPUT; process exited and GPU1 returned to 7 MiB/0%. No second probe was run.",
+  "static_path_evidence":"wan_move.py:266-281: y=vae.encode(...)[0], then edited_y=replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]. create_pos_feature_map uses height//8,width//8 at trajectory.py:206-219. This establishes flow but not an observed real y tensor.",
+  "existing_replay_intermediates":"NONE: Replay A/B contain MP4/log/pid/exit artifacts only."
+}

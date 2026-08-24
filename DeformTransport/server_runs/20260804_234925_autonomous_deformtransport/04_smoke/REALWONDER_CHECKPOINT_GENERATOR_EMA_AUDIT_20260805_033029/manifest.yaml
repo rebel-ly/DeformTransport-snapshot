@@ -1,0 +1,6 @@
+RUN_ID: 20260804_234925_autonomous_deformtransport
+job_id: REALWONDER_CHECKPOINT_GENERATOR_EMA_AUDIT_20260805_033029
+任务: checkpoint_generator与generator_ema_GPU逐张量差异审计
+GPU编号: 3
+GPU_UUID: GPU-111b4686-bb10-d8db-87fd-401b36dcbdf3
+timeout秒: 600

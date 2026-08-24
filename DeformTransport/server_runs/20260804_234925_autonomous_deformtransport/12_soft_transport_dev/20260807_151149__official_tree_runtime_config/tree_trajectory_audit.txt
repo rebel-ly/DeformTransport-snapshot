@@ -1,0 +1,583 @@
+========== TREE HANDLER ==========
+     1	from simulation.case_simulation.case_handler import CaseHandler, register_case
+     2	import numpy as np
+     3	import torch
+     4	import gstaichi as ti
+     5	import genesis as gs
+     6	import math
+     7	from simulation.utils import gs_to_pt3d
+     8	
+     9	@register_case("tree")
+    10	class Tree(CaseHandler):
+    11	    def __init__(self, config, all_obj_info, device):
+    12	        super().__init__(config, all_obj_info, device)
+    13	    
+    14	
+    15	    def fix_particles(self):
+    16	        ############################ Fix Particles ###############################
+    17	        # fix part of the object - only applied to particle cases
+    18	       
+    19	        fixed_area_list = list(self.config['fixed_area'])[0]
+    20	        sim_particles = torch.tensor(self.all_objs[0].init_particles).to(self.device)
+    21	        x_left = self.all_obj_info[0]['min'][0] + self.all_obj_info[0]['size'][0] * fixed_area_list[0]
+    22	        x_right = self.all_obj_info[0]['min'][0] + self.all_obj_info[0]['size'][0] * fixed_area_list[1]
+    23	        z_top = self.all_obj_info[0]['max'][2] - self.all_obj_info[0]['size'][2] * fixed_area_list[2]
+    24	        z_bottom = self.all_obj_info[0]['max'][2] - self.all_obj_info[0]['size'][2] * fixed_area_list[3]
+    25	
+    26	        fixed_area_idx = torch.where(
+    27	            (sim_particles[:, 0] > x_left) & (sim_particles[:, 0] < x_right) &
+    28	            (sim_particles[:, 2] > z_bottom) & (sim_particles[:, 2] < z_top)
+    29	        )
+    30	
+    31	        is_free = torch.ones(sim_particles.shape[0], dtype=torch.bool).to(self.device)
+    32	        is_free[fixed_area_idx] = False
+    33	        self.all_objs[0].set_free(is_free)
+    34	    
+    35	    
+    36	    def create_force_fields(self):
+    37	
+    38	        wind_force_center = (
+    39	            self.all_obj_info[0]['min'][0].item(),
+    40	            self.all_obj_info[0]['min'][1].item(),
+    41	            self.all_obj_info[0]['min'][2].item()
+    42	        )
+    43	        wind_force_radius = ((self.all_obj_info[0]['max'][0] - self.all_obj_info[0]['min'][0]) * 1.5).item()
+    44	        wind_force_direction = (
+    45	            ((self.all_obj_info[0]['max'][0] - self.all_obj_info[0]['min'][0]) * 0.3).item(),
+    46	            ((self.all_obj_info[0]['min'][1] - self.all_obj_info[0]['max'][1]) * 0.).item(),
+    47	            ((self.all_obj_info[0]['min'][2] - self.all_obj_info[0]['max'][2]) * 0.0).item()
+    48	        )
+    49	        force_field = gs.force_fields.Wind(
+    50	            direction = wind_force_direction,
+    51	            strength = 1,
+    52	            radius = wind_force_radius,
+    53	            center = wind_force_center,
+    54	        )
+    55	        force_field.activate()
+    56	        self.scene.add_force_field(
+    57	            force_field = force_field
+    58	        )
+
+========== SANTA HANDLER ==========
+     1	from simulation.case_simulation.case_handler import CaseHandler, register_case
+     2	import numpy as np
+     3	import torch
+     4	import gstaichi as ti
+     5	import genesis as gs
+     6	
+     7	@register_case("santa_cloth")
+     8	class SantaCloth(CaseHandler):
+     9	    def __init__(self, config, all_obj_info, device):
+    10	        super().__init__(config, all_obj_info, device)
+    11	
+    12	    def custom_simulation(self, sid):
+    13	        pass
+    14	
+    15	    def fix_particles(self):
+    16	        ############################ Fix Particles ###############################
+    17	        # fix part of the object - only applied to particle cases
+    18	        for i in range(len(self.all_objs)):
+    19	            fixed_area_list = list(self.config['fixed_area'])[i]
+    20	            sim_particles = torch.tensor(self.all_objs[i].init_particles).to(self.device)
+    21	            x_left = self.all_obj_info[i]['min'][0] + self.all_obj_info[i]['size'][0] * fixed_area_list[0]
+    22	            x_right = self.all_obj_info[i]['min'][0] + self.all_obj_info[i]['size'][0] * fixed_area_list[1]
+    23	            z_top = self.all_obj_info[i]['max'][2] - self.all_obj_info[i]['size'][2] * fixed_area_list[2]
+    24	            z_bottom = self.all_obj_info[i]['max'][2] - self.all_obj_info[i]['size'][2] * fixed_area_list[3]
+    25	
+    26	            print(f"[fix_particles] obj {i}: fixed_area={fixed_area_list}, "
+    27	                  f"n_particles={len(sim_particles)}")
+    28	            print(f"[fix_particles] obj {i}: x_range=[{x_left:.4f}, {x_right:.4f}], "
+    29	                  f"z_range=[{z_bottom:.4f}, {z_top:.4f}]")
+    30	            print(f"[fix_particles] obj {i}: particle x range=[{sim_particles[:,0].min():.4f}, "
+    31	                  f"{sim_particles[:,0].max():.4f}], "
+    32	                  f"z range=[{sim_particles[:,2].min():.4f}, {sim_particles[:,2].max():.4f}]")
+    33	            print(f"[fix_particles] obj {i}: obj_info min={self.all_obj_info[i]['min']}, "
+    34	                  f"max={self.all_obj_info[i]['max']}, size={self.all_obj_info[i]['size']}")
+    35	
+    36	            fixed_area_idx = torch.where(
+    37	                (sim_particles[:, 0] > x_left) & (sim_particles[:, 0] < x_right) &
+    38	                (sim_particles[:, 2] > z_bottom) & (sim_particles[:, 2] < z_top)
+    39	            )
+    40	
+    41	            fixed_area_points = sim_particles[fixed_area_idx]
+    42	            print(f"[fix_particles] obj {i}: found {len(fixed_area_points)} particles to fix")
+    43	            fixed_area_list = [tuple(point.tolist()) for point in fixed_area_points]
+    44	            for point in fixed_area_list:
+    45	                self.all_objs[i].fix_particle(self.all_objs[i].find_closest_particle(point), 0)
+    46	            print(f"[fix_particles] obj {i}: fixed {len(fixed_area_list)} particles")
+    47	
+    48	    def create_force_fields(self):
+    49	        if self.config.get('skip_force_fields', False):
+    50	            return
+    51	
+    52	        wind_lowest = (self.all_obj_occupied_lower_bound[2] + (self.all_obj_occupied_upper_bound[2] - self.all_obj_occupied_lower_bound[2]) * 0.05).cpu().numpy()
+    53	        wind_highest = (self.all_obj_occupied_lower_bound[2] + (self.all_obj_occupied_upper_bound[2] - self.all_obj_occupied_lower_bound[2]) * 0.8).cpu().numpy()
+    54	
+    55	        @ti.func
+    56	        def force_func(pos, vel, t, i):
+    57	            frame_step = t // self.config['dt'] // self.config['frame_steps']
+    58	            strength = 3
+    59	            direction = ti.Vector([0, 0, 0], dt=gs.ti_float)
+    60	
+    61	            cycle_step = frame_step % 144
+    62	            if cycle_step <= 20:
+    63	                direction = ti.Vector([-1, 0, 0], dt=gs.ti_float)
+    64	            elif cycle_step > 20 and cycle_step <= 30:
+    65	                direction = ti.Vector([0, 0, 0], dt=gs.ti_float)
+    66	            elif cycle_step > 30 and cycle_step <= 50:
+    67	                direction = ti.Vector([1, 0, 0], dt=gs.ti_float)
+    68	            elif cycle_step > 50 and cycle_step <= 80:
+    69	                direction = ti.Vector([-1, 0, 0], dt=gs.ti_float)
+    70	                strength = 3
+    71	            elif cycle_step > 80 and cycle_step <= 100:
+    72	                direction = ti.Vector([0, 0, 0], dt=gs.ti_float)
+    73	                strength = 0
+    74	            elif cycle_step > 100 and cycle_step <= 120:
+    75	                direction = ti.Vector([1, 0, 0], dt=gs.ti_float)
+    76	                strength = 3
+    77	            elif cycle_step > 120 and cycle_step <= 130:
+    78	                direction = ti.Vector([0, 0, 0], dt=gs.ti_float)
+    79	                strength = 0
+    80	            elif cycle_step > 130 and cycle_step <= 144:
+    81	                direction = ti.Vector([-1, 0, 0], dt=gs.ti_float)
+    82	                strength = 3
+    83	
+    84	            acc = ti.Vector.zero(gs.ti_float, 3)
+    85	            if pos[2] > wind_lowest and pos[2] < wind_highest:
+    86	                scaler = (pos[2] - wind_lowest) / (wind_highest - wind_lowest)
+    87	                scaler = ti.exp(scaler ** 2)
+    88	                acc = direction * strength * scaler
+    89	            else:
+    90	                acc = ti.Vector.zero(gs.ti_float, 3)
+    91	            return acc
+    92	
+    93	        force_field = gs.force_fields.Custom(force_func)
+    94	        force_field.activate()
+    95	        self.scene.add_force_field(
+    96	            force_field = force_field
+    97	        )
+    98	    
+    99	    def detect_ground_plane(self, ground_plane):
+   100	        pass
+
+========== PARTICLE / TRAJECTORY EXPORT ==========
+case_simulation.py:114:    if genesis_simulator.point_trajectory_export is None:
+case_simulation.py:115:        raise RuntimeError("point trajectory export was requested but no trajectory was recorded")
+case_simulation.py:117:        genesis_simulator.point_trajectory_export,
+simulation/genesis_simulator.py:19:from deform_transport.trajectory import PointTrajectoryRecorder
+simulation/genesis_simulator.py:231:        self.trajectory_recorder = None
+simulation/genesis_simulator.py:232:        self.point_trajectory_export = None
+simulation/genesis_simulator.py:234:            self.trajectory_recorder = PointTrajectoryRecorder(
+simulation/genesis_simulator.py:329:                if self.trajectory_recorder is not None:
+simulation/genesis_simulator.py:330:                    self.trajectory_recorder.record(
+simulation/genesis_simulator.py:348:        if self.trajectory_recorder is not None:
+simulation/genesis_simulator.py:349:            self.point_trajectory_export = self.trajectory_recorder.state_dict()
+simulation/image23D/single_view_reconstructor.py:303:        unprojected_points = kf_camera.unproject(points_cloud, point_depth)
+simulation/image23D/single_view_reconstructor.py:308:            unprojected_points = unprojected_points[mask]
+simulation/image23D/single_view_reconstructor.py:311:        return unprojected_points, points_colors
+simulation/image23D/single_view_reconstructor.py:814:        input_unprojected_points = rearrange(
+simulation/image23D/single_view_reconstructor.py:818:        gt_kps = input_unprojected_points[:, gt_kp_h, gt_kp_w].permute(1, 0)
+deform_transport/transport_ready.py:10:from .trajectory import map_image_uv_to_latent, validate_trajectory_export
+deform_transport/transport_ready.py:64:def _flatten_trajectory_objects(
+deform_transport/transport_ready.py:65:    trajectory: Mapping[str, Any],
+deform_transport/transport_ready.py:67:    objects = trajectory["objects"]
+deform_transport/transport_ready.py:139:def build_transport_ready(
+deform_transport/transport_ready.py:140:    trajectory: Mapping[str, Any],
+deform_transport/transport_ready.py:144:    source_trajectory_path: str | Path | None = None,
+deform_transport/transport_ready.py:157:    validate_trajectory_export(trajectory)
+deform_transport/transport_ready.py:158:    flat = _flatten_trajectory_objects(trajectory)
+deform_transport/transport_ready.py:166:                "source raster frame count must match the trajectory frame count"
+deform_transport/transport_ready.py:177:        raise ValueError("source raster contains a point ID outside the trajectory")
+deform_transport/transport_ready.py:205:            "points_3d": trajectory.get("coordinate_system"),
+deform_transport/transport_ready.py:210:        "frame_ids": _plain_cpu(trajectory["frame_ids"]).to(torch.long),
+deform_transport/transport_ready.py:211:        "simulation_steps": _plain_cpu(trajectory["simulation_steps"]).to(
+deform_transport/transport_ready.py:239:        "camera": _plain_structure(trajectory["camera"]),
+deform_transport/transport_ready.py:247:            "source_trajectory": path_string(source_trajectory_path),
+deform_transport/transport_ready.py:255:    validate_transport_ready(state)
+deform_transport/transport_ready.py:279:def validate_transport_ready(state: Mapping[str, Any]) -> None:
+deform_transport/transport_ready.py:459:def save_transport_ready(state: Mapping[str, Any], path: str | Path) -> Path:
+deform_transport/transport_ready.py:462:    validate_transport_ready(state)
+deform_transport/transport_ready.py:467:    validate_transport_ready(loaded)
+deform_transport/trajectory.py:1:"""Point-trajectory recording utilities for RealWonder.
+deform_transport/trajectory.py:21:    """Detach runtime tensor subclasses at the trajectory export boundary."""
+deform_transport/trajectory.py:200:            raise RuntimeError("cannot export an empty trajectory")
+deform_transport/trajectory.py:221:                    f"object {object_id} trajectory shape changed: "
+deform_transport/trajectory.py:225:                raise ValueError(f"object {object_id} trajectory contains non-finite positions")
+deform_transport/trajectory.py:273:        validate_trajectory_export(state)
+deform_transport/trajectory.py:283:def validate_trajectory_export(state: Mapping[str, Any]) -> None:
+deform_transport/trajectory.py:287:        raise ValueError(f"unsupported trajectory format: {state.get('format_version')}")
+deform_transport/trajectory.py:296:        raise ValueError("trajectory export has no frames")
+deform_transport/trajectory.py:298:        raise ValueError("trajectory export has no objects")
+deform_transport/trajectory.py:313:            raise ValueError("initial point identity does not match trajectory point identity")
+deform_transport/trajectory.py:315:            raise ValueError("trajectory export contains non-finite values")
+deform_transport/__init__.py:3:from .trajectory import (
+deform_transport/__init__.py:7:    validate_trajectory_export,
+deform_transport/__init__.py:14:    "validate_trajectory_export",
+scripts/inspect_realwonder_case.py:18:from deform_transport.trajectory import (  # noqa: E402
+scripts/run_realwonder_trajectory_probe.py:100:            f"flow count {len(flows)} does not match trajectory frames {current_uv.shape[0]}"
+scripts/run_realwonder_trajectory_probe.py:256:    trajectory_path = simulator.save_point_trajectories(
+scripts/run_realwonder_trajectory_probe.py:259:    export = torch.load(trajectory_path, map_location="cpu")
+scripts/run_realwonder_trajectory_probe.py:372:        "trajectory_path": str(trajectory_path),
+scripts/assemble_final_sim_from_trajectory.py:2:"""把无损 RealWonder trajectory probe 输出组装成 infer_sim final_sim。"""
+scripts/assemble_final_sim_from_trajectory.py:114:        "任务": "从RealWonder无损trajectory probe组装final_sim",
+scripts/assemble_final_sim_from_trajectory.py:125:        "trajectory_sha256": sha256(output / "point_trajectories.pt"),
+scripts/build_continuous_transport_ready_probe.py:20:from deform_transport.transport_ready import validate_transport_ready
+scripts/build_continuous_transport_ready_probe.py:58:    validate_transport_ready(state)
+scripts/build_continuous_transport_ready_probe.py:250:    validate_transport_ready(state)
+scripts/audit_soft_weight_thresholds.py:18:from deform_transport.transport_ready import validate_transport_ready
+scripts/audit_soft_weight_thresholds.py:72:        args.transport_ready,
+scripts/audit_soft_weight_thresholds.py:76:    validate_transport_ready(state)
+scripts/audit_soft_weight_thresholds.py:203:        "transport_ready": str(args.transport_ready.resolve()),
+scripts/validate_soft_transport_cpu_gpu.py:14:from deform_transport.transport_ready import validate_transport_ready
+scripts/validate_soft_transport_cpu_gpu.py:138:        args.transport_ready,
+scripts/validate_soft_transport_cpu_gpu.py:143:    validate_transport_ready(state)
+scripts/validate_soft_transport_cpu_gpu.py:196:        "transport_ready": str(
+scripts/validate_soft_transport_cpu_gpu.py:197:            args.transport_ready.resolve()
+scripts/diagnose_aligned_visibility_transport_geometry.py:806:        args.visibility_contract.resolve()
+scripts/diagnose_aligned_visibility_transport_geometry.py:1381:            "visibility_contract": str(
+scripts/diagnose_aligned_visibility_transport_geometry.py:1384:            "visibility_contract_sha256":
+scripts/diagnose_aligned_visibility_transport_geometry.py:1436:            "visibility_contract": {
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:806:        args.visibility_contract.resolve()
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1388:            "visibility_contract": str(
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1391:            "visibility_contract_sha256":
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1443:            "visibility_contract": {
+scripts/run_checkpoint_free_transport_probe.py:37:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+scripts/run_checkpoint_free_transport_probe.py:45:    / "transport_ready.pt"
+scripts/run_checkpoint_free_transport_probe.py:237:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+scripts/run_checkpoint_free_transport_probe.py:239:    validate_transport_ready(state)
+scripts/run_checkpoint_free_transport_probe.py:519:            "transport_ready": str(args.transport_ready.resolve()),
+scripts/run_checkpoint_free_transport_probe.py:530:            "export_transport_ready": "python scripts/export_transport_ready.py",
+scripts/run_santa_validation_suite.py:18:PROBE = REPO_ROOT / "scripts" / "run_realwonder_trajectory_probe.py"
+scripts/run_santa_validation_suite.py:86:def _trajectory_summary(output_dir: Path, report: dict) -> dict:
+scripts/run_santa_validation_suite.py:270:        summaries[spec["name"]] = _trajectory_summary(output_dir, report)
+scripts/run_wan_vae_transport_probe.py:35:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+scripts/run_wan_vae_transport_probe.py:47:    / "transport_ready.pt"
+scripts/run_wan_vae_transport_probe.py:222:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+scripts/run_wan_vae_transport_probe.py:224:    validate_transport_ready(state)
+scripts/export_transport_ready.py:1:"""Convert a saved RealWonder trajectory into the transport-ready contract."""
+scripts/export_transport_ready.py:18:from deform_transport.transport_ready import (  # noqa: E402
+scripts/export_transport_ready.py:19:    build_transport_ready,
+scripts/export_transport_ready.py:20:    save_transport_ready,
+scripts/export_transport_ready.py:36:    / "transport_ready.pt"
+scripts/export_transport_ready.py:48:    trajectory_path = source_dir / "point_trajectories.pt"
+scripts/export_transport_ready.py:54:        trajectory_path,
+scripts/export_transport_ready.py:63:    trajectory = torch.load(
+scripts/export_transport_ready.py:64:        trajectory_path, map_location="cpu", weights_only=False
+scripts/export_transport_ready.py:67:    state = build_transport_ready(
+scripts/export_transport_ready.py:68:        trajectory,
+scripts/export_transport_ready.py:71:        source_trajectory_path=trajectory_path,
+scripts/export_transport_ready.py:77:    output_path = save_transport_ready(state, args.output.resolve())
+scripts/compare_hard_soft_support.py:14:from deform_transport.transport_ready import validate_transport_ready
+scripts/compare_hard_soft_support.py:42:        args.transport_ready,
+scripts/compare_hard_soft_support.py:46:    validate_transport_ready(state)
+scripts/compare_hard_soft_support.py:189:        "transport_ready": str(args.transport_ready.resolve()),
+scripts/compare_hard_soft_continuous.py:13:from deform_transport.transport_ready import validate_transport_ready
+scripts/compare_hard_soft_continuous.py:40:        args.transport_ready,
+scripts/compare_hard_soft_continuous.py:45:    validate_transport_ready(state)
+scripts/compare_hard_soft_continuous.py:303:            args.transport_ready.resolve()
+scripts/build_soft_wan_latent_artifact.py:22:from deform_transport.transport_ready import validate_transport_ready
+scripts/build_soft_wan_latent_artifact.py:23:from deform_transport.visibility_contract import select_target_validity
+scripts/build_soft_wan_latent_artifact.py:114:    transport_path = args.transport_ready.resolve()
+scripts/build_soft_wan_latent_artifact.py:118:        args.visibility_contract.resolve()
+scripts/build_soft_wan_latent_artifact.py:119:        if args.visibility_contract is not None
+scripts/build_soft_wan_latent_artifact.py:163:    validate_transport_ready(state)
+scripts/build_soft_wan_latent_artifact.py:261:            "latent frame indices exceed transport trajectory"
+scripts/build_soft_wan_latent_artifact.py:692:            "transport_ready": str(transport_path),
+scripts/build_soft_wan_latent_artifact.py:693:            "transport_ready_sha256": sha256(
+scripts/build_soft_wan_latent_artifact.py:700:            "visibility_contract": (
+scripts/build_soft_wan_latent_artifact.py:705:            "visibility_contract_sha256": (
+scripts/build_soft_wan_latent_artifact.py:758:            "visibility_contract": (
+scripts/decode_compare_hard_soft_wan_artifacts.py:25:from deform_transport.transport_ready import (
+scripts/decode_compare_hard_soft_wan_artifacts.py:26:    validate_transport_ready,
+scripts/decode_compare_hard_soft_wan_artifacts.py:362:    transport_path = args.transport_ready.resolve()
+scripts/decode_compare_hard_soft_wan_artifacts.py:400:    validate_transport_ready(state)
+scripts/decode_compare_hard_soft_wan_artifacts.py:810:            "transport_ready": {
+scripts/audit_material_metric_contract.py:4:It inventories trajectory coordinates, temporal mappings, validity fields,
+scripts/audit_material_metric_contract.py:193:    transport_path = args.transport_ready.resolve()
+scripts/audit_material_metric_contract.py:338:            "transport_ready": str(
+scripts/audit_time_and_future_visibility_contract.py:682:        args.transport_ready.resolve()
+scripts/audit_time_and_future_visibility_contract.py:945:                                "valid_projected_points":
+scripts/audit_time_and_future_visibility_contract.py:1225:            "transport_ready": str(
+scripts/audit_raster_timeline_contract.py:225:        args.transport_ready.resolve()
+scripts/audit_raster_timeline_contract.py:636:            "transport_ready": {
+scripts/build_aligned_transport_visibility_contract.py:36:from deform_transport.transport_ready import validate_transport_ready
+scripts/build_aligned_transport_visibility_contract.py:180:        args.transport_ready.resolve()
+scripts/build_aligned_transport_visibility_contract.py:194:        / "aligned_transport_ready.pt"
+scripts/build_aligned_transport_visibility_contract.py:198:        / "aligned_visibility_contract.pt"
+scripts/build_aligned_transport_visibility_contract.py:235:    validate_transport_ready(old)
+scripts/build_aligned_transport_visibility_contract.py:461:        "source_transport_ready": str(
+scripts/build_aligned_transport_visibility_contract.py:464:        "source_transport_ready_sha256":
+scripts/build_aligned_transport_visibility_contract.py:474:    validate_transport_ready(aligned)
+scripts/build_aligned_transport_visibility_contract.py:515:    visibility_contract = {
+scripts/build_aligned_transport_visibility_contract.py:518:            "aligned_raster_visibility_contract",
+scripts/build_aligned_transport_visibility_contract.py:567:            "transport_ready": str(
+scripts/build_aligned_transport_visibility_contract.py:570:            "transport_ready_sha256":
+scripts/build_aligned_transport_visibility_contract.py:718:            "old_transport_ready": {
+scripts/build_aligned_transport_visibility_contract.py:825:        visibility_contract,
+scripts/build_aligned_transport_visibility_contract.py:830:        "aligned_transport_ready": {
+scripts/build_aligned_transport_visibility_contract.py:841:        "aligned_visibility_contract": {
+
+========== SAVE OPERATIONS ==========
+case_simulation.py:135:torch.save(points_masks_downsampled, points_masks_path)
+deform_transport/transport_ready.py:465:    torch.save(dict(state), path)
+deform_transport/trajectory.py:279:        torch.save(self.state_dict(), path)
+scripts/run_realwonder_trajectory_probe.py:246:    np.save(output_dir / "flows.npy", flows_array)
+scripts/run_realwonder_trajectory_probe.py:252:        np.save(flow_source_indices_path, flow_source_point_indices_array)
+scripts/build_continuous_transport_ready_probe.py:307:    torch.save(output_state, output_path)
+scripts/diagnose_aligned_visibility_transport_geometry.py:1396:    torch.save(
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1403:    torch.save(
+scripts/run_checkpoint_free_transport_probe.py:359:    torch.save(saved_results, results_path)
+scripts/run_wan_vae_transport_probe.py:443:    torch.save(
+scripts/run_precomputed_demo_simulation.py:160:    np.save(output / "flows_geometry.npy", flow.transpose(0, 3, 1, 2))
+scripts/build_soft_wan_latent_artifact.py:726:    torch.save(output_state, output_path)
+scripts/build_soft_fusion_ablation_artifacts.py:288:    torch.save(state, path)
+scripts/build_aligned_transport_visibility_contract.py:819:    torch.save(
+scripts/build_aligned_transport_visibility_contract.py:824:    torch.save(
+scripts/scan_wan_transport_alpha_tau.py:957:        torch.save(
+scripts/build_temporal_alpha_schedule_candidates.py:220:        torch.save(candidate_state, path)
+
+========== MPM STATE ACCESS ==========
+simulation/case_simulation/sand_house.py:16:        cup_pos = self.all_obj_info[0]['center'].cpu().numpy()
+simulation/case_simulation/sand_house.py:18:        franka_pos1 = cup_pos + np.array([-0.65, -0.1, 0.0])
+simulation/case_simulation/sand_house.py:19:        franka_pos2 = cup_pos + np.array([0.65, -0.1, 0.0])
+simulation/case_simulation/sand_house.py:20:        franka_pos1[2] = self.all_obj_info[0]['min'][2]
+simulation/case_simulation/sand_house.py:21:        franka_pos2[2] = self.all_obj_info[0]['min'][2]
+simulation/case_simulation/sand_house.py:22:        self.franka_pos1 = torch.from_numpy(franka_pos1).to(self.device)
+simulation/case_simulation/sand_house.py:23:        self.franka_pos2 = torch.from_numpy(franka_pos2).to(self.device)
+simulation/case_simulation/sand_house.py:27:                pos = franka_pos1,
+simulation/case_simulation/sand_house.py:35:                pos= franka_pos2,
+simulation/case_simulation/sand_house.py:43:    def fix_particles(self):
+simulation/case_simulation/sand_house.py:44:        self.init_pos = self.all_objs[0].get_particles()[0]
+simulation/case_simulation/sand_house.py:46:    def init_robots_pose(self):
+simulation/case_simulation/sand_house.py:48:        cup_pos = self.all_obj_info[0]['center'].cpu().numpy()
+simulation/case_simulation/sand_house.py:50:        self.initial_ee_pos1 = cup_pos + np.array([-0.5, -0.1, -0.03])
+simulation/case_simulation/sand_house.py:51:        self.initial_ee_pos2 = cup_pos + np.array([0.45, -0.1, -0.09])
+simulation/case_simulation/sand_house.py:58:        qpos1 = self.franka1.inverse_kinematics(
+simulation/case_simulation/sand_house.py:60:            pos=self.initial_ee_pos1,
+simulation/case_simulation/sand_house.py:63:        qpos2 = self.franka2.inverse_kinematics(
+simulation/case_simulation/sand_house.py:65:            pos=self.initial_ee_pos2,
+simulation/case_simulation/sand_house.py:69:        if qpos1 is not None:
+simulation/case_simulation/sand_house.py:70:            self.franka_qpos1 = qpos1.cpu().numpy()
+simulation/case_simulation/sand_house.py:71:            self.franka_qpos1[-2:] = 0.04 * self.arm_scale
+simulation/case_simulation/sand_house.py:75:        if qpos2 is not None:
+simulation/case_simulation/sand_house.py:76:            self.franka_qpos2 = qpos2.cpu().numpy()
+simulation/case_simulation/sand_house.py:77:            self.franka_qpos2[-2:] = 0.04 * self.arm_scale
+simulation/case_simulation/sand_house.py:81:        self.franka1.set_qpos(self.franka_qpos1)
+simulation/case_simulation/sand_house.py:82:        self.franka2.set_qpos(self.franka_qpos2)
+simulation/case_simulation/sand_house.py:97:            self.all_objs[0].set_position(self.init_pos)
+simulation/case_simulation/sand_house.py:105:            self.franka2.set_qpos(self.franka_qpos2)
+simulation/case_simulation/sand_house.py:110:            target_pos = self.initial_ee_pos1.copy() + np.array([displacement, 0.0, 0.0])
+simulation/case_simulation/sand_house.py:112:            self.franka_qpos1 = self.franka1.inverse_kinematics(
+simulation/case_simulation/sand_house.py:114:                pos=target_pos,
+simulation/case_simulation/sand_house.py:118:            if self.franka_qpos1 is not None:
+simulation/case_simulation/sand_house.py:119:                self.franka_qpos1[..., -2:] = 0.04
+simulation/case_simulation/sand_house.py:120:                self.franka1.control_dofs_position(self.franka_qpos1[..., :-2], self.motors_dof)
+simulation/case_simulation/sand_house.py:121:                self.franka1.control_dofs_position(np.array([0.04, 0.04]), self.fingers_dof)
+simulation/case_simulation/sand_house.py:124:            self.franka2.set_qpos(self.franka_qpos2)
+simulation/case_simulation/sand_house.py:128:            target_pos = self.initial_ee_pos1.copy() + np.array([28 * step_size - retreat_distance, 0.0, 0.0])
+simulation/case_simulation/sand_house.py:130:            self.franka_qpos1 = self.franka1.inverse_kinematics(
+simulation/case_simulation/sand_house.py:132:                pos=target_pos,
+simulation/case_simulation/sand_house.py:136:            if self.franka_qpos1 is not None:
+simulation/case_simulation/sand_house.py:137:                self.franka_qpos1[..., -2:] = 0.04
+simulation/case_simulation/sand_house.py:138:                self.franka1.control_dofs_position(self.franka_qpos1[..., :-2], self.motors_dof)
+simulation/case_simulation/sand_house.py:139:                self.franka1.control_dofs_position(np.array([0.04, 0.04]), self.fingers_dof)
+simulation/case_simulation/sand_house.py:143:            self.franka1.set_qpos(self.franka_qpos1)
+simulation/case_simulation/sand_house.py:149:            target_pos = self.initial_ee_pos2.copy() + np.array([-displacement, 0.0, 0.0])
+simulation/case_simulation/sand_house.py:151:            self.franka_qpos2 = self.franka2.inverse_kinematics(
+simulation/case_simulation/sand_house.py:153:                pos=target_pos,
+simulation/case_simulation/sand_house.py:157:            if self.franka_qpos2 is not None:
+simulation/case_simulation/sand_house.py:158:                self.franka_qpos2[..., -2:] = 0.04
+simulation/case_simulation/sand_house.py:159:                self.franka2.control_dofs_position(self.franka_qpos2[..., :-2], self.motors_dof)
+simulation/case_simulation/sand_house.py:160:                self.franka2.control_dofs_position(np.array([0.04, 0.04]), self.fingers_dof)
+simulation/case_simulation/sand_house.py:164:            self.franka1.set_qpos(self.franka_qpos1)
+simulation/case_simulation/sand_house.py:170:            target_pos = self.initial_ee_pos2.copy() + np.array([-30 * step_size + retreat_distance, 0.0, 0.0])
+simulation/case_simulation/sand_house.py:172:            self.franka_qpos2 = self.franka2.inverse_kinematics(
+simulation/case_simulation/sand_house.py:174:                pos=target_pos,
+simulation/case_simulation/sand_house.py:178:            if self.franka_qpos2 is not None:
+simulation/case_simulation/sand_house.py:179:                self.franka_qpos2[..., -2:] = 0.04
+simulation/case_simulation/sand_house.py:180:                self.franka2.control_dofs_position(self.franka_qpos2[..., :-2], self.motors_dof)
+simulation/case_simulation/sand_house.py:181:                self.franka2.control_dofs_position(np.array([0.04, 0.04]), self.fingers_dof)
+simulation/case_simulation/sand_house.py:184:            self.franka2.set_qpos(self.franka_qpos2)
+simulation/case_simulation/sand_house.py:189:            target_pos = self.initial_ee_pos1.copy() + np.array([displacement, 0.1, 0.0])
+simulation/case_simulation/sand_house.py:191:            self.franka_qpos1 = self.franka1.inverse_kinematics(
+simulation/case_simulation/sand_house.py:193:                pos=target_pos,
+simulation/case_simulation/sand_house.py:197:            if self.franka_qpos1 is not None:
+simulation/case_simulation/sand_house.py:198:                self.franka_qpos1[..., -2:] = 0.04
+simulation/case_simulation/sand_house.py:199:                self.franka1.control_dofs_position(self.franka_qpos1[..., :-2], self.motors_dof)
+simulation/case_simulation/sand_house.py:200:                self.franka1.control_dofs_position(np.array([0.04, 0.04]), self.fingers_dof)
+simulation/case_simulation/sand_house.py:203:            self.franka2.set_qpos(self.franka_qpos2)
+simulation/case_simulation/sand_house.py:207:            target_pos = self.initial_ee_pos1.copy() + np.array([30 * step_size - retreat_distance, 0.1, 0.0])
+simulation/case_simulation/sand_house.py:209:            self.franka_qpos1 = self.franka1.inverse_kinematics(
+simulation/case_simulation/sand_house.py:211:                pos=target_pos,
+simulation/case_simulation/sand_house.py:215:            if self.franka_qpos1 is not None:
+simulation/case_simulation/sand_house.py:216:                self.franka_qpos1[..., -2:] = 0.04
+simulation/case_simulation/sand_house.py:217:                self.franka1.control_dofs_position(self.franka_qpos1[..., :-2], self.motors_dof)
+simulation/case_simulation/sand_house.py:218:                self.franka1.control_dofs_position(np.array([0.04, 0.04]), self.fingers_dof)
+simulation/case_simulation/sand_house.py:221:            self.franka1.set_qpos(self.franka_qpos1)
+simulation/case_simulation/sand_house.py:222:            self.franka2.set_qpos(self.franka_qpos2)
+simulation/case_simulation/case_handler.py:64:                        pos=self.all_obj_info[idx]['center'].cpu().numpy().astype(np.float64),
+simulation/case_simulation/case_handler.py:83:                            pos = tuple(per_obj_info['center'].cpu().numpy().astype(np.float64)),
+simulation/case_simulation/case_handler.py:93:                        #     pos = per_obj_info['center'].cpu().numpy(),
+simulation/case_simulation/case_handler.py:106:                        pos=self.all_obj_info[idx]['center'].cpu().numpy().astype(np.float64),
+simulation/case_simulation/case_handler.py:137:        self.init_robots_pose()
+simulation/case_simulation/case_handler.py:138:        self.fix_particles()
+simulation/case_simulation/case_handler.py:163:            morph = gs.morphs.Plane(pos=(self.ground_anchor[0], self.ground_anchor[1], self.ground_anchor[2]), normal=self.normal)
+simulation/case_simulation/case_handler.py:180:    def init_robots_pose(self):
+simulation/case_simulation/case_handler.py:181:        """Initialize robots pose if needed for this case."""
+simulation/case_simulation/case_handler.py:184:    def fix_particles(self):
+simulation/case_simulation/case_handler.py:185:        """Fix particles if needed for this case."""
+simulation/case_simulation/case_handler.py:205:        sim_vgeoms_render_T = target_franka.solver._vgeoms_render_T
+simulation/case_simulation/case_handler.py:245:        vertices = torch.from_numpy(np.vstack(all_vertices)).to(self.device, dtype=torch.float32) # + self.franka_pos
+simulation/case_simulation/persimmon.py:23:            self.all_objs[1].solver.apply_links_external_force(force=force_left, links_idx=[self.all_objs[1].idx])
+simulation/case_simulation/persimmon.py:24:            self.all_objs[0].solver.apply_links_external_force(force=force_right, links_idx=[self.all_objs[0].idx])
+simulation/case_simulation/santa_cloth.py:15:    def fix_particles(self):
+simulation/case_simulation/santa_cloth.py:20:            sim_particles = torch.tensor(self.all_objs[i].init_particles).to(self.device)
+simulation/case_simulation/santa_cloth.py:26:            print(f"[fix_particles] obj {i}: fixed_area={fixed_area_list}, "
+simulation/case_simulation/santa_cloth.py:27:                  f"n_particles={len(sim_particles)}")
+simulation/case_simulation/santa_cloth.py:28:            print(f"[fix_particles] obj {i}: x_range=[{x_left:.4f}, {x_right:.4f}], "
+simulation/case_simulation/santa_cloth.py:30:            print(f"[fix_particles] obj {i}: particle x range=[{sim_particles[:,0].min():.4f}, "
+simulation/case_simulation/santa_cloth.py:31:                  f"{sim_particles[:,0].max():.4f}], "
+simulation/case_simulation/santa_cloth.py:32:                  f"z range=[{sim_particles[:,2].min():.4f}, {sim_particles[:,2].max():.4f}]")
+simulation/case_simulation/santa_cloth.py:33:            print(f"[fix_particles] obj {i}: obj_info min={self.all_obj_info[i]['min']}, "
+simulation/case_simulation/santa_cloth.py:37:                (sim_particles[:, 0] > x_left) & (sim_particles[:, 0] < x_right) &
+simulation/case_simulation/santa_cloth.py:38:                (sim_particles[:, 2] > z_bottom) & (sim_particles[:, 2] < z_top)
+simulation/case_simulation/santa_cloth.py:41:            fixed_area_points = sim_particles[fixed_area_idx]
+simulation/case_simulation/santa_cloth.py:42:            print(f"[fix_particles] obj {i}: found {len(fixed_area_points)} particles to fix")
+simulation/case_simulation/santa_cloth.py:46:            print(f"[fix_particles] obj {i}: fixed {len(fixed_area_list)} particles")
+simulation/case_simulation/santa_cloth.py:56:        def force_func(pos, vel, t, i):
+simulation/case_simulation/santa_cloth.py:85:            if pos[2] > wind_lowest and pos[2] < wind_highest:
+simulation/case_simulation/santa_cloth.py:86:                scaler = (pos[2] - wind_lowest) / (wind_highest - wind_lowest)
+simulation/case_simulation/lamp.py:17:        # self.all_objs[0].solver.set_geoms_friction_ratio(friction_ratio=[0.01], geoms_idx=[self.all_objs[0].geoms[0].idx])
+simulation/case_simulation/lamp.py:18:        self.all_objs[0].solver.apply_links_external_force(force=force_direction * force_strength, links_idx=[self.all_objs[0].idx])    
+simulation/case_simulation/two_duck.py:11:        self.initial_pos0 = all_obj_info[0]['center'].cpu().numpy()
+simulation/case_simulation/two_duck.py:12:        self.initial_pos1 = all_obj_info[1]['center'].cpu().numpy()
+simulation/case_simulation/two_duck.py:16:        pos_0 = self.all_objs[0].get_pos().cpu().numpy()
+simulation/case_simulation/two_duck.py:17:        pos_1 = self.all_objs[1].get_pos().cpu().numpy()
+simulation/case_simulation/two_duck.py:18:        force_direction = pos_1 - pos_0
+simulation/case_simulation/two_duck.py:24:            self.all_objs[0].solver.apply_links_external_torque(torque=np.array([[0, 0, -0.01]]), links_idx=[self.all_objs[0].idx])
+simulation/case_simulation/two_duck.py:26:        # self.all_objs[0].solver.set_geoms_friction_ratio(friction_ratio=[0.01], geoms_idx=[self.all_objs[0].geoms[0].idx])
+simulation/case_simulation/two_duck.py:27:        self.all_objs[0].solver.apply_links_external_force(force=force_direction * force_strength, links_idx=[self.all_objs[0].idx])    
+simulation/case_simulation/tree.py:15:    def fix_particles(self):
+simulation/case_simulation/tree.py:20:        sim_particles = torch.tensor(self.all_objs[0].init_particles).to(self.device)
+simulation/case_simulation/tree.py:27:            (sim_particles[:, 0] > x_left) & (sim_particles[:, 0] < x_right) &
+simulation/case_simulation/tree.py:28:            (sim_particles[:, 2] > z_bottom) & (sim_particles[:, 2] < z_top)
+simulation/case_simulation/tree.py:31:        is_free = torch.ones(sim_particles.shape[0], dtype=torch.bool).to(self.device)
+simulation/genesis_simulator.py:16:    pose_to_transform_matrix,
+simulation/genesis_simulator.py:113:        if 'mpm_gravity' in self.config:
+simulation/genesis_simulator.py:114:            if isinstance(self.config['mpm_gravity'], (int, float)):
+simulation/genesis_simulator.py:115:                mpm_gravity = tuple(self.config['mpm_gravity'] * np.array(gravity_dir))
+simulation/genesis_simulator.py:117:                mpm_gravity = tuple(pt3d_to_gs(np.array(self.config['mpm_gravity'])))
+simulation/genesis_simulator.py:119:            mpm_gravity = None
+simulation/genesis_simulator.py:172:            mpm_options = gs.options.MPMOptions(
+simulation/genesis_simulator.py:177:                gravity = mpm_gravity,
+simulation/genesis_simulator.py:181:                rigid_mpm=True,
+simulation/genesis_simulator.py:199:            pos = (0, -1, 0),
+simulation/genesis_simulator.py:215:                # for debug purpose
+simulation/genesis_simulator.py:216:                # per_object_pos = self.objs[obj_idx].get_pos().cpu().numpy()
+simulation/genesis_simulator.py:218:                # per_object_transform_matrix = torch.from_numpy(pose_to_transform_matrix(per_object_pos, per_object_quat)).to(self.device).float()
+simulation/genesis_simulator.py:220:                self.objs[obj_idx].solver.update_vgeoms_render_T()
+simulation/genesis_simulator.py:221:                rigid_T = self.objs[obj_idx].solver._vgeoms_render_T
+simulation/genesis_simulator.py:226:            elif per_material_type in ['pbd_liquid', 'pbd_cloth', 'mpm_sand', 'mpm_liquid', 'mpm_elastic', 'mpm_snow', 'mpm_elastic2plastic', 'pbd_elastic', 'pbd_particle']:
+simulation/genesis_simulator.py:227:                self.closest_indices[obj_idx] = self.map_pc_to_particles(obj_idx)
+simulation/genesis_simulator.py:257:                obj_inertial_pos = self.objs[obj_idx].get_pos().cpu().numpy()
+simulation/genesis_simulator.py:259:                transform_matrix = torch.from_numpy(pose_to_transform_matrix(obj_inertial_pos, obj_inertial_quat)).to(self.device).float()
+simulation/genesis_simulator.py:268:                # self.objs[obj_idx].solver.update_vgeoms_render_T() # trigger update
+simulation/genesis_simulator.py:269:                # rigid_T = self.objs[obj_idx].solver._vgeoms_render_T
+simulation/genesis_simulator.py:278:            elif per_material_type in ['pbd_liquid', 'pbd_cloth', 'mpm_sand', 'mpm_liquid', 'mpm_elastic', 'mpm_snow', 'mpm_elastic2plastic', 'pbd_elastic', 'pbd_particle']:
+simulation/genesis_simulator.py:279:                particles_now_pos_in_gs = self.objs[obj_idx].solver.particles.pos.to_numpy()
+simulation/genesis_simulator.py:280:                if len(particles_now_pos_in_gs.shape) == 4:
+simulation/genesis_simulator.py:281:                    particles_now_pos_in_gs = particles_now_pos_in_gs[0, self.objs[obj_idx].particle_start:self.objs[obj_idx].particle_end, 0]
+simulation/genesis_simulator.py:283:                    particles_now_pos_in_gs = particles_now_pos_in_gs[self.objs[obj_idx].particle_start:self.objs[obj_idx].particle_end, 0]
+simulation/genesis_simulator.py:285:                particles_start_pos_in_gs = self.objs[obj_idx].init_particles
+simulation/genesis_simulator.py:287:                particles_now_pos_in_gs = torch.tensor(particles_now_pos_in_gs).to(self.device)
+simulation/genesis_simulator.py:288:                particles_start_pos_in_gs = torch.tensor(particles_start_pos_in_gs).to(self.device)
+simulation/genesis_simulator.py:290:                particles_change_pos_in_gs = particles_now_pos_in_gs - particles_start_pos_in_gs
+simulation/genesis_simulator.py:291:                points_change_pos_in_gs = particles_change_pos_in_gs[self.closest_indices[obj_idx]]
+simulation/genesis_simulator.py:292:                points_change_pos_in_gs = points_change_pos_in_gs.mean(dim=1)
+simulation/genesis_simulator.py:293:                updated_points = self.fg_pcs[obj_idx]['points'] + points_change_pos_in_gs
+simulation/genesis_simulator.py:309:            cv2.imwrite((output_folder / "gs_frames" / f"{sid:04d}.png").as_posix(), render_out[0])
+simulation/genesis_simulator.py:312:            self.cam.stop_recording(save_to_filename=(output_folder / "render_gs.mp4").as_posix(), fps=10)
+simulation/genesis_simulator.py:352:    def map_pc_to_particles(self, obj_idx):
+simulation/genesis_simulator.py:353:        sim_particles = torch.tensor(self.objs[obj_idx].init_particles).to(self.device)
+simulation/genesis_simulator.py:354:        print(f"number of sim_particles: {sim_particles.shape[0]}")
+simulation/genesis_simulator.py:361:            # Calculate pairwise distances between chunk and all particles
+simulation/genesis_simulator.py:365:                chunk.unsqueeze(1) - sim_particles.unsqueeze(0),
+simulation/genesis_simulator.py:368:            # Get top num_closest indices of closest particles for this chunk
+simulation/genesis_simulator.py:422:        elif per_material_type == "mpm_sand":
+simulation/genesis_simulator.py:430:        elif per_material_type == "mpm_elastic":
+simulation/genesis_simulator.py:437:        elif per_material_type == "mpm_liquid":
+simulation/genesis_simulator.py:444:        elif per_material_type == "mpm_snow":
+simulation/genesis_simulator.py:451:        elif per_material_type == "mpm_elastic2plastic":
+simulation/genesis_simulator.py:477:        sim_vgeoms_render_T = target_franka.solver._vgeoms_render_T
+simulation/image23D/segmenter.py:33:    pos_points = coords[labels==1]
+simulation/image23D/segmenter.py:35:    ax.scatter(pos_points[:, 0], pos_points[:, 1], color='green', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)
+simulation/image23D/segmenter.py:102:        pred_semantic_map = self.segment_processor.post_process_semantic_segmentation(
+simulation/image23D/segmenter.py:134:            # min_mask_region_area=100,  # Requires open-cv to run post-processing
+simulation/image23D/noise_warp/noise_warp.py:601:    #The original plan was to use init xy during expand, because the query position is arbitrary....
+simulation/image23D/noise_warp/noise_warp.py:635:    pos = (grid + pre_shrink[:xy]).round()
+simulation/image23D/noise_warp/noise_warp.py:636:    in_bounds = (0<= pos[x]) & (pos[x] < w) & (0<= pos[y]) & (pos[y] < h)
+simulation/image23D/noise_warp/noise_warp.py:644:    #Deal with shrink positions offsets
+simulation/image23D/noise_warp/noise_warp.py:651:        pre_shrink[:xy] = 0 #DEBUG: Uncomment to ablate floating-point swarm positions
+simulation/image23D/noise_warp/noise_warp.py:661:    # pre_shrink[:xy][pre_shrink[:xy].abs()<.1] = 0  #DEBUG: Uncomment to ablate floating-point swarm positions
+simulation/image23D/noise_warp/noise_warp.py:669:    shrink_mask = torch.ones(1,h,w,dtype=bool,device=device) #The purpose is to get zeroes where no element is used
+simulation/image23D/noise_warp/noise_warp.py:729:        post_noise_alpha = 0,
+simulation/image23D/noise_warp/noise_warp.py:748:        self.post_noise_alpha=post_noise_alpha
+simulation/image23D/noise_warp/noise_warp.py:773:        if self.post_noise_alpha:
+simulation/image23D/noise_warp/noise_warp.py:774:            noise = mix_new_noise(noise, self.post_noise_alpha)
+simulation/image23D/noise_warp/noise_warp.py:895:    post_noise_alpha = 0,
+simulation/image23D/noise_warp/noise_warp.py:964:            post_noise_alpha = post_noise_alpha,
+simulation/image23D/noise_warp/make_warped_noise.py:67:    #         crop_start (int): Starting position for cropping (default: 176)
+simulation/image23D/mesh_generator.py:15:from sam3d_objects.data.dataset.tdfy.transforms_3d import compose_transform
+simulation/image23D/mesh_generator.py:75:        l2c_transform = compose_transform(
+simulation/image23D/mesh_generator.py:101:        # l2c_transform = compose_transform(
+simulation/image23D/single_view_reconstructor.py:21:    PointsRenderer, PointsRasterizer, PointsRasterizationSettings, AlphaCompositor,
+simulation/image23D/single_view_reconstructor.py:23:    PerspectiveCameras, BlendParams, PointLights, TexturesVertex, mesh, HardFlatShader, Textures, NormWeightedCompositor
+simulation/image23D/single_view_reconstructor.py:331:        transform_matrix_w2c_pt3d = transform_matrix_pt3d.transpose(0, 1)
+simulation/image23D/single_view_reconstructor.py:375:            prev_frame_data: Dictionary containing previous frame's point positions and camera
+simulation/image23D/single_view_reconstructor.py:405:                compositor=AlphaCompositor()
+simulation/image23D/single_view_reconstructor.py:455:            compositor=AlphaCompositor()
+simulation/image23D/single_view_reconstructor.py:563:            ToPILImage()(points_mask_to_save.unsqueeze(0).clamp(0, 1).cpu()).save(points_mask_path.as_posix())
+simulation/image23D/single_view_reconstructor.py:567:            ToPILImage()(mesh_mask_to_save.unsqueeze(0).clamp(0, 1).cpu()).save(mesh_mask_path.as_posix())
+simulation/image23D/single_view_reconstructor.py:575:            image_pil.save(image_path.as_posix())
+simulation/image23D/single_view_reconstructor.py:701:            compositor=AlphaCompositor()
+simulation/image23D/single_view_reconstructor.py:766:            gt_kp_save_path = (self.output_folder / "gt_kps.png").as_posix()
+simulation/image23D/single_view_reconstructor.py:811:            mesh_kps_save_path = (self.output_folder / "mesh_kps.png").as_posix()
+simulation/utils.py:136:def spherical_camera_pose(azimuths: np.ndarray, elevations: np.ndarray, radius=2.5):
+simulation/utils.py:147:    c2ws = center_looking_at_camera_pose(cam_locations)
+simulation/utils.py:150:def center_looking_at_camera_pose(camera_position: torch.Tensor, look_at: torch.Tensor = None, up_world: torch.Tensor = None):
+simulation/utils.py:152:    Create OpenGL camera extrinsics from camera locations and look-at position.
+simulation/utils.py:154:    camera_position: (M, 3) or (3,)
+simulation/utils.py:164:    if camera_position.ndim == 2:
+simulation/utils.py:165:        look_at = look_at.unsqueeze(0).repeat(camera_position.shape[0], 1)
+simulation/utils.py:166:        up_world = up_world.unsqueeze(0).repeat(camera_position.shape[0], 1)
+simulation/utils.py:169:    z_axis = camera_position - look_at
+simulation/utils.py:176:    extrinsics = torch.stack([x_axis, y_axis, z_axis, camera_position], dim=-1)
+simulation/utils.py:245:def pose_to_transform_matrix(pos, quat):
+simulation/utils.py:247:    Convert position and quaternion to 4x4 transformation matrix for Genesis
+simulation/utils.py:250:        pos: [x, y, z] position vector 
+simulation/utils.py:257:    if hasattr(pos, 'cpu'):  # torch tensor
+simulation/utils.py:258:        pos = pos.cpu().numpy()
+simulation/utils.py:262:    pos = np.array(pos, dtype=np.float64)
+simulation/utils.py:278:    transform_matrix[:3, 3] = pos          # translation part
+simulation/utils.py:718:    img_np = np.transpose(img_np, (1, 2, 0))  # (H, W, C)
+simulation/utils.py:1029:    ret = torch.from_numpy(ret.transpose(2, 0, 1)).float()
+simulation/utils.py:1054:    flow_tensor = torch.from_numpy(flow.transpose(2, 0, 1)).float()
+simulation/utils.py:1276:    # Get the depth value for each vertex's corresponding pixel position
+case_simulation.py:107:optical_flows = np.transpose(optical_flows, (0, 3, 1, 2))  # shape (71, 2, 512, 512)
+
+========== SANTA PIPELINE ORIGIN ==========
+./tests/test_transport_ready.py:168:            path = save_transport_ready(state, Path(directory) / "transport_ready.pt")
+./scripts/run_checkpoint_free_transport_probe.py:45:    / "transport_ready.pt"
+./scripts/run_wan_vae_transport_probe.py:47:    / "transport_ready.pt"
+./scripts/export_transport_ready.py:36:    / "transport_ready.pt"
+./scripts/build_aligned_transport_visibility_contract.py:194:        / "aligned_transport_ready.pt"
+./scripts/build_aligned_transport_visibility_contract.py:198:        / "aligned_visibility_contract.pt"
+./docs/code_snapshots/20260805__test_transport_ready__fc4ff4f4.py:168:            path = save_transport_ready(state, Path(directory) / "transport_ready.pt")
+./docs/code_snapshots/20260805__run_wan_vae_transport_probe__backup.py:46:    / "transport_ready.pt"
+./docs/code_review/20260805_float_coordinate_pipeline/test_transport_ready_current.py:168:            path = save_transport_ready(state, Path(directory) / "transport_ready.pt")
+./docs/code_review/20260805_float_coordinate_pipeline/export_transport_ready_current.py:36:    / "transport_ready.pt"
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/run_wan_vae_transport_probe_snapshot.py:47:    / "transport_ready.pt"
+./server_runs/20260804_234925_autonomous_deformtransport/source_snapshot/key_sources/tests/test_transport_ready.py:168:            path = save_transport_ready(state, Path(directory) / "transport_ready.pt")
+./server_runs/20260804_234925_autonomous_deformtransport/source_snapshot/key_sources/scripts/run_checkpoint_free_transport_probe.py:45:    / "transport_ready.pt"
+./server_runs/20260804_234925_autonomous_deformtransport/source_snapshot/key_sources/scripts/run_wan_vae_transport_probe.py:46:    / "transport_ready.pt"
+./server_runs/20260804_234925_autonomous_deformtransport/source_snapshot/key_sources/scripts/export_transport_ready.py:36:    / "transport_ready.pt"

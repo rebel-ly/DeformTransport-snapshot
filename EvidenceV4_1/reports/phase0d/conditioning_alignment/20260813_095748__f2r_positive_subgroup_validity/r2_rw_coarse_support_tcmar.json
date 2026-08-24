@@ -1,0 +1,43 @@
+{
+  "status": "DIAGNOSTIC_ONLY_SUPPORT_CONDITIONED",
+  "frozen_f2_all_patch_target": 65.71344520089995,
+  "exact_all_patch_reproduction": {
+    "n": 1110,
+    "mean": 65.71344520089995,
+    "median": 67.35846964518228,
+    "p95": 85.65334129333496
+  },
+  "rules": {
+    "ANY_VALID_SUPPORT": {
+      "instance_rule": "at least one of 64 target patch sample locations has authoritative occupancy",
+      "qualifying_anchor_observations": 9766,
+      "carriers_with_at_least_one_qualifying_observation": 1110,
+      "carrier_aggregated_tc_mar_lab": {
+        "n": 1110,
+        "mean": 65.71344520089995,
+        "median": 67.35846964518228,
+        "p95": 85.65334129333496
+      }
+    },
+    "FULL_VALID_SUPPORT": {
+      "instance_rule": "all 64 target patch sample locations have authoritative occupancy",
+      "qualifying_anchor_observations": 8436,
+      "carriers_with_at_least_one_qualifying_observation": 1064,
+      "carrier_aggregated_tc_mar_lab": {
+        "n": 1064,
+        "mean": 66.28637703930882,
+        "median": 67.76587422688803,
+        "p95": 85.78805732727051
+      }
+    }
+  },
+  "diagnostic_pipeline_validity": {
+    "f2_double_normalization_detected": true,
+    "detail": "diagnose_rgb_condition.py divides RGB by 255 before evaluator.to_common, which divides by 255 again",
+    "reason_preserved_here": "required exact comparability to frozen ALL=65.71344520089995",
+    "numeric_interpretation": "LIMITED; supported-subset comparison is internally comparable but the absolute condition TC-MAR is not a correctly normalized RGB TC-MAR"
+  },
+  "rw_coarse_high_tcmar_explained_by_holes": "NOT_SUPPORTED",
+  "rw_appearance_metric_alignment_hypothesis": "UNRESOLVED",
+  "decision_basis": "predeclared descriptive material-drop criterion (supported mean <75% of ALL); not used for formal metrics or carrier selection"
+}

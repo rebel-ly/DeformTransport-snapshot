@@ -1,0 +1,55 @@
+{
+  "stage": "Frozen SandHouse V2-A/B artifact build",
+  "source_v1": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_203011__frozen_quality075_ramp4/sand_house_quality075_ramp4_full_generation.pt",
+  "source_geometry": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v2_prep/sand_house_v2_geometry_features.pt",
+  "formula_status": "frozen before V2 video generation",
+  "no_video_outcome_used": true,
+  "confidence": {
+    "name": "confidence_prior_v0",
+    "min": 0.0,
+    "max": 1.0,
+    "mean_inside_v1_mask": 0.18781098936106283
+  },
+  "V1_actual": {
+    "correct_scale": 0.75,
+    "shuffled_scale": 0.710907468820995,
+    "correct_energy": 0.01591038205005771,
+    "shuffled_energy": 0.015910383762741214,
+    "common_E_ref": 0.015910381451249123
+  },
+  "V2_A": {
+    "formula": "C * Delta_V1_actual",
+    "correct_energy": 0.0028533040500283878,
+    "shuffled_energy": 0.0028819926051844055,
+    "correct_retention": 0.1793359858393871,
+    "shuffled_retention": 0.18113910061260927,
+    "inference_scale": 1.0
+  },
+  "V2_B": {
+    "formula": "s_B * C * Delta_V1_actual",
+    "correct_restore_scale": 5.576124846581137,
+    "shuffled_restore_scale": 5.520618856116664,
+    "correct_energy": 0.015910379099128017,
+    "shuffled_energy": 0.015910382890894716,
+    "common_E_ref": 0.015910381451249123,
+    "inference_scale": 1.0
+  },
+  "checks": {
+    "v1_mask_cells": 48109,
+    "frame_ids_match": true,
+    "slot0_correct_A_zero": true,
+    "slot0_shuffled_A_zero": true,
+    "slot0_correct_B_zero": true,
+    "slot0_shuffled_B_zero": true,
+    "v2B_correct_energy_matches_ref": true,
+    "v2B_shuffled_energy_matches_ref": true,
+    "same_geometry_gate_for_modes": true,
+    "no_outcome_data_used": true,
+    "inference_scale_must_be_one": true
+  },
+  "all_checks_pass": true,
+  "artifacts": {
+    "V2_A": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v2_dev/20260808_225046__frozen_v2_ab_artifacts/sand_house_v2A_natural_adaptive.pt",
+    "V2_B": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v2_dev/20260808_225046__frozen_v2_ab_artifacts/sand_house_v2B_energy_controlled_adaptive.pt"
+  }
+}

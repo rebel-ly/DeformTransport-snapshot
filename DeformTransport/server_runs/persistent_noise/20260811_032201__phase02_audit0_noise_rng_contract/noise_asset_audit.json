@@ -1,0 +1,85 @@
+{
+  "n_noise_assets": 5,
+  "assets": [
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/noises.npy",
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "size_mb": 30.85,
+      "sample_n": 200000,
+      "sample_mean": -0.002408600877970457,
+      "sample_var": 1.0099221467971802,
+      "sample_min": -4.6640625,
+      "sample_max": 3.77734375
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noises.npy",
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "size_mb": 30.85,
+      "sample_n": 200000,
+      "sample_mean": 0.003457098500803113,
+      "sample_var": 1.0214134454727173,
+      "sample_min": -4.36328125,
+      "sample_max": 3.783203125
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/noises.npy",
+      "shape": [
+        21,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "size_mb": 7.998,
+      "sample_n": 200000,
+      "sample_mean": -0.010455395095050335,
+      "sample_var": 1.0067455768585205,
+      "sample_min": -4.33984375,
+      "sample_max": 4.40625
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noises.npy",
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "size_mb": 30.85,
+      "sample_n": 200000,
+      "sample_mean": -0.0072250971570611,
+      "sample_var": 1.0058969259262085,
+      "sample_min": -4.0,
+      "sample_max": 3.826171875
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_201448__sand_house_final_sim_seed0/noises.npy",
+      "shape": [
+        165,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "size_mb": 62.842,
+      "sample_n": 200000,
+      "sample_mean": -9.612961002858356e-05,
+      "sample_var": 1.0000959634780884,
+      "sample_min": -4.2578125,
+      "sample_max": 4.421875
+    }
+  ]
+}

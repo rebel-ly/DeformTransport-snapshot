@@ -1,0 +1,81 @@
+{
+  "status": "CURRENT_FORMAL_CORRECTED_V2",
+  "comparison": "seed0 numerical comparison only",
+  "significance_claim": false,
+  "superiority_claim": false,
+  "non_inferiority_claim": false,
+  "metrics": [
+    {
+      "METRIC": "TC-MAR Lab mean",
+      "RW": 13.639900159270573,
+      "DT_FULL": 17.144317299874714,
+      "DT_MINUS_RW": 3.504417140604142,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-MAR Lab median",
+      "RW": 9.546106088056899,
+      "DT_FULL": 14.77844642547139,
+      "DT_MINUS_RW": 5.232340337414492,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-MAR Lab p95",
+      "RW": 40.176803651452055,
+      "DT_FULL": 37.01063968507866,
+      "DT_MINUS_RW": -3.1661639663733965,
+      "NUMERICAL_WINNER": "DT_FULL",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-MAR RGB-L1 mean",
+      "RW": 0.0971740217773049,
+      "DT_FULL": 0.11649965856279348,
+      "DT_MINUS_RW": 0.019325636785488584,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-MAR RGB-L1 median",
+      "RW": 0.04986683472192713,
+      "DT_FULL": 0.07873046770691872,
+      "DT_MINUS_RW": 0.02886363298499159,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-MAR RGB-L1 p95",
+      "RW": 0.3180196253644923,
+      "DT_FULL": 0.3197196369059383,
+      "DT_MINUS_RW": 0.0017000115414460004,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-ME transition mean EPE mean",
+      "RW": 0.5869890665947547,
+      "DT_FULL": 0.7265499674289193,
+      "DT_MINUS_RW": 0.13956090083416461,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-ME transition mean EPE median",
+      "RW": 0.5070961964161795,
+      "DT_FULL": 0.6906036221851227,
+      "DT_MINUS_RW": 0.1835074257689432,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    },
+    {
+      "METRIC": "TC-ME transition mean EPE p95",
+      "RW": 1.153139444856402,
+      "DT_FULL": 1.3080249503965733,
+      "DT_MINUS_RW": 0.15488550554017122,
+      "NUMERICAL_WINNER": "RW",
+      "direction": "lower_is_better"
+    }
+  ]
+}

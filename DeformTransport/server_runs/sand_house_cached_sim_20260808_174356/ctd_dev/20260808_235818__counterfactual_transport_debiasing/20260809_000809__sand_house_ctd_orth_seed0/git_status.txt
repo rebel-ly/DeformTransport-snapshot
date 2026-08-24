@@ -1,0 +1,6 @@
+?? case_source_census.json
+?? docs/audits/20260805__candidate_case_inventory.txt
+?? docs/code_review/
+?? docs/code_snapshots/
+?? scripts/build_counterfactual_transport_debiasing.py
+?? scripts/build_sand_house_v2_ab_artifacts.py

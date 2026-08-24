@@ -1,0 +1,278 @@
+{
+  "decision": "WINNER_SELECTED",
+  "winner": "v3d",
+  "selection_basis": "Santa+Tree development only; motion safety -> TC-MAR Lab significance tier -> mean relative TC-MAR Lab improvement tie-break",
+  "sandhouse_used_for_selection": false,
+  "candidates": [
+    {
+      "candidate": "v3s",
+      "motion_safety": {
+        "santa": "PASS",
+        "tree": "PASS"
+      },
+      "appearance_status": {
+        "santa": "REGRESS",
+        "tree": "IMPROVE"
+      },
+      "eligible": false,
+      "tier": -1,
+      "mean_relative_tc_mar_lab_improvement": 0.041127374583626815,
+      "appearance": {
+        "santa": {
+          "old_correct": 21.271405488892093,
+          "candidate": 21.588041406403132,
+          "old_minus_candidate_ci": [
+            -0.5831493423860475,
+            -0.05468314085876282
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 18.96363288940394,
+          "candidate": 17.121500498906414,
+          "old_minus_candidate_ci": [
+            1.4437767980051588,
+            2.251441781584067
+          ],
+          "vs_rw": "LOSS"
+        }
+      },
+      "motion": {
+        "santa": {
+          "old_correct": 0.6146001028412253,
+          "candidate": 0.5534874807553878,
+          "candidate_minus_old_ci": [
+            -0.10142064515979922,
+            -0.0309238518126208
+          ],
+          "vs_rw": "TIE"
+        },
+        "tree": {
+          "old_correct": 0.3678516887213693,
+          "candidate": 0.35976084597641583,
+          "candidate_minus_old_ci": [
+            -0.023749308910052842,
+            0.007915689615616022
+          ],
+          "vs_rw": "WIN"
+        }
+      }
+    },
+    {
+      "candidate": "v3b",
+      "motion_safety": {
+        "santa": "REGRESSION_STOP",
+        "tree": "PASS"
+      },
+      "appearance_status": {
+        "santa": "IMPROVE",
+        "tree": "TIE"
+      },
+      "eligible": false,
+      "tier": -1,
+      "mean_relative_tc_mar_lab_improvement": 0.017081499132474066,
+      "appearance": {
+        "santa": {
+          "old_correct": 21.271405488892093,
+          "candidate": 20.719800517656136,
+          "old_minus_candidate_ci": [
+            0.3217779039478364,
+            0.7761352577449036
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 18.96363288940394,
+          "candidate": 18.807538699125452,
+          "old_minus_candidate_ci": [
+            -0.02489903380805848,
+            0.34046581464160247
+          ],
+          "vs_rw": "LOSS"
+        }
+      },
+      "motion": {
+        "santa": {
+          "old_correct": 0.6146001028412253,
+          "candidate": 0.7397369558741081,
+          "candidate_minus_old_ci": [
+            0.06791197088992948,
+            0.18877986007238778
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 0.3678516887213693,
+          "candidate": 0.36232793977997524,
+          "candidate_minus_old_ci": [
+            -0.017074104793707353,
+            0.005788911317857417
+          ],
+          "vs_rw": "WIN"
+        }
+      }
+    },
+    {
+      "candidate": "v3c",
+      "motion_safety": {
+        "santa": "REGRESSION_STOP",
+        "tree": "PASS"
+      },
+      "appearance_status": {
+        "santa": "TIE",
+        "tree": "TIE"
+      },
+      "eligible": false,
+      "tier": -1,
+      "mean_relative_tc_mar_lab_improvement": 0.002902738454586383,
+      "appearance": {
+        "santa": {
+          "old_correct": 21.271405488892093,
+          "candidate": 21.280976494542305,
+          "old_minus_candidate_ci": [
+            -0.4194634414518494,
+            0.4031943258820514
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 18.96363288940394,
+          "candidate": 18.84500732631935,
+          "old_minus_candidate_ci": [
+            -0.035051273716679765,
+            0.26735382521489715
+          ],
+          "vs_rw": "LOSS"
+        }
+      },
+      "motion": {
+        "santa": {
+          "old_correct": 0.6146001028412253,
+          "candidate": 0.6852171410932477,
+          "candidate_minus_old_ci": [
+            0.01641030470392758,
+            0.12681403733394594
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 0.3678516887213693,
+          "candidate": 0.37591615818908636,
+          "candidate_minus_old_ci": [
+            -0.0028172606907256813,
+            0.0190589802106983
+          ],
+          "vs_rw": "WIN"
+        }
+      }
+    },
+    {
+      "candidate": "v3d",
+      "motion_safety": {
+        "santa": "PASS",
+        "tree": "PASS"
+      },
+      "appearance_status": {
+        "santa": "IMPROVE",
+        "tree": "TIE"
+      },
+      "eligible": true,
+      "tier": 2,
+      "mean_relative_tc_mar_lab_improvement": 0.010588957885427148,
+      "appearance": {
+        "santa": {
+          "old_correct": 21.271405488892093,
+          "candidate": 20.822418440480483,
+          "old_minus_candidate_ci": [
+            0.048927328936294756,
+            0.8505418299878353
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 18.96363288940394,
+          "candidate": 18.962298314647253,
+          "old_minus_candidate_ci": [
+            -0.24756013414339187,
+            0.24946402421829067
+          ],
+          "vs_rw": "LOSS"
+        }
+      },
+      "motion": {
+        "santa": {
+          "old_correct": 0.6146001028412253,
+          "candidate": 0.6211449923432835,
+          "candidate_minus_old_ci": [
+            -0.03479699773029018,
+            0.04952393044381556
+          ],
+          "vs_rw": "TIE"
+        },
+        "tree": {
+          "old_correct": 0.3678516887213693,
+          "candidate": 0.3722336539157997,
+          "candidate_minus_old_ci": [
+            -0.008647075309287605,
+            0.017799086773057884
+          ],
+          "vs_rw": "WIN"
+        }
+      }
+    },
+    {
+      "candidate": "v3e",
+      "motion_safety": {
+        "santa": "PASS",
+        "tree": "REGRESSION_STOP"
+      },
+      "appearance_status": {
+        "santa": "REGRESS",
+        "tree": "TIE"
+      },
+      "eligible": false,
+      "tier": -1,
+      "mean_relative_tc_mar_lab_improvement": -0.255736603719929,
+      "appearance": {
+        "santa": {
+          "old_correct": 21.271405488892093,
+          "candidate": 31.555329558213618,
+          "old_minus_candidate_ci": [
+            -10.978814111310893,
+            -9.577127911812198
+          ],
+          "vs_rw": "LOSS"
+        },
+        "tree": {
+          "old_correct": 18.96363288940394,
+          "candidate": 19.49482016459751,
+          "old_minus_candidate_ci": [
+            -1.0469014093838214,
+            0.0034289993274325544
+          ],
+          "vs_rw": "LOSS"
+        }
+      },
+      "motion": {
+        "santa": {
+          "old_correct": 0.6146001028412253,
+          "candidate": 0.6299053257908718,
+          "candidate_minus_old_ci": [
+            -0.028380198664731775,
+            0.06972852713886483
+          ],
+          "vs_rw": "TIE"
+        },
+        "tree": {
+          "old_correct": 0.3678516887213693,
+          "candidate": 0.7562613088819155,
+          "candidate_minus_old_ci": [
+            0.32095441376805994,
+            0.46071391709150755
+          ],
+          "vs_rw": "TIE"
+        }
+      }
+    }
+  ]
+}

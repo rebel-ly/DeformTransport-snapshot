@@ -1,0 +1,1053 @@
+当前阶段：
+
+Phase0D-2R-C —
+Container Runtime Recovery + Recovered Same-Seed Replay Determinism Audit
+
+这是 Phase0D-2 的正式 recovery replay。
+
+当前目标：
+
+在保持所有科学变量冻结的前提下，
+修复 host/container execution path binding，
+然后执行：
+
+Corrected-v2 Santa
+Correct V3D
+seed=0
+
+Replay A / Replay B
+
+并最终比较 decoded RGB exact determinism。
+
+==================================================
+0. 当前已经确认的事实
+==================================================
+
+Phase0C：
+PASS / CLOSED
+
+Phase0D-1：
+UNRESOLVED
+历史记录永久保留。
+
+Phase0D-1R：
+PASS
+PROCEED_TO_PHASE0D2=True
+
+Phase0D-2：
+ENGINEERING_FAIL
+
+原因：
+dashscope -> cryptography Rust binding
+在 host GLIBC 2.17 上要求更高 GLIBC。
+
+该阶段：
+SAME_SEED_REPLAY = NOT_EVALUATED
+
+没有 MP4，
+没有 decoded RGB，
+seed1-4 未运行。
+
+Phase0D-2R-A：
+ROOT_CAUSE_IDENTIFIED
+
+SYSTEM_GLIBC_VERSION = 2.17
+CRYPTOGRAPHY_VERSION = 50.0.0
+MAX_REQUIRED_GLIBC_VERSION = 2.28
+DASHSCOPE_VERSION = 1.26.6
+
+DASHSCOPE_IMPORT_STYLE = UNCONDITIONAL
+FORMAL_PROMPT_EXTENSION_ENABLED = False
+DASHSCOPE_FUNCTIONALLY_REQUIRED_FOR_FORMAL_RUN = False
+
+RECOMMENDED_MINIMAL_RECOVERY = R2
+
+Phase0D-2R-B：
+PASS
+
+Recovery：
+
+仅修改：
+wan/utils/prompt_extend.py
+
+改为真正的 lazy DashScope import。
+
+原 SHA：
+a7d81b451377a47413e932d440d573ea010c0d608c8bb668b3af9c01261c0a67
+
+patched SHA：
+61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19
+
+trajectory.py SHA unchanged = True
+wan_move.py SHA unchanged = True
+
+DASHSCOPE_LOADED_AFTER_PROMPT_MODULE_IMPORT = False
+GENERATE_IMPORT_SMOKE = PASS
+
+FORMAL_RUN_REACHES_DASHSCOPE_FUNCTION = False
+NEXT_RUNTIME_BLOCKER = NONE
+
+LAUNCHER_EXITCODE_FIX = PASS
+MOCK_EXITCODE_CAPTURE_TEST = PASS
+
+RECOVERY_SEMANTICS =
+NO_FORMAL_PATH_SEMANTIC_CHANGE_DETECTED
+
+PROCEED_TO_PHASE0D2RC = True
+
+==================================================
+1. 用户手工 Attempt 1 状态
+==================================================
+
+用户后来手工尝试启动：
+
+run_phase0d2_replay_pair.sh
+
+但该 attempt 没有进入 generation。
+
+已经确认：
+
+A. 用户最初在错误位置调用 launcher；
+
+B. launcher 本身需要：
+
+SEED OUTPUT_DIR
+
+两个参数，但第一次没有传；
+
+C. 用户随后进入正式 Docker/container：
+
+prompt 类似：
+
+I have no name!@gpu3
+
+D. Container Evidence root 已精确确认：
+
+/workspace/DeformTransport_EvidenceV4_1
+
+E. exact recovery dir：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/runtime_recovery/20260813_020121__lazy_dashscope_recovery
+
+F. launcher：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/runtime_recovery/20260813_020121__lazy_dashscope_recovery/run_phase0d2_replay_pair.sh
+
+G. launcher line 5 当前硬编码 host path：
+
+RUNNER="/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172755__santa_v3d_contract_recovery/formal_run_corrected_v2_v3d.sh"
+
+而 container 中 Evidence root 是：
+
+/workspace/DeformTransport_EvidenceV4_1
+
+因此当前 launcher 存在：
+
+HOST_TO_CONTAINER_PATH_BINDING_DEFECT
+
+H. 手工 Attempt 1：
+
+LAUNCHER_EXECUTED = False
+GENERATION_STARTED = False
+MODEL_LOAD = False
+GPU_COMPUTE = False
+SCIENTIFIC_RESULT = NOT_EVALUATED
+
+不得删除或覆盖该 evidence。
+
+==================================================
+2. 本阶段总体原则
+==================================================
+
+必须首先修复 execution infrastructure。
+
+只有 path/runtime contract 全部 PASS 后，
+才授权正式 seed0 Replay A/B。
+
+禁止：
+
+- 修改 corrected-v2 input
+- 修改 N
+- 修改 tracks
+- 修改 visibility
+- 修改 depth
+- 修改 IDs
+- 修改 source image
+- 修改 prompt
+- 修改 seed
+- 修改 generation parameters
+- 修改 trajectory.py
+- 修改 wan_move.py
+- 修改 V3D semantics
+- 修改 checkpoint
+- 修改 scheduler
+- 修改 CFG
+- 修改 sample steps
+- 修改 sample shift
+- 修改 frame count
+- 修改 resolution
+- 修改 dtype
+- 修改 prompt-extension setting
+- 删除历史 failed runs
+- 覆盖任何 Evidence
+
+==================================================
+3. 首先确认当前 execution context
+==================================================
+
+记录：
+
+hostname
+whoami
+pwd
+
+确认当前真正执行正式 generation 的 context 是
+Docker/container environment。
+
+记录：
+
+container-visible：
+
+/workspace/DeformTransport
+/workspace/Wan-Move
+/workspace/DeformTransport_EvidenceV4_1
+
+对应是否存在。
+
+同时记录：
+
+which python
+python --version
+sys.executable
+PATH
+PYTHONPATH
+LD_LIBRARY_PATH
+
+生成：
+
+container_execution_context.json
+
+==================================================
+4. Path-map audit
+==================================================
+
+必须建立明确的 host/container path map。
+
+已知：
+
+Host:
+ /mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1
+
+Container:
+ /workspace/DeformTransport_EvidenceV4_1
+
+但不得假设所有目录都有相同映射。
+
+必须只读检查：
+
+formal runner
+Wan-Move repo
+DeformTransport repo
+checkpoint
+source image
+tracks
+visibility
+depth
+IDs
+output root
+
+逐项记录：
+
+HOST_PATH
+CONTAINER_PATH
+CONTAINER_EXISTS
+SHA_MATCH_IF_APPLICABLE
+
+生成：
+
+host_container_path_map.json
+
+==================================================
+5. Audit formal runner before modification
+==================================================
+
+Container-side expected formal runner：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172755__santa_v3d_contract_recovery/formal_run_corrected_v2_v3d.sh
+
+必须：
+
+ls
+SHA256
+shellcheck/syntax check（如 shellcheck 不存在可 bash -n）
+
+然后完整审计：
+
+grep -n '/mnt/sdbd' runner
+grep -n '/workspace' runner
+
+以及：
+
+tracks
+visibility
+depth
+IDs
+checkpoint
+Wan-Move repo
+source image
+output destination
+
+所有 path binding。
+
+不得只修 launcher line 5 就直接运行。
+
+==================================================
+6. Container-visible asset validation
+==================================================
+
+对 formal runner 最终要读取的每个 asset：
+
+source image
+tracks
+visibility
+depth
+material IDs
+checkpoint
+
+必须验证 container path：
+
+exists
+file/dir size
+SHA（已有 formal SHA 时）
+shape/count（适用时）
+
+Formal tracks 必须：
+
+N=1257
+T=81
+
+不得出现任何 N=1277 lineage。
+
+要求：
+
+N1277_PATH_HITS = 0
+
+==================================================
+7. Do not modify frozen recovery launcher
+==================================================
+
+现有：
+
+run_phase0d2_replay_pair.sh
+
+属于 Phase0D-2R-B evidence。
+
+不得修改或覆盖。
+
+保存其：
+
+SHA256
+
+然后创建新的：
+
+run_phase0d2rc_container_pair.sh
+
+这是 container-only execution wrapper。
+
+==================================================
+8. Container wrapper modification scope
+==================================================
+
+新 wrapper 只能修改：
+
+host → container path translation
+
+以及调用 frozen launcher/runner 所必需的
+container execution infrastructure。
+
+不得改变任何 generation semantic argument。
+
+必须保存：
+
+original launcher
+new wrapper
+exact unified diff
+
+生成：
+
+container_wrapper.patch.diff
+
+报告：
+
+FILES_CHANGED_BY_CONTAINER_RECOVERY
+
+不得修改：
+
+trajectory.py
+wan_move.py
+formal scientific inputs
+
+==================================================
+9. Formal runner path strategy
+==================================================
+
+优先策略：
+
+如果 formal runner 内部所有 scientific asset paths
+已有 container-visible binding，
+
+则新 wrapper 只把：
+
+RUNNER=
+
+映射到 container path。
+
+如果 formal runner 内部仍含 host-only paths：
+
+不要直接修改 frozen runner。
+
+创建新的：
+
+formal_run_corrected_v2_v3d_container.sh
+
+它只能做 exact path translation。
+
+必须生成 original-vs-container exact diff。
+
+所有非 path generation tokens必须 exact equal。
+
+==================================================
+10. Formal contract token comparison
+==================================================
+
+机器比较：
+
+original formal runner
+
+vs
+
+container formal runner（如创建）
+
+忽略：
+
+host/container path prefix
+
+之后，必须验证下列 generation values exact equal：
+
+task
+seed
+resolution
+frame_num
+checkpoint identity
+sample_steps
+sample_shift
+guidance
+scheduler
+dtype
+t5_cpu
+offload_model
+DT_TRANSPORT_VARIANT
+prompt
+source image identity
+track identity
+visibility identity
+depth identity
+ID identity
+
+输出：
+
+GENERATION_SEMANTIC_CONTRACT_EQUAL = True
+
+否则：
+STOP。
+
+==================================================
+11. Recheck runtime recovery source gate
+==================================================
+
+正式 generation 前再次验证：
+
+trajectory.py SHA256 =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py SHA256 =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+prompt_extend.py SHA256 =
+61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19
+
+生成：
+
+runtime_source_gate.json
+
+要求：
+
+RUNTIME_SOURCE_GATE = PASS
+
+==================================================
+12. Import smoke inside actual container
+==================================================
+
+注意：
+
+0D-2R-B smoke 成功不代表当前 container
+一定使用同一 interpreter。
+
+所以必须在本次正式 execution context 再测试：
+
+prompt_extend import
+
+确认：
+
+dashscope not loaded
+
+generate import smoke
+
+要求：
+
+CONTAINER_PROMPT_IMPORT = PASS
+CONTAINER_GENERATE_IMPORT = PASS
+NEXT_RUNTIME_BLOCKER = NONE
+
+不得加载 14B checkpoint。
+
+==================================================
+13. GPU + host preflight
+==================================================
+
+当前用户最后确认 GPU1/GPU2 均：
+
+NVIDIA L40
+7MiB
+0%
+No running processes
+
+但正式启动前必须重新检查：
+
+nvidia-smi -i 1
+nvidia-smi -i 2
+free -h
+df -h
+
+不得杀任何用户进程。
+
+如果 GPU 不空闲：
+STOP 或选择重新等待，
+不能擅自换卡。
+
+如果 host RAM 明显不足以双进程运行：
+降级 sequential，
+但要记录原因。
+
+==================================================
+14. Create a NEW Phase0D-2R-C evidence directory
+==================================================
+
+不要在 recovery source dir 中混入正式 generation evidence。
+
+创建 timestamped：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+same_seed_replay_recovery/
+<TIMESTAMP>__santa_v3d_seed0
+
+其中保存：
+
+PHASE0D2RC_PROTOCOL_FROZEN.txt
+container_execution_context.json
+host_container_path_map.json
+runtime_source_gate.json
+container_wrapper.patch.diff
+generation_contract_pairing.json
+gpu_preflight.txt
+host_preflight.txt
+
+以及后续 formal run evidence。
+
+==================================================
+15. Freeze Replay A/B outputs
+==================================================
+
+只能：
+
+seed = 0
+
+Replay A：
+GPU1
+
+Replay B：
+GPU2
+
+创建新的 formal output dirs。
+
+不得复用历史空目录。
+
+推荐：
+
+.../formal_runs/
+santa_correct_v3d_seed000_replayA_rc
+
+.../formal_runs/
+santa_correct_v3d_seed000_replayB_rc
+
+如果命名冲突：
+使用 timestamp suffix，
+不得覆盖。
+
+==================================================
+16. Pre-generation manifests
+==================================================
+
+每个 replay 在启动前生成：
+
+RunA_manifest.json
+RunB_manifest.json
+
+必须记录：
+
+seed=0
+GPU index
+GPU UUID
+runner SHA
+wrapper SHA
+source code SHA
+input asset SHA
+N=1257
+T=81
+prompt
+checkpoint
+all generation config
+output path
+container environment
+command
+
+机器比较：
+
+RUN_CONTRACT_PAIRING = PASS
+
+允许不同字段仅：
+
+run ID
+GPU index
+GPU UUID
+output path
+timestamp
+
+其他全部 exact equal。
+
+如果 pairing FAIL：
+禁止启动。
+
+==================================================
+17. Launcher exit-code handling
+==================================================
+
+必须使用 0D-2R-B 已验证逻辑：
+
+wait PID_A
+capture RC_A
+
+wait PID_B
+capture RC_B
+
+必须分别保存：
+
+runA_exit_code.txt
+runB_exit_code.txt
+
+不得再次出现：
+
+NOT_CAPTURED_BY_LAUNCHER
+
+==================================================
+18. Authorized formal generation
+==================================================
+
+只有所有 preflight/gates PASS 后，
+现在授权正式 generation。
+
+仅运行：
+
+seed=0 A
+seed=0 B
+
+禁止 seed1-4。
+
+优先：
+
+GPU1 + GPU2 parallel
+
+因为用户当前两张卡空闲。
+
+如果 host memory safety不允许，
+降级为 sequential。
+
+运行期间：
+
+完整保存 stdout/stderr。
+
+允许低频 health polling，
+但不要高频重复分析完整日志。
+
+原则：
+
+- 完整日志必须持续保存；
+- 低频查看 tail 只用于确认：
+  process alive
+  model loading/step progress
+  no OOM
+  no runtime exception
+  host memory healthy
+- 运行完成后再做完整日志审计。
+
+不要因为减少 polling 而减少最终 evidence。
+
+==================================================
+19. Generation failure handling
+==================================================
+
+如果任一 child 非0：
+
+保存完整 evidence。
+
+不要删除。
+不要换 seed。
+不要自动 patch 第二个问题。
+
+状态：
+
+ENGINEERING_FAIL_RECOVERY_REPLAY
+
+如果是新 blocker：
+精确记录。
+
+STOP。
+
+==================================================
+20. Output validation
+==================================================
+
+如果 A/B exit code 都为0：
+
+确认：
+
+MP4 exists
+size > 0
+
+记录：
+
+MP4 SHA256
+bytes
+
+但：
+
+MP4 SHA 不作为 determinism gate。
+
+==================================================
+21. Decode contract
+==================================================
+
+两条视频使用完全相同 decode pipeline。
+
+优先 frozen ffmpeg：
+
+-v error
+-map 0:v:0
+-vsync 0
+-pix_fmt rgb24
+-f rawvideo
+
+不 resize。
+不 crop。
+
+输出：
+
+decoded_A.rgb
+decoded_B.rgb
+
+记录：
+
+ffmpeg version
+ffprobe version
+decoded SHA256
+
+==================================================
+22. Shape validation
+==================================================
+
+必须报告：
+
+FRAME_COUNT_A
+FRAME_COUNT_B
+
+WIDTH_A/B
+HEIGHT_A/B
+
+dtype = RGB24
+
+预期：
+
+81 frames
+832x480
+
+验证 raw bytes：
+
+81 * 832 * 480 * 3
+
+如果 shape contract 不符：
+
+OUTPUT_SHAPE_CONTRACT = FAIL
+STOP。
+
+==================================================
+23. Exact determinism comparison
+==================================================
+
+比较：
+
+decoded A vs decoded B
+
+报告：
+
+DECODED_RGB_SHA_EQUAL
+
+PIXEL_SCALAR_MISMATCH_COUNT
+
+DIFFERING_FRAME_COUNT
+
+FIRST_DIFFERING_FRAME
+
+MAX_ABS_PIXEL_DIFFERENCE
+
+MEAN_ABS_PIXEL_DIFFERENCE
+
+不设置 tolerance。
+
+==================================================
+24. Decision tree
+==================================================
+
+CASE A：
+
+如果跨 GPU A/B exact equal：
+
+SAME_SEED_REPLAY = PASS
+
+CROSS_DEVICE_REPLAY_EXACT = True
+
+RUNTIME_OUTPUT_NONDETERMINISM =
+NOT_DETECTED
+
+PHASE0D2RC_STATUS = PASS
+
+PROCEED_TO_PHASE0D3 = True
+
+--------------------------------------------------
+
+CASE B：
+
+如果 A/B mismatch：
+
+不得直接说 generator nondeterministic。
+
+执行 diagnostic Run C：
+
+GPU1
+seed=0
+
+同 frozen formal contract。
+
+生成新的：
+
+replayC_gpu1
+
+比较：
+
+A vs C
+
+如果 A vs C exact equal：
+
+SAME_DEVICE_REPLAY = PASS
+CROSS_DEVICE_REPLAY = MISMATCH
+
+DEVICE_ASSOCIATED_OUTPUT_DIFFERENCE =
+DETECTED
+
+PHASE0D2RC_STATUS =
+PASS_WITH_DEVICE_LIMITATION
+
+PROCEED_TO_PHASE0D3 = False
+
+STOP 等主对话决定后续所有 multi-seed
+是否必须单 GPU。
+
+--------------------------------------------------
+
+CASE C：
+
+如果 A/B mismatch
+且 A/C mismatch：
+
+PHASE0D2RC_STATUS =
+UNRESOLVED_RUNTIME_NONDETERMINISM
+
+PROCEED_TO_PHASE0D3 = False
+
+STOP。
+
+==================================================
+25. Interpretation scope
+==================================================
+
+即使 A/B exact：
+
+允许：
+
+"final decoded RGB output was exactly replay
+reproducible for the audited seed=0 contract
+across the two audited L40 devices."
+
+不得说：
+
+all latent tensors bitwise deterministic.
+
+==================================================
+26. No quality/GT evaluation
+==================================================
+
+Phase0D scope仍：
+
+PAIRWISE_OUTPUT_STOCHASTICITY_ONLY
+
+formal future-video reference/GT：
+
+UNRESOLVED
+
+本阶段不要计算：
+
+GT LPIPS
+GT SSIM
+GT PSNR
+FVD
+
+==================================================
+27. Final evidence outputs
+==================================================
+
+生成：
+
+decoded_comparison.json
+
+RunA_manifest.json
+RunB_manifest.json
+必要时 RunC_manifest.json
+
+run_pair_contract.json
+generation_lineage_audit.json
+
+PHASE0D2RC_SUMMARY.md
+phase0d2rc_status.json
+SHA256SUMS.txt
+
+==================================================
+28. Summary 九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+必须同时记录：
+
+- 原 Phase0D-2 ENGINEERING_FAIL 不变；
+- 0D-2R-A root cause；
+- 0D-2R-B lazy DashScope recovery；
+- Attempt 1 invocation/path error generation never started；
+- 本 0D-2R-C 才是正式 recovered scientific replay。
+
+==================================================
+29. Final stdout
+==================================================
+
+最终打印：
+
+===== PHASE0D-2R-C RECOVERED SAME-SEED REPLAY =====
+
+OUT = ...
+
+CONTAINER_EXECUTION_CONTEXT = PASS/FAIL
+
+HOST_CONTAINER_PATH_MAP = PASS/FAIL
+
+RUNTIME_SOURCE_GATE = PASS/FAIL
+
+GENERATION_SEMANTIC_CONTRACT_EQUAL = True/False
+
+N1277_PATH_HITS = ...
+
+CONTAINER_PROMPT_IMPORT = ...
+CONTAINER_GENERATE_IMPORT = ...
+NEXT_RUNTIME_BLOCKER = ...
+
+GPU_A = ...
+GPU_B = ...
+EXECUTION_MODE = ...
+
+RUN_CONTRACT_PAIRING = ...
+
+SEED_A = 0
+SEED_B = 0
+
+RUN_A_EXIT_CODE = ...
+RUN_B_EXIT_CODE = ...
+
+TRACK_COUNT_A = ...
+TRACK_COUNT_B = ...
+
+FRAME_COUNT_A = ...
+FRAME_COUNT_B = ...
+
+FRAME_SHAPE_A = ...
+FRAME_SHAPE_B = ...
+
+MP4_SHA_EQUAL = ...
+
+DECODED_RGB_SHA_EQUAL = ...
+
+PIXEL_SCALAR_MISMATCH_COUNT = ...
+DIFFERING_FRAME_COUNT = ...
+MAX_ABS_PIXEL_DIFFERENCE = ...
+MEAN_ABS_PIXEL_DIFFERENCE = ...
+
+CROSS_DEVICE_REPLAY_EXACT = ...
+
+如有 Run C：
+
+A_C_DECODED_RGB_SHA_EQUAL = ...
+A_C_PIXEL_SCALAR_MISMATCH_COUNT = ...
+SAME_DEVICE_REPLAY = ...
+
+PHASE0D_SCOPE =
+PAIRWISE_OUTPUT_STOCHASTICITY_ONLY
+
+PHASE0D2RC_STATUS =
+PASS /
+PASS_WITH_DEVICE_LIMITATION /
+ENGINEERING_FAIL_RECOVERY_REPLAY /
+UNRESOLVED_RUNTIME_NONDETERMINISM /
+FAIL /
+ERROR
+
+PROCEED_TO_PHASE0D3 =
+True/False
+
+然后 STOP。
+
+禁止运行 seed1、2、3、4。
+禁止自动进入 Phase0D-3。

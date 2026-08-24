@@ -1,0 +1,4 @@
+{
+  "incorrect_manifest_candidate": {"path": "/workspace/DeformTransport/v4_eval_files_to_upload/eval_v3.py", "sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08", "santa_expect_n": 1277, "status": "REJECTED_N1277_BRIDGE"},
+  "authoritative_candidate": {"path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py", "sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5", "santa_expect_n": 1257, "ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8", "status": "ACTUALLY_CONSUMED_BY_SEED0_PRIMARY_RUNNER"}
+}

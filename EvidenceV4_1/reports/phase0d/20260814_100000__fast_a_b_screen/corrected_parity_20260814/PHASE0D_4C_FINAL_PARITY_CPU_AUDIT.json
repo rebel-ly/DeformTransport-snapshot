@@ -1,0 +1,78 @@
+{
+  "comparisons": {
+    "a2_vs_b2_g2": {
+      "different_channel_fraction": 0.0,
+      "different_channel_values": 0,
+      "max_abs_diff": 0,
+      "mean_abs_diff": 0.0,
+      "rgb_exact": true
+    },
+    "a2_vs_canonical": {
+      "different_channel_fraction": 0.0,
+      "different_channel_values": 0,
+      "max_abs_diff": 0,
+      "mean_abs_diff": 0.0,
+      "rgb_exact": true
+    },
+    "b2_g2_vs_canonical": {
+      "different_channel_fraction": 0.0,
+      "different_channel_values": 0,
+      "max_abs_diff": 0,
+      "mean_abs_diff": 0.0,
+      "rgb_exact": true
+    }
+  },
+  "videos": {
+    "a2": {
+      "decode_success": true,
+      "decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+      "fps": 16.0,
+      "frame_count": 81,
+      "height": 464,
+      "mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "mp4_size_bytes": 7729377,
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/corrected_parity_20260814/a2_gpu0_formal_rerun/santa_correct_v3d_seed000.mp4",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "width": 832
+    },
+    "b2_g2": {
+      "decode_success": true,
+      "decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+      "fps": 16.0,
+      "frame_count": 81,
+      "height": 464,
+      "mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "mp4_size_bytes": 7729377,
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/corrected_parity_20260814/b2_gpu2_hardgate/santa_correct_v3d_seed000.mp4",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "width": 832
+    },
+    "canonical": {
+      "decode_success": true,
+      "decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+      "fps": 16.0,
+      "frame_count": 81,
+      "height": 464,
+      "mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "mp4_size_bytes": 7729377,
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/gpu0_seed0_eligibility/santa_correct_v3d_seed000.mp4",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "width": 832
+    }
+  }
+}

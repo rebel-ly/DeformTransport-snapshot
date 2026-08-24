@@ -1,0 +1,10 @@
+2026-08-11T03:55:26+00:00
+===== INFER_SIM =====
+923d7e2538152f02305e6d863488f06b01765c76e05298a76840b20eff6c3417  /workspace/DeformTransport/infer_sim.py
+===== CHECKPOINT =====
+-rw-r--r-- 1 10001 1000 18G Aug  3 23:29 /workspace/DeformTransport/ckpts/Realwonder-Distilled-AR-I2V-Flow/sink_size=1-attn_size=21-frame_per_block=3-denoising_steps=4/step=000800.pt
+===== A2 NOISE =====
+6691b1e03f072d6652ce5bd88fc27996e1f1918ffa9f8c43f1aca481c3314fda  /workspace/DeformTransport/server_runs/persistent_noise/20260811_035351__tree_A2_block3_formal_seed0/final_sim/noises.npy
+===== SOURCE SIM =====
+/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/resized_input_image.png
+/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames

@@ -1,0 +1,1221 @@
+==================================================
+最高优先级硬约束：LOCAL CODEX ONLY
+==================================================
+
+LOCAL CODEX DOES ALL REASONING;
+SERVER IS SSH EXECUTION TARGET ONLY.
+
+严禁：
+
+- server-side codex CLI
+- codex exec / codex run / codex agent
+- nested Codex agent
+- server-side OpenAI / Codex / LLM API inference
+- 使用服务器 CPA_API_KEY / OPENAI_API_KEY 产生 LLM token
+
+服务器只允许执行：
+
+- deterministic bash
+- deterministic Python
+- existing project/runtime/helper code
+- CPU structural analysis
+- artifact inspection
+- lightweight non-diffusion functional checks
+
+不得 kill：
+codex app-server / SSH helper / remote bridge。
+
+==================================================
+当前阶段
+==================================================
+
+Phase 0D-2F / F3 —
+GPU Arm Construction & Freeze
+
+CPU ONLY.
+NO DIFFUSION GENERATION.
+
+本阶段目标：
+
+一次性完成下一轮 seed0 GPU screening
+所需的全部 conditioning artifacts、
+subgroup contracts、
+WM-0 gate、
+run manifests 和 provenance。
+
+本阶段结束后必须 STOP。
+
+==================================================
+0. Frozen prerequisite
+==================================================
+
+F2-R evidence：
+
+/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/
+reports/phase0d/conditioning_alignment/
+20260813_095748__f2r_positive_subgroup_validity
+
+Frozen status：
+
+PHASE0D2F_F2R_STATUS = PASS_WITH_LIMITATIONS
+PROCEED_TO_F3 = True
+
+F2-R core facts：
+
+ID_JOIN = 1257/1257
+
+ZERO_SWITCH_POSITIVE_VISIBLE:
+N = 62
+MAR gap DT-RW =
+-9.387910510311205
+
+ME gap =
++0.08442653734934465
+
+This is:
+
+FORMAL_POSITIVE_SUBGROUP_EVIDENCE = PRESENT
+
+but only appearance-positive,
+NOT appearance+motion positive.
+
+High-motion:
+
+Q4 stable:
+N = 13
+MAR gap ≈ +15.5764840216
+ME gap ≈ +0.5912901352
+
+Q4 fragmented:
+N = 301
+MAR gap ≈ +8.7771372835
+ME gap ≈ +0.3102430976
+
+Frozen interpretation：
+
+HIGH_MOTION_REMAINS_BAD_WHEN_STABLE
+
+Do not claim fragmentation alone explains
+high-motion failure.
+
+R2:
+
+RW coarse hole explanation =
+NOT_SUPPORTED
+
+but condition TC-MAR absolute diagnostic
+has double-normalization limitation.
+
+Therefore：
+
+RW appearance metric alignment hypothesis =
+UNRESOLVED
+
+Do not fix/revisit it in F3.
+
+R3:
+
+condition-level RW vs DT TC-ME comparison
+is representation-asymmetric.
+
+Therefore：
+
+CONDITION_TCME_CAUSAL_INTERPRETATION_VALID = False
+
+Do not use these condition TC-ME values
+for method selection in F3.
+
+R4:
+
+Tree timeline =
+PASS
+
+best offset = 0
+
+visible coordinate equality =
+36143/36143 exact
+
+Tree historical motion evidence remains：
+
+LEGACY_BUT_TIMELINE_COMPATIBLE
+
+Do not reopen Tree in F3.
+
+==================================================
+1. Formal corrected-v2 evaluation assets
+==================================================
+
+Formal full evaluation support remains:
+
+EVAL_N = 1257
+
+EVAL_IDS_SHA =
+f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8
+
+EVAL_TRACKS_SHA =
+a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33df7fdebfb51929
+
+EVAL_VISIBILITY_SHA =
+5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff
+
+IMPORTANT:
+
+conditioning subset != evaluation subset.
+
+ALL FUTURE METHODS
+must still evaluate on all 1257 carriers.
+
+Never evaluate only selected conditioning tracks.
+
+==================================================
+2. Canonical existing videos
+==================================================
+
+RealWonder canonical baseline:
+
+aligned_santa_baseline_seed0.mp4
+
+SHA256 =
+1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7
+
+DT-FULL canonical Replay A:
+
+SHA256 =
+08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935
+
+Do not regenerate either one.
+
+==================================================
+3. Current FULL structural facts
+==================================================
+
+FULL_TRACK_COUNT = 1257
+
+REAL_TRANSPORT_Y_SHAPE =
+[1,16,21,60,104]
+
+future spatial slots:
+
+20 * 60 * 104 =
+124800
+
+FULL_WRITE_SUPPORT =
+9031
+
+FULL_MEAN_WRITES_PER_SLOT =
+451.55
+
+FULL_INTERVENTION_FRACTION =
+7.236378%
+
+Current visibility semantics:
+
+raster-defined /
+frontmost-support /
+operational visibility
+
+Do NOT call it semantic/perceptual GT visibility.
+
+==================================================
+4. Frozen first-screen design
+==================================================
+
+Existing methods reused:
+
+RW
+DT-FULL
+
+New seed0 GPU methods proposed:
+
+1. WM-0
+2. DT-FRAG-PRUNE
+3. DT-GRID100-CENTER
+
+Do NOT generate them in F3.
+
+Additionally CPU-only construct:
+
+4. DT-COUNT218-CENTER
+
+This is NOT a first-screen GPU arm.
+
+Its purpose is a future count-matched control
+if FRAG-PRUNE wins.
+
+==================================================
+5. Important causal-language correction
+==================================================
+
+FRAG-PRUNE is NOT a pure fragmentation-only intervention.
+
+F2-R structural precompute already indicates:
+
+FULL listed K:
+1257
+
+FRAG-PRUNE retained K:
+218
+
+so it removes about 82.7% of listed carriers.
+
+It therefore changes both:
+
+- carrier identity
+- conditioning count / density
+
+Hence future interpretation must be:
+
+“fragmentation-targeted strong sparsification”
+
+NOT:
+
+“pure fragmentation intervention”.
+
+COUNT218-CENTER is constructed now precisely
+to enable future count-matched attribution if needed.
+
+==================================================
+6. Frozen FRAG-PRUNE rule
+==================================================
+
+The rule was preregistered before GPU outputs:
+
+RETAIN:
+
+switch_count < 3
+
+REMOVE:
+
+switch_count >= 3
+
+Do NOT additionally remove:
+
+zero-future-visible carriers.
+
+Do NOT use:
+
+MAR
+ME
+F2 per-carrier errors
+motion magnitude
+collision score
+future GPU outputs
+
+for selection.
+
+Only frozen operational visibility switch count.
+
+Expected from F2-R:
+
+FRAG_PRUNE_RETAINED_K ≈ 218
+
+But independently recompute from frozen source
+and machine verify exact value.
+
+==================================================
+7. Frozen GRID100-CENTER rule
+==================================================
+
+Use:
+
+WANMOVE_STYLE_32x32_SOURCE_GRID_SURROGATE
+
+NOT:
+
+EXACT_WANMOVE_TRAINING_GRID
+
+Source coordinate domain:
+
+480x832
+
+Construct deterministic 32x32 spatial bins.
+
+Record exact:
+
+row edges
+column edges
+boundary convention
+bin center formula
+coordinate order
+
+Assign all 1257 source carriers exactly once.
+
+Requirements:
+
+GRID_ASSIGNMENT_COUNT = 1257
+OUT_OF_DOMAIN_COUNT = 0
+
+==================================================
+8. Select exactly 100 occupied coarse bins
+==================================================
+
+If occupied bins >=100:
+
+select 100 occupied bins by deterministic
+farthest-point sampling over bin centers.
+
+Initialization:
+
+occupied-bin center nearest
+centroid of occupied-bin centers.
+
+Iteration:
+
+choose candidate maximizing
+minimum Euclidean distance
+to already selected bins.
+
+Tie-break:
+
+(row, col) lexicographic.
+
+Save the ordered bin list.
+
+If occupied bins <100:
+
+STOP:
+
+FAIL_GRID100_SPATIAL_CONTRACT
+
+Do not duplicate carriers.
+
+==================================================
+9. DT-GRID100-CENTER selection
+==================================================
+
+Within each selected coarse bin:
+
+choose carrier nearest
+the deterministic bin center.
+
+Tie-break:
+
+minimum material ID.
+
+Do NOT use:
+
+visibility
+motion
+depth
+error values
+collision
+
+for carrier selection.
+
+Expected:
+
+K = 100
+unique IDs = 100
+unique bins = 100
+
+==================================================
+10. DT-COUNT218-CENTER construction
+==================================================
+
+CPU-ONLY future causal control.
+
+Goal:
+
+construct exactly K equal to the
+actual FRAG-PRUNE retained listed K.
+
+Let:
+
+K_COUNT_MATCH =
+FRAG_PRUNE_RETAINED_K
+
+Expected approximately:
+
+218
+
+Selection must be independent of switch count.
+
+Use a deterministic spatially distributed selection
+from the SAME N=1257 source carrier pool.
+
+Preferred rule:
+
+use the same 32x32 surrogate grid,
+but because K > selected 100 bins,
+construct K_COUNT_MATCH carriers using a fully deterministic,
+error-independent spatial distribution algorithm.
+
+Recommended deterministic rule:
+
+A. First select occupied bins by the same
+   farthest-point ordering.
+
+B. First pass:
+   one CENTER carrier per selected occupied bin,
+   following the same center/tie-break rule.
+
+C. If K_COUNT_MATCH exceeds occupied-bin count:
+   continue adding carriers in round-robin over
+   the same deterministic farthest-point bin order,
+   choosing the next-nearest unused carrier
+   to each bin center.
+
+D. Within-bin distance ties:
+   minimum material ID.
+
+Continue until exactly:
+
+K_COUNT_MATCH.
+
+Do not use visibility/switch/error/motion.
+
+Record exact algorithm in contract.
+
+This arm is named:
+
+DT-COUNT218-CENTER
+
+only if actual K = 218.
+
+If actual FRAG K differs,
+name dynamically:
+
+DT-COUNT<K>-CENTER
+
+and report actual K.
+
+==================================================
+11. Pure-subset requirements
+==================================================
+
+FRAG-PRUNE
+GRID100-CENTER
+COUNT-MATCHED-CENTER
+
+must all be PURE ROW SUBSETS
+of formal N=1257 conditioning assets.
+
+For every selected material:
+
+ID exact
+track exact
+visibility exact
+
+No coordinate modification.
+
+No future-state modification.
+
+No interpolation.
+
+No resampling.
+
+No new visibility semantics.
+
+No depth modification.
+
+Machine verify using SHA/value equality.
+
+Output:
+
+FRAG_PRUNE_EXACT_ROW_SUBSET
+GRID100_CENTER_EXACT_ROW_SUBSET
+COUNT_MATCHED_EXACT_ROW_SUBSET
+
+All must True.
+
+==================================================
+12. Create actual conditioning artifacts
+==================================================
+
+For each subset create timestamped/new files only:
+
+IDs
+tracks
+visibility
+selection manifest
+
+Preserve expected generator tensor ordering.
+
+Do not overwrite corrected-v2 source assets.
+
+For each artifact save:
+
+shape
+dtype
+SHA256
+parent formal artifact SHA
+selection ID SHA
+
+==================================================
+13. Structural V3D audit
+==================================================
+
+Using frozen V3D operator,
+CPU/no-diffusion only.
+
+For:
+
+FULL1257
+FRAG-PRUNE
+GRID100-CENTER
+COUNT-MATCHED-CENTER
+
+compute:
+
+listed track count
+
+active-visible carrier count
+
+candidate assignment count
+
+winning write count / write support
+
+mean writes per future slot
+
+intervention fraction over 124800
+
+collision candidate count
+collision cell count
+max collision multiplicity
+
+visible-slot distribution
+
+switch-count distribution
+
+source spatial coverage
+
+coarse-grid occupancy
+
+Do not interpret structural metrics as
+video-quality results.
+
+==================================================
+14. Explicitly verify F2-R FRAG precompute
+==================================================
+
+Expected approximate prior values:
+
+FRAG retained = 218
+
+FRAG write support =
+1799
+
+FRAG intervention fraction ≈
+1.4415%
+
+Require exact reconstruction from frozen inputs.
+
+Output:
+
+F2R_FRAG_PRECOMPUTE_REPRODUCED =
+PASS/FAIL
+
+If mismatch:
+
+do not silently proceed.
+
+Investigate source/version mismatch.
+
+If not resolved:
+
+STOP:
+FAIL_FRAG_PRECOMPUTE_REPRODUCTION
+
+==================================================
+15. WM-0 functional no-op gate
+==================================================
+
+Before GPU use,
+prove no-trajectory conditioning is clean.
+
+Using current formal Wan-Move/V3D path
+without diffusion transformer:
+
+set N=0.
+
+Verify:
+
+trajectory count = 0
+
+trajectory write count = 0
+
+edited_y exactly equals original y
+
+depth/winner write count = 0
+
+no condition tensor mutation from trajectory path
+
+no generator-consumed trajectory-side randomness added
+
+If frozen noise helper exists,
+verify relevant generator noise SHA
+does not change solely due N=0 path.
+
+Do not require unrelated global RNG states
+to be byte-identical.
+
+Output:
+
+WM0_FUNCTIONAL_GATE = PASS/FAIL/UNRESOLVED
+
+WM0_EDITED_Y_EQUALS_Y_EXACT = True/False
+WM0_TRAJECTORY_WRITE_COUNT = 0/...
+WM0_GENERATOR_CONSUMED_RANDOMNESS_CHANGE =
+False/True/UNRESOLVED
+
+WM-0 first GPU arm requires:
+
+WM0_FUNCTIONAL_GATE = PASS
+
+==================================================
+16. Freeze future evaluation subgroups NOW
+==================================================
+
+Before any new video output exists,
+materialize exact membership masks / ID lists for:
+
+1. ALL
+2. HIGH_MOTION_Q4
+3. FRAGMENTED_SWITCH_GE3
+4. Q4_AND_FRAGMENTED
+5. Q4_AND_STABLE
+6. ZERO_SWITCH_POSITIVE_VISIBLE
+
+Use exactly frozen F2/F2-R assignments.
+
+Do NOT recompute quartiles from future methods.
+
+For each subgroup save:
+
+name
+definition
+N
+ordered material IDs
+membership mask
+IDs SHA256
+mask SHA256
+
+Machine verify subgroup IDs are subset
+of formal EVAL_N=1257 IDs.
+
+Important:
+
+Q4 stable N is expected ~13.
+Report small-N limitation,
+but do not remove the subgroup.
+
+==================================================
+17. Freeze first-screen metric contract
+==================================================
+
+The next GPU screen will use
+the already recovered binding-only
+corrected-v2 evaluator lineage.
+
+Primary screening metrics:
+
+TC-MAR Lab mean
+LOWER is better
+
+TC-ME transition mean EPE mean
+LOWER is better
+
+Formal baseline values:
+
+RW TCMAR =
+13.639900159270573
+
+DT_FULL TCMAR =
+17.144317299874714
+
+RW TCME =
+0.5869890665947547
+
+DT_FULL TCME =
+0.7265499674289193
+
+The first seed0 screen is directional only.
+
+No p-values.
+No formal superiority.
+No non-inferiority claim.
+
+==================================================
+18. Freeze promotion/stop-loss rule BEFORE GPU
+==================================================
+
+A new candidate is eligible for promotion only if:
+
+relative to DT-FULL,
+
+TC-MAR Lab mean moves downward
+
+AND
+
+TC-ME mean moves downward.
+
+That is the primary 2D direction gate.
+
+Do not require seed0 to beat RW outright.
+
+Also report all frozen subgroups.
+
+A candidate that improves aggregate
+but substantially worsens high-motion Q4
+must be flagged:
+
+AGGREGATE_GAIN_WITH_HIGH_MOTION_REGRESSION
+
+and cannot support the main
+“better deformable-object prediction” claim
+without further evidence.
+
+If both FRAG-PRUNE and GRID100-CENTER
+fail the primary two-metric direction gate:
+
+STOP sparse/prune line after screen.
+
+Do NOT automatically launch:
+
+k50
+k200
+GRID100-STABLE
+PHYS
+blend
+no-vis
+19k
+
+==================================================
+19. Freeze conditional second-stage logic
+==================================================
+
+Do not execute now.
+
+If FRAG-PRUNE is strongest/promoted:
+
+next causal control candidate:
+COUNT-MATCHED-CENTER
+
+This will separate:
+
+count/sparsification effect
+
+from:
+
+fragmentation-targeted selection effect.
+
+If GRID100-CENTER is strongest/promoted:
+
+next candidate:
+GRID100-STABLE
+
+same k / similar spatial contract
+to test stability selection.
+
+If WM-0 is strongest:
+
+flag:
+
+TRAJECTORY_CONDITIONING_MAY_BE_NET_NEGATIVE
+
+and do not continue selector tuning
+without explicit user decision.
+
+==================================================
+20. Prepare exact GPU run manifests
+==================================================
+
+Prepare but DO NOT EXECUTE
+three future generation manifests:
+
+A.
+WM-0
+seed=0
+
+B.
+DT-FRAG-PRUNE
+seed=0
+
+C.
+DT-GRID100-CENTER
+seed=0
+
+Each manifest must freeze:
+
+method label
+seed
+source image
+prompt
+source/video preprocessing
+action/simulation lineage
+trajectory artifact path/SHA
+visibility artifact path/SHA
+N condition
+Wan-Move source HEAD
+runtime Python path/SHA
+model/checkpoint identity
+resolution
+frame count
+generation arguments
+expected output directory
+
+No actual generation.
+
+==================================================
+21. GPU execution policy for next phase
+==================================================
+
+Do not execute this now,
+but manifests should support:
+
+3 new videos total.
+
+If resources allow next phase,
+parallel across available L40 GPUs is permitted,
+provided every run uses the same frozen runtime/config
+except method-specific conditioning artifact.
+
+No dynamic parameter changes based on partial outputs.
+
+==================================================
+22. Evidence directory
+==================================================
+
+Create:
+
+/workspace/DeformTransport_EvidenceV4_1/
+reports/phase0d/conditioning_alignment/
+<TIMESTAMP>__f3_gpu_arm_construction_freeze
+
+At minimum save:
+
+PHASE0D2F_F3_PROTOCOL_FROZEN.txt
+
+frozen_input_identity.json
+
+grid32_surrogate_contract.json
+grid32_assignment.json
+grid100_selected_bins.json
+
+frag_prune_contract.json
+frag_prune_selection.json
+
+grid100_center_contract.json
+grid100_center_selection.json
+
+count_matched_center_contract.json
+count_matched_center_selection.json
+
+artifacts/
+  frag_prune_ids.*
+  frag_prune_tracks.*
+  frag_prune_visibility.*
+
+  grid100_center_ids.*
+  grid100_center_tracks.*
+  grid100_center_visibility.*
+
+  count_matched_center_ids.*
+  count_matched_center_tracks.*
+  count_matched_center_visibility.*
+
+structural_comparison.json
+
+wm0_functional_gate.json
+
+subgroups/
+  all.*
+  high_motion_q4.*
+  fragmented_switch_ge3.*
+  q4_and_fragmented.*
+  q4_and_stable.*
+  zero_switch_positive_visible.*
+
+future_evaluation_contract.json
+promotion_stoploss_contract.json
+
+gpu_manifests/
+  wm0_seed0.json
+  frag_prune_seed0.json
+  grid100_center_seed0.json
+
+PHASE0D2F_F3_SUMMARY.md
+phase0d2f_f3_status.json
+SHA256SUMS.txt
+
+==================================================
+23. No history deletion
+==================================================
+
+Do NOT delete old F1/F2 protocol/evidence files.
+
+If creating a current index,
+older protocols may be labeled:
+
+SUPERSEDED_FOR_CURRENT_EXECUTION
+
+but all old evidence and SHA must remain.
+
+==================================================
+24. PASS requirements
+==================================================
+
+F3 PASS requires ALL:
+
+FORMAL_INPUT_IDENTITY = PASS
+
+GRID_ASSIGNMENT_COUNT = 1257
+OUT_OF_DOMAIN_COUNT = 0
+OCCUPIED_BIN_COUNT >= 100
+
+GRID100_CENTER_K = 100
+
+FRAG_PRUNE_RULE =
+switch_count < 3
+
+FRAG_PRUNE_RETAINED_K =
+exact frozen recomputation
+
+F2R_FRAG_PRECOMPUTE_REPRODUCED = PASS
+
+FRAG_PRUNE_EXACT_ROW_SUBSET = True
+
+GRID100_CENTER_EXACT_ROW_SUBSET = True
+
+COUNT_MATCHED_EXACT_ROW_SUBSET = True
+
+COUNT_MATCHED_K =
+FRAG_PRUNE_RETAINED_K
+
+WM0_FUNCTIONAL_GATE = PASS
+
+SUBGROUP_FREEZE_STATUS = PASS
+
+ALL subgroup ID/mask SHA frozen
+
+EVALUATION_SET_UNCHANGED = True
+
+GPU_MANIFEST_COUNT = 3
+
+NO_DIFFUSION_GENERATION = True
+
+No formal source asset modified.
+
+Then:
+
+PHASE0D2F_F3_STATUS = PASS
+
+PROCEED_TO_SEED0_GPU_SCREEN = True
+
+but STOP.
+
+==================================================
+25. Failure handling
+==================================================
+
+If F2-R FRAG precompute cannot be reproduced:
+
+FAIL_FRAG_PRECOMPUTE_REPRODUCTION
+
+If GRID100 cannot produce 100 occupied bins:
+
+FAIL_GRID100_SPATIAL_CONTRACT
+
+If any subset changes trajectory/visibility values:
+
+FAIL_NOT_PURE_SUBSET
+
+If WM0 cannot be proved clean:
+
+PASS_WITH_WM0_UNRESOLVED is allowed
+for FRAG/GRID construction,
+
+but:
+
+WM0_GPU_ARM_ALLOWED = False
+
+If subgroup membership cannot be frozen exactly:
+
+FAIL_SUBGROUP_FREEZE
+
+Do not patch around these.
+
+==================================================
+26. Required F3 summary
+==================================================
+
+PHASE0D2F_F3_SUMMARY.md must contain:
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+27. Final stdout
+==================================================
+
+最终只打印：
+
+===== PHASE0D-2F / F3 GPU ARM CONSTRUCTION & FREEZE =====
+
+OUT = ...
+
+FORMAL_INPUT_IDENTITY = ...
+
+EVAL_N = 1257
+EVAL_IDS_SHA = ...
+EVAL_TRACKS_SHA = ...
+EVAL_VISIBILITY_SHA = ...
+
+----- FRAG PRUNE -----
+
+FRAG_PRUNE_RULE =
+retain switch_count < 3
+
+FRAG_PRUNE_RETAINED_K = ...
+FRAG_PRUNE_REMOVED_K = ...
+
+FRAG_PRUNE_ACTIVE_VISIBLE_K = ...
+
+FRAG_PRUNE_WRITE_SUPPORT = ...
+FRAG_PRUNE_MEAN_WRITES_PER_SLOT = ...
+FRAG_PRUNE_INTERVENTION_FRACTION = ...
+
+F2R_FRAG_PRECOMPUTE_REPRODUCED = ...
+
+FRAG_PRUNE_EXACT_ROW_SUBSET = ...
+
+----- GRID100 CENTER -----
+
+GRID_SURROGATE_NAME =
+WANMOVE_STYLE_32x32_SOURCE_GRID_SURROGATE
+
+GRID_ASSIGNMENT_COUNT = ...
+OUT_OF_DOMAIN_COUNT = ...
+OCCUPIED_BIN_COUNT = ...
+
+GRID100_CENTER_K = ...
+GRID100_CENTER_WRITE_SUPPORT = ...
+GRID100_CENTER_MEAN_WRITES_PER_SLOT = ...
+GRID100_CENTER_INTERVENTION_FRACTION = ...
+
+GRID100_CENTER_EXACT_ROW_SUBSET = ...
+
+----- COUNT MATCHED CONTROL -----
+
+COUNT_MATCHED_METHOD_NAME = ...
+COUNT_MATCHED_K = ...
+
+COUNT_MATCHED_WRITE_SUPPORT = ...
+COUNT_MATCHED_MEAN_WRITES_PER_SLOT = ...
+COUNT_MATCHED_INTERVENTION_FRACTION = ...
+
+COUNT_MATCHED_EXACT_ROW_SUBSET = ...
+
+----- COMPARATIVE STRUCTURE -----
+
+FULL_K = 1257
+FULL_WRITE_SUPPORT = 9031
+FULL_INTERVENTION_FRACTION = 7.236378%
+
+FRAG_VS_FULL_LISTED_K_RATIO = ...
+GRID100_VS_FULL_LISTED_K_RATIO = ...
+
+FRAG_VS_GRID100_WRITE_SUPPORT_RATIO = ...
+
+----- WM0 -----
+
+WM0_FUNCTIONAL_GATE = ...
+WM0_EDITED_Y_EQUALS_Y_EXACT = ...
+WM0_TRAJECTORY_WRITE_COUNT = ...
+WM0_GENERATOR_CONSUMED_RANDOMNESS_CHANGE = ...
+WM0_GPU_ARM_ALLOWED = ...
+
+----- FROZEN SUBGROUPS -----
+
+SUBGROUP_ALL_N = ...
+SUBGROUP_ALL_IDS_SHA = ...
+
+SUBGROUP_HIGH_MOTION_Q4_N = ...
+SUBGROUP_HIGH_MOTION_Q4_IDS_SHA = ...
+
+SUBGROUP_FRAGMENTED_GE3_N = ...
+SUBGROUP_FRAGMENTED_GE3_IDS_SHA = ...
+
+SUBGROUP_Q4_FRAGMENTED_N = ...
+SUBGROUP_Q4_FRAGMENTED_IDS_SHA = ...
+
+SUBGROUP_Q4_STABLE_N = ...
+SUBGROUP_Q4_STABLE_IDS_SHA = ...
+
+SUBGROUP_ZERO_SWITCH_POSITIVE_VISIBLE_N = ...
+SUBGROUP_ZERO_SWITCH_POSITIVE_VISIBLE_IDS_SHA = ...
+
+SUBGROUP_FREEZE_STATUS = ...
+
+----- NEXT GPU SCREEN -----
+
+GPU_MANIFEST_COUNT = ...
+
+GPU_ARM_1 = WM-0
+GPU_ARM_1_SEED = 0
+GPU_ARM_1_MANIFEST = ...
+
+GPU_ARM_2 = DT-FRAG-PRUNE
+GPU_ARM_2_SEED = 0
+GPU_ARM_2_MANIFEST = ...
+
+GPU_ARM_3 = DT-GRID100-CENTER
+GPU_ARM_3_SEED = 0
+GPU_ARM_3_MANIFEST = ...
+
+PRIMARY_SCREEN_METRICS = [
+TC-MAR_Lab_mean,
+TC-ME_transition_mean_EPE_mean
+]
+
+PRIMARY_DIRECTION_RULE =
+both metrics must improve versus DT-FULL
+for promotion eligibility
+
+COUNT_MATCHED_CONTROL_PREPARED = ...
+
+EVALUATION_SET_UNCHANGED = ...
+
+NO_DIFFUSION_GENERATION = True
+
+PHASE0D2F_F3_STATUS =
+PASS /
+PASS_WITH_WM0_UNRESOLVED /
+FAIL_FRAG_PRECOMPUTE_REPRODUCTION /
+FAIL_GRID100_SPATIAL_CONTRACT /
+FAIL_NOT_PURE_SUBSET /
+FAIL_SUBGROUP_FREEZE /
+ERROR
+
+PROCEED_TO_SEED0_GPU_SCREEN = True/False
+
+===== CODEX QUOTA ISOLATION AUDIT =====
+
+LOCAL_CODEX_ONLY_POLICY = ENABLED
+SERVER_ROLE = SSH_EXECUTION_TARGET_ONLY
+
+SERVER_SIDE_CODEX_CLI_INVOKED = False/UNRESOLVED
+SERVER_SIDE_CODEX_AGENT_CREATED = False/UNRESOLVED
+SERVER_SIDE_OPENAI_API_CALLED = False/UNRESOLVED
+SERVER_SIDE_CPA_API_KEY_CONSUMED_FOR_LLM = False/UNRESOLVED
+SERVER_SIDE_LLM_INFERENCE_DETECTED = False/UNRESOLVED
+
+EXISTING_REMOTE_HELPER_PROCESSES_KILLED = False
+
+QUOTA_ISOLATION_STATUS = PASS/UNRESOLVED
+
+然后 STOP。
+
+绝对禁止在本阶段运行：
+
+WM-0 diffusion
+FRAG-PRUNE diffusion
+GRID100-CENTER diffusion
+任何新视频 generation。

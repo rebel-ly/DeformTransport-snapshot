@@ -1,0 +1,767 @@
+==================================================
+F4 OVERNIGHT AUTONOMOUS COMPLETION EXTENSION
+==================================================
+
+用户即将离开休息。
+
+当前 F4 generation 继续正常执行。
+
+从现在开始，在不需要任何用户交互的前提下，
+自动完成所有“结果整理、正式评价、诊断汇总和下一步准备”工作。
+
+但是：
+
+严禁自动启动任何新的下一阶段 GPU generation。
+
+LOCAL CODEX DOES ALL REASONING;
+SERVER IS SSH EXECUTION TARGET ONLY.
+
+继续禁止：
+
+- server-side Codex CLI
+- server-side Codex agent
+- server-side LLM/API inference
+- CPA_API_KEY / OPENAI_API_KEY LLM consumption
+- kill/preempt other processes
+
+==================================================
+1. Current generation behavior remains unchanged
+==================================================
+
+继续按照已经冻结的 TWO_GPU_STAGED 调度：
+
+GPU1 -> WM-0 seed0
+GPU2 -> DT-FRAG-PRUNE seed0
+
+FIRST_FREE_OF_GPU1_GPU2
+-> DT-GRID100-CENTER seed0
+
+不要因为任何中间视频、日志或主观观感
+改变第三条 generation。
+
+三条全部完成前：
+
+不要进行结果导向的实验修改。
+
+==================================================
+2. Generation 完成后自动进入 formal evaluation
+==================================================
+
+三条新视频全部生成后，
+无需等待用户确认。
+
+自动执行当前 F4 protocol 中已经冻结的：
+
+A. output integrity audit
+
+B. baseline reproduction
+
+C. formal corrected-v2 N=1257 evaluation
+
+D. per-sample diagnostic reproduction
+
+E. frozen subgroup evaluation
+
+F. primary direction / Pareto / promotion decision
+
+这些属于已经预注册的 F4 工作，
+不是新的实验设计。
+
+==================================================
+3. Formal methods
+==================================================
+
+统一评价：
+
+1. RW
+2. DT-FULL
+3. WM-0
+4. DT-FRAG-PRUNE
+5. DT-GRID100-CENTER
+
+evaluation support始终：
+
+N = 1257
+
+condition K不得影响 evaluation support。
+
+==================================================
+4. Automatically produce one master comparison table
+==================================================
+
+创建：
+
+MASTER_SEED0_COMPARISON.csv
+MASTER_SEED0_COMPARISON.md
+
+至少包含：
+
+METHOD
+
+CONDITION_K
+
+TCMAR_LAB_MEAN
+TCMAR_LAB_MEDIAN
+TCMAR_LAB_P95
+
+TCMAR_RGBL1_MEAN
+TCMAR_RGBL1_MEDIAN
+TCMAR_RGBL1_P95
+
+TCME_MEAN
+TCME_MEDIAN
+TCME_P95
+
+DELTA_MAR_VS_DTFULL
+DELTA_ME_VS_DTFULL
+
+PCT_MAR_CHANGE_VS_DTFULL
+PCT_ME_CHANGE_VS_DTFULL
+
+DELTA_MAR_VS_RW
+DELTA_ME_VS_RW
+
+PRIMARY_DIRECTION_PASS
+
+SEED0_NUMERIC_BEATS_RW_ON_BOTH_PRIMARY
+
+其中：
+
+lower is better。
+
+百分比只作 descriptive statistics，
+不得替代正式 absolute metrics。
+
+==================================================
+5. Automatically create MAR–ME Pareto analysis
+==================================================
+
+创建：
+
+seed0_pareto_analysis.json
+seed0_pareto_analysis.md
+
+二维坐标：
+
+x = TC-MAR Lab mean
+y = TC-ME mean
+
+lower-left is better.
+
+对五个方法记录：
+
+PARETO_DOMINATED_BY
+PARETO_DOMINATES
+PARETO_FRONT = True/False
+
+不得人为构造加权综合分数。
+
+不要用：
+
+MAR + ME
+weighted score
+normalized rank sum
+
+之类方式强行选赢家。
+
+==================================================
+6. Automatically calculate recovery fractions
+==================================================
+
+为了明早快速判断“追回了多少 RW gap”，
+对每个新 arm计算：
+
+MAR_GAP_RECOVERY_FRACTION =
+
+(DTFULL_MAR - METHOD_MAR)
+/
+(DTFULL_MAR - RW_MAR)
+
+ME_GAP_RECOVERY_FRACTION =
+
+(DTFULL_ME - METHOD_ME)
+/
+(DTFULL_ME - RW_ME)
+
+解释：
+
+0 = 未追回任何 DT-FULL→RW gap
+
+1 = 数值达到 RW
+
+>1 = seed0 数值超过 RW
+
+<0 = 比 DT-FULL 更差
+
+这些全部：
+
+DIAGNOSTIC_DESCRIPTIVE_ONLY
+
+不得称 statistical improvement。
+
+==================================================
+7. Frozen subgroup evaluation automatically complete
+==================================================
+
+对每个5方法自动输出：
+
+ALL
+
+HIGH_MOTION_Q4
+N=314
+
+FRAGMENTED_SWITCH_GE3
+N=1039
+
+Q4_AND_FRAGMENTED
+N=301
+
+Q4_AND_STABLE
+N=13
+SMALL_N=True
+
+ZERO_SWITCH_POSITIVE_VISIBLE
+N=62
+
+每个 subgroup 至少输出：
+
+TCMAR_LAB_MEAN
+TCME_MEAN
+
+以及相对：
+
+DT-FULL
+RW
+
+的 signed delta。
+
+==================================================
+8. Automatically produce subgroup safety table
+==================================================
+
+创建：
+
+SUBGROUP_SAFETY_TABLE.csv
+SUBGROUP_SAFETY_TABLE.md
+
+对三个新 arm分别列：
+
+ALL_MAR_CHANGE
+ALL_ME_CHANGE
+
+Q4_MAR_CHANGE
+Q4_ME_CHANGE
+
+FRAGMENTED_MAR_CHANGE
+FRAGMENTED_ME_CHANGE
+
+Q4_FRAGMENTED_MAR_CHANGE
+Q4_FRAGMENTED_ME_CHANGE
+
+Q4_STABLE_MAR_CHANGE
+Q4_STABLE_ME_CHANGE
+
+ZERO_SWITCH_VISIBLE_MAR_CHANGE
+ZERO_SWITCH_VISIBLE_ME_CHANGE
+
+relative to DT-FULL。
+
+特别标记：
+
+AGGREGATE_GAIN_WITH_HIGH_MOTION_REGRESSION
+
+如果 aggregate 两项都改善，
+但 Q4 至少一项恶化。
+
+==================================================
+9. Automatically prepare deterministic visual comparison
+==================================================
+
+这一步只用于明早人工检查，
+不得参与 promotion gate。
+
+从以下5个视频：
+
+RW
+DT-FULL
+WM-0
+FRAG-PRUNE
+GRID100-CENTER
+
+使用完全相同 frame indices：
+
+0
+20
+40
+60
+80
+
+提取原始 decoded RGB frame。
+
+禁止：
+
+resize affecting interpretation
+enhancement
+color correction
+sharpening
+cropping different regions
+
+如果为了排版必须缩放，
+对所有方法使用完全相同的 deterministic scale。
+
+创建：
+
+visual_comparison/
+  frame_000.*
+  frame_020.*
+  frame_040.*
+  frame_060.*
+  frame_080.*
+
+以及一个：
+
+FIVE_METHOD_CONTACT_SHEET.png
+
+排列固定：
+
+rows = methods
+
+RW
+DT-FULL
+WM-0
+DT-FRAG-PRUNE
+DT-GRID100-CENTER
+
+columns = frames
+
+0
+20
+40
+60
+80
+
+明确标记：
+
+VISUAL_DIAGNOSTIC_ONLY
+NOT_USED_FOR_PROMOTION_DECISION
+
+==================================================
+10. Automatically summarize generation runtime
+==================================================
+
+创建：
+
+generation_runtime_summary.json
+
+记录：
+
+method
+GPU
+start
+end
+wall_clock_seconds
+exit_code
+MP4 SHA
+frame count
+shape
+
+以便明早知道实际 GPU 成本。
+
+==================================================
+11. Automatically execute frozen promotion logic
+==================================================
+
+仅使用已经预注册的主指标：
+
+TC-MAR Lab mean
+TC-ME mean
+
+相对 DT-FULL：
+
+两项都下降
+=> PRIMARY_DIRECTION_PASS
+
+不得事后修改标准。
+
+按原 F4 protocol自动输出：
+
+PRIMARY_DIRECTION_PASS_ARMS
+
+PRIMARY_PARETO_DOMINANCE
+
+PROMOTED_ARM
+
+NEXT_CAUSAL_CONTROL
+
+SPARSE_PRUNE_ROUTE_STATUS
+
+==================================================
+12. Route classification for tomorrow
+==================================================
+
+另外生成：
+
+NEXT_ROUTE_DECISION.json
+
+只能从以下预先定义类别中选择：
+
+CASE_A_FRAG_PROMOTED
+
+条件：
+FRAG primary direction PASS
+且 FRAG 是唯一或 Pareto-dominant promoted candidate。
+
+PREPARE_NEXT =
+DT-COUNT218-CENTER
+
+解释：
+需要同 K=218 control 区分
+targeted fragmentation pruning
+和 general sparsification/count effect。
+
+--------------------------------
+
+CASE_B_GRID100_PROMOTED
+
+条件：
+GRID100 primary direction PASS
+且 GRID100 是唯一或 Pareto-dominant promoted candidate。
+
+PREPARE_NEXT =
+DT-GRID100-STABLE
+
+解释：
+下一步 same-K test stability selector
+是否提供额外收益。
+
+--------------------------------
+
+CASE_C_WM0_PROMOTED
+
+条件：
+WM-0 primary direction PASS
+并明显优于 trajectory-conditioned alternatives。
+
+PREPARE_NEXT =
+OPERATOR_INJECTION_REASSESSMENT
+
+设置：
+
+TRAJECTORY_CONDITIONING_MAY_BE_NET_NEGATIVE = True
+
+不要继续 selector sweep。
+
+--------------------------------
+
+CASE_D_MULTIPLE_PROMOTED
+
+多个 arm primary direction PASS
+且没有单一 arm在 MAR/ME 上 Pareto dominate。
+
+PREPARE_NEXT =
+USER_DECISION_REQUIRED
+
+不要自行用加权分数挑赢家。
+
+--------------------------------
+
+CASE_E_NO_ARM_PROMOTED
+
+三条都不能同时改善 MAR 和 ME。
+
+设置：
+
+SPARSE_PRUNE_ROUTE_STATUS =
+STOP_PRIMARY_DIRECTION_FAILURE
+
+PREPARE_NEXT =
+ROUTE_REASSESSMENT
+
+不得自动准备 k50/k200/PHYS/blend/no-vis/19k。
+
+==================================================
+13. Prepare next-step files, but DO NOT execute
+==================================================
+
+如果：
+
+CASE_A_FRAG_PROMOTED
+
+允许检查已经存在的：
+
+DT-COUNT218-CENTER artifacts
+
+并生成：
+
+NEXT_STEP_PREP/
+count218_seed0_candidate_manifest.json
+
+但：
+
+DO NOT GENERATE VIDEO.
+
+--------------------------------
+
+如果：
+
+CASE_B_GRID100_PROMOTED
+
+允许生成一个：
+
+NEXT_STEP_PREP/
+grid100_stable_design_stub.json
+
+只记录下一步需要做什么。
+
+不要正式构造/生成 GRID100-STABLE，
+因为 selector细节仍需用户审核。
+
+--------------------------------
+
+如果：
+
+CASE_C_WM0_PROMOTED
+
+生成：
+
+NEXT_STEP_PREP/
+operator_reassessment_questions.md
+
+列出下一阶段需审计的：
+
+transport amplitude
+replacement semantics
+injection timing
+native Wan-Move conditioning compatibility
+
+不运行新实验。
+
+--------------------------------
+
+如果：
+
+CASE_D / CASE_E
+
+只生成 decision file。
+
+不得自动扩展实验。
+
+==================================================
+14. Do NOT automatically run determinism replay
+==================================================
+
+即使某 arm 被 PROMOTED：
+
+今晚也不要自动执行：
+
+same-seed replay
+seed1
+seed2
+seed3
+seed4
+
+原因：
+
+新的 promoted config
+是否值得继续需要用户明早先看
+formal metrics + subgroup + visual evidence。
+
+仅设置：
+
+PROMOTED_ARM_REPEAT_READY = True/False
+
+不得执行。
+
+==================================================
+15. Automatic evidence validation
+==================================================
+
+完成全部结果后：
+
+sha256sum 本阶段全部关键 evidence。
+
+验证：
+
+formal evaluator unchanged
+
+F3 source artifacts unchanged
+
+F3 manifests unchanged
+
+baseline videos unchanged
+
+evaluation subgroup artifacts unchanged
+
+记录：
+
+POST_RUN_IMMUTABILITY_AUDIT = PASS/FAIL
+
+==================================================
+16. Create a MORNING HANDOFF
+==================================================
+
+最后自动创建一个非常重要的文件：
+
+MORNING_HANDOFF.md
+
+控制在约 1–2 页。
+
+内容严格按以下结构：
+
+# F4 Morning Handoff
+
+## 1. 是否完整完成
+- 3 generations status
+- evaluation status
+- evidence integrity
+
+## 2. 最关键主指标
+
+表格：
+
+RW
+DT-FULL
+WM-0
+FRAG
+GRID100
+
+只列：
+
+TC-MAR Lab mean
+TC-ME mean
+
+## 3. 谁相对 DT-FULL 两项都改善
+
+PRIMARY_DIRECTION_PASS_ARMS
+
+## 4. 是否有人 seed0 两项都数值超过 RW
+
+列出。
+
+## 5. High-motion Q4 是否退化
+
+每个 candidate一句。
+
+## 6. 最值得继续的 arm
+
+PROMOTED_ARM
+
+## 7. 下一实验应该是什么
+
+NEXT_ROUTE_CASE
+NEXT_CAUSAL_CONTROL / NEXT_ACTION
+
+## 8. 当前不能说什么
+
+必须包括：
+
+seed0 only
+no statistical superiority
+no formal final paper claim
+FRAG not pure fragmentation intervention
+
+## 9. 明早需要用户决定的唯一问题
+
+只列最多 1–2 个真正需要人工决策的问题。
+
+==================================================
+17. Final overnight stdout
+==================================================
+
+所有工作完成后最终打印：
+
+===== F4 OVERNIGHT COMPLETION =====
+
+THREE_GENERATIONS_COMPLETE = ...
+
+FORMAL_EVALUATION_COMPLETE = ...
+
+SUBGROUP_EVALUATION_COMPLETE = ...
+
+VISUAL_CONTACT_SHEET_CREATED = ...
+
+POST_RUN_IMMUTABILITY_AUDIT = ...
+
+----- PRIMARY RESULTS -----
+
+RW:
+MAR = ...
+ME = ...
+
+DT_FULL:
+MAR = ...
+ME = ...
+
+WM0:
+MAR = ...
+ME = ...
+MAR_GAP_RECOVERY = ...
+ME_GAP_RECOVERY = ...
+
+FRAG:
+MAR = ...
+ME = ...
+MAR_GAP_RECOVERY = ...
+ME_GAP_RECOVERY = ...
+
+GRID100:
+MAR = ...
+ME = ...
+MAR_GAP_RECOVERY = ...
+ME_GAP_RECOVERY = ...
+
+PRIMARY_DIRECTION_PASS_ARMS = [...]
+
+SEED0_NUMERIC_BEATS_RW_BOTH_ARMS = [...]
+
+PRIMARY_PARETO_FRONT = [...]
+
+AGGREGATE_GAIN_WITH_HIGH_MOTION_REGRESSION_ARMS = [...]
+
+PROMOTED_ARM = ...
+
+NEXT_ROUTE_CASE = ...
+
+NEXT_CAUSAL_CONTROL = ...
+
+PROMOTED_ARM_REPEAT_READY = ...
+
+MORNING_HANDOFF =
+<absolute path>
+
+PHASE0D2F_F4_STATUS = ...
+
+===== CODEX QUOTA ISOLATION AUDIT =====
+
+LOCAL_CODEX_ONLY_POLICY = ENABLED
+SERVER_ROLE = SSH_EXECUTION_TARGET_ONLY
+
+SERVER_SIDE_CODEX_CLI_INVOKED = False/UNRESOLVED
+SERVER_SIDE_CODEX_AGENT_CREATED = False/UNRESOLVED
+SERVER_SIDE_OPENAI_API_CALLED = False/UNRESOLVED
+SERVER_SIDE_CPA_API_KEY_CONSUMED_FOR_LLM = False/UNRESOLVED
+SERVER_SIDE_LLM_INFERENCE_DETECTED = False/UNRESOLVED
+
+EXISTING_REMOTE_HELPER_PROCESSES_KILLED = False
+
+QUOTA_ISOLATION_STATUS = PASS/UNRESOLVED
+
+然后 STOP。
+
+==================================================
+18. HARD STOP
+==================================================
+
+无论今晚结果多好：
+
+禁止自动执行：
+
+COUNT218 video generation
+GRID100-STABLE video generation
+same-seed replay
+seed1-4
+任何 F5
+任何新的 selector sweep
+任何新的 operator修改
+
+明早等待用户分析后决定。

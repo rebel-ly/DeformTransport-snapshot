@@ -1,0 +1,19 @@
+/workspace/DeformTransport/scripts/run_realwonder_trajectory_probe.py:257:        output_dir / "point_trajectories.pt"
+/workspace/DeformTransport/scripts/assemble_final_sim_from_trajectory.py:83:    for name in ("point_trajectories.pt", "flows.npy", "flow_source_point_indices.npy"):
+/workspace/DeformTransport/scripts/assemble_final_sim_from_trajectory.py:125:        "trajectory_sha256": sha256(output / "point_trajectories.pt"),
+/workspace/DeformTransport/scripts/export_santa_material_tracks_to_wan_move_visibility_corrected.py:20:    "final_sim/point_trajectories.pt"
+/workspace/DeformTransport/scripts/export_santa_material_tracks_to_wan_move_visibility_corrected.py:28:    "final_sim/point_trajectories.pt"
+/workspace/DeformTransport/scripts/export_santa_material_tracks_to_wan_move_visibility_corrected.py:43:    "outputs/aligned_visibility_contract.pt"
+/workspace/DeformTransport/scripts/run_santa_validation_suite.py:87:    export = torch.load(output_dir / "point_trajectories.pt", map_location="cpu")
+/workspace/DeformTransport/scripts/run_santa_validation_suite.py:135:    export_a = torch.load(output_a / "point_trajectories.pt", map_location="cpu")
+/workspace/DeformTransport/scripts/run_santa_validation_suite.py:136:    export_b = torch.load(output_b / "point_trajectories.pt", map_location="cpu")
+/workspace/DeformTransport/scripts/export_transport_ready.py:48:    trajectory_path = source_dir / "point_trajectories.pt"
+/workspace/DeformTransport/scripts/run_precomputed_demo_simulation.py:169:    simulator.save_point_trajectories(output / "point_trajectories.pt")
+/workspace/DeformTransport/scripts/build_aligned_transport_visibility_contract.py:194:        / "aligned_transport_ready.pt"
+/workspace/DeformTransport/scripts/build_aligned_transport_visibility_contract.py:198:        / "aligned_visibility_contract.pt"
+/workspace/DeformTransport/scripts/export_santa_material_tracks_to_wan_move.py:20:    "final_sim/point_trajectories.pt"
+/workspace/DeformTransport/scripts/export_santa_material_tracks_to_wan_move.py:28:    "final_sim/point_trajectories.pt"
+/workspace/DeformTransport/prepare_and_run_v3_suite.sh:254:              "final_sim/point_trajectories.pt"
+/workspace/DeformTransport/run_v3d_formal_validation.sh:650:    / "raw_sim/point_trajectories.pt"
+/workspace/DeformTransport/run_v3d_formal_validation.sh:659:            "point_trajectories.pt"
+/workspace/DeformTransport/run_v3d_formal_validation.sh:666:            "point_trajectories.pt:\n"

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+O="${1:?output}"; GPU="${2:?gpu}"; W=/workspace; R="$W/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation"; WAN="$W/Wan-Move"; OVER="$W/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay"
+export CUDA_VISIBLE_DEVICES="$GPU" DT_TRANSPORT_VARIANT=v3d
+export DT_TRACK_IDS_PATH="$W/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy"
+export DT_TRACK_DEPTH_PATH="$W/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy"
+export PYTHONPATH="$OVER:$WAN:${PYTHONPATH:-}"
+mkdir -p "$O"; cd "$WAN"
+exec "$W/tools/miniforge3/envs/wan-move/bin/python" "$OVER/generate.py" --task wan-move-i2v --size '480*832' --frame_num 81 --ckpt_dir "$WAN/Wan-Move-14B-480P" --image "$W/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png" --track "$W/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy" --track_visibility "$W/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy" --prompt 'Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement.' --base_seed 0 --sample_steps 40 --sample_shift 3.0 --t5_cpu --offload_model True --dtype bf16 --preview_latent "$R/WAN_FORMAL_PREVIEW_LATENT_58x104.npy" --initial_epsilon "$R/R3_SHARED_EPSILON_58x104.npy" --start_index 0 --save_file "$O/d1_begin0_correct_v3d_seed000.mp4"

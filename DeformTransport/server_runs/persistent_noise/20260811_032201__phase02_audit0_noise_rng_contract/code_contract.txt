@@ -1,0 +1,28 @@
+===== INFER_SIM =====
+-rwxr-xr-x 1 10001 1000 21K Aug  7 02:39 /workspace/DeformTransport/infer_sim.py
+923d7e2538152f02305e6d863488f06b01765c76e05298a76840b20eff6c3417  /workspace/DeformTransport/infer_sim.py
+
+===== NOISE / RNG SYMBOLS =====
+39:    load_noise,
+66:def load_sim_masks(mask_path, target_frames):
+71:        target_frames: Target number of latent frames.
+74:        Tensor of shape [1, target_frames, H, W] (bool).
+78:    if T_mask != target_frames:
+80:        indices = torch.linspace(0, T_mask - 1, steps=target_frames).round().long().clamp(0, T_mask - 1)
+89:                        help="Path to simulation final_sim directory (contains noises.npy, frames/, masks, etc.)")
+93:    parser.add_argument("--eval_degradation", type=float, default=0.5,
+191:        "num_frame_per_block": 3,
+254:    noise_path = sim_data_path / "noises.npy"
+260:    noise_data = load_noise(
+262:        target_frames=num_output_frames,
+265:        eval_degradation=args.eval_degradation,
+289:            sim_masks = load_sim_masks(mask_file, target_frames=num_output_frames)
+300:        franka_masks_raw = load_sim_masks(str(franka_mask_file), target_frames=num_output_frames)
+311:    structured_noise = noise_data['structured_noise'].unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+312:    structured_noise_sde = noise_data.get('structured_noise_sde')
+313:    if structured_noise_sde is not None:
+314:        structured_noise_sde = structured_noise_sde.unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+526:    pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+532:        'num_frames': pixel_num_frames,
+540:        noise=structured_noise,
+556:        structured_noise_sde=structured_noise_sde,

@@ -1,0 +1,55 @@
+diff --git a/wan/utils/prompt_extend.py b/wan/utils/prompt_extend.py
+index 3eda6d5..74d67c6 100644
+--- a/wan/utils/prompt_extend.py
++++ b/wan/utils/prompt_extend.py
+@@ -9,7 +9,6 @@ from dataclasses import dataclass
+ from http import HTTPStatus
+ from typing import List, Optional, Union
+ 
+-import dashscope
+ import torch
+ from PIL import Image
+ 
+@@ -231,18 +230,20 @@ class DashScopePromptExpander(PromptExpander):
+         if model_name is None:
+             model_name = 'qwen-plus' if not is_vl else 'qwen-vl-max'
+         super().__init__(model_name, is_vl, **kwargs)
++        import dashscope
++        self.dashscope = dashscope
+         if api_key is not None:
+-            dashscope.api_key = api_key
++            self.dashscope.api_key = api_key
+         elif 'DASH_API_KEY' in os.environ and os.environ[
+                 'DASH_API_KEY'] is not None:
+-            dashscope.api_key = os.environ['DASH_API_KEY']
++            self.dashscope.api_key = os.environ['DASH_API_KEY']
+         else:
+             raise ValueError("DASH_API_KEY is not set")
+         if 'DASH_API_URL' in os.environ and os.environ[
+                 'DASH_API_URL'] is not None:
+-            dashscope.base_http_api_url = os.environ['DASH_API_URL']
++            self.dashscope.base_http_api_url = os.environ['DASH_API_URL']
+         else:
+-            dashscope.base_http_api_url = 'https://dashscope.aliyuncs.com/api/v1'
++            self.dashscope.base_http_api_url = 'https://dashscope.aliyuncs.com/api/v1'
+         self.api_key = api_key
+ 
+         self.max_image_size = max_image_size
+@@ -261,7 +262,7 @@ class DashScopePromptExpander(PromptExpander):
+         exception = None
+         for _ in range(self.retry_times):
+             try:
+-                response = dashscope.Generation.call(
++                response = self.dashscope.Generation.call(
+                     self.model,
+                     messages=messages,
+                     seed=seed,
+@@ -335,7 +336,7 @@ class DashScopePromptExpander(PromptExpander):
+         status = False
+         for _ in range(self.retry_times):
+             try:
+-                response = dashscope.MultiModalConversation.call(
++                response = self.dashscope.MultiModalConversation.call(
+                     self.model,
+                     messages=messages,
+                     seed=seed,

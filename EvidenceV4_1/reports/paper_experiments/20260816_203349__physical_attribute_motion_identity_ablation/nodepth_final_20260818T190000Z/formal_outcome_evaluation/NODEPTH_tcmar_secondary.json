@@ -1,0 +1,8 @@
+{
+  "arm": "NODEPTH",
+  "metric": "TC-MAR",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "value": 10.292388805431345,
+  "candidate_mp4_sha256": "42b374a07d4e87d91706b65da663cc8be875821f26d4c46d967b31dfa8e54d9e",
+  "cross_baseline_interpretation": "NOT_OPENED"
+}

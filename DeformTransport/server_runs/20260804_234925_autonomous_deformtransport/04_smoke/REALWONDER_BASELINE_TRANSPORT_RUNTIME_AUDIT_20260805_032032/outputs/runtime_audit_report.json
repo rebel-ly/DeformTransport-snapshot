@@ -1,0 +1,69 @@
+{
+  "时间": "2026-08-05T03:23:26.373460+08:00",
+  "任务": "原生Baseline预生成GPU路径等价性与transport运行时分支审计",
+  "结论边界": "真实执行pipeline构造、checkpoint加载、structured_noise加载、首帧加载、21帧Wan_VAE编码及Correct/Shuffled payload注入；未执行去噪generator，不是视频结果",
+  "检查": {
+    "noise_shape": [
+      6,
+      16,
+      60,
+      104
+    ],
+    "first_frame_shape": [
+      3,
+      480,
+      832
+    ],
+    "sim_frames_shape": [
+      1,
+      3,
+      21,
+      480,
+      832
+    ],
+    "encoded_shape": [
+      1,
+      6,
+      16,
+      60,
+      104
+    ],
+    "baseline与原生编码同一对象": true,
+    "correct_shape": [
+      1,
+      6,
+      16,
+      60,
+      104
+    ],
+    "shuffled_shape": [
+      1,
+      6,
+      16,
+      60,
+      104
+    ],
+    "correct与encoded最大绝对差": 2.578125,
+    "shuffled与encoded最大绝对差": 2.78125,
+    "Correct与Shuffled最大绝对差": 2.59375,
+    "infer_sim_AST_transport加载调用数": 1,
+    "pipeline_inference签名含sim_latent": true,
+    "pipeline_inference实现读取sim_latent": true
+  },
+  "FSDP键归一化": false,
+  "耗时秒": {
+    "pipeline构造": 118.8016653980012,
+    "checkpoint加载": 14.593581503999303,
+    "noise加载": 0.12524295099137817,
+    "VAE编码": 3.5007095159962773,
+    "总计": 143.29506021199632
+  },
+  "资源": {
+    "torch峰值allocated_MiB": 6552.12353515625,
+    "torch峰值reserved_MiB": 7566.0,
+    "CPU_maxRSS_GiB": 45.59611129760742,
+    "MemAvailable_before_GiB": 75.43711853027344,
+    "MemAvailable_after_GiB": 87.92366790771484
+  },
+  "通过": true
+}

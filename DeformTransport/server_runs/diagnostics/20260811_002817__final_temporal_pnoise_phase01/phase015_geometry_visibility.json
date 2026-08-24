@@ -1,0 +1,632 @@
+{
+  "tree_dynamic_event": {
+    "event_window": [
+      36,
+      56
+    ],
+    "n_tracks": 713,
+    "source_knn_edges": 2355,
+    "event_means": {
+      "mean_step_px": 1.1020654172477566,
+      "mean_accel_px": 0.8065757294152783,
+      "reversal_fraction": 0.0036273960133886753,
+      "knn_log_distortion": 0.6178792078444549,
+      "visibility_churn": 0.12135176651305683
+    },
+    "outside_means": {
+      "mean_step_px": 0.6258591887433493,
+      "mean_accel_px": 0.3871642577862762,
+      "reversal_fraction": 0.003709294008865614,
+      "knn_log_distortion": 0.3802405294899388,
+      "visibility_churn": 0.1337865785532603
+    },
+    "event_over_outside_ratio": {
+      "mean_step_px": 1.7608839768903493,
+      "mean_accel_px": 2.083290782127226,
+      "reversal_fraction": 0.9779208670757309,
+      "knn_log_distortion": 1.6249693547220985,
+      "visibility_churn": 0.9070548617456932
+    },
+    "top_frames": {
+      "mean_step_px": [
+        {
+          "frame": 48,
+          "mean_step_px": 1.4107724330696463
+        },
+        {
+          "frame": 40,
+          "mean_step_px": 1.2989715249607978
+        },
+        {
+          "frame": 33,
+          "mean_step_px": 1.2713009496941974
+        },
+        {
+          "frame": 49,
+          "mean_step_px": 1.263588236544014
+        },
+        {
+          "frame": 35,
+          "mean_step_px": 1.2361606731534542
+        },
+        {
+          "frame": 51,
+          "mean_step_px": 1.233320297970643
+        },
+        {
+          "frame": 47,
+          "mean_step_px": 1.2106005425521027
+        },
+        {
+          "frame": 50,
+          "mean_step_px": 1.1659085829776559
+        },
+        {
+          "frame": 39,
+          "mean_step_px": 1.1435397144760004
+        },
+        {
+          "frame": 37,
+          "mean_step_px": 1.1432532067011978
+        }
+      ],
+      "mean_accel_px": [
+        {
+          "frame": 49,
+          "mean_accel_px": 1.0730013680221189
+        },
+        {
+          "frame": 48,
+          "mean_accel_px": 1.0573052084377008
+        },
+        {
+          "frame": 52,
+          "mean_accel_px": 0.964473792852446
+        },
+        {
+          "frame": 53,
+          "mean_accel_px": 0.8831759907646918
+        },
+        {
+          "frame": 51,
+          "mean_accel_px": 0.871635883873182
+        },
+        {
+          "frame": 44,
+          "mean_accel_px": 0.8682019345595132
+        },
+        {
+          "frame": 56,
+          "mean_accel_px": 0.842162544762582
+        },
+        {
+          "frame": 50,
+          "mean_accel_px": 0.833771007709158
+        },
+        {
+          "frame": 45,
+          "mean_accel_px": 0.8252695529470642
+        },
+        {
+          "frame": 41,
+          "mean_accel_px": 0.8202770982273722
+        }
+      ],
+      "reversal_fraction": [
+        {
+          "frame": 62,
+          "reversal_fraction": 0.08614232209737828
+        },
+        {
+          "frame": 63,
+          "reversal_fraction": 0.045454545454545456
+        },
+        {
+          "frame": 64,
+          "reversal_fraction": 0.022388059701492536
+        },
+        {
+          "frame": 45,
+          "reversal_fraction": 0.021052631578947368
+        },
+        {
+          "frame": 44,
+          "reversal_fraction": 0.02054794520547945
+        },
+        {
+          "frame": 65,
+          "reversal_fraction": 0.015209125475285171
+        },
+        {
+          "frame": 72,
+          "reversal_fraction": 0.011673151750972763
+        },
+        {
+          "frame": 61,
+          "reversal_fraction": 0.011320754716981131
+        },
+        {
+          "frame": 43,
+          "reversal_fraction": 0.010416666666666666
+        },
+        {
+          "frame": 49,
+          "reversal_fraction": 0.010135135135135136
+        }
+      ],
+      "knn_log_distortion": [
+        {
+          "frame": 57,
+          "knn_log_distortion": 0.9373365750535002
+        },
+        {
+          "frame": 56,
+          "knn_log_distortion": 0.9263076461721884
+        },
+        {
+          "frame": 55,
+          "knn_log_distortion": 0.9127228126527702
+        },
+        {
+          "frame": 58,
+          "knn_log_distortion": 0.9127228126527702
+        },
+        {
+          "frame": 54,
+          "knn_log_distortion": 0.8895023909838876
+        },
+        {
+          "frame": 59,
+          "knn_log_distortion": 0.8834054754835133
+        },
+        {
+          "frame": 60,
+          "knn_log_distortion": 0.8757687536686041
+        },
+        {
+          "frame": 61,
+          "knn_log_distortion": 0.8649665986540096
+        },
+        {
+          "frame": 53,
+          "knn_log_distortion": 0.8611827490974502
+        },
+        {
+          "frame": 62,
+          "knn_log_distortion": 0.8538666995621834
+        }
+      ],
+      "visibility_churn": [
+        {
+          "frame": 20,
+          "visibility_churn": 0.20757363253856942
+        },
+        {
+          "frame": 24,
+          "visibility_churn": 0.20476858345021037
+        },
+        {
+          "frame": 23,
+          "visibility_churn": 0.19775596072931276
+        },
+        {
+          "frame": 25,
+          "visibility_churn": 0.19635343618513323
+        },
+        {
+          "frame": 27,
+          "visibility_churn": 0.19214586255259467
+        },
+        {
+          "frame": 18,
+          "visibility_churn": 0.18934081346423562
+        },
+        {
+          "frame": 16,
+          "visibility_churn": 0.18513323983169705
+        },
+        {
+          "frame": 17,
+          "visibility_churn": 0.18513323983169705
+        },
+        {
+          "frame": 21,
+          "visibility_churn": 0.18513323983169705
+        },
+        {
+          "frame": 30,
+          "visibility_churn": 0.18513323983169705
+        }
+      ]
+    },
+    "selected_frames": {
+      "32": {
+        "frame": 32,
+        "mean_step_px": 1.0534515504886115,
+        "median_step_px": 0.8912639472260184,
+        "mean_accel_px": 0.6169461397838594,
+        "reversal_fraction": 0.0,
+        "knn_log_distortion": 0.2288267145890475,
+        "visible_fraction": 0.6171107994389902,
+        "visibility_churn": 0.17251051893408134
+      },
+      "36": {
+        "frame": 36,
+        "mean_step_px": 1.1164326420250115,
+        "median_step_px": 0.6267365771655076,
+        "mean_accel_px": 0.7900589704333966,
+        "reversal_fraction": 0.0,
+        "knn_log_distortion": 0.2960677943659833,
+        "visible_fraction": 0.5778401122019635,
+        "visibility_churn": 0.15427769985974754
+      },
+      "40": {
+        "frame": 40,
+        "mean_step_px": 1.2989715249607978,
+        "median_step_px": 0.18009422816207776,
+        "mean_accel_px": 0.8167204907394705,
+        "reversal_fraction": 0.0,
+        "knn_log_distortion": 0.40629390516193714,
+        "visible_fraction": 0.5511921458625526,
+        "visibility_churn": 0.12622720897615708
+      },
+      "44": {
+        "frame": 44,
+        "mean_step_px": 1.0463383155766244,
+        "median_step_px": 0.001373291015625,
+        "mean_accel_px": 0.8682019345595132,
+        "reversal_fraction": 0.02054794520547945,
+        "knn_log_distortion": 0.5436337936504954,
+        "visible_fraction": 0.5189340813464236,
+        "visibility_churn": 0.11921458625525946
+      },
+      "48": {
+        "frame": 48,
+        "mean_step_px": 1.4107724330696463,
+        "median_step_px": 0.0013427734375,
+        "mean_accel_px": 1.0573052084377008,
+        "reversal_fraction": 0.006802721088435374,
+        "knn_log_distortion": 0.6803127134251842,
+        "visible_fraction": 0.514726507713885,
+        "visibility_churn": 0.11360448807854137
+      },
+      "52": {
+        "frame": 52,
+        "mean_step_px": 1.1366010767690142,
+        "median_step_px": 0.0,
+        "mean_accel_px": 0.964473792852446,
+        "reversal_fraction": 0.0,
+        "knn_log_distortion": 0.8118126000285435,
+        "visible_fraction": 0.4796633941093969,
+        "visibility_churn": 0.12201963534361851
+      },
+      "56": {
+        "frame": 56,
+        "mean_step_px": 0.7857927376157194,
+        "median_step_px": 0.0,
+        "mean_accel_px": 0.842162544762582,
+        "reversal_fraction": 0.0,
+        "knn_log_distortion": 0.9263076461721884,
+        "visible_fraction": 0.4838709677419355,
+        "visibility_churn": 0.11360448807854137
+      },
+      "60": {
+        "frame": 60,
+        "mean_step_px": 0.3217790490975778,
+        "median_step_px": 0.0,
+        "mean_accel_px": 0.5443140078367493,
+        "reversal_fraction": 0.0037593984962406013,
+        "knn_log_distortion": 0.8757687536686041,
+        "visible_fraction": 0.4726507713884993,
+        "visibility_churn": 0.11220196353436185
+      }
+    }
+  },
+  "santa_visibility": {
+    "bridge_shape": [
+      81,
+      1277
+    ],
+    "bridge_true_fraction": 1.0,
+    "bridge_all_true": true,
+    "per_frame_true_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "candidate_assets": [
+      {
+        "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_visibility_contract.pt",
+        "arrays": [
+          {
+            "name": "root.frame_ids",
+            "shape": [
+              81
+            ],
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 80.0
+          },
+          {
+            "name": "root.simulation_steps",
+            "shape": [
+              81
+            ],
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 800.0
+          },
+          {
+            "name": "root.point_id",
+            "shape": [
+              28264
+            ],
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 28263.0
+          },
+          {
+            "name": "root.source_visible",
+            "shape": [
+              28264
+            ],
+            "dtype": "bool",
+            "min": 0.0,
+            "max": 1.0,
+            "true_fraction": 0.6766911972827625
+          },
+          {
+            "name": "root.aligned_projection_valid",
+            "shape": [
+              81,
+              28264
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          },
+          {
+            "name": "root.aligned_visible",
+            "shape": [
+              81,
+              28264
+            ],
+            "dtype": "bool",
+            "min": 0.0,
+            "max": 1.0,
+            "true_fraction": 0.34876761609236373
+          },
+          {
+            "name": "root.source_and_aligned_visible",
+            "shape": [
+              81,
+              28264
+            ],
+            "dtype": "bool",
+            "min": 0.0,
+            "max": 1.0,
+            "true_fraction": 0.2649607929469237
+          },
+          {
+            "name": "root.visible_point_counts",
+            "shape": [
+              81
+            ],
+            "dtype": "int64",
+            "min": 6182.0,
+            "max": 19126.0
+          },
+          {
+            "name": "root.source_and_visible_point_counts",
+            "shape": [
+              81
+            ],
+            "dtype": "int64",
+            "min": 4589.0,
+            "max": 19126.0
+          },
+          {
+            "name": "root.raster_index_by_frame",
+            "shape": [
+              81
+            ],
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 80.0
+          },
+          {
+            "name": "root.old_future_index_by_frame",
+            "shape": [
+              81
+            ],
+            "dtype": "int64",
+            "min": -1.0,
+            "max": 79.0
+          }
+        ]
+      },
+      {
+        "path": "/workspace/DeformTransport/server_runs/wan_move_formal/20260810_124150__v3d_mechanism_and_sandhouse_heldout_seed0/artifacts/santa/santa_v3d_visibility.npy",
+        "arrays": [
+          {
+            "name": "root",
+            "shape": [
+              1,
+              81,
+              1277
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "path": "/workspace/DeformTransport/server_runs/wan_move_formal/20260810_124331__v3d_mechanism_and_sandhouse_heldout_seed0/artifacts/santa/santa_v3d_visibility.npy",
+        "arrays": [
+          {
+            "name": "root",
+            "shape": [
+              1,
+              81,
+              1277
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "path": "/workspace/DeformTransport/server_runs/wan_move_formal/20260810_124701__v3d_mechanism_and_sandhouse_heldout_seed0/artifacts/santa/santa_v3d_visibility.npy",
+        "arrays": [
+          {
+            "name": "root",
+            "shape": [
+              1,
+              81,
+              1277
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "path": "/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_053022__v3s_v3b_v3c_v3d_v3e_correct_seed0/artifacts/santa/santa_v3s_visibility.npy",
+        "arrays": [
+          {
+            "name": "root",
+            "shape": [
+              1,
+              81,
+              1196
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "path": "/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_053404__v3s_v3b_v3c_v3d_v3e_correct_seed0/artifacts/santa/santa_v3s_visibility.npy",
+        "arrays": [
+          {
+            "name": "root",
+            "shape": [
+              1,
+              81,
+              1196
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "path": "/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/artifacts/santa/santa_v3s_visibility.npy",
+        "arrays": [
+          {
+            "name": "root",
+            "shape": [
+              1,
+              81,
+              1196
+            ],
+            "dtype": "bool",
+            "min": 1.0,
+            "max": 1.0,
+            "true_fraction": 1.0
+          }
+        ]
+      }
+    ]
+  },
+  "santa_overlay": "/workspace/DeformTransport/server_runs/diagnostics/20260811_002817__final_temporal_pnoise_phase01/santa_visibility_overlay.png"
+}

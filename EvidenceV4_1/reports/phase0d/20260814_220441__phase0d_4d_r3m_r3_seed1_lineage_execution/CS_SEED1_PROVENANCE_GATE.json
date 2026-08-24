@@ -1,0 +1,23 @@
+{
+  "CS_PROVENANCE_GATE": "PASS",
+  "planned_manifest": "SEED1_CS_PLANNED_MANIFEST.json",
+  "lineage_audit": "SEED0_TO_SEED1_ARM_LINEAGE_AUDIT.json",
+  "phase0b_identity_shuffle_evidence": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/report.json",
+  "CS_SEED0_TO_SEED1_UNEXPECTED_DIFFS": [],
+  "CS_SHUFFLE_PERMUTATION_SHA_SEED0_EQ_SEED1": true,
+  "CS_SHUFFLED_TRACKS_SHA_SEED0_EQ_SEED1": true,
+  "PREVIEW_SHA_SEED0_EQ_SEED1": true,
+  "SEED1_THREE_ARM_SHARED_EPSILON": true,
+  "CS_SHUFFLED_TRACKS_PATH": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/santa_material_tracks_identity_shuffled_seed0.npy",
+  "CS_SHUFFLED_TRACKS_SHA": "248c85b701e28d8bc417a0bb5dcd88d3f648d927abd2ffd169dc74dcb751d2cb",
+  "CS_SHUFFLE_PERMUTATION_SHA": "c8f5bd566b4cad1825c08863461f0672beee50959a06588d8424b8c8653de471",
+  "formal_diffusion_seed": 1,
+  "K": 1257,
+  "transport_variant": "v3d",
+  "start_index": 15,
+  "actual_sigma": 0.8329627513885498,
+  "actual_timestep": 832,
+  "effective_denoise_steps": 25,
+  "decoded_output_geometry": [832, 464],
+  "latent_geometry": [58, 104]
+}

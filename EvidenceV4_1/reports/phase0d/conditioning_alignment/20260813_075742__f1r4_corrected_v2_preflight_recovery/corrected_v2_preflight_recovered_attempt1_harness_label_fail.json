@@ -1,0 +1,17 @@
+{
+  "RW_CORRECTED_V2_PREFLIGHT": "FAIL",
+  "DTFULL_CORRECTED_V2_PREFLIGHT": "FAIL",
+  "RW_FIRST_FAIL_PREDICATE": "ids_container",
+  "DTFULL_FIRST_FAIL_PREDICATE": "ids_container",
+  "SHARED_FIRST_FAIL": true,
+  "rw_fail_predicates": [
+    "ids_container",
+    "tracks_container",
+    "visibility_container"
+  ],
+  "dtfull_fail_predicates": [
+    "ids_container",
+    "tracks_container",
+    "visibility_container"
+  ]
+}

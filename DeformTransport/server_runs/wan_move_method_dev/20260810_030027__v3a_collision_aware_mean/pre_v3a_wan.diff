@@ -1,0 +1,13 @@
+diff --git a/wan/wan_move.py b/wan/wan_move.py
+index 8d59630..4e3c250 100644
+--- a/wan/wan_move.py
++++ b/wan/wan_move.py
+@@ -274,6 +274,8 @@ class WanMove:
+         ])[0]
+  
+         # Edit y to enable motion control
++        # DeformTransport formal protocol: freeze trajectory-internal RNG
++        torch.manual_seed(seed)
+         track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)
+         track_feats = track_feats.permute(3, 0, 1, 2)
+         edited_y = replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]

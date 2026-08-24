@@ -1,0 +1,31 @@
+Persistent-Noise Phase02 pre-generation route decision
+
+A0:
+Original RealWonder structured noise.
+
+A1:
+Full global persistent material noise.
+Marginal legality: PASS on Santa and Tree.
+Temporal compatibility: FAIL on Santa and Tree.
+Decision: STOP before GPU generation.
+Status: diagnostic only.
+
+A2:
+Native-block-3 reanchored persistent material noise.
+Marginal legality: PASS on Santa and Tree.
+Temporal compatibility: PASS on Santa and Tree.
+Decision: PROMOTE to formal GPU generation.
+
+Pre-registered rho1 compatibility gate:
+P95 absolute delta <= 0.10
+MAX absolute delta <= 0.15
+
+Santa:
+A1 P95=0.201869 MAX=0.205556 FAIL
+A2 P95=0.080022 MAX=0.145804 PASS
+
+Tree:
+A1 P95=0.128902 MAX=0.150758 FAIL
+A2 P95=0.093890 MAX=0.095215 PASS
+
+No thresholds were changed after observing results.

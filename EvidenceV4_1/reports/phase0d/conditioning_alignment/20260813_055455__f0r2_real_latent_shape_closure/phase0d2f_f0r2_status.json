@@ -1,0 +1,2 @@
+{
+  "phase":"Phase0D-2F/F0-R2", "n1277_formal_contamination":false, "real_vae_latent_shape":"[16,21,60,104] (FORMAL_CODE_EXACT; runtime probe import-blocked)", "real_transport_y_shape":"[1,16,21,60,104]", "real_transport_latent_hw":"60x104", "final_output_464_cause":"UNRESOLVED_NONBLOCKING_FOR_EVALUATION", "status":"PASS_WITH_OUTPUT_ORIGIN_LIMITATION", "phase0d2f_f0_recovered_status":"PASS_WITH_OUTPUT_ORIGIN_LIMITATION", "proceed_to_f1":true}

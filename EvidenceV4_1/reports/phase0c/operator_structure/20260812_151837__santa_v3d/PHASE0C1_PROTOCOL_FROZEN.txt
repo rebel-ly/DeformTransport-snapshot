@@ -1,0 +1,284 @@
+当前阶段：
+
+Phase0C-1 — Operator Structural Intervention Audit
+
+本阶段是 DeformTransport Evidence V4.1 的新阶段。
+
+Phase0B 已正式 CLOSED：
+
+PHASE0B_STATUS = PASS
+CAUSAL_CONTRACT = PASS
+PROCEED_TO_PHASE0C = True
+
+禁止重新运行 Phase0B。
+
+==================================================
+1. 核心问题
+==================================================
+
+审计 patched Wan-Move V3D transport operator 的结构性干预：
+
+1. future latent 各时间 slot 写入多少 target cells；
+2. 每个 target cell 有多少 material carriers 竞争；
+3. collision cell 数量与 multiplicity 分布；
+4. collision winner material ID；
+5. depth arbitration；
+6. 1257 条 material carriers 中多少真正产生有效 contribution；
+7. 每个 source identity 被写入 future latent 的次数；
+8. Correct / Identity-Shuffled 是否具有完全相同的：
+   - target support
+   - collision structure
+   - winner material IDs
+   - depth ordering
+   - per-slot write counts
+   - carrier contribution counts
+9. operator intervention 是否只在 source feature value 层面不同。
+
+==================================================
+2. Formal evidence input
+==================================================
+
+优先复用：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/
+functional_conditioning/
+20260812_143438__santa_v3d_seed0_import_recovered
+
+以及：
+
+/workspace/DeformTransport/server_runs/new_audit/
+20260811_224005__santa_corrected_v2_aligned_timeline
+
+禁止使用历史 N=1277 Santa bridge。
+
+正式：
+
+N = 1257
+T = 81
+latent temporal slots = 21
+latent H = 60
+latent W = 104
+variant = V3D
+
+==================================================
+3. 禁止事项
+==================================================
+
+禁止：
+
+- GPU generation
+- instantiate WanMove 14B
+- 修改 Wan-Move
+- 修改 DeformTransport
+- 重新 shuffle
+- 换 seed
+- 改 visibility
+- 删除旧 evidence
+- 覆盖 Phase0B artifacts
+- 因结果不好调整 collision rule
+
+本阶段优先 read-only + CPU analysis。
+
+==================================================
+4. 必须分析的结构量
+==================================================
+
+按 latent temporal slot tau=1..20 计算：
+
+A. visible candidate carrier count
+
+B. unique target cell count
+
+C. collision cell count：
+   target cell candidate count > 1
+
+D. collision carrier count：
+   位于 collision cells 中的 carrier 数
+
+E. maximum multiplicity
+
+F. multiplicity histogram：
+   1,2,3,... candidates per target cell
+
+G. selected winner count
+
+H. unique winner material ID count
+
+I. candidate-to-winner retention ratio
+
+J. per-carrier future contribution count：
+   每个 material ID 在20个 future slots 中赢得多少次
+
+K. zero-contribution carrier count
+
+L. source feature reuse count distribution
+
+==================================================
+5. Correct vs Identity-Shuffled exact equivalence
+==================================================
+
+必须逐项比较：
+
+candidate target cells
+candidate multiplicities
+collision cells
+collision multiplicity
+winner material IDs
+winning depth
+per-slot write support
+per-carrier winner counts
+zero-contribution carrier set
+
+预注册要求：
+
+这些结构变量必须 Correct/Shuffled exact equal。
+
+任何不一致：
+
+PHASE0C1_STATUS = FAIL
+
+不得自行解释掉。
+
+==================================================
+6. 注意 winner reconstruction
+==================================================
+
+必须严格按照当前 frozen patched trajectory.py
+中 V3D 的真实 arbitration 逻辑重建 winner。
+
+先验证 source SHA：
+
+trajectory.py =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+如果 drift：
+SOURCE_DRIFT
+STOP。
+
+不要凭自己的理解写新的 collision policy。
+
+==================================================
+7. 必须报告的 aggregate
+==================================================
+
+至少输出：
+
+TOTAL_FUTURE_SLOTS = 20
+
+TOTAL_CANDIDATE_ASSIGNMENTS = ...
+TOTAL_UNIQUE_TARGET_WRITES = 9031（如果数据确实如此）
+TOTAL_COLLISION_CELLS = ...
+TOTAL_COLLISION_CARRIERS = ...
+
+GLOBAL_MAX_MULTIPLICITY = ...
+
+CARRIERS_N = 1257
+CARRIERS_WITH_ANY_CONTRIBUTION = ...
+ZERO_CONTRIBUTION_CARRIERS = ...
+
+MEAN_WIN_COUNT_PER_CARRIER = ...
+P50_WIN_COUNT = ...
+P95_WIN_COUNT = ...
+MAX_WIN_COUNT = ...
+
+以及每个 tau：
+
+tau
+candidate_count
+unique_target_cells
+collision_cells
+max_multiplicity
+
+==================================================
+8. Correct/Shuffled invariants
+==================================================
+
+最后必须输出：
+
+TARGET_CELL_STRUCTURE_MISMATCHES = ...
+COLLISION_STRUCTURE_MISMATCHES = ...
+WINNER_ID_MISMATCHES = ...
+WINNING_DEPTH_MISMATCHES = ...
+PER_CARRIER_CONTRIBUTION_MISMATCHES = ...
+ZERO_CONTRIBUTION_SET_EQUAL = True/False
+
+==================================================
+9. 输出目录
+==================================================
+
+创建 timestamped：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0c/
+operator_structure/
+<TIMESTAMP>__santa_v3d
+
+至少生成：
+
+PHASE0C1_PROTOCOL_FROZEN.txt
+run_phase0c1.py
+operator_structure_audit.json
+per_slot_statistics.csv
+carrier_contribution_statistics.csv
+PHASE0C1_SUMMARY.md
+phase0c1_status.json
+SHA256SUMS.txt
+
+==================================================
+10. PHASE0C1_SUMMARY.md
+==================================================
+
+必须包含：
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+11. 最终 stdout
+==================================================
+
+最后打印：
+
+===== PHASE0C-1 OPERATOR STRUCTURAL AUDIT =====
+
+OUT = ...
+
+N = 1257
+FUTURE_LATENT_SLOTS = 20
+
+TOTAL_CANDIDATE_ASSIGNMENTS = ...
+TOTAL_UNIQUE_TARGET_WRITES = ...
+
+TOTAL_COLLISION_CELLS = ...
+TOTAL_COLLISION_CARRIERS = ...
+GLOBAL_MAX_MULTIPLICITY = ...
+
+CARRIERS_WITH_ANY_CONTRIBUTION = ...
+ZERO_CONTRIBUTION_CARRIERS = ...
+
+MEAN_WIN_COUNT_PER_CARRIER = ...
+P50_WIN_COUNT = ...
+P95_WIN_COUNT = ...
+MAX_WIN_COUNT = ...
+
+TARGET_CELL_STRUCTURE_MISMATCHES = ...
+COLLISION_STRUCTURE_MISMATCHES = ...
+WINNER_ID_MISMATCHES = ...
+WINNING_DEPTH_MISMATCHES = ...
+PER_CARRIER_CONTRIBUTION_MISMATCHES = ...
+ZERO_CONTRIBUTION_SET_EQUAL = ...
+
+PHASE0C1_STATUS = PASS/FAIL/ERROR
+
+然后 STOP。
+
+不要进入 0C-2。

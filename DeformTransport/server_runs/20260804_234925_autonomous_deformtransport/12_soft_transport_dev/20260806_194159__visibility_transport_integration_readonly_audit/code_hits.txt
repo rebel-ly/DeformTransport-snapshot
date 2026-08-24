@@ -1,0 +1,1470 @@
+
+================================================================
+FILE: deform_transport/soft_transport.py
+================================================================
+   172	        point_features[source_sample_valid] = (
+   173	            numerator[source_sample_valid]
+   174	            / denominator[source_sample_valid]
+   175	            .to(source_grid.dtype)
+   176	            .unsqueeze(1)
+   177	        )
+   178	
+   179	    return point_features, source_sample_valid
+   180	
+   181	
+   182	def soft_point_transport(
+   183	    source_grid: torch.Tensor,
+   184	    source_uv: torch.Tensor,
+   185	    target_uv: torch.Tensor,
+   186	    source_visible: torch.Tensor,
+   187	    source_valid: torch.Tensor,
+   188	    target_valid: torch.Tensor,
+   189	    point_id: torch.Tensor,
+   190	    *,
+   191	    object_id: torch.Tensor | None = None,
+   192	    mode: TransportMode = "correct",
+   193	    seed: int = 0,
+   194	    eps: float = 1e-8,
+   195	) -> dict[str, torch.Tensor | str | int | float]:
+   196	    """Transport point features using normalized bilinear forward splatting.
+   197	
+   198	    Source features are bilinearly sampled from the initial latent grid.
+   199	    Each valid target point contributes to up to four neighboring target cells.
+   200	    Contributions are normalized by their accumulated spatial weights.
+   201	
+   202	    This first implementation deliberately excludes depth, occlusion confidence,
+--
+   218	
+   219	    channel_count, height, width = source_grid.shape
+   220	    device = source_grid.device
+   221	
+   222	    source_uv = _as_device_tensor(
+   223	        source_uv,
+   224	        device=device,
+   225	        dtype=torch.float32,
+   226	    )
+   227	    target_uv = _as_device_tensor(
+   228	        target_uv,
+   229	        device=device,
+   230	        dtype=torch.float32,
+   231	    )
+   232	    source_visible = _as_device_tensor(
+   233	        source_visible,
+   234	        device=device,
+   235	        dtype=torch.bool,
+   236	    )
+   237	    source_valid = _as_device_tensor(
+   238	        source_valid,
+   239	        device=device,
+   240	        dtype=torch.bool,
+   241	    )
+   242	    target_valid = _as_device_tensor(
+   243	        target_valid,
+   244	        device=device,
+   245	        dtype=torch.bool,
+   246	    )
+   247	    point_id = _as_device_tensor(
+   248	        point_id,
+   249	        device=device,
+   250	        dtype=torch.long,
+   251	    )
+   252	
+   253	    if source_uv.ndim != 2 or source_uv.shape[-1] != 2:
+   254	        raise ValueError("source_uv must have shape [N, 2]")
+   255	
+   256	    point_count = source_uv.shape[0]
+   257	
+   258	    if target_uv.ndim != 3 or target_uv.shape[1:] != (point_count, 2):
+   259	        raise ValueError("target_uv must have shape [T, N, 2]")
+   260	
+   261	    frame_count = target_uv.shape[0]
+   262	
+   263	    if source_visible.shape != (point_count,):
+   264	        raise ValueError("source_visible must have shape [N]")
+   265	    if source_valid.shape != (point_count,):
+   266	        raise ValueError("source_valid must have shape [N]")
+   267	    if target_valid.shape != (frame_count, point_count):
+   268	        raise ValueError("target_valid must have shape [T, N]")
+   269	    if point_id.shape != (point_count,):
+   270	        raise ValueError("point_id must have shape [N]")
+   271	    if torch.unique(point_id).numel() != point_count:
+   272	        raise ValueError("point_id must contain N unique identities")
+   273	
+   274	    if object_id is None:
+   275	        object_id = torch.zeros(
+   276	            point_count,
+   277	            dtype=torch.long,
+   278	            device=device,
+   279	        )
+   280	    else:
+   281	        object_id = _as_device_tensor(
+   282	            object_id,
+   283	            device=device,
+   284	            dtype=torch.long,
+   285	        )
+   286	        if object_id.shape != (point_count,):
+   287	            raise ValueError("object_id must have shape [N]")
+   288	
+   289	    source_continuous_valid = _validate_continuous_uv(
+   290	        source_uv,
+   291	        height=height,
+   292	        width=width,
+   293	    )
+   294	
+   295	    eligible_source = (
+   296	        source_visible
+   297	        & source_valid
+   298	        & source_continuous_valid
+   299	    )
+   300	
+   301	    correct_point_features, source_sample_valid = _sample_source_bilinear(
+   302	        source_grid,
+   303	        source_uv,
+   304	        eligible_source,
+   305	    )
+   306	
+   307	    if mode == "shuffled":
+   308	        permutation = make_objectwise_feature_permutation(
+   309	            source_sample_valid.detach().cpu(),
+   310	            object_id.detach().cpu(),
+   311	            seed=seed,
+--
+   316	            point_count,
+   317	            dtype=torch.long,
+   318	            device=device,
+   319	        )
+   320	        point_features = correct_point_features
+   321	
+   322	    target_continuous_valid = _validate_continuous_uv(
+   323	        target_uv,
+   324	        height=height,
+   325	        width=width,
+   326	    )
+   327	
+   328	    valid_point_mask = (
+   329	        source_sample_valid.unsqueeze(0)
+   330	        & target_valid
+   331	        & target_continuous_valid
+   332	    )
+   333	
+   334	    target_cells, target_weights, target_neighbor_valid = (
+   335	        _bilinear_neighbors(
+   336	            target_uv,
+   337	            height=height,
+   338	            width=width,
+   339	        )
+   340	    )
+   341	
+   342	    flat_cell_count = height * width
+   343	
+   344	    transported_frames = []
+--
+   346	    count_frames = []
+   347	    weight_frames = []
+   348	
+   349	    for frame_index in range(frame_count):
+   350	        feature_sum = torch.zeros(
+   351	            (channel_count, flat_cell_count),
+   352	            dtype=source_grid.dtype,
+   353	            device=device,
+   354	        )
+   355	        weight_sum = torch.zeros(
+   356	            (1, flat_cell_count),
+   357	            dtype=torch.float32,
+   358	            device=device,
+   359	        )
+   360	        contribution_count = torch.zeros(
+   361	            (1, flat_cell_count),
+   362	            dtype=torch.long,
+   363	            device=device,
+   364	        )
+   365	
+   366	        for neighbor_index in range(4):
+   367	            valid = (
+   368	                valid_point_mask[frame_index]
+   369	                & target_neighbor_valid[frame_index, :, neighbor_index]
+   370	            )
+   371	
+   372	            if not bool(valid.any()):
+   373	                continue
+   374	
+--
+   391	            )
+   392	
+   393	            feature_sum.scatter_add_(
+   394	                1,
+   395	                linear_index.unsqueeze(0).expand(channel_count, -1),
+   396	                weighted_features,
+   397	            )
+   398	
+   399	            weight_sum.scatter_add_(
+   400	                1,
+   401	                linear_index.unsqueeze(0),
+   402	                weights.unsqueeze(0),
+   403	            )
+   404	
+   405	            contribution_count.scatter_add_(
+   406	                1,
+   407	                linear_index.unsqueeze(0),
+   408	                torch.ones(
+   409	                    (1, linear_index.numel()),
+   410	                    dtype=torch.long,
+   411	                    device=device,
+   412	                ),
+   413	            )
+   414	
+   415	        transport_mask = weight_sum > eps
+   416	
+   417	        normalized = feature_sum / weight_sum.clamp_min(eps).to(
+   418	            source_grid.dtype
+   419	        )
+   420	
+   421	        normalized = torch.where(
+   422	            transport_mask.expand_as(normalized),
+   423	            normalized,
+   424	            torch.zeros_like(normalized),
+   425	        )
+   426	
+   427	        transported_frames.append(
+   428	            normalized.reshape(channel_count, height, width)
+   429	        )
+   430	        mask_frames.append(
+   431	            transport_mask.reshape(1, height, width)
+   432	        )
+   433	        count_frames.append(
+   434	            contribution_count.reshape(1, height, width)
+   435	        )
+   436	        weight_frames.append(
+   437	            weight_sum.reshape(1, height, width)
+   438	        )
+   439	
+   440	    result: dict[str, torch.Tensor | str | int | float] = {
+   441	        "mode": mode,
+   442	        "seed": int(seed),
+   443	        "eps": float(eps),
+   444	        "point_features": point_features,
+   445	        "transported_grid": torch.stack(transported_frames),
+   446	        "transport_mask": torch.stack(mask_frames),
+   447	        "contribution_count": torch.stack(count_frames),
+   448	        "transport_weight": torch.stack(weight_frames),
+   449	        "valid_point_mask": valid_point_mask,
+   450	        "source_point_mask": source_sample_valid,
+   451	        "permutation": permutation,
+   452	    }
+   453	
+   454	    if not bool(torch.isfinite(result["point_features"]).all()):
+   455	        raise RuntimeError("soft transport produced non-finite point features")
+   456	    if not bool(torch.isfinite(result["transported_grid"]).all()):
+   457	        raise RuntimeError("soft transport produced NaN or Inf")
+   458	    if not bool(torch.isfinite(result["transport_weight"]).all()):
+   459	        raise RuntimeError("soft transport produced non-finite weights")
+   460	
+   461	    return result
+
+================================================================
+FILE: deform_transport/transport_ready.py
+================================================================
+    78	    bindings_by_object = []
+    79	    object_point_ranges = []
+    80	    point_offset = 0
+    81	
+    82	    for object_index, object_state in enumerate(objects):
+    83	        object_id = int(object_state["object_id"])
+    84	        if object_id != object_index:
+    85	            raise ValueError(
+    86	                "transport flattening requires object list order to match object_id"
+    87	            )
+    88	        point_count = int(object_state["points_3d"].shape[1])
+    89	        points_3d.append(_plain_cpu(object_state["points_3d"]))
+    90	        points_uv.append(_plain_cpu(object_state["points_uv"]))
+    91	        depth.append(_plain_cpu(object_state["depth"]))
+    92	        render_valid.append(_plain_cpu(object_state["projection_valid"]))
+    93	        source_points_3d.append(_plain_cpu(object_state["initial_points_3d"]))
+    94	        source_points_uv.append(_plain_cpu(object_state["initial_points_uv"]))
+    95	        source_depth.append(_plain_cpu(object_state["initial_depth"]))
+    96	        source_render_valid.append(
+    97	            _plain_cpu(object_state["initial_projection_valid"])
+    98	        )
+    99	        object_ids.append(torch.full((point_count,), object_id, dtype=torch.long))
+   100	        material_types.append(str(object_state["material_type"]))
+   101	        binding = object_state.get("binding_particle_indices")
+   102	        bindings_by_object.append(None if binding is None else _plain_cpu(binding))
+   103	        object_point_ranges.append(
+   104	            {
+   105	                "object_id": object_id,
+   106	                "start": point_offset,
+   107	                "end": point_offset + point_count,
+   108	            }
+   109	        )
+   110	        point_offset += point_count
+   111	
+--
+   125	        "depth": torch.cat(depth, dim=1),
+   126	        "render_valid": torch.cat(render_valid, dim=1),
+   127	        "source_points_3d": torch.cat(source_points_3d, dim=0),
+   128	        "source_points_uv": torch.cat(source_points_uv, dim=0),
+   129	        "source_depth": torch.cat(source_depth, dim=0),
+   130	        "source_render_valid": torch.cat(source_render_valid, dim=0),
+   131	        "object_id": torch.cat(object_ids, dim=0),
+   132	        "material_type": material_types,
+   133	        "point_particle_binding": flattened_binding,
+   134	        "point_particle_binding_by_object": bindings_by_object,
+   135	        "object_point_ranges": object_point_ranges,
+   136	    }
+   137	
+   138	
+   139	def build_transport_ready(
+   140	    trajectory: Mapping[str, Any],
+   141	    source_raster_point_indices: torch.Tensor,
+   142	    *,
+   143	    case_name: str,
+   144	    source_trajectory_path: str | Path | None = None,
+   145	    initial_rgb_path: str | Path | None = None,
+   146	    coarse_rgb_paths: Sequence[str | Path] = (),
+   147	    flow_path: str | Path | None = None,
+   148	    source_raster_path: str | Path | None = None,
+   149	) -> dict[str, Any]:
+   150	    """Build the flattened, source-visible transport contract.
+   151	
+   152	    ``source_raster_point_indices`` may be the initial ``[H, W]`` raster or the
+   153	    saved ``[T, H, W]`` stack. In the latter case only frame zero is the visual
+--
+   172	        raise ValueError(
+   173	            "source_raster_point_indices must have shape [H, W] or [T, H, W]"
+   174	        )
+   175	    selected = source_raster[source_raster >= 0]
+   176	    if selected.numel() and int(selected.max()) >= point_count:
+   177	        raise ValueError("source raster contains a point ID outside the trajectory")
+   178	    raster_visible_ids = torch.unique(selected, sorted=True)
+   179	
+   180	    source_latent, source_video, source_crop_valid = map_image_uv_to_latent(
+   181	        flat["source_points_uv"]
+   182	    )
+   183	    future_latent, future_video, future_crop_valid = _map_frames_to_latent(
+   184	        flat["points_uv"]
+   185	    )
+   186	    source_valid = flat["source_render_valid"] & source_crop_valid
+   187	    projection_valid = flat["render_valid"] & future_crop_valid
+   188	    source_visible = torch.zeros(point_count, dtype=torch.bool)
+   189	    source_visible[raster_visible_ids] = True
+   190	    source_visible &= source_valid
+   191	    source_visible_point_ids = point_id[source_visible]
+   192	
+   193	    if coarse_rgb_paths and len(coarse_rgb_paths) != frame_count:
+   194	        raise ValueError(
+   195	            f"expected {frame_count} coarse RGB paths, got {len(coarse_rgb_paths)}"
+   196	        )
+   197	
+   198	    def path_string(path: str | Path | None) -> str | None:
+   199	        return str(Path(path).resolve()) if path is not None else None
+   200	
+   201	    state = {
+   202	        "format_version": TRANSPORT_READY_FORMAT_VERSION,
+   203	        "case_name": str(case_name),
+   204	        "coordinate_system": {
+   205	            "points_3d": trajectory.get("coordinate_system"),
+--
+   209	        },
+   210	        "frame_ids": _plain_cpu(trajectory["frame_ids"]).to(torch.long),
+   211	        "simulation_steps": _plain_cpu(trajectory["simulation_steps"]).to(
+   212	            torch.long
+   213	        ),
+   214	        "point_id": point_id,
+   215	        "object_id": flat["object_id"],
+   216	        "material_type": flat["material_type"],
+   217	        "object_point_ranges": flat["object_point_ranges"],
+   218	        "points_3d": flat["points_3d"],
+   219	        "points_2d_render": flat["points_uv"],
+   220	        "points_2d_video": future_video,
+   221	        "points_2d_latent": future_latent,
+   222	        "depth": flat["depth"],
+   223	        "render_projection_valid": flat["render_valid"],
+   224	        "projection_valid": projection_valid,
+   225	        "source_points_3d": flat["source_points_3d"],
+   226	        "source_points_2d_render": flat["source_points_uv"],
+   227	        "source_points_2d_video": source_video,
+   228	        "source_points_2d_latent": source_latent,
+   229	        "source_depth": flat["source_depth"],
+   230	        "source_render_projection_valid": flat["source_render_valid"],
+   231	        "source_valid": source_valid,
+   232	        "source_visible": source_visible,
+   233	        "source_visible_point_ids": source_visible_point_ids,
+   234	        "source_raster_visible_point_ids": raster_visible_ids,
+   235	        "point_particle_binding": flat["point_particle_binding"],
+   236	        "point_particle_binding_by_object": flat[
+   237	            "point_particle_binding_by_object"
+   238	        ],
+   239	        "camera": _plain_structure(trajectory["camera"]),
+   240	        "render_height": RENDER_HEIGHT,
+   241	        "render_width": RENDER_WIDTH,
+   242	        "video_height": VIDEO_HEIGHT,
+   243	        "video_width": VIDEO_WIDTH,
+   244	        "latent_height": LATENT_HEIGHT,
+   245	        "latent_width": LATENT_WIDTH,
+   246	        "paths": {
+   247	            "source_trajectory": path_string(source_trajectory_path),
+   248	            "initial_rgb": path_string(initial_rgb_path),
+   249	            "coarse_rgb_frames": [path_string(path) for path in coarse_rgb_paths],
+   250	            "flow": path_string(flow_path),
+   251	            "source_raster_point_indices": path_string(source_raster_path),
+   252	        },
+   253	    }
+   254	    state = _plain_structure(state)
+   255	    validate_transport_ready(state)
+   256	    return state
+   257	
+   258	
+   259	def _require_tensor(
+   260	    state: Mapping[str, Any],
+   261	    name: str,
+   262	    *,
+   263	    shape: tuple[int, ...],
+   264	    dtype: torch.dtype,
+   265	) -> torch.Tensor:
+   266	    value = state.get(name)
+   267	    if type(value) is not torch.Tensor:
+   268	        raise ValueError(f"{name} must be a plain torch.Tensor")
+   269	    if tuple(value.shape) != shape or value.dtype != dtype:
+   270	        raise ValueError(
+   271	            f"{name} must be {dtype} with shape {shape}, got "
+   272	            f"{value.dtype} {tuple(value.shape)}"
+   273	        )
+   274	    if value.device.type != "cpu":
+   275	        raise ValueError(f"{name} must be stored on CPU")
+   276	    return value
+   277	
+   278	
+   279	def validate_transport_ready(state: Mapping[str, Any]) -> None:
+   280	    """Validate the flattened transport contract and verified crop mapping."""
+   281	
+   282	    if state.get("format_version") != TRANSPORT_READY_FORMAT_VERSION:
+   283	        raise ValueError(
+   284	            f"unsupported transport-ready format: {state.get('format_version')}"
+   285	        )
+   286	    frame_ids = state.get("frame_ids")
+   287	    point_id = state.get("point_id")
+   288	    if type(frame_ids) is not torch.Tensor or frame_ids.ndim != 1:
+   289	        raise ValueError("frame_ids must be a plain 1D tensor")
+   290	    if type(point_id) is not torch.Tensor or point_id.ndim != 1:
+   291	        raise ValueError("point_id must be a plain 1D tensor")
+   292	    frame_count = int(frame_ids.numel())
+   293	    point_count = int(point_id.numel())
+--
+   321	    latent_uv = _require_tensor(
+   322	        state,
+   323	        "points_2d_latent",
+   324	        shape=(frame_count, point_count, 2),
+   325	        dtype=torch.long,
+   326	    )
+   327	    depth = _require_tensor(
+   328	        state,
+   329	        "depth",
+   330	        shape=(frame_count, point_count),
+   331	        dtype=torch.float32,
+   332	    )
+   333	    render_valid = _require_tensor(
+   334	        state,
+   335	        "render_projection_valid",
+   336	        shape=(frame_count, point_count),
+   337	        dtype=torch.bool,
+   338	    )
+   339	    projection_valid = _require_tensor(
+   340	        state,
+   341	        "projection_valid",
+   342	        shape=(frame_count, point_count),
+   343	        dtype=torch.bool,
+   344	    )
+   345	    source_points = _require_tensor(
+   346	        state,
+   347	        "source_points_3d",
+   348	        shape=(point_count, 3),
+   349	        dtype=torch.float32,
+   350	    )
+   351	    source_render_uv = _require_tensor(
+   352	        state,
+   353	        "source_points_2d_render",
+   354	        shape=(point_count, 2),
+   355	        dtype=torch.float32,
+--
+   360	        shape=(point_count, 2),
+   361	        dtype=torch.float32,
+   362	    )
+   363	    source_latent_uv = _require_tensor(
+   364	        state,
+   365	        "source_points_2d_latent",
+   366	        shape=(point_count, 2),
+   367	        dtype=torch.long,
+   368	    )
+   369	    source_depth = _require_tensor(
+   370	        state, "source_depth", shape=(point_count,), dtype=torch.float32
+   371	    )
+   372	    source_render_valid = _require_tensor(
+   373	        state,
+   374	        "source_render_projection_valid",
+   375	        shape=(point_count,),
+   376	        dtype=torch.bool,
+   377	    )
+   378	    source_valid = _require_tensor(
+   379	        state, "source_valid", shape=(point_count,), dtype=torch.bool
+   380	    )
+   381	    source_visible = _require_tensor(
+   382	        state, "source_visible", shape=(point_count,), dtype=torch.bool
+   383	    )
+   384	    source_visible_ids = state.get("source_visible_point_ids")
+   385	    if type(source_visible_ids) is not torch.Tensor or source_visible_ids.dtype != torch.long:
+   386	        raise ValueError("source_visible_point_ids must be a plain int64 tensor")
+   387	    if source_visible_ids.ndim != 1:
+   388	        raise ValueError("source_visible_point_ids must be one-dimensional")
+   389	    if source_visible_ids.numel() and (
+   390	        int(source_visible_ids.min()) < 0
+   391	        or int(source_visible_ids.max()) >= point_count
+   392	    ):
+   393	        raise ValueError("source_visible_point_ids contains an out-of-range ID")
+   394	    if not torch.equal(source_visible_ids, point_id[source_visible]):
+   395	        raise ValueError("source_visible IDs and mask disagree")
+   396	    if bool((source_visible & ~source_valid).any()):
+   397	        raise ValueError("source_visible must be a subset of source_valid")
+   398	
+   399	    expected_source_latent, _, source_crop_valid = map_image_uv_to_latent(
+   400	        source_render_uv
+   401	    )
+   402	    expected_future_latent, _, future_crop_valid = _map_frames_to_latent(render_uv)
+   403	    if not torch.equal(source_latent_uv, expected_source_latent):
+   404	        raise ValueError("source latent coordinates do not match the verified mapping")
+   405	    if not torch.equal(latent_uv, expected_future_latent):
+   406	        raise ValueError("future latent coordinates do not match the verified mapping")
+   407	    if not torch.equal(source_valid, source_render_valid & source_crop_valid):
+   408	        raise ValueError("source_valid does not combine render and crop validity")
+   409	    if not torch.equal(projection_valid, render_valid & future_crop_valid):
+   410	        raise ValueError("projection_valid does not combine render and crop validity")
+   411	
+   412	    valid_source_cells = source_latent_uv[source_valid]
+   413	    valid_future_cells = latent_uv[projection_valid]
+   414	    for cells, label in (
+   415	        (valid_source_cells, "source"),
+   416	        (valid_future_cells, "future"),
+   417	    ):
+   418	        if cells.numel() and not bool(
+   419	            (cells[:, 0] >= 0).all()
+   420	            and (cells[:, 0] < int(state["latent_width"])).all()
+   421	            and (cells[:, 1] >= 0).all()
+   422	            and (cells[:, 1] < int(state["latent_height"])).all()
+   423	        ):
+   424	            raise ValueError(f"valid {label} latent coordinates are out of bounds")
+   425	
+   426	    for tensor, name in (
+   427	        (points_3d, "points_3d"),
+--
+   445	    if not isinstance(camera, dict) or set(camera) != {"K", "R", "T"}:
+   446	        raise ValueError("camera must contain K, R, and T")
+   447	    for name, tensor in camera.items():
+   448	        if type(tensor) is not torch.Tensor or tensor.shape[0] != frame_count:
+   449	            raise ValueError(f"camera {name} must be a plain per-frame tensor")
+   450	
+   451	    paths = state.get("paths")
+   452	    if not isinstance(paths, dict):
+   453	        raise ValueError("paths metadata is required")
+   454	    coarse_paths = paths.get("coarse_rgb_frames")
+   455	    if not isinstance(coarse_paths, list) or len(coarse_paths) not in (0, frame_count):
+   456	        raise ValueError("coarse_rgb_frames must be empty or match frame count")
+   457	
+   458	
+   459	def save_transport_ready(state: Mapping[str, Any], path: str | Path) -> Path:
+   460	    """Validate and save a portable CPU-tensor transport artifact."""
+   461	
+   462	    validate_transport_ready(state)
+   463	    path = Path(path)
+   464	    path.parent.mkdir(parents=True, exist_ok=True)
+   465	    torch.save(dict(state), path)
+   466	    loaded = torch.load(path, map_location="cpu", weights_only=False)
+   467	    validate_transport_ready(loaded)
+   468	    return path
+   469	
+
+================================================================
+FILE: scripts/build_soft_wan_latent_artifact.py
+================================================================
+     7	"""
+     8	
+     9	from __future__ import annotations
+    10	
+    11	import argparse
+    12	import hashlib
+    13	import json
+    14	import time
+    15	from pathlib import Path
+    16	from typing import Any
+    17	
+    18	import torch
+    19	
+    20	from deform_transport.hard_transport import hard_point_transport
+    21	from deform_transport.soft_transport import soft_point_transport
+    22	from deform_transport.transport_ready import validate_transport_ready
+    23	
+    24	
+    25	def parse_args() -> argparse.Namespace:
+    26	    parser = argparse.ArgumentParser()
+    27	    parser.add_argument(
+    28	        "--transport-ready",
+    29	        type=Path,
+    30	        required=True,
+    31	    )
+    32	    parser.add_argument(
+    33	        "--base-vae-artifact",
+    34	        type=Path,
+    35	        required=True,
+    36	    )
+--
+    86	) -> float:
+    87	    expanded = mask.unsqueeze(0).expand_as(first)
+    88	
+    89	    if not bool(expanded.any()):
+    90	        return 0.0
+    91	
+    92	    return float(
+    93	        torch.abs(first - second)[expanded].mean()
+    94	    )
+    95	
+    96	
+    97	def main() -> None:
+    98	    args = parse_args()
+    99	
+   100	    transport_path = args.transport_ready.resolve()
+   101	    base_path = args.base_vae_artifact.resolve()
+   102	    output_path = args.output.resolve()
+   103	
+   104	    if args.threshold < 0:
+   105	        raise ValueError("threshold must be nonnegative")
+   106	
+   107	    if not transport_path.is_file():
+   108	        raise FileNotFoundError(transport_path)
+   109	
+   110	    if not base_path.is_file():
+   111	        raise FileNotFoundError(base_path)
+   112	
+   113	    if output_path.exists():
+   114	        raise FileExistsError(
+   115	            f"refusing to overwrite existing output: {output_path}"
+   116	        )
+   117	
+   118	    if not torch.cuda.is_available():
+   119	        raise RuntimeError("CUDA is required")
+   120	
+   121	    started = time.perf_counter()
+   122	
+   123	    state = torch.load(
+   124	        transport_path,
+   125	        map_location="cpu",
+   126	        weights_only=False,
+   127	    )
+   128	    validate_transport_ready(state)
+   129	
+   130	    required_continuous = {
+   131	        "source_points_2d_latent_continuous",
+   132	        "points_2d_latent_continuous",
+   133	    }
+   134	
+   135	    missing_continuous = sorted(
+   136	        required_continuous - set(state)
+   137	    )
+   138	
+   139	    if missing_continuous:
+   140	        raise ValueError(
+   141	            "continuous transport-ready fields are missing: "
+   142	            f"{missing_continuous}"
+   143	        )
+   144	
+   145	    base = torch.load(
+   146	        base_path,
+   147	        map_location="cpu",
+   148	        weights_only=True,
+   149	    )
+   150	
+   151	    required_base = {
+   152	        "latent_frame_indices",
+   153	        "source_latent",
+   154	        "target_latent",
+   155	        "correct_fused_latent",
+   156	        "shuffled_fused_latent",
+   157	        "transport_mask",
+   158	        "contribution_count",
+   159	    }
+   160	
+   161	    missing_base = sorted(required_base - set(base))
+   162	
+   163	    if missing_base:
+   164	        raise ValueError(
+   165	            f"base VAE artifact is missing keys: {missing_base}"
+   166	        )
+   167	
+   168	    latent_indices = base["latent_frame_indices"].to(
+   169	        dtype=torch.long,
+   170	        device="cpu",
+   171	    )
+   172	
+--
+   214	    source_grid = (
+   215	        source_latent_cpu[0, 0]
+   216	        .to(device=device, dtype=torch.float32)
+   217	        .contiguous()
+   218	    )
+   219	
+   220	    target_latent = (
+   221	        target_latent_cpu
+   222	        .to(device=device, dtype=torch.float32)
+   223	        .contiguous()
+   224	    )
+   225	
+   226	    common = {
+   227	        "source_grid": source_grid,
+   228	        "source_visible": state[
+   229	            "source_visible"
+   230	        ].to(device),
+   231	        "source_valid": state[
+   232	            "source_valid"
+   233	        ].to(device),
+   234	        "target_valid": state[
+   235	            "projection_valid"
+   236	        ][latent_indices].to(device),
+   237	        "point_id": state["point_id"].to(device),
+   238	        "object_id": state["object_id"].to(device),
+   239	        "seed": args.seed,
+   240	    }
+   241	
+   242	    torch.cuda.reset_peak_memory_stats()
+   243	    torch.cuda.synchronize()
+   244	
+   245	    transport_started = time.perf_counter()
+   246	
+   247	    hard_reference = hard_point_transport(
+   248	        source_uv=state[
+   249	            "source_points_2d_latent"
+   250	        ].to(device),
+   251	        target_uv=state[
+   252	            "points_2d_latent"
+   253	        ][latent_indices].to(device),
+   254	        mode="correct",
+   255	        **common,
+   256	    )
+   257	
+   258	    soft_correct = soft_point_transport(
+   259	        source_uv=state[
+   260	            "source_points_2d_latent_continuous"
+   261	        ].to(device),
+   262	        target_uv=state[
+   263	            "points_2d_latent_continuous"
+   264	        ][latent_indices].to(device),
+   265	        mode="correct",
+   266	        **common,
+   267	    )
+   268	
+   269	    soft_shuffled = soft_point_transport(
+   270	        source_uv=state[
+   271	            "source_points_2d_latent_continuous"
+   272	        ].to(device),
+   273	        target_uv=state[
+   274	            "points_2d_latent_continuous"
+   275	        ][latent_indices].to(device),
+   276	        mode="shuffled",
+   277	        **common,
+   278	    )
+   279	
+   280	    torch.cuda.synchronize()
+   281	
+   282	    transport_seconds = (
+   283	        time.perf_counter() - transport_started
+   284	    )
+   285	
+   286	    base_mask = base["transport_mask"].to(device)
+   287	    base_count = base["contribution_count"].to(device)
+   288	
+   289	    hard_mask = hard_reference["transport_mask"]
+   290	    hard_count = hard_reference["contribution_count"]
+   291	
+   292	    if not torch.equal(base_mask, hard_mask):
+   293	        raise RuntimeError(
+   294	            "recomputed hard mask does not match base VAE artifact"
+   295	        )
+   296	
+   297	    if not torch.equal(base_count, hard_count):
+   298	        raise RuntimeError(
+   299	            "recomputed hard count does not match base VAE artifact"
+   300	        )
+   301	
+   302	    if not torch.equal(
+   303	        soft_correct["transport_mask"],
+   304	        soft_shuffled["transport_mask"],
+   305	    ):
+   306	        raise RuntimeError(
+   307	            "soft Correct and Shuffled masks differ"
+   308	        )
+   309	
+   310	    if not torch.equal(
+   311	        soft_correct["contribution_count"],
+   312	        soft_shuffled["contribution_count"],
+   313	    ):
+   314	        raise RuntimeError(
+   315	            "soft Correct and Shuffled counts differ"
+   316	        )
+   317	
+   318	    correct_transport_weight = soft_correct["transport_weight"]
+   319	    shuffled_transport_weight = soft_shuffled["transport_weight"]
+   320	
+   321	    weight_absolute_difference = torch.abs(
+   322	        correct_transport_weight
+   323	        - shuffled_transport_weight
+   324	    )
+   325	
+   326	    weight_max_abs_difference = float(
+   327	        weight_absolute_difference.max()
+   328	    )
+   329	    weight_mean_abs_difference = float(
+   330	        weight_absolute_difference.mean()
+   331	    )
+   332	
+   333	    weights_allclose = bool(
+   334	        torch.allclose(
+   335	            correct_transport_weight,
+   336	            shuffled_transport_weight,
+   337	            atol=2e-4,
+   338	            rtol=2e-4,
+   339	        )
+   340	    )
+   341	
+   342	    if not weights_allclose:
+   343	        raise RuntimeError(
+   344	            "soft Correct and Shuffled weights are not numerically "
+   345	            "equivalent: "
+   346	            f"max_abs_difference={weight_max_abs_difference}, "
+   347	            f"mean_abs_difference={weight_mean_abs_difference}"
+   348	        )
+   349	
+   350	    if not torch.equal(
+   351	        soft_correct["valid_point_mask"],
+   352	        soft_shuffled["valid_point_mask"],
+   353	    ):
+   354	        raise RuntimeError(
+   355	            "soft Correct and Shuffled valid-point masks differ"
+   356	        )
+   357	
+   358	    raw_soft_mask = soft_correct["transport_mask"]
+   359	    raw_soft_count = soft_correct["contribution_count"]
+   360	    # Geometry is shared between Correct and Shuffled. Use the Correct
+   361	    # accumulation as the canonical spatial weight for both variants.
+   362	    transport_weight = correct_transport_weight
+   363	
+   364	    if bool((hard_mask & ~raw_soft_mask).any()):
+   365	        raise RuntimeError(
+   366	            "legacy Hard support is not a subset of Soft support"
+   367	        )
+   368	
+   369	    soft_only_mask = raw_soft_mask & ~hard_mask
+   370	
+   371	    gated_mask = (
+   372	        hard_mask
+   373	        | (
+   374	            soft_only_mask
+   375	            & (transport_weight >= args.threshold)
+   376	        )
+   377	    )
+   378	
+   379	    # Diagnostic only: independently threshold the Shuffled accumulation.
+   380	    # Correct and Shuffled still use the shared canonical gated_mask below,
+   381	    # ensuring that feature identity is the only ablation variable.
+   382	    shuffled_independent_gated_mask = (
+   383	        hard_mask
+   384	        | (
+   385	            soft_only_mask
+   386	            & (
+   387	                shuffled_transport_weight
+   388	                >= args.threshold
+   389	            )
+   390	        )
+   391	    )
+   392	
+   393	    independent_gated_mask_equal = bool(
+   394	        torch.equal(
+   395	            gated_mask,
+   396	            shuffled_independent_gated_mask,
+   397	        )
+   398	    )
+   399	
+   400	    independent_gated_mask_difference_cells = int(
+   401	        (
+--
+   436	        target_latent,
+   437	    )
+   438	
+   439	    fused_shuffled = torch.where(
+   440	        broadcast_mask,
+   441	        raw_shuffled,
+   442	        target_latent,
+   443	    )
+   444	
+   445	    for tensor, name in (
+   446	        (raw_correct, "raw_correct"),
+   447	        (raw_shuffled, "raw_shuffled"),
+   448	        (fused_correct, "fused_correct"),
+   449	        (fused_shuffled, "fused_shuffled"),
+   450	        (transport_weight, "transport_weight"),
+   451	    ):
+   452	        if not bool(torch.isfinite(tensor).all()):
+   453	            raise RuntimeError(
+   454	                f"{name} contains NaN or Inf"
+   455	            )
+   456	
+   457	    output_state = {
+   458	        "format_version": 2,
+   459	        "artifact_kind": "wan_vae_soft_transport",
+   460	        "transport_method": (
+   461	            "continuous_bilinear_forward_splat_gate"
+   462	        ),
+   463	        "soft_weight_threshold": float(
+   464	            args.threshold
+   465	        ),
+   466	        "seed": int(args.seed),
+   467	        "latent_frame_indices": (
+   468	            latent_indices.contiguous()
+   469	        ),
+   470	        "source_latent": (
+   471	            source_latent_cpu.detach().cpu().contiguous()
+   472	        ),
+   473	        "target_latent": (
+   474	            target_latent_cpu.detach().cpu().contiguous()
+   475	        ),
+   476	        # Compatibility keys used by pipeline_integration.py.
+   477	        "correct_transported_latent": (
+   478	            raw_correct.detach().cpu().contiguous()
+   479	        ),
+   480	        "shuffled_transported_latent": (
+   481	            raw_shuffled.detach().cpu().contiguous()
+   482	        ),
+   483	        "correct_fused_latent": (
+   484	            fused_correct.detach().cpu().contiguous()
+   485	        ),
+   486	        "shuffled_fused_latent": (
+   487	            fused_shuffled.detach().cpu().contiguous()
+   488	        ),
+   489	        "transport_mask": (
+   490	            gated_mask.detach().cpu().contiguous()
+   491	        ),
+   492	        "contribution_count": (
+   493	            gated_count.detach().cpu().contiguous()
+   494	        ),
+   495	        # Additional audit tensors.
+   496	        "transport_weight": (
+   497	            transport_weight.detach().cpu().contiguous()
+   498	        ),
+   499	        "raw_soft_transport_mask": (
+   500	            raw_soft_mask.detach().cpu().contiguous()
+   501	        ),
+   502	        "raw_soft_contribution_count": (
+   503	            raw_soft_count.detach().cpu().contiguous()
+   504	        ),
+   505	        "hard_reference_mask": (
+   506	            hard_mask.detach().cpu().contiguous()
+   507	        ),
+   508	        "hard_reference_contribution_count": (
+   509	            hard_count.detach().cpu().contiguous()
+   510	        ),
+   511	        "soft_only_mask": (
+   512	            soft_only_mask.detach().cpu().contiguous()
+   513	        ),
+   514	        "shuffled_permutation": (
+   515	            soft_shuffled["permutation"]
+   516	            .detach()
+   517	            .cpu()
+   518	            .contiguous()
+   519	        ),
+   520	        "source_files": {
+   521	            "transport_ready": str(transport_path),
+   522	            "transport_ready_sha256": sha256(
+   523	                transport_path
+   524	            ),
+   525	            "base_vae_artifact": str(base_path),
+   526	            "base_vae_artifact_sha256": sha256(
+   527	                base_path
+   528	            ),
+   529	        },
+   530	    }
+   531	
+   532	    output_path.parent.mkdir(
+   533	        parents=True,
+   534	        exist_ok=True,
+   535	    )
+   536	
+   537	    torch.save(output_state, output_path)
+   538	
+   539	    loaded = torch.load(
+   540	        output_path,
+   541	        map_location="cpu",
+   542	        weights_only=True,
+   543	    )
+   544	
+   545	    if not torch.equal(
+   546	        loaded["transport_mask"],
+   547	        loaded["contribution_count"] > 0,
+   548	    ):
+   549	        raise RuntimeError(
+   550	            "saved artifact broke the mask/count contract"
+   551	        )
+   552	
+   553	    support_hard = int(hard_mask.sum())
+   554	    support_soft = int(raw_soft_mask.sum())
+   555	    support_gated = int(gated_mask.sum())
+   556	
+   557	    report = {
+   558	        "output": str(output_path),
+   559	        "output_sha256": sha256(output_path),
+   560	        "transport_method": output_state[
+   561	            "transport_method"
+--
+   564	        "latent_frame_indices": (
+   565	            latent_indices.tolist()
+   566	        ),
+   567	        "support": {
+   568	            "hard_cells": support_hard,
+   569	            "raw_soft_cells": support_soft,
+   570	            "gated_cells": support_gated,
+   571	            "raw_soft_over_hard": (
+   572	                support_soft / support_hard
+   573	            ),
+   574	            "gated_over_hard": (
+   575	                support_gated / support_hard
+   576	            ),
+   577	            "soft_only_cells": int(
+   578	                soft_only_mask.sum()
+   579	            ),
+   580	            "retained_soft_only_cells": int(
+   581	                (gated_mask & soft_only_mask).sum()
+   582	            ),
+   583	        },
+   584	        "fairness": {
+   585	            "masks_equal": True,
+   586	            "counts_equal": True,
+   587	            "weights_allclose": weights_allclose,
+   588	            "weight_allclose_atol": 2e-4,
+   589	            "weight_allclose_rtol": 2e-4,
+   590	            "weight_max_abs_difference": (
+   591	                weight_max_abs_difference
+   592	            ),
+   593	            "weight_mean_abs_difference": (
+   594	                weight_mean_abs_difference
+   595	            ),
+--
+   600	                independent_gated_mask_difference_cells
+   601	            ),
+   602	            "shared_canonical_gated_mask": True,
+   603	            "valid_point_masks_equal": True,
+   604	            "permutations_differ": bool(
+   605	                not torch.equal(
+   606	                    soft_correct["permutation"],
+   607	                    soft_shuffled["permutation"],
+   608	                )
+   609	            ),
+   610	        },
+   611	        "compatibility": {
+   612	            "base_hard_mask_exact": True,
+   613	            "base_hard_count_exact": True,
+   614	            "transport_mask_equals_count_positive": True,
+   615	            "selected_key_shapes_match_target": (
+   616	                tuple(fused_correct.shape)
+   617	                == tuple(target_latent.shape)
+   618	                == tuple(fused_shuffled.shape)
+   619	            ),
+   620	        },
+   621	        "latent_differences": {
+   622	            "correct_vs_shuffled_mean_abs": float(
+   623	                torch.abs(
+   624	                    fused_correct - fused_shuffled
+   625	                ).mean()
+   626	            ),
+   627	            "soft_correct_vs_target_mean_abs": float(
+   628	                torch.abs(
+--
+   644	                    ].to(device)
+   645	                ).mean()
+   646	            ),
+   647	        },
+   648	        "statistics": {
+   649	            "target_latent": tensor_stats(
+   650	                target_latent
+   651	            ),
+   652	            "soft_correct_fused": tensor_stats(
+   653	                fused_correct
+   654	            ),
+   655	            "soft_shuffled_fused": tensor_stats(
+   656	                fused_shuffled
+   657	            ),
+   658	            "transport_weight": tensor_stats(
+   659	                transport_weight
+   660	            ),
+   661	        },
+   662	        "runtime_seconds": {
+   663	            "transport": transport_seconds,
+   664	            "total": (
+   665	                time.perf_counter() - started
+   666	            ),
+   667	        },
+   668	        "gpu_peak_memory_mib": {
+   669	            "allocated": float(
+   670	                torch.cuda.max_memory_allocated()
+   671	                / (1024**2)
+   672	            ),
+   673	            "reserved": float(
+
+================================================================
+FILE: scripts/build_confidence_weighted_residual_artifact.py
+================================================================
+     1	"""Build a confidence-weighted Soft transport residual artifact.
+     2	
+     3	Confidence:
+     4	    ratio = transport_weight / contribution_count
+     5	    x = clamp((ratio - low) / (high - low), 0, 1)
+     6	    confidence = x^2 * (3 - 2*x)
+     7	
+     8	Correct and Shuffled use exactly the same geometry-derived confidence map.
+     9	The source artifact is never modified.
+    10	"""
+    11	
+    12	from __future__ import annotations
+    13	
+    14	import argparse
+    15	import hashlib
+    16	import json
+    17	from pathlib import Path
+    18	from typing import Any
+--
+   147	        )
+   148	
+   149	    state = torch.load(
+   150	        source_path,
+   151	        map_location="cpu",
+   152	        weights_only=True,
+   153	    )
+   154	
+   155	    required = {
+   156	        "latent_frame_indices",
+   157	        "source_latent",
+   158	        "target_latent",
+   159	        "correct_transported_latent",
+   160	        "shuffled_transported_latent",
+   161	        "transport_mask",
+   162	        "contribution_count",
+   163	        "transport_weight",
+   164	    }
+   165	
+   166	    missing = sorted(required - set(state))
+   167	
+   168	    if missing:
+   169	        raise ValueError(
+   170	            f"source artifact is missing keys: {missing}"
+   171	        )
+   172	
+   173	    target = state["target_latent"].to(
+   174	        torch.float32
+   175	    )
+   176	    correct = state[
+   177	        "correct_transported_latent"
+   178	    ].to(torch.float32)
+   179	    shuffled = state[
+   180	        "shuffled_transported_latent"
+   181	    ].to(torch.float32)
+   182	
+   183	    mask = state["transport_mask"]
+   184	    count = state["contribution_count"]
+   185	    weight = state["transport_weight"].to(
+   186	        torch.float32
+   187	    )
+   188	
+   189	    if target.ndim != 5:
+   190	        raise ValueError(
+   191	            "target_latent must have shape [B,T,C,H,W]"
+   192	        )
+   193	
+   194	    expected_map_shape = (
+   195	        target.shape[1],
+   196	        1,
+   197	        target.shape[3],
+   198	        target.shape[4],
+   199	    )
+   200	
+   201	    for tensor, label in (
+   202	        (mask, "transport_mask"),
+   203	        (count, "contribution_count"),
+   204	        (weight, "transport_weight"),
+   205	    ):
+   206	        if tuple(tensor.shape) != expected_map_shape:
+   207	            raise ValueError(
+   208	                f"{label} shape mismatch: "
+   209	                f"{tuple(tensor.shape)}"
+   210	            )
+   211	
+   212	    if mask.dtype != torch.bool:
+   213	        raise ValueError(
+   214	            "transport_mask must be boolean"
+   215	        )
+   216	
+   217	    if not torch.equal(mask, count > 0):
+   218	        raise ValueError(
+   219	            "mask/count contract failed"
+   220	        )
+   221	
+   222	    if not bool(torch.isfinite(weight).all()):
+   223	        raise ValueError(
+   224	            "transport_weight contains NaN or Inf"
+   225	        )
+   226	
+   227	    if bool((weight < 0).any()):
+   228	        raise ValueError(
+   229	            "transport_weight must be nonnegative"
+   230	        )
+   231	
+   232	    ratio = torch.where(
+   233	        count > 0,
+   234	        weight / count.to(torch.float32).clamp_min(1),
+   235	        torch.zeros_like(weight),
+   236	    )
+   237	
+   238	    normalized = (
+   239	        (ratio - args.confidence_low)
+   240	        / (
+   241	            args.confidence_high
+   242	            - args.confidence_low
+   243	        )
+--
+   314	            dtype=torch.float32,
+   315	        ),
+   316	        padding=1,
+   317	    )
+   318	
+   319	    interior = mask & (neighbor_count == 9)
+   320	    boundary = mask & ~interior
+   321	
+   322	    regions = {
+   323	        "support": mask,
+   324	        "interior": interior,
+   325	        "boundary": boundary,
+   326	    }
+   327	
+   328	    soft_only = state.get("soft_only_mask")
+   329	
+   330	    if (
+   331	        isinstance(soft_only, torch.Tensor)
+   332	        and tuple(soft_only.shape)
+   333	        == tuple(mask.shape)
+   334	    ):
+   335	        regions["soft_only"] = (
+   336	            soft_only.to(torch.bool) & mask
+   337	        )
+   338	
+   339	    output_dir.mkdir(
+   340	        parents=True,
+   341	        exist_ok=False,
+   342	    )
+--
+   345	        output_dir
+   346	        / (
+   347	            "vae_latent_outputs_soft_confidence_"
+   348	            "wpc_smooth_l010_h025.pt"
+   349	        )
+   350	    )
+   351	
+   352	    output_state = {
+   353	        "format_version": 4,
+   354	        "artifact_kind": (
+   355	            "wan_vae_soft_confidence_weighted_residual"
+   356	        ),
+   357	        "transport_method": state.get(
+   358	            "transport_method",
+   359	            "continuous_bilinear_forward_splat",
+   360	        ),
+   361	        "confidence_method": (
+   362	            "smoothstep_weight_per_count"
+   363	        ),
+   364	        "confidence_low": float(
+   365	            args.confidence_low
+   366	        ),
+   367	        "confidence_high": float(
+   368	            args.confidence_high
+   369	        ),
+   370	        "latent_frame_indices": state[
+   371	            "latent_frame_indices"
+   372	        ].contiguous(),
+   373	        "source_latent": state[
+--
+   384	            weighted_correct_residual.contiguous()
+   385	        ),
+   386	        "shuffled_transport_residual": (
+   387	            weighted_shuffled_residual.contiguous()
+   388	        ),
+   389	        # These make the artifact compatible with the
+   390	        # existing replacement loader as well, although
+   391	        # the intended use is inter-step residual loading.
+   392	        "correct_fused_latent": (
+   393	            weighted_correct.contiguous()
+   394	        ),
+   395	        "shuffled_fused_latent": (
+   396	            weighted_shuffled.contiguous()
+   397	        ),
+   398	        "transport_mask": mask.contiguous(),
+   399	        "contribution_count": count.contiguous(),
+   400	        "transport_weight": weight.contiguous(),
+   401	        "confidence_ratio": ratio.contiguous(),
+   402	        "confidence_map": confidence.contiguous(),
+   403	        "soft_only_mask": (
+   404	            state["soft_only_mask"].contiguous()
+   405	            if isinstance(
+   406	                state.get("soft_only_mask"),
+   407	                torch.Tensor,
+   408	            )
+   409	            else torch.zeros_like(mask)
+   410	        ),
+   411	        "source_files": {
+   412	            "soft_artifact": str(source_path),
+   413	            "soft_artifact_sha256": sha256(
+   414	                source_path
+   415	            ),
+   416	        },
+   417	    }
+   418	
+   419	    torch.save(
+   420	        output_state,
+   421	        output_path,
+   422	    )
+   423	
+   424	    loaded = torch.load(
+   425	        output_path,
+   426	        map_location="cpu",
+   427	        weights_only=True,
+   428	    )
+   429	
+   430	    if not torch.equal(
+   431	        loaded["transport_mask"],
+   432	        loaded["contribution_count"] > 0,
+   433	    ):
+   434	        raise RuntimeError(
+   435	            "saved mask/count contract failed"
+   436	        )
+   437	
+   438	    reference = loaded[
+   439	        "target_latent"
+   440	    ].to(torch.bfloat16)
+   441	
+   442	    loaded_correct_residual = (
+   443	        load_precomputed_transport_residual(
+   444	            output_path,
+   445	            mode="correct",
+   446	            reference_latent=reference,
+
+================================================================
+FILE: deform_transport/pipeline_integration.py
+================================================================
+   106	        ):
+   107	            raise ValueError(
+   108	                f"{label} must be a finite floating-point tensor"
+   109	            )
+   110	
+   111	    if tuple(transported.shape) != tuple(target.shape):
+   112	        raise ValueError(
+   113	            "transported latent and target latent shapes differ"
+   114	        )
+   115	
+   116	    frame_count = transported.shape[1]
+   117	    height = transported.shape[3]
+   118	    width = transported.shape[4]
+   119	
+   120	    mask = state.get("transport_mask")
+   121	    count = state.get("contribution_count")
+   122	
+   123	    expected_mask_shape = (
+   124	        frame_count,
+   125	        1,
+   126	        height,
+   127	        width,
+   128	    )
+   129	
+   130	    if (
+   131	        not isinstance(mask, torch.Tensor)
+   132	        or tuple(mask.shape) != expected_mask_shape
+   133	    ):
+   134	        raise ValueError(
+   135	            "transport_mask does not match transported latent"
+   136	        )
+   137	
+   138	    if mask.dtype != torch.bool:
+   139	        raise ValueError(
+   140	            "transport_mask must be boolean"
+   141	        )
+   142	
+   143	    if (
+   144	        not isinstance(count, torch.Tensor)
+   145	        or tuple(count.shape) != tuple(mask.shape)
+   146	    ):
+   147	        raise ValueError(
+   148	            "contribution_count does not match transport_mask"
+   149	        )
+   150	
+   151	    if (
+   152	        count.dtype.is_floating_point
+   153	        or bool((count < 0).any())
+   154	    ):
+   155	        raise ValueError(
+   156	            "contribution_count must contain "
+   157	            "nonnegative integers"
+   158	        )
+   159	
+   160	    if not torch.equal(mask, count > 0):
+   161	        raise ValueError(
+   162	            "transport_mask must equal contribution_count > 0"
+   163	        )
+   164	
+   165	    explicit_residual_key = (
+   166	        _EXPLICIT_RESIDUAL_KEYS[mode]
+   167	    )
+   168	
+   169	    explicit_residual = state.get(
+   170	        explicit_residual_key
+   171	    )
+   172	
+   173	    if explicit_residual is not None:
+   174	        if not isinstance(
+   175	            explicit_residual,
+   176	            torch.Tensor,
+--
+   262	
+   263	    key = _LATENT_KEYS[mode]
+   264	    selected = state.get(key)
+   265	    if not isinstance(selected, torch.Tensor):
+   266	        raise ValueError(f"transport artifact is missing tensor {key!r}")
+   267	    if selected.ndim != 5 or tuple(selected.shape) != tuple(reference_latent.shape):
+   268	        raise ValueError(
+   269	            f"{key} shape {tuple(selected.shape)} does not match freshly encoded "
+   270	            f"sim_latent {tuple(reference_latent.shape)}"
+   271	        )
+   272	    if not selected.dtype.is_floating_point or not bool(torch.isfinite(selected).all()):
+   273	        raise ValueError(f"{key} must be a finite floating-point tensor")
+   274	
+   275	    frame_count, height, width = selected.shape[1], selected.shape[3], selected.shape[4]
+   276	    mask = state.get("transport_mask")
+   277	    count = state.get("contribution_count")
+   278	    if not isinstance(mask, torch.Tensor) or tuple(mask.shape) != (
+   279	        frame_count,
+   280	        1,
+   281	        height,
+   282	        width,
+   283	    ):
+   284	        raise ValueError("transport_mask does not match the selected latent")
+   285	    if mask.dtype != torch.bool:
+   286	        raise ValueError("transport_mask must be boolean")
+   287	    if not isinstance(count, torch.Tensor) or tuple(count.shape) != tuple(mask.shape):
+   288	        raise ValueError("contribution_count does not match transport_mask")
+   289	    if count.dtype.is_floating_point or bool((count < 0).any()):
+   290	        raise ValueError("contribution_count must contain nonnegative integers")
+   291	    if not torch.equal(mask, count > 0):
+   292	        raise ValueError("transport_mask must equal contribution_count > 0")
+   293	
+   294	    return selected.to(
+   295	        device=reference_latent.device,
+   296	        dtype=reference_latent.dtype,
+   297	    ).contiguous()

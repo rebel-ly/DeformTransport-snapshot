@@ -1,0 +1,24 @@
+{
+  "status": "TREE_NORM_PRESERVING_DIRECTION_READY",
+  "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_234033__tree__norm_preserving_direction_transport/tree_quality_correct_norm_preserving_direction.pt",
+  "old_mean_abs": 0.012252077460289001,
+  "new_mean_abs": 0.011997289024293423,
+  "mean_abs_ratio": 0.9792044706849602,
+  "old_rms": 0.04646586999297142,
+  "new_rms": 0.04700654372572899,
+  "old_max_abs": 0.9596481323242188,
+  "new_max_abs": 0.8937684893608093,
+  "active_feature_norm_max_error": 9.5367431640625e-07,
+  "transport_direction_cosine": 1.0,
+  "checks": {
+    "residual_saved_exact": true,
+    "fused_saved_exact": true,
+    "slot0_zero": true,
+    "mask_count_contract": true,
+    "norm_preserved": true,
+    "direction_preserved": true,
+    "finite": true
+  },
+  "all_checks_pass": true
+}

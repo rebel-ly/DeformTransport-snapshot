@@ -1,0 +1,13 @@
+{
+  "intended_scientific_difference_only": "MATERIAL_CARRIER_SET K0 vs K1257 Correct",
+  "C1_C2_UNEXPECTED_DIFFS": [],
+  "expected_differences": [
+    "transport.K",
+    "transport.tracks",
+    "transport.visibility",
+    "transport.ids",
+    "transport.depth",
+    "transport.expected_writes"
+  ],
+  "uncontrolled_arm_specific_randomness": false
+}

@@ -1,0 +1,61 @@
+{
+  "GPU0": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/gpu0_seed0_eligibility/santa_correct_v3d_seed000.mp4",
+    "exists": true,
+    "file_size": 7729377,
+    "sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+    "decodable": false,
+    "frames": 0,
+    "width": 0,
+    "height": 0,
+    "EXIT_CODE": "UNAVAILABLE_FROM_NONPARENT_WATCHER",
+    "integrity": "FAIL"
+  },
+  "SEED1": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/seed1/santa_correct_v3d_seed001.mp4",
+    "exists": true,
+    "file_size": 6596209,
+    "sha256": "0fbc113ac3a5374ccfad8fe658524a73d64639f10ea7570f27ffcdb813b31450",
+    "decodable": false,
+    "frames": 0,
+    "width": 0,
+    "height": 0,
+    "EXIT_CODE": "UNAVAILABLE_FROM_NONPARENT_WATCHER",
+    "integrity": "FAIL"
+  },
+  "SEED2": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/seed2/santa_correct_v3d_seed002.mp4",
+    "exists": true,
+    "file_size": 5733310,
+    "sha256": "140f08015527780b95525d61195d9cf929d647b47a9e6a1d61cfc1df5f64182b",
+    "decodable": false,
+    "frames": 0,
+    "width": 0,
+    "height": 0,
+    "EXIT_CODE": "UNAVAILABLE_FROM_NONPARENT_WATCHER",
+    "integrity": "FAIL"
+  },
+  "process_mapping": {
+    "GPU0_PROCESS_MAPPING": "PASS",
+    "SEED1_PROCESS_MAPPING": "PASS",
+    "SEED2_PROCESS_MAPPING": "PASS"
+  },
+  "contamination": {
+    "GPU0_OUTPUT_CONTAMINATION": false,
+    "SEED1_OUTPUT_CONTAMINATION": false,
+    "SEED2_OUTPUT_CONTAMINATION": false,
+    "OUTPUT_CONTAMINATION_RISK": false,
+    "basis": "duplicate PID group absent; empty duplicate logs; no early output existed"
+  },
+  "gpu0_identity": {
+    "canonical_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+    "FRAME_COUNT_EQUAL": false,
+    "FRAME_SHAPE_EQUAL": true,
+    "DECODED_RGB_PIXEL_MISMATCH_COUNT": 0,
+    "DECODED_RGB_MAX_ABS_DIFF": 0,
+    "MP4_SHA_EQUAL": true,
+    "GPU0_CROSS_DEVICE_GENERATION_IDENTITY": "FAIL",
+    "GPU0_FORMAL_GENERATION_ELIGIBLE": false
+  },
+  "WAVE1_SCIENTIFIC_VALIDITY": "FAIL"
+}

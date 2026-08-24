@@ -1,0 +1,193 @@
+{
+  "balanced": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/balanced_a0p500_t0p750_ramp4.pt",
+    "sha256": "7bffc1d41132eb3e1ecca3ca4cf8f07ad0d69cb28545871b3a511cca6ef7eb94",
+    "candidate_id": "balanced_a0p500_t0p750_ramp4",
+    "keys": [
+      "alpha",
+      "alpha_schedule",
+      "artifact_kind",
+      "base_artifact",
+      "candidate_id",
+      "correct_fused_latent",
+      "format_version",
+      "group",
+      "latent_frame_indices",
+      "schedule_name",
+      "shuffled_fused_latent",
+      "target_latent",
+      "threshold",
+      "transport_mask",
+      "transport_validity_mode"
+    ],
+    "alpha": 0.5,
+    "threshold": 0.75,
+    "schedule_name": "ramp4",
+    "alpha_schedule": [
+      0.0,
+      0.1666666716337204,
+      0.3333333432674408,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "shapes": {
+      "target": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "correct": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "shuffled": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mask": [
+        21,
+        1,
+        60,
+        104
+      ]
+    },
+    "residual_statistics": {
+      "correct_mean_abs": 0.03460140526294708,
+      "correct_max_abs": 1.855384111404419,
+      "shuffled_mean_abs": 0.044906362891197205,
+      "shuffled_max_abs": 2.055272102355957
+    },
+    "checks": {
+      "target_shape": true,
+      "correct_shape": true,
+      "shuffled_shape": true,
+      "all_finite": true,
+      "correct_slot0_equals_target": true,
+      "shuffled_slot0_equals_target": true,
+      "correct_residual_slot0_zero": true,
+      "shuffled_residual_slot0_zero": true,
+      "correct_and_shuffled_differ": true
+    },
+    "all_checks_pass": true
+  },
+  "quality": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/quality_a0p250_t0p750_ramp4.pt",
+    "sha256": "f500be23959700f8cf7e77adc0afc0e5707deca21764baa5034a46c4efee6ddd",
+    "candidate_id": "quality_a0p250_t0p750_ramp4",
+    "keys": [
+      "alpha",
+      "alpha_schedule",
+      "artifact_kind",
+      "base_artifact",
+      "candidate_id",
+      "correct_fused_latent",
+      "format_version",
+      "group",
+      "latent_frame_indices",
+      "schedule_name",
+      "shuffled_fused_latent",
+      "target_latent",
+      "threshold",
+      "transport_mask",
+      "transport_validity_mode"
+    ],
+    "alpha": 0.25,
+    "threshold": 0.75,
+    "schedule_name": "ramp4",
+    "alpha_schedule": [
+      0.0,
+      0.0833333358168602,
+      0.1666666716337204,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "shapes": {
+      "target": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "correct": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "shuffled": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mask": [
+        21,
+        1,
+        60,
+        104
+      ]
+    },
+    "residual_statistics": {
+      "correct_mean_abs": 0.01730070263147354,
+      "correct_max_abs": 0.9276919364929199,
+      "shuffled_mean_abs": 0.022453181445598602,
+      "shuffled_max_abs": 1.0276360511779785
+    },
+    "checks": {
+      "target_shape": true,
+      "correct_shape": true,
+      "shuffled_shape": true,
+      "all_finite": true,
+      "correct_slot0_equals_target": true,
+      "shuffled_slot0_equals_target": true,
+      "correct_residual_slot0_zero": true,
+      "shuffled_residual_slot0_zero": true,
+      "correct_and_shuffled_differ": true
+    },
+    "all_checks_pass": true
+  },
+  "all_checks_pass": true
+}

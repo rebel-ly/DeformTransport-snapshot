@@ -1,0 +1,26 @@
+{
+  "identity_benefit_top1": {
+    "intersection": 3,
+    "jaccard": 0.14285714285714285,
+    "overlap_coefficient": 0.25,
+    "union": 21
+  },
+  "identity_benefit_top5": {
+    "intersection": 15,
+    "jaccard": 0.14563106796116504,
+    "overlap_coefficient": 0.2542372881355932,
+    "union": 103
+  },
+  "transport_harm_top1": {
+    "intersection": 4,
+    "jaccard": 0.2,
+    "overlap_coefficient": 0.3333333333333333,
+    "union": 20
+  },
+  "transport_harm_top5": {
+    "intersection": 28,
+    "jaccard": 0.3111111111111111,
+    "overlap_coefficient": 0.4745762711864407,
+    "union": 90
+  }
+}

@@ -1,0 +1,3 @@
+Phase0C-3A-R — Visible-count Variance Clarification
+
+Read-only standard-library audit of Phase0C-3 carrier_funnel_statistics.csv and carrier_contribution_audit.json. No operator rerun, no dependency installation, and no modification of historical evidence. Spearman is intentionally NOT_COMPUTED_DEPENDENCY_UNAVAILABLE.

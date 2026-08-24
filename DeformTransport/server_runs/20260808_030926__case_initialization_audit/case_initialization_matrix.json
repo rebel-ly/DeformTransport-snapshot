@@ -1,0 +1,116 @@
+{
+  "lamp": {
+    "status": "failed",
+    "returncode": 1,
+    "elapsed_sec": 0.13943862915039062,
+    "log": "/workspace/DeformTransport/server_runs/20260808_030926__case_initialization_audit/lamp.log",
+    "result": {
+      "case": "lamp",
+      "module": "simulation.case_simulation.lamp",
+      "class": "Lamp",
+      "import_ok": false,
+      "class_found": false,
+      "signature": null,
+      "required_args": [],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'simulation'"
+    }
+  },
+  "persimmon": {
+    "status": "failed",
+    "returncode": 1,
+    "elapsed_sec": 0.1109919548034668,
+    "log": "/workspace/DeformTransport/server_runs/20260808_030926__case_initialization_audit/persimmon.log",
+    "result": {
+      "case": "persimmon",
+      "module": "simulation.case_simulation.persimmon",
+      "class": "Persimmon",
+      "import_ok": false,
+      "class_found": false,
+      "signature": null,
+      "required_args": [],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'simulation'"
+    }
+  },
+  "sand_house": {
+    "status": "failed",
+    "returncode": 1,
+    "elapsed_sec": 0.09702539443969727,
+    "log": "/workspace/DeformTransport/server_runs/20260808_030926__case_initialization_audit/sand_house.log",
+    "result": {
+      "case": "sand_house",
+      "module": "simulation.case_simulation.sand_house",
+      "class": "SandHouse",
+      "import_ok": false,
+      "class_found": false,
+      "signature": null,
+      "required_args": [],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'simulation'"
+    }
+  },
+  "santa_cloth": {
+    "status": "failed",
+    "returncode": 1,
+    "elapsed_sec": 0.0960545539855957,
+    "log": "/workspace/DeformTransport/server_runs/20260808_030926__case_initialization_audit/santa_cloth.log",
+    "result": {
+      "case": "santa_cloth",
+      "module": "simulation.case_simulation.santa_cloth",
+      "class": "SantaCloth",
+      "import_ok": false,
+      "class_found": false,
+      "signature": null,
+      "required_args": [],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'simulation'"
+    }
+  },
+  "tree": {
+    "status": "failed",
+    "returncode": 1,
+    "elapsed_sec": 0.10897183418273926,
+    "log": "/workspace/DeformTransport/server_runs/20260808_030926__case_initialization_audit/tree.log",
+    "result": {
+      "case": "tree",
+      "module": "simulation.case_simulation.tree",
+      "class": "Tree",
+      "import_ok": false,
+      "class_found": false,
+      "signature": null,
+      "required_args": [],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'simulation'"
+    }
+  },
+  "two_duck": {
+    "status": "failed",
+    "returncode": 1,
+    "elapsed_sec": 0.12483739852905273,
+    "log": "/workspace/DeformTransport/server_runs/20260808_030926__case_initialization_audit/two_duck.log",
+    "result": {
+      "case": "two_duck",
+      "module": "simulation.case_simulation.two_duck",
+      "class": "TwoDuck",
+      "import_ok": false,
+      "class_found": false,
+      "signature": null,
+      "required_args": [],
+      "init_attempted": false,
+      "init_ok": false,
+      "error_type": "ModuleNotFoundError",
+      "error": "No module named 'simulation'"
+    }
+  }
+}

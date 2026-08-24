@@ -1,0 +1,17 @@
+{
+  "RW_FIRST_FAIL_PREDICATE": "tracks_sha",
+  "DTFULL_FIRST_FAIL_PREDICATE": "tracks_sha",
+  "SHARED_FIRST_FAIL": true,
+  "root_cause_class": "DATA_BINDING",
+  "requested_value": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33df7fdebfb51929",
+  "requested_length": 63,
+  "actual_asset_value": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+  "actual_length": 64,
+  "failure_scope": "shared sidecar identity predicate before method-specific scoring",
+  "PATH_NAMESPACE_FAILURE": false,
+  "LEGACY_SIDECAR_DEPENDENCY": false,
+  "TRUE_METRIC_SEMANTIC_INCOMPATIBILITY": false,
+  "classification": "Allowed binding/configuration issue. No sidecar content, representation, N, mapping, visibility, sampling, timeline, video, or metric logic change is required.",
+  "recovery_required": true,
+  "recovery_scope": "BINDING_ONLY"
+}

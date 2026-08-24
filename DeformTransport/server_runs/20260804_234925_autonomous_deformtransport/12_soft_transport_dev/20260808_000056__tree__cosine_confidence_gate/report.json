@@ -1,0 +1,31 @@
+{
+  "status": "TREE_COSINE_CONFIDENCE_GATE_READY",
+  "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_000056__tree__cosine_confidence_gate/tree_quality_correct_cosine_confidence_gate.pt",
+  "active_future_cells": 14747,
+  "active_cosine_mean": 0.7579216361045837,
+  "active_gate_mean": 0.7579216361045837,
+  "active_gate_quantiles": [
+    0.09133043885231018,
+    0.6100062727928162,
+    0.7024235725402832,
+    0.7789019346237183,
+    0.8367726802825928,
+    0.8749066591262817,
+    0.9789034128189087
+  ],
+  "old_residual_mean_abs": 0.012252077460289001,
+  "new_residual_mean_abs": 0.009127180092036724,
+  "mean_abs_ratio": 0.7449495909260626,
+  "old_rms": 0.04646586999297142,
+  "new_rms": 0.03441964089870453,
+  "checks": {
+    "saved_residual_exact": true,
+    "saved_fused_exact": true,
+    "slot0_zero": true,
+    "mask_count_contract": true,
+    "gate_range": true,
+    "finite": true
+  },
+  "all_checks_pass": true
+}

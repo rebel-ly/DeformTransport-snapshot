@@ -1,0 +1,22 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "ID_JOIN_COVERAGE": 1257,
+  "expected": 1257,
+  "missing_ids": [],
+  "exact_material_id_join": true,
+  "fields": [
+    "TRANSPORT_CONTRIBUTOR",
+    "WINNING_WRITE_COUNT",
+    "VISIBLE_SLOT_COUNT",
+    "VISIBILITY_SWITCH_COUNT",
+    "VISIBLE_RUN_COUNT",
+    "REAPPEARANCE_COUNT",
+    "COLLISION_EXPOSURE_COUNT",
+    "ALWAYS_COLLISION_LOSER",
+    "NO_VISIBLE",
+    "SOURCE_CELL",
+    "motion/trajectory"
+  ],
+  "LOCAL_DEFORMATION_SCORE": "DEFERRED_TO_F3",
+  "reason": "No exact coarse-bin definition was frozen; no post-hoc bin tuning performed."
+}

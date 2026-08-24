@@ -1,0 +1,800 @@
+=== DATE ===
+2026-08-05T17:18:31+00:00
+
+=== GIT ===
+feature/trajectory-probe
+c98b2724563a64d96186d1bf4e6f9b8952ed9f48
+ M .gitignore
+ M case_simulation.py
+ M demo_web/simulation/utils.py
+ M demo_web/simulation_engine.py
+ M infer_sim.py
+ M simulation/case_simulation/__init__.py
+ M simulation/genesis_simulator.py
+ M simulation/utils.py
+ M wan/modules/attention.py
+?? UPSTREAM.md
+?? candidate_case_inventory_20260805_054703.txt
+?? deform_transport/
+?? deformtransport_flow_audit_20260805_044228.tar.gz
+?? docs/
+?? hard_transport_current.py
+?? requirements-stage1-wsl-blackwell.txt
+?? requirements-stage1-wsl.txt
+?? requirements-vae-only-wsl.txt
+?? scripts/
+?? server_env/
+?? server_runs/
+?? test_hard_transport_current.py
+?? test_transport_ready_current.py
+?? tests/
+
+=== ROOT FILES ===
+d | artifacts
+d | assets
+d | cases
+d | deform_transport
+d | demo_web
+d | docs
+d | .git
+d | __pycache__
+d | scripts
+d | server_env
+d | server_runs
+d | simulation
+d | tests
+d | vidgen
+d | wan
+f | candidate_case_inventory_20260805_054703.txt
+f | case_simulation.py
+f | default.yml
+f | deformtransport_flow_audit_20260805_044228.tar.gz
+f | .gitignore
+f | .gitmodules
+f | hard_transport_current.py
+f | infer_sim.py
+f | LICENSE.md
+f | README.md
+f | requirements-stage1-wsl-blackwell.txt
+f | requirements-stage1-wsl.txt
+f | requirements.txt
+f | requirements-vae-only-wsl.txt
+f | test_hard_transport_current.py
+f | test_transport_ready_current.py
+f | UPSTREAM.md
+l | ckpts
+l | wan_models
+
+=== DEFORM_TRANSPORT FILES ===
+deform_transport/hard_transport.py
+deform_transport/__init__.py
+deform_transport/pipeline_integration.py
+deform_transport/trajectory.py
+deform_transport/transport_metrics.py
+deform_transport/transport_payloads.py
+deform_transport/transport_ready.py
+deform_transport/wan_vae_codec.py
+
+=== SCRIPT FILES ===
+scripts/assemble_final_sim_from_trajectory.py
+scripts/build_flow_latent_artifact.py
+scripts/export_transport_ready.py
+scripts/inspect_realwonder_case.py
+scripts/run_checkpoint_free_transport_probe.py
+scripts/run_precomputed_demo_simulation.py
+scripts/run_realwonder_trajectory_probe.py
+scripts/run_santa_validation_suite.py
+scripts/run_wan_vae_transport_probe.py
+scripts/run_wan_vae_transport_probe.py.bak_20260805_012829
+scripts/setup_wsl_f.ps1
+
+=== TEST FILES ===
+tests/test_hard_transport.py
+tests/test_pipeline_integration.py
+tests/test_realwonder_trajectory.py
+tests/test_transport_ready.py
+tests/test_wan_vae_codec.py
+
+=== TRANSPORT IMPORT REFERENCES ===
+./tests/test_transport_ready.py:16:from deform_transport.transport_ready import (  # noqa: E402
+./tests/test_transport_ready.py:17:    build_transport_ready,
+./tests/test_transport_ready.py:18:    save_transport_ready,
+./tests/test_transport_ready.py:19:    validate_transport_ready,
+./tests/test_transport_ready.py:110:        state = build_transport_ready(
+./tests/test_transport_ready.py:121:        state = build_transport_ready(
+./tests/test_transport_ready.py:142:        state = build_transport_ready(
+./tests/test_transport_ready.py:162:        state = build_transport_ready(
+./tests/test_transport_ready.py:168:            path = save_transport_ready(state, Path(directory) / "transport_ready.pt")
+./tests/test_transport_ready.py:170:        validate_transport_ready(loaded)
+./tests/test_transport_ready.py:180:            build_transport_ready(
+./tests/test_hard_transport.py:14:from deform_transport.hard_transport import (  # noqa: E402
+./tests/test_pipeline_integration.py:7:from deform_transport.pipeline_integration import load_precomputed_transport_latent
+./scripts/build_flow_latent_artifact.py:654:    from deform_transport.pipeline_integration import (
+./scripts/run_checkpoint_free_transport_probe.py:23:from deform_transport.hard_transport import hard_point_transport  # noqa: E402
+./scripts/run_checkpoint_free_transport_probe.py:37:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+./scripts/run_checkpoint_free_transport_probe.py:45:    / "transport_ready.pt"
+./scripts/run_checkpoint_free_transport_probe.py:237:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+./scripts/run_checkpoint_free_transport_probe.py:239:    validate_transport_ready(state)
+./scripts/run_checkpoint_free_transport_probe.py:519:            "transport_ready": str(args.transport_ready.resolve()),
+./scripts/run_checkpoint_free_transport_probe.py:530:            "export_transport_ready": "python scripts/export_transport_ready.py",
+./scripts/run_wan_vae_transport_probe.py:25:from deform_transport.hard_transport import hard_point_transport  # noqa: E402
+./scripts/run_wan_vae_transport_probe.py:35:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+./scripts/run_wan_vae_transport_probe.py:47:    / "transport_ready.pt"
+./scripts/run_wan_vae_transport_probe.py:222:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+./scripts/run_wan_vae_transport_probe.py:224:    validate_transport_ready(state)
+./scripts/export_transport_ready.py:18:from deform_transport.transport_ready import (  # noqa: E402
+./scripts/export_transport_ready.py:19:    build_transport_ready,
+./scripts/export_transport_ready.py:20:    save_transport_ready,
+./scripts/export_transport_ready.py:36:    / "transport_ready.pt"
+./scripts/export_transport_ready.py:67:    state = build_transport_ready(
+./scripts/export_transport_ready.py:77:    output_path = save_transport_ready(state, args.output.resolve())
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014751/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014751/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014751/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014751/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014751/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014808/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014808/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014808/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014808/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014808/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014825/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014825/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014825/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014825/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014825/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014842/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014842/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014842/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014842/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014842/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014848/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014848/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014848/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014848/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014848/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014939/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014939/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014939/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014939/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014939/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015002/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015002/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015002/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015002/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015002/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015013/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015013/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015013/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015013/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015013/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015030/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015030/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015030/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015030/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015030/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015053/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015053/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015053/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015053/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015053/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015127/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015127/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015127/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015127/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015127/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015132/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015132/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015132/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015132/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015132/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015213/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015213/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015213/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015213/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015213/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015230/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015230/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015230/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015230/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015230/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015253/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015253/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015253/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015253/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015253/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015332/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015332/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015332/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015332/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015332/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015406/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015406/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015406/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015406/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015406/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015417/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015417/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015417/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015417/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015417/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015423/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015423/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015423/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015423/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015423/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015434/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015434/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015434/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015434/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015434/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015446/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015446/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015446/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015446/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015446/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015457/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015457/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015457/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015457/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015457/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015606/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015606/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015606/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015606/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015606/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015617/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015617/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015617/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015617/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015617/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015634/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015634/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015634/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015634/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015634/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015657/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015657/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015657/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015657/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015657/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014757/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014757/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014757/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014757/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014757/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014802/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014802/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014802/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014802/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014802/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014916/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014916/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014916/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014916/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014916/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014956/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014956/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014956/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014956/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014956/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015008/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015008/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015008/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015008/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015008/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015058/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015058/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015058/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015058/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015058/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015104/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015104/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015104/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015104/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015104/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015115/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015115/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015115/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015115/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015115/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015121/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015121/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015121/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015121/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015121/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015144/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015144/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015144/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015144/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015144/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015155/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015155/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015155/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015155/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015155/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015218/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015218/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015218/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015218/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015218/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015258/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015258/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015258/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015258/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015258/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015304/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015304/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015304/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015304/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015304/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015315/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015315/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015315/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015315/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015315/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015321/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015321/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015321/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015321/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015321/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015355/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015355/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015355/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015355/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015355/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015400/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015400/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015400/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015400/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015400/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015440/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015440/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015440/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015440/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015440/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015451/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015451/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015451/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015451/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015451/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015508/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015508/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015508/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015508/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015508/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015600/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015600/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015600/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015600/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015600/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015611/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015611/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015611/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015611/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015611/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015639/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015639/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015639/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015639/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015639/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015651/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015651/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015651/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015651/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015651/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/manifest.yaml:12:输入transport_ready: /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/command.sh:8:  --transport-ready "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt" \
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/wan_vae_transport_gpu_smoke_queued/launch_shareable_vae_e2e.sh:12:docker exec -i deformtransport-dev sha256sum /workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy_v3.pt /workspace/DeformTransport/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth > "$dir/输入模型与脚本SHA256.txt"
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/wan_vae_transport_gpu_smoke_queued/launch_shareable_vae_e2e.sh:26:输入: /workspace/DeformTransport/server_runs/$run_id/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy_v3.pt
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/wan_vae_transport_gpu_smoke_queued/launch_shareable_vae_e2e.sh:37:exec timeout --signal=TERM --kill-after=10s 300s python -u scripts/run_wan_vae_transport_probe.py \\
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/wan_vae_transport_gpu_smoke_queued/launch_shareable_vae_e2e.sh:38: --transport-ready "/workspace/DeformTransport/server_runs/$run_id/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy_v3.pt" \\
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014745/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014745/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014745/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014745/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014745/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014814/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014814/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014814/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014814/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014814/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014819/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014819/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014819/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014819/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014819/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014831/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014831/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014831/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014831/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014831/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014854/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014854/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014854/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014854/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014854/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014859/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014859/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014859/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014859/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014859/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014905/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014905/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014905/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014905/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014905/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014910/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014910/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014910/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014910/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014910/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014928/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014928/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014928/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014928/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014928/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014945/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014945/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014945/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014945/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014945/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014950/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014950/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014950/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014950/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014950/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015036/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015036/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015036/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015036/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015036/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015047/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015047/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015047/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015047/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015047/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015207/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015207/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015207/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015207/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015207/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015247/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015247/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015247/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015247/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015247/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015326/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015326/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015326/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015326/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015326/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015343/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015343/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015343/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015343/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015343/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015412/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015412/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015412/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015412/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015412/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015503/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015503/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015503/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015503/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015503/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015526/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015526/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015526/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015526/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015526/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015537/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015537/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015537/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015537/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015537/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015543/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015543/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015543/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015543/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015543/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015622/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015622/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015622/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015622/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015622/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015703/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015703/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015703/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015703/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015703/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_020232/manifest.yaml:13:输入: /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_020232/command.sh:7:exec timeout --signal=TERM --kill-after=10s 300s python -u scripts/run_wan_vae_transport_probe.py \
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_020232/command.sh:8: --transport-ready "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt" \
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/run_wan_vae_transport_probe_snapshot.py:25:from deform_transport.hard_transport import hard_point_transport  # noqa: E402
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/run_wan_vae_transport_probe_snapshot.py:35:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/run_wan_vae_transport_probe_snapshot.py:47:    / "transport_ready.pt"
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/run_wan_vae_transport_probe_snapshot.py:222:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/run_wan_vae_transport_probe_snapshot.py:224:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/command.sh:11:timeout --signal=TERM --kill-after=20s 1800s python -u /workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py   --transport-ready /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_20260805_011211/transport_ready.pt   --checkpoint /workspace/DeformTransport/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth   --output-dir /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs   --seed 0   --visual-inspection pending   --visual-note "Official Santa 81-frame Wan VAE transport probe; visual review pending"
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/launch_shareable.sh:28:sha256sum "$repo/artifacts/transport_validation/santa_cloth_21f/wan_vae/vae_latent_outputs.pt" "$root/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt" "$run_dir/run_transport_gpu_validation.py" > "$run_dir/输入资产与脚本SHA256.txt"
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/launch_shareable.sh:41:输入transport_ready: /workspace/DeformTransport/server_runs/$run_id/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued/launch_shareable.sh:53:  --transport-ready "/workspace/DeformTransport/server_runs/$run_id/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt" \\
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014837/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014837/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014837/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014837/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014837/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014922/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014922/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014922/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014922/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014922/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014933/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014933/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014933/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014933/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014933/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015019/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015019/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015019/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015019/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015019/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015024/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015024/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015024/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015024/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015024/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015041/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015041/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015041/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015041/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015041/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015110/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015110/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015110/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015110/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015110/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015138/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015138/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015138/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015138/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015138/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015150/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015150/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015150/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015150/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015150/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015201/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015201/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015201/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015201/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015201/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015224/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015224/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015224/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015224/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015224/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015235/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015235/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015235/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015235/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015235/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015241/run_transport_gpu_validation.py:8:from deform_transport.hard_transport import hard_point_transport
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015241/run_transport_gpu_validation.py:9:from deform_transport.transport_ready import validate_transport_ready
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015241/run_transport_gpu_validation.py:24:    state=torch.load(a.transport_ready,map_location="cpu",weights_only=False)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015241/run_transport_gpu_validation.py:26:    validate_transport_ready(state)
+./server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015241/run_transport_gpu_validation.py:56:      "输入":{"transport_ready":str(a.transport_ready.resolve()),"transport_ready_SHA256":sha256(a.transport_ready),"latent_artifact":str(a.latent_artifact.resolve()),"latent_artifact_SHA256":sha256(a.latent_artifact),"seed":a.seed},
+
+=== SERVER RUN TOP-LEVEL DIRECTORIES ===
+server_runs/20260804_234925_autonomous_deformtransport/00_audit
+server_runs/20260804_234925_autonomous_deformtransport/01_environment
+server_runs/20260804_234925_autonomous_deformtransport/01_environment/case_simulation_readiness_20260805
+server_runs/20260804_234925_autonomous_deformtransport/01_environment/SIM_RUNTIME_RECOVERY_20260805_043358
+server_runs/20260804_234925_autonomous_deformtransport/02_code_audit
+server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/blend_mode_integration_20260805_0402
+server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/flash_attention_sdpa_fallback_20260805_0324
+server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/flow_mode_integration_20260805_0350
+server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/sdpa_padding_mask_fix_20260805_0328
+server_runs/20260804_234925_autonomous_deformtransport/02_validation
+server_runs/20260804_234925_autonomous_deformtransport/02_validation/post_full_generator
+server_runs/20260804_234925_autonomous_deformtransport/03_command_reconstruction
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/baseline_smoke_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/baseline_transport_runtime_audit_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/checkpoint_generator_ema_audit_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/clip_sdpa_e2e_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014745
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014751
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014757
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014802
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014808
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014814
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014819
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014825
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014831
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014837
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014842
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014848
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014854
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014859
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014905
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014910
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014916
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014922
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014928
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014933
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014939
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014945
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014950
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_014956
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015002
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015008
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015013
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015019
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015024
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015030
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015036
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015041
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015047
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015053
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015058
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015104
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015110
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015115
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015121
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015127
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015132
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015138
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015144
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015150
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015155
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015201
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015207
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015213
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015218
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015224
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015230
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015235
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015241
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015247
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015253
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015258
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015304
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015309
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015315
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015321
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015326
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015332
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015338
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015343
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015349
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015355
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015400
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015406
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015412
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015417
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015423
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015428
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015434
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015440
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015446
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015451
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015457
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015503
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015508
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015514
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015520
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015526
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015531
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015537
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015543
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015549
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015554
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015600
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015606
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015611
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015617
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015622
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015628
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015634
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015639
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015645
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015651
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015657
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015703
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/DT_TRANSPORT_GPU_PARITY_20260805_015718
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/FINAL_SIM_NOISE_RECON_20260805_025505
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/FINAL_SIM_NOISE_RECON_20260805_030552
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/FINAL_SIM_NOISE_RECON_20260805_031213
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/final_sim_noise_reconstruction_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/FLOW_TRANSPORT_ARTIFACT_20260805_035026
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/flow_transport_artifact_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/generator_load_probe_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/I2V_VAE_CONDITIONING_20260805_033512
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/I2V_VAE_CONDITIONING_20260805_033616
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/i2v_vae_conditioning_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_BLEND_A05_MANUAL_20260805_035051
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_FLOW_ARTIFACT_MANUAL_20260805_052317
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_FLOW_GENERATOR_MANUAL_20260805_052727
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_NOISE_MANUAL_20260805_010011
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRANSPORT_READY_MANUAL_20260805_011211
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRIO_20260805_050719
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRIO_MANUAL_20260805_021601
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_SIM_4F_20260805_044638
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_SIM_4F_20260805_045917_retry1
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_SIM_4F_20260805_050419_retry2
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_BASELINE_TRANSPORT_RUNTIME_AUDIT_20260805_032032
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_CHECKPOINT_GENERATOR_EMA_AUDIT_20260805_033029
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_GENERATOR_LOAD_20260805_030721
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_031709
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_031854
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_032517
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_032928
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_034305
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_EMA_20260805_040221
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BLEND_20260805_040147
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_CORRECT_20260805_033343
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_FLOW_20260805_035223
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA__SEED1_
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/realwonder_santa_sequence_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_SHUFFLED_20260805_033730
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/SDPA_FALLBACK_NUMERIC_20260805_032626
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/SDPA_FALLBACK_NUMERIC_20260805_032659
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/SDPA_FALLBACK_NUMERIC_20260805_032855
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/transport_gpu_validation_queued
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_CLIP_SDPA_E2E_20260805_033251
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_020119
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_020232
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/wan_vae_transport_gpu_smoke_queued
+server_runs/20260804_234925_autonomous_deformtransport/05_integration
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/RAFT_MOTION_BASE_CORRECT_20260805_034226
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/RAFT_MOTION_BASELINE_SEED1_20260805_035839
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/RAFT_MOTION_BLEND_20260805_040614
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/RAFT_MOTION_FLOW_20260805_035709
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/raft_motion_queued
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/RAFT_MOTION_SHUFFLED_20260805_034428
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/realwonder_santa_proxy_trio_20260805
+server_runs/20260804_234925_autonomous_deformtransport/06_santa_comparison
+server_runs/20260804_234925_autonomous_deformtransport/07_diagnostics
+server_runs/20260804_234925_autonomous_deformtransport/08_method_iterations
+server_runs/20260804_234925_autonomous_deformtransport/09_flow_baseline
+server_runs/20260804_234925_autonomous_deformtransport/10_official_cases
+server_runs/20260804_234925_autonomous_deformtransport/12_scaled_evaluation
+server_runs/20260804_234925_autonomous_deformtransport/12_scaled_evaluation/__pycache__
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/HARD_BASELINE_TEST_20260805_171311
+server_runs/20260804_234925_autonomous_deformtransport/cleanup_selfbuilt_robot_case_20260805_164656
+server_runs/20260804_234925_autonomous_deformtransport/final
+server_runs/20260804_234925_autonomous_deformtransport/gpu_scheduler
+server_runs/20260804_234925_autonomous_deformtransport/human_handoff
+server_runs/20260804_234925_autonomous_deformtransport/human_manual
+server_runs/20260804_234925_autonomous_deformtransport/human_manual/20260805_080436
+server_runs/20260804_234925_autonomous_deformtransport/literature
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/correct_blend_alpha0p5_v1
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_20260805_011211
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/__pycache__
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/torch_cache
+server_runs/20260804_234925_autonomous_deformtransport/repository_organization_audit_20260805_171831
+server_runs/20260804_234925_autonomous_deformtransport/source_snapshot
+server_runs/20260804_234925_autonomous_deformtransport/source_snapshot/key_sources

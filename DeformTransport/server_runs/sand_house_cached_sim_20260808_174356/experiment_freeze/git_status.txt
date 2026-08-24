@@ -1,0 +1,18 @@
+ M demo_web/simulation_engine.py
+ M simulation/genesis_simulator.py
+ M simulation/image23D/segmenter.py
+ M simulation/image23D/single_view_reconstructor.py
+?? (
+?? )
+?? -e
+?? -iname
+?? -path
+?? -print
+?? -type
+?? PY
+?? case_source_census.json
+?? docs/audits/20260805__candidate_case_inventory.txt
+?? docs/code_review/
+?? docs/code_snapshots/
+?? scripts/build_sand_house_v2_geometry_features.py
+?? simulation/reconstruction_cache.py

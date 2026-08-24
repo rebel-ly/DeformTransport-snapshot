@@ -1,0 +1,29 @@
+{
+  "DT_TRANSPORT_VARIANT": "v3d",
+  "N": 0,
+  "current_overlay_k0_exact_noop": true,
+  "depth_shape": [
+    81,
+    0
+  ],
+  "different_scalar_values": 0,
+  "edited_y_equals_y_exact": true,
+  "edited_y_sha256": "3499ca1aa62d39770e70b3803d15cb61e8d59ee0cad68272995648d7c87bfe66",
+  "ids_shape": [
+    0
+  ],
+  "max_abs_diff": 0.0,
+  "mean_abs_diff": 0.0,
+  "tracks_shape": [
+    81,
+    0,
+    2
+  ],
+  "trajectory_writes": 0,
+  "visibility_shape": [
+    81,
+    0
+  ],
+  "winner_writes": 0,
+  "y_sha256": "3499ca1aa62d39770e70b3803d15cb61e8d59ee0cad68272995648d7c87bfe66"
+}

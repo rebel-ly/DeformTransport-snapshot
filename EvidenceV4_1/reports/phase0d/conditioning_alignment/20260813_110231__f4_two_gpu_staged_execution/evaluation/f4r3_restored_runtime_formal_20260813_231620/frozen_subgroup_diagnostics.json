@@ -1,0 +1,186 @@
+{
+  "formal_all_diagnostic": {
+    "RW": {
+      "TCMAR_LAB_MEAN": 13.63990015927057,
+      "TCME_TRANSITION_MEAN": 0.5869890665947547
+    },
+    "DT-FULL": {
+      "TCMAR_LAB_MEAN": 17.144317299874714,
+      "TCME_TRANSITION_MEAN": 0.7265499674289193
+    },
+    "WM-0": {
+      "TCMAR_LAB_MEAN": 44.47206866882119,
+      "TCME_TRANSITION_MEAN": 3.618652456619911
+    },
+    "DT-FRAG-PRUNE": {
+      "TCMAR_LAB_MEAN": 17.16092978486358,
+      "TCME_TRANSITION_MEAN": 0.6744934747082023
+    },
+    "DT-GRID100-CENTER": {
+      "TCMAR_LAB_MEAN": 23.224553849614445,
+      "TCME_TRANSITION_MEAN": 0.6989570945353583
+    }
+  },
+  "subgroups": {
+    "RW": {
+      "all": {
+        "N": 1257,
+        "TCMAR_LAB_MEAN": 13.639900159270573,
+        "TCME_MEAN": 0.7478196456074139
+      },
+      "high_motion_q4": {
+        "N": 314,
+        "TCMAR_LAB_MEAN": 11.355178971502843,
+        "TCME_MEAN": 0.8943014602285222
+      },
+      "fragmented_switch_ge3": {
+        "N": 1039,
+        "TCMAR_LAB_MEAN": 13.045953686062642,
+        "TCME_MEAN": 0.7789415329498346
+      },
+      "q4_and_fragmented": {
+        "N": 301,
+        "TCMAR_LAB_MEAN": 11.214443848824212,
+        "TCME_MEAN": 0.8870510472997326
+      },
+      "q4_and_stable": {
+        "N": 13,
+        "TCMAR_LAB_MEAN": 14.873557038468691,
+        "TCME_MEAN": 1.0755617834482671
+      },
+      "zero_switch_positive_visible": {
+        "N": 62,
+        "TCMAR_LAB_MEAN": 23.556203480112934,
+        "TCME_MEAN": 0.2941685320020525
+      }
+    },
+    "DT-FULL": {
+      "all": {
+        "N": 1257,
+        "TCMAR_LAB_MEAN": 17.144317299874714,
+        "TCME_MEAN": 0.9142896549966396
+      },
+      "high_motion_q4": {
+        "N": 314,
+        "TCMAR_LAB_MEAN": 20.393829591125556,
+        "TCME_MEAN": 1.2146090316648763
+      },
+      "fragmented_switch_ge3": {
+        "N": 1039,
+        "TCMAR_LAB_MEAN": 17.413941176549848,
+        "TCME_MEAN": 0.9514444260787789
+      },
+      "q4_and_fragmented": {
+        "N": 301,
+        "TCMAR_LAB_MEAN": 19.991581132369355,
+        "TCME_MEAN": 1.1965193161838492
+      },
+      "q4_and_stable": {
+        "N": 13,
+        "TCMAR_LAB_MEAN": 30.450041060030582,
+        "TCME_MEAN": 1.6668519186905515
+      },
+      "zero_switch_positive_visible": {
+        "N": 62,
+        "TCMAR_LAB_MEAN": 14.168292969801737,
+        "TCME_MEAN": 0.37859506935139714
+      }
+    },
+    "WM-0": {
+      "all": {
+        "N": 1257,
+        "TCMAR_LAB_MEAN": 44.47206866882119,
+        "TCME_MEAN": 4.806073225819103
+      },
+      "high_motion_q4": {
+        "N": 314,
+        "TCMAR_LAB_MEAN": 55.29565329077897,
+        "TCME_MEAN": 5.801043658573846
+      },
+      "fragmented_switch_ge3": {
+        "N": 1039,
+        "TCMAR_LAB_MEAN": 46.39952807783104,
+        "TCME_MEAN": 5.016016504432529
+      },
+      "q4_and_fragmented": {
+        "N": 301,
+        "TCMAR_LAB_MEAN": 55.64773682597627,
+        "TCME_MEAN": 5.804579522460588
+      },
+      "q4_and_stable": {
+        "N": 13,
+        "TCMAR_LAB_MEAN": 46.49356491084685,
+        "TCME_MEAN": 5.712647061405275
+      },
+      "zero_switch_positive_visible": {
+        "N": 62,
+        "TCMAR_LAB_MEAN": 27.906852825538763,
+        "TCME_MEAN": 2.4799622390794753
+      }
+    },
+    "DT-FRAG-PRUNE": {
+      "all": {
+        "N": 1257,
+        "TCMAR_LAB_MEAN": 17.160929784863576,
+        "TCME_MEAN": 0.9050542752244606
+      },
+      "high_motion_q4": {
+        "N": 314,
+        "TCMAR_LAB_MEAN": 14.424011074287614,
+        "TCME_MEAN": 1.1513134930602593
+      },
+      "fragmented_switch_ge3": {
+        "N": 1039,
+        "TCMAR_LAB_MEAN": 17.661188200745404,
+        "TCME_MEAN": 0.9472994638691076
+      },
+      "q4_and_fragmented": {
+        "N": 301,
+        "TCMAR_LAB_MEAN": 14.288309124405822,
+        "TCME_MEAN": 1.143523257358129
+      },
+      "q4_and_stable": {
+        "N": 13,
+        "TCMAR_LAB_MEAN": 17.816559821332408,
+        "TCME_MEAN": 1.34606938561352
+      },
+      "zero_switch_positive_visible": {
+        "N": 62,
+        "TCMAR_LAB_MEAN": 13.7994484613259,
+        "TCME_MEAN": 0.2941664278369579
+      }
+    },
+    "DT-GRID100-CENTER": {
+      "all": {
+        "N": 1257,
+        "TCMAR_LAB_MEAN": 23.224553849614445,
+        "TCME_MEAN": 1.0453453149401246
+      },
+      "high_motion_q4": {
+        "N": 314,
+        "TCMAR_LAB_MEAN": 16.251953620371953,
+        "TCME_MEAN": 1.087374533115813
+      },
+      "fragmented_switch_ge3": {
+        "N": 1039,
+        "TCMAR_LAB_MEAN": 23.387415711653098,
+        "TCME_MEAN": 1.0793696877727141
+      },
+      "q4_and_fragmented": {
+        "N": 301,
+        "TCMAR_LAB_MEAN": 16.175801330583667,
+        "TCME_MEAN": 1.077556496479662
+      },
+      "q4_and_stable": {
+        "N": 13,
+        "TCMAR_LAB_MEAN": 18.15576086507903,
+        "TCME_MEAN": 1.3328254490195868
+      },
+      "zero_switch_positive_visible": {
+        "N": 62,
+        "TCMAR_LAB_MEAN": 20.899389533049636,
+        "TCME_MEAN": 0.32168180152022446
+      }
+    }
+  }
+}

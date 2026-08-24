@@ -1,0 +1,18 @@
+{
+  "c1_c2_result_seal": "OPEN",
+  "seed0_incremental_transport_signal": "PASS",
+  "c1_tcme": 0.47438763126111494,
+  "c2_tcme": 0.42167144903579584,
+  "c1_tcmar": 10.2725907004925,
+  "c2_tcmar": 10.261138980605933,
+  "preview_diagnostics": "UNRESOLVED_FROZEN_SUPPORT_MASK_NOT_PERSISTED",
+  "e0_status": "RUNNING_ACTIVE",
+  "epsilon_only_canonical_bridge": "UNRESOLVED_RUNNING",
+  "science_next_action": "STOP_FOR_USER_DECISION",
+  "formal_overlay_modified": false,
+  "gpu3_used": false,
+  "server_side_codex_executed": false,
+  "server_llm_api_used": false,
+  "existing_remote_helper_processes_killed": false,
+  "local_codex_only_policy": "PRESERVED"
+}

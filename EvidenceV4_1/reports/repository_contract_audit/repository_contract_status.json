@@ -1,0 +1,27 @@
+{
+  "status": "CLOSED",
+  "git_review_commit": "9a70c7de75113281b27396272be3c33046c5f93b",
+  "formal_santa_input": {
+    "bridge": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline",
+    "track_count": 1257,
+    "timeline": "step0..800",
+    "decision": "PASS"
+  },
+  "historical_santa_1277": {
+    "decision": "FORMAL_REJECT",
+    "reason": [
+      "raw future frame used as source",
+      "projection-only visibility",
+      "true-source VAE-cell sampling failure"
+    ]
+  },
+  "historical_sandhouse_v3d": {
+    "decision": "FORMAL_REJECT",
+    "source_exact_initial": false,
+    "uv_frame0_initial_max_abs_diff": 0.44915771484375,
+    "xyz_frame0_initial_max_abs_diff": 0.0005390280857682228,
+    "depth_frame0_initial_max_abs_diff": 0.000102996826171875,
+    "numerical_metric_effect": "UNRESOLVED"
+  },
+  "phase0b_allowed": true
+}

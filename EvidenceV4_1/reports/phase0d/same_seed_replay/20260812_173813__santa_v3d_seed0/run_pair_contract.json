@@ -1,0 +1,16 @@
+{
+  "A_B_formal_fields_equal": true,
+  "execution_mode": "CROSS_DEVICE_PARALLEL",
+  "formal_fields_exact_equal_except": [
+    "command",
+    "environment",
+    "gpu_physical_index",
+    "gpu_uuid",
+    "mp4_path",
+    "output_dir",
+    "run_id",
+    "start_time_utc"
+  ],
+  "runner_sha_match": true,
+  "status": "PASS"
+}

@@ -1,0 +1,6 @@
+arm,intervention,TC_ME,TC_MAR,delta_TCME_full_minus_intervention,delta_TCMAR_full_minus_intervention,operator_exposure,video_path,video_sha256
+C2,Full / Correct,0.42167144903579584,10.261138980605933,0,0,reference,,
+CS,IDENTITY CORRUPTION,0.5138549546231557,11.860088155174827,-0.09218350558735984,-1.598949174568894,geometry identical to C2,,
+SC,TARGET-POSITION EVOLUTION NULLIFICATION,0.4753837180196287,11.987516239928766,-0.05371226898383287,-1.726377259322833,support/collision topology changed,,
+NODEPTH,DEPTH-PRIMARY COLLISION-ARBITRATION REMOVAL,0.4230808744543751,10.292388805431345,-0.0014094254185792465,-0.031249824825412276,328/788 collision winners changed; eligibility retained,/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/nodepth_final_20260818T190000Z/nodepth_auto_attempt_12_gpu2_20260819T143718Z/nodepth_formal_correct_v3d_seed000.mp4,42b374a07d4e87d91706b65da663cc8be875821f26d4c46d967b31dfa8e54d9e
+NOVIS,VISIBILITY-GATE REMOVAL,NA,NA,NA,NA,zero intervention exposure,NA,NA

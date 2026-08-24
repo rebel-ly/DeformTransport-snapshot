@@ -1,0 +1,5 @@
+{
+  "primary": {"metric": "TC-ME", "c1": 0.47438763126111494, "c2": 0.42167144903579584, "delta_c2_minus_c1": -0.0527161822253191, "relative_change": -0.11112654359555316, "direction": "C2_BETTER", "seed0_incremental_transport_signal": "PASS"},
+  "secondary": {"metric": "TC-MAR", "c1": 10.2725907004925, "c2": 10.261138980605933, "delta_c2_minus_c1": -0.011451719886567, "relative_change": -0.001114776, "direction": "C2_BETTER"},
+  "scope": "Within frozen Preview-SDEdit protocol only; no cross-baseline conclusion opened."
+}

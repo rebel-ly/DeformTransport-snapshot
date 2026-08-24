@@ -1,0 +1,16 @@
+usage: run_wan_vae_transport_probe.py [-h] [--transport-ready TRANSPORT_READY]
+                                      [--checkpoint CHECKPOINT]
+                                      [--output-dir OUTPUT_DIR] [--seed SEED]
+                                      [--baseline-only]
+                                      [--visual-inspection {pending,pass,fail}]
+                                      [--visual-note VISUAL_NOTE]
+
+options:
+  -h, --help            show this help message and exit
+  --transport-ready TRANSPORT_READY
+  --checkpoint CHECKPOINT
+  --output-dir OUTPUT_DIR
+  --seed SEED
+  --baseline-only
+  --visual-inspection {pending,pass,fail}
+  --visual-note VISUAL_NOTE

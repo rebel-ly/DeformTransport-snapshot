@@ -1,0 +1,40 @@
+DeformTransport Evidence V4.1
+Phase0B-3 Wan-Move Consumption-Path Audit
+
+QUESTION
+
+Does the actually installed Wan-Move implementation consume the
+Identity-Shuffled t=0 coordinate ONLY as a source-feature lookup
+coordinate, while consuming t>0 positions as target placement
+coordinates?
+
+The following stronger statement must NOT be assumed from array
+equality alone:
+
+"full motion trajectory is identical."
+
+PASS requires source-coordinate intervention not to propagate into
+a generator-consumed velocity/delta/source-relative motion signal.
+
+AUDIT TARGET
+
+/workspace/Wan-Move
+
+Files:
+wan/wan_move.py
+wan/modules/trajectory.py
+
+Required inspection:
+- exact git HEAD
+- working-tree modifications
+- exact source SHA256
+- WanMove.generate
+- create_pos_feature_map
+- replace_feature
+- all _dt_* trajectory functions
+- random permutation / generator / manual seed usage
+- use of t=0 source position
+- use of future target position
+- any coordinate subtraction / velocity / relative-motion operation
+
+No model generation is performed in Phase0B-3 source audit.

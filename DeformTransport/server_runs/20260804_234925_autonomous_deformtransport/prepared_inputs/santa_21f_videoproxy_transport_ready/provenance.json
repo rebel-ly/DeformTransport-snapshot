@@ -1,0 +1,17 @@
+{
+  "用途": "GPU运行时全链路smoke，不用于公平生成或GT评估",
+  "输入视频": "/workspace/DeformTransport/artifacts/transport_validation/santa_cloth_21f/wan_vae/target_input.mp4",
+  "输入视频SHA256": "6028136b62bc54e0b5ef667fb21362516e929f9e8643cb404c6f062cde165e1d",
+  "原始transport_ready": "/workspace/DeformTransport/artifacts/transport_validation/santa_cloth_21f/transport_ready.pt",
+  "原始transport_ready_SHA256": "2bb3d0fe4beff3a6ef7e6d66fa8f5438f5bb0172264dfb561cb7254368fa6664",
+  "派生transport_ready": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt",
+  "派生transport_ready_SHA256": "45d25b1901e621e575a83ffb1a351306c2ed4980b8a5988f70e6caef56cc123b",
+  "帧数": 21,
+  "分辨率": [
+    480,
+    832
+  ],
+  "提取方式": "imageio FFMPEG逐帧解码后保存PNG",
+  "重要限制": "PNG无损保存了解码像素，但源MP4本身有损；不得与原始未压缩final_sim混同",
+  "校验": "validate_transport_ready保存前后均通过"
+}

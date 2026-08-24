@@ -1,0 +1,26 @@
+{
+  "时间": "2026-08-05T03:33:35.916592+08:00",
+  "任务": "Santa真实首帧Wan_CLIP图像编码器SDPA端到端回归",
+  "输入": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/resized_input_image.png",
+  "输入SHA256": "895099a95d73f13e449cd87816086e79b9cab1dbc8f1f5de6fc94356e1627004",
+  "输入shape": [
+    1,
+    3,
+    480,
+    832
+  ],
+  "输出shape": [
+    1,
+    257,
+    1280
+  ],
+  "输出dtype": "torch.float32",
+  "输出finite": true,
+  "输出SHA256": "90df8676218176b1b5d62154af6c72e7130801eb3863f9334b6a8fdc0551acd9",
+  "CLIP编码耗时秒": 2.9389474670024356,
+  "总耗时秒": 24.490963999996893,
+  "torch峰值allocated_MiB": 4644.09521484375,
+  "torch峰值reserved_MiB": 4722.0,
+  "CPU_maxRSS_GiB": 9.313251495361328,
+  "通过": true
+}

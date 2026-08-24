@@ -1,0 +1,15 @@
+{
+  "wrapper_pid": 62037,
+  "python_pid": 62052,
+  "status_at_attestation": "RUNNING_ACTIVE",
+  "cuda_visible_devices": "0",
+  "gpu_assignment": "GPU0",
+  "stdout_attests_formal_diffusion_seed": 1,
+  "stdout_attests_start_index": 15,
+  "stdout_attests_seed1_epsilon_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_100000__phase0d_4d_r3m_seed1_wave1/EPSILON_SEED1_58x104.npy",
+  "immediate_traceback": false,
+  "immediate_cuda_oom": false,
+  "science_result_seal": "CLOSED",
+  "c2_seed1_launched": false,
+  "cs_seed1_launched": false
+}

@@ -1,0 +1,5 @@
+{
+  "historical_n1277_santa_metrics": "LEGACY_HISTORICAL_ONLY",
+  "corrected_v2_metrics": "NOT_PRODUCED_BECAUSE_SOURCE_MODIFICATION_REQUIRED",
+  "comparison_policy": "No N1277 values are promoted or mixed with corrected-v2 formal values."
+}

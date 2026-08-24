@@ -1,0 +1,18 @@
+{
+  "runtime": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python",
+  "evaluator": "generated/eval_v3_corrected_v2_recovered.py",
+  "appearance": {
+    "exit_code": 0,
+    "report": "runtime/formal/appearance_report.json",
+    "log": "runtime/formal/appearance.log"
+  },
+  "motion_santa": {
+    "exit_code": 0,
+    "cuda_visible_devices": "1",
+    "batch": 8,
+    "report": "runtime/formal/santa_motion_report.json",
+    "log": "runtime/formal/santa_motion.log"
+  },
+  "RW_EVAL_EXIT_CODE": 0,
+  "DTFULL_EVAL_EXIT_CODE": 0
+}

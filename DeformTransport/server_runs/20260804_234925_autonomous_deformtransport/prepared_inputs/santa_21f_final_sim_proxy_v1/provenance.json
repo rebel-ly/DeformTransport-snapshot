@@ -1,0 +1,39 @@
+{
+  "生成时间": "2026-08-05T02:52:24.831020+08:00",
+  "用途": "infer_sim原生Baseline/Correct/Shuffled最小21像素帧闭环与集成验证",
+  "结论边界": "有损工程proxy；不可作为future GT、原始完整simulation或正式方法效果结论",
+  "源配置": "/workspace/DeformTransport/cases/santa_cloth/config.yaml",
+  "源配置SHA256": "f348f16833fb5d21ab4e7d28629c2357205b6aab937e296b4f428ca18a934586",
+  "源初始图": "/workspace/DeformTransport/artifacts/stage1_dynamic/santa_cloth_2f_wsl_20260802_retry3/frame_initial.png",
+  "源初始图SHA256": "dd5d8410fde94cc8fb303f425648838b2dce0d16f5774bdfd8987a0d1e57dc04",
+  "初始图处理": "512x512 RGB→双线性832x832→中心裁剪y[176:656]→832x480 PNG",
+  "输出初始图shape": [
+    480,
+    832,
+    3
+  ],
+  "输出初始图dtype": "uint8",
+  "输出初始图SHA256": "895099a95d73f13e449cd87816086e79b9cab1dbc8f1f5de6fc94356e1627004",
+  "未来帧来源": "/workspace/DeformTransport/artifacts/transport_validation/santa_cloth_21f/wan_vae/target_input.mp4",
+  "未来视频SHA256": "6028136b62bc54e0b5ef667fb21362516e929f9e8643cb404c6f062cde165e1d",
+  "未来帧处理": "从历史target_input.mp4已解码的21个832x480 PNG逐文件复制；源MP4有损",
+  "未来帧数": 21,
+  "未来帧shape": [
+    480,
+    832,
+    3
+  ],
+  "未来帧dtype": "uint8",
+  "配置latent帧数": 6,
+  "像素帧公式": "4*6-3=21",
+  "denoising_step_list": [
+    750,
+    500,
+    250
+  ],
+  "mask策略": "mask_dropin_step=-1；不伪造points/mesh mask；infer_sim按源码跳过",
+  "缺失待生成": [
+    "noises.npy",
+    "flows.npy"
+  ]
+}

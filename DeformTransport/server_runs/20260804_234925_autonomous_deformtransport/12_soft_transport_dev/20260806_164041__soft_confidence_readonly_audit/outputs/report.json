@@ -1,0 +1,1515 @@
+{
+  "inputs": {
+    "soft_artifact": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_184845__santa__soft_wan_gate025_artifact_retry1/outputs/vae_latent_outputs_soft_gate025.pt",
+      "sha256": "38ab294a9c5cdd2f5a54dadaf87ffbd6fb16d1c7a0868d000cc7c37d2a7975fb"
+    },
+    "residual_artifact": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_194114__santa__soft_fusion_ablations/outputs/vae_latent_outputs_soft_gate025_blend_a050.pt",
+      "sha256": "2f0c643ca8584f7655e6aa8d7eba84ea9e404031cafe1776fe92e118ab4cecb5"
+    }
+  },
+  "soft_artifact_inventory": {
+    "format_version": {
+      "type": "int",
+      "repr": "2"
+    },
+    "artifact_kind": {
+      "type": "str",
+      "repr": "'wan_vae_soft_transport'"
+    },
+    "transport_method": {
+      "type": "str",
+      "repr": "'continuous_bilinear_forward_splat_gate'"
+    },
+    "soft_weight_threshold": {
+      "type": "float",
+      "repr": "0.25"
+    },
+    "seed": {
+      "type": "int",
+      "repr": "0"
+    },
+    "latent_frame_indices": {
+      "type": "Tensor",
+      "shape": [
+        21
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 21,
+      "min": 0,
+      "max": 80,
+      "nonzero_values": 20
+    },
+    "source_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        1,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 99840,
+      "finite": true,
+      "min": -1.9609375,
+      "max": 2.03125,
+      "mean": 0.07029043883085251,
+      "std": 0.686345636844635,
+      "nonzero_values": 99778
+    },
+    "target_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -3.609375,
+      "max": 4.625,
+      "mean": 0.11669106781482697,
+      "std": 1.0522958040237427,
+      "nonzero_values": 2096157
+    },
+    "correct_transported_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -1.665988564491272,
+      "max": 1.729393482208252,
+      "mean": 0.008157787844538689,
+      "std": 0.2677813172340393,
+      "nonzero_values": 371872
+    },
+    "shuffled_transported_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -1.5521271228790283,
+      "max": 1.6764072179794312,
+      "mean": 0.005901746917515993,
+      "std": 0.23588277399539948,
+      "nonzero_values": 371872
+    },
+    "correct_fused_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -2.953125,
+      "max": 4.15625,
+      "mean": 0.09628943353891373,
+      "std": 1.0175007581710815,
+      "nonzero_values": 2096305
+    },
+    "shuffled_fused_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -2.953125,
+      "max": 4.15625,
+      "mean": 0.09438890963792801,
+      "std": 1.0097581148147583,
+      "nonzero_values": 2096305
+    },
+    "transport_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 22453,
+      "false_values": 108587
+    },
+    "contribution_count": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 131040,
+      "min": 0,
+      "max": 318,
+      "nonzero_values": 22453
+    },
+    "transport_weight": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 131040,
+      "finite": true,
+      "min": 0.0,
+      "max": 93.79911804199219,
+      "mean": 3.0650641918182373,
+      "std": 8.728419303894043,
+      "nonzero_values": 23242
+    },
+    "raw_soft_transport_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 23242,
+      "false_values": 107798
+    },
+    "raw_soft_contribution_count": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 131040,
+      "min": 0,
+      "max": 318,
+      "nonzero_values": 23242
+    },
+    "hard_reference_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 20813,
+      "false_values": 110227
+    },
+    "hard_reference_contribution_count": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 131040,
+      "min": 0,
+      "max": 107,
+      "nonzero_values": 20813
+    },
+    "soft_only_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 2429,
+      "false_values": 128611
+    },
+    "shuffled_permutation": {
+      "type": "Tensor",
+      "shape": [
+        28264
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 28264,
+      "min": 0,
+      "max": 28263,
+      "nonzero_values": 28263
+    },
+    "source_files": {
+      "type": "dict",
+      "repr": "{'transport_ready': '/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt', 'transport_ready_sha256': '154a08e074abcb6aa458b08cfd37c033dbc8245ffe02d182524e9bc275252723', 'base_vae_artifact': '/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/vae_latent"
+    }
+  },
+  "residual_artifact_inventory": {
+    "format_version": {
+      "type": "int",
+      "repr": "3"
+    },
+    "artifact_kind": {
+      "type": "str",
+      "repr": "'wan_vae_soft_gate025_residual_blend'"
+    },
+    "transport_method": {
+      "type": "str",
+      "repr": "'continuous_bilinear_forward_splat'"
+    },
+    "fusion_mode": {
+      "type": "str",
+      "repr": "'residual_blend'"
+    },
+    "fusion_alpha": {
+      "type": "float",
+      "repr": "0.5"
+    },
+    "latent_frame_indices": {
+      "type": "Tensor",
+      "shape": [
+        21
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 21,
+      "min": 0,
+      "max": 80,
+      "nonzero_values": 20
+    },
+    "source_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        1,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 99840,
+      "finite": true,
+      "min": -1.9609375,
+      "max": 2.03125,
+      "mean": 0.07029043883085251,
+      "std": 0.686345636844635,
+      "nonzero_values": 99778
+    },
+    "target_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -3.609375,
+      "max": 4.625,
+      "mean": 0.11669106781482697,
+      "std": 1.0522958040237427,
+      "nonzero_values": 2096157
+    },
+    "correct_transported_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -1.665988564491272,
+      "max": 1.729393482208252,
+      "mean": 0.008157787844538689,
+      "std": 0.2677813172340393,
+      "nonzero_values": 371872
+    },
+    "shuffled_transported_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -1.5521271228790283,
+      "max": 1.6764072179794312,
+      "mean": 0.005901746917515993,
+      "std": 0.23588277399539948,
+      "nonzero_values": 371872
+    },
+    "correct_fused_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -2.953125,
+      "max": 4.15625,
+      "mean": 0.10649026185274124,
+      "std": 1.0279210805892944,
+      "nonzero_values": 2096305
+    },
+    "shuffled_fused_latent": {
+      "type": "Tensor",
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu",
+      "numel": 2096640,
+      "finite": true,
+      "min": -2.953125,
+      "max": 4.15625,
+      "mean": 0.10553998500108719,
+      "std": 1.0198194980621338,
+      "nonzero_values": 2096305
+    },
+    "transport_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 22453,
+      "false_values": 108587
+    },
+    "contribution_count": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.int64",
+      "device": "cpu",
+      "numel": 131040,
+      "min": 0,
+      "max": 318,
+      "nonzero_values": 22453
+    },
+    "soft_only_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 2429,
+      "false_values": 128611
+    },
+    "source_soft_only_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "device": "cpu",
+      "numel": 131040,
+      "true_values": 2429,
+      "false_values": 128611
+    },
+    "source_files": {
+      "type": "dict",
+      "repr": "{'hard_artifact': '/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/vae_latent_outputs.pt', 'hard_artifact_sha256': '57f12610f0038cd6bba5577a7cc231f6b8d5172a6c53766b972eaa08d1afd18c', 'soft_artifact': '/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_184845__santa__soft_wan_gate025_artifact_retry1/outputs/vae_latent_outputs_soft_gate0"
+    },
+    "extra": {
+      "type": "dict",
+      "repr": "{'support_source': 'soft_gate025_mask', 'purpose': 'test whether partial residual injection preserves target detail'}"
+    }
+  },
+  "common_tensor_comparisons": {
+    "latent_frame_indices": {
+      "available_in_soft": true,
+      "available_in_residual": true,
+      "shape_equal": true,
+      "dtype_equal": true,
+      "exactly_equal": true
+    },
+    "source_latent": {
+      "available_in_soft": true,
+      "available_in_residual": true,
+      "shape_equal": true,
+      "dtype_equal": true,
+      "exactly_equal": true,
+      "max_abs_difference": 0.0,
+      "mean_abs_difference": 0.0
+    },
+    "target_latent": {
+      "available_in_soft": true,
+      "available_in_residual": true,
+      "shape_equal": true,
+      "dtype_equal": true,
+      "exactly_equal": true,
+      "max_abs_difference": 0.0,
+      "mean_abs_difference": 0.0
+    },
+    "transport_mask": {
+      "available_in_soft": true,
+      "available_in_residual": true,
+      "shape_equal": true,
+      "dtype_equal": true,
+      "exactly_equal": true
+    },
+    "contribution_count": {
+      "available_in_soft": true,
+      "available_in_residual": true,
+      "shape_equal": true,
+      "dtype_equal": true,
+      "exactly_equal": true
+    },
+    "soft_only_mask": {
+      "available_in_soft": true,
+      "available_in_residual": true,
+      "shape_equal": true,
+      "dtype_equal": true,
+      "exactly_equal": true
+    },
+    "transport_weight": {
+      "available_in_soft": true,
+      "available_in_residual": false
+    }
+  },
+  "transport_geometry": {
+    "mask_shape": [
+      21,
+      1,
+      60,
+      104
+    ],
+    "support_cells": 22453,
+    "interior_cells": 18102,
+    "boundary_cells": 4351,
+    "soft_only_cells": 1640,
+    "mask_count_contract": true
+  },
+  "candidate_spatial_maps": {
+    "transport_mask": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.bool",
+        "device": "cpu",
+        "numel": 131040,
+        "true_values": 22453,
+        "false_values": 108587
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        }
+      }
+    },
+    "contribution_count": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.int64",
+        "device": "cpu",
+        "numel": 131040,
+        "min": 0,
+        "max": 318,
+        "nonzero_values": 22453
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 71.4609146118164,
+            "std": 48.52928924560547,
+            "q00": 1.0,
+            "q01": 3.0,
+            "q05": 10.0,
+            "q10": 18.199951171875,
+            "q25": 39.0,
+            "q50": 61.0,
+            "q75": 93.0,
+            "q90": 137.0,
+            "q95": 173.0,
+            "q99": 232.0,
+            "q100": 318.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 82.19528198242188,
+            "std": 46.85589599609375,
+            "q00": 1.0,
+            "q01": 15.0,
+            "q05": 29.0,
+            "q10": 36.0,
+            "q25": 50.0,
+            "q50": 70.0,
+            "q75": 101.0,
+            "q90": 148.0,
+            "q95": 181.0,
+            "q99": 237.0,
+            "q100": 318.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 26.801424026489258,
+            "std": 23.353635787963867,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 3.0,
+            "q10": 5.0,
+            "q25": 10.0,
+            "q50": 20.0,
+            "q75": 37.0,
+            "q90": 55.0,
+            "q95": 69.0,
+            "q99": 105.0,
+            "q100": 222.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 17.9939022064209,
+            "std": 13.161408424377441,
+            "q00": 2.0,
+            "q01": 3.0,
+            "q05": 4.0,
+            "q10": 5.0,
+            "q25": 8.0,
+            "q50": 14.0,
+            "q75": 24.0,
+            "q90": 36.0,
+            "q95": 44.0499267578125,
+            "q99": 62.6099853515625,
+            "q100": 85.0
+          }
+        }
+      }
+    },
+    "transport_weight": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.float32",
+        "device": "cpu",
+        "numel": 131040,
+        "finite": true,
+        "min": 0.0,
+        "max": 93.79911804199219,
+        "mean": 3.0650641918182373,
+        "std": 8.728419303894043,
+        "nonzero_values": 23242
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 17.885475158691406,
+            "std": 13.400554656982422,
+            "q00": 0.0003056191198993474,
+            "q01": 0.20835785567760468,
+            "q05": 1.0635144710540771,
+            "q10": 3.06736421585083,
+            "q25": 8.998072624206543,
+            "q50": 15.151450157165527,
+            "q75": 23.305391311645508,
+            "q90": 35.780723571777344,
+            "q95": 44.97077560424805,
+            "q99": 63.17818069458008,
+            "q100": 93.79911804199219
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 20.792997360229492,
+            "std": 13.007219314575195,
+            "q00": 0.006598545238375664,
+            "q01": 2.3169493675231934,
+            "q05": 5.843558311462402,
+            "q10": 8.221855163574219,
+            "q25": 12.093572616577148,
+            "q50": 17.667402267456055,
+            "q75": 25.504859924316406,
+            "q90": 38.671546936035156,
+            "q95": 47.99666976928711,
+            "q99": 65.9020004272461,
+            "q100": 93.79911804199219
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 5.788943767547607,
+            "std": 6.426483631134033,
+            "q00": 0.0003056191198993474,
+            "q01": 0.0021441776771098375,
+            "q05": 0.20835785567760468,
+            "q10": 0.40399065613746643,
+            "q25": 1.1016385555267334,
+            "q50": 3.7752206325531006,
+            "q75": 8.527678489685059,
+            "q90": 13.929638862609863,
+            "q95": 17.387929916381836,
+            "q99": 28.651596069335938,
+            "q100": 70.24488067626953
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 3.325610876083374,
+            "std": 3.535412311553955,
+            "q00": 0.25153303146362305,
+            "q01": 0.26531311869621277,
+            "q05": 0.33230629563331604,
+            "q10": 0.4130804240703583,
+            "q25": 0.7767546772956848,
+            "q50": 1.9974596500396729,
+            "q75": 4.634832382202148,
+            "q90": 8.316635131835938,
+            "q95": 10.628722190856934,
+            "q99": 15.841706275939941,
+            "q100": 22.73877716064453
+          }
+        }
+      }
+    },
+    "raw_soft_transport_mask": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.bool",
+        "device": "cpu",
+        "numel": 131040,
+        "true_values": 23242,
+        "false_values": 107798
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        }
+      }
+    },
+    "raw_soft_contribution_count": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.int64",
+        "device": "cpu",
+        "numel": 131040,
+        "min": 0,
+        "max": 318,
+        "nonzero_values": 23242
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 71.4609146118164,
+            "std": 48.52928924560547,
+            "q00": 1.0,
+            "q01": 3.0,
+            "q05": 10.0,
+            "q10": 18.199951171875,
+            "q25": 39.0,
+            "q50": 61.0,
+            "q75": 93.0,
+            "q90": 137.0,
+            "q95": 173.0,
+            "q99": 232.0,
+            "q100": 318.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 82.19528198242188,
+            "std": 46.85589599609375,
+            "q00": 1.0,
+            "q01": 15.0,
+            "q05": 29.0,
+            "q10": 36.0,
+            "q25": 50.0,
+            "q50": 70.0,
+            "q75": 101.0,
+            "q90": 148.0,
+            "q95": 181.0,
+            "q99": 237.0,
+            "q100": 318.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 26.801424026489258,
+            "std": 23.353635787963867,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 3.0,
+            "q10": 5.0,
+            "q25": 10.0,
+            "q50": 20.0,
+            "q75": 37.0,
+            "q90": 55.0,
+            "q95": 69.0,
+            "q99": 105.0,
+            "q100": 222.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 17.9939022064209,
+            "std": 13.161408424377441,
+            "q00": 2.0,
+            "q01": 3.0,
+            "q05": 4.0,
+            "q10": 5.0,
+            "q25": 8.0,
+            "q50": 14.0,
+            "q75": 24.0,
+            "q90": 36.0,
+            "q95": 44.0499267578125,
+            "q99": 62.6099853515625,
+            "q100": 85.0
+          }
+        }
+      }
+    },
+    "hard_reference_mask": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.bool",
+        "device": "cpu",
+        "numel": 131040,
+        "true_values": 20813,
+        "false_values": 110227
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 0.9269585609436035,
+            "std": 0.2602103352546692,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 0.9888962507247925,
+            "std": 0.10479054600000381,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 0.6692714095115662,
+            "std": 0.47052955627441406,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 0.0,
+            "std": 0.0,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 0.0,
+            "q90": 0.0,
+            "q95": 0.0,
+            "q99": 0.0,
+            "q100": 0.0
+          }
+        }
+      }
+    },
+    "hard_reference_contribution_count": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.int64",
+        "device": "cpu",
+        "numel": 131040,
+        "min": 0,
+        "max": 107,
+        "nonzero_values": 20813
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 17.8882999420166,
+            "std": 14.689451217651367,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 2.0,
+            "q25": 8.0,
+            "q50": 15.0,
+            "q75": 24.0,
+            "q90": 37.0,
+            "q95": 48.0,
+            "q99": 69.0,
+            "q100": 107.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 20.499557495117188,
+            "std": 14.41013240814209,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 4.0,
+            "q10": 6.0,
+            "q25": 11.0,
+            "q50": 17.0,
+            "q75": 25.0,
+            "q90": 40.0,
+            "q95": 50.0,
+            "q99": 71.0,
+            "q100": 107.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 7.024362087249756,
+            "std": 10.159933090209961,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 3.0,
+            "q75": 10.5,
+            "q90": 19.0,
+            "q95": 26.0,
+            "q99": 47.0,
+            "q100": 93.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 0.0,
+            "std": 0.0,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 0.0,
+            "q90": 0.0,
+            "q95": 0.0,
+            "q99": 0.0,
+            "q100": 0.0
+          }
+        }
+      }
+    },
+    "soft_only_mask": {
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          1,
+          60,
+          104
+        ],
+        "dtype": "torch.bool",
+        "device": "cpu",
+        "numel": 131040,
+        "true_values": 2429,
+        "false_values": 128611
+      },
+      "region_statistics": {
+        "support": {
+          "cells": 22453,
+          "statistics": {
+            "values": 22453,
+            "mean": 0.07304146140813828,
+            "std": 0.2602103352546692,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 0.0,
+            "q90": 0.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "interior": {
+          "cells": 18102,
+          "statistics": {
+            "values": 18102,
+            "mean": 0.011103745549917221,
+            "std": 0.10479054600000381,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 0.0,
+            "q90": 0.0,
+            "q95": 0.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "boundary": {
+          "cells": 4351,
+          "statistics": {
+            "values": 4351,
+            "mean": 0.33072856068611145,
+            "std": 0.47052955627441406,
+            "q00": 0.0,
+            "q01": 0.0,
+            "q05": 0.0,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 0.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        },
+        "soft_only": {
+          "cells": 1640,
+          "statistics": {
+            "values": 1640,
+            "mean": 1.0,
+            "std": 0.0,
+            "q00": 1.0,
+            "q01": 1.0,
+            "q05": 1.0,
+            "q10": 1.0,
+            "q25": 1.0,
+            "q50": 1.0,
+            "q75": 1.0,
+            "q90": 1.0,
+            "q95": 1.0,
+            "q99": 1.0,
+            "q100": 1.0
+          }
+        }
+      }
+    }
+  },
+  "derived_diagnostics": {
+    "selected_weight_key": "transport_weight",
+    "weight_statistics": {
+      "support": {
+        "cells": 22453,
+        "statistics": {
+          "values": 22453,
+          "mean": 17.885475158691406,
+          "std": 13.400554656982422,
+          "q00": 0.0003056191198993474,
+          "q01": 0.20835785567760468,
+          "q05": 1.0635144710540771,
+          "q10": 3.06736421585083,
+          "q25": 8.998072624206543,
+          "q50": 15.151450157165527,
+          "q75": 23.305391311645508,
+          "q90": 35.780723571777344,
+          "q95": 44.97077560424805,
+          "q99": 63.17818069458008,
+          "q100": 93.79911804199219
+        }
+      },
+      "interior": {
+        "cells": 18102,
+        "statistics": {
+          "values": 18102,
+          "mean": 20.792997360229492,
+          "std": 13.007219314575195,
+          "q00": 0.006598545238375664,
+          "q01": 2.3169493675231934,
+          "q05": 5.843558311462402,
+          "q10": 8.221855163574219,
+          "q25": 12.093572616577148,
+          "q50": 17.667402267456055,
+          "q75": 25.504859924316406,
+          "q90": 38.671546936035156,
+          "q95": 47.99666976928711,
+          "q99": 65.9020004272461,
+          "q100": 93.79911804199219
+        }
+      },
+      "boundary": {
+        "cells": 4351,
+        "statistics": {
+          "values": 4351,
+          "mean": 5.788943767547607,
+          "std": 6.426483631134033,
+          "q00": 0.0003056191198993474,
+          "q01": 0.0021441776771098375,
+          "q05": 0.20835785567760468,
+          "q10": 0.40399065613746643,
+          "q25": 1.1016385555267334,
+          "q50": 3.7752206325531006,
+          "q75": 8.527678489685059,
+          "q90": 13.929638862609863,
+          "q95": 17.387929916381836,
+          "q99": 28.651596069335938,
+          "q100": 70.24488067626953
+        }
+      },
+      "soft_only": {
+        "cells": 1640,
+        "statistics": {
+          "values": 1640,
+          "mean": 3.325610876083374,
+          "std": 3.535412311553955,
+          "q00": 0.25153303146362305,
+          "q01": 0.26531311869621277,
+          "q05": 0.33230629563331604,
+          "q10": 0.4130804240703583,
+          "q25": 0.7767546772956848,
+          "q50": 1.9974596500396729,
+          "q75": 4.634832382202148,
+          "q90": 8.316635131835938,
+          "q95": 10.628722190856934,
+          "q99": 15.841706275939941,
+          "q100": 22.73877716064453
+        }
+      }
+    },
+    "weight_per_count_statistics": {
+      "support": {
+        "cells": 22453,
+        "statistics": {
+          "values": 22453,
+          "mean": 0.23473475873470306,
+          "std": 0.06359504908323288,
+          "q00": 0.0003056191198993474,
+          "q01": 0.04132464900612831,
+          "q05": 0.09730324149131775,
+          "q10": 0.14852313697338104,
+          "q25": 0.21037594974040985,
+          "q50": 0.24648262560367584,
+          "q75": 0.27274686098098755,
+          "q90": 0.30085131525993347,
+          "q95": 0.3182637691497803,
+          "q99": 0.3553062975406647,
+          "q100": 0.7296468019485474
+        }
+      },
+      "interior": {
+        "cells": 18102,
+        "statistics": {
+          "values": 18102,
+          "mean": 0.24827858805656433,
+          "std": 0.04569985717535019,
+          "q00": 0.006598545238375664,
+          "q01": 0.11177830398082733,
+          "q05": 0.16712652146816254,
+          "q10": 0.19148951768875122,
+          "q25": 0.2260679304599762,
+          "q50": 0.2506572902202606,
+          "q75": 0.27483218908309937,
+          "q90": 0.3021218180656433,
+          "q95": 0.31911930441856384,
+          "q99": 0.35325267910957336,
+          "q100": 0.5790877938270569
+        }
+      },
+      "boundary": {
+        "cells": 4351,
+        "statistics": {
+          "values": 4351,
+          "mean": 0.1783866584300995,
+          "std": 0.09080018848180771,
+          "q00": 0.0003056191198993474,
+          "q01": 0.0021441776771098375,
+          "q05": 0.04132464900612831,
+          "q10": 0.060898616909980774,
+          "q25": 0.10263146460056305,
+          "q50": 0.17653138935565948,
+          "q75": 0.25225120782852173,
+          "q90": 0.2940828502178192,
+          "q95": 0.31342801451683044,
+          "q99": 0.3666331171989441,
+          "q100": 0.7296468019485474
+        }
+      },
+      "soft_only": {
+        "cells": 1640,
+        "statistics": {
+          "values": 1640,
+          "mean": 0.15651705861091614,
+          "std": 0.07708755880594254,
+          "q00": 0.016795549541711807,
+          "q01": 0.03998328372836113,
+          "q05": 0.05293832719326019,
+          "q10": 0.06492497026920319,
+          "q25": 0.0929391086101532,
+          "q50": 0.14356815814971924,
+          "q75": 0.21377240121364594,
+          "q90": 0.268344521522522,
+          "q95": 0.29234737157821655,
+          "q99": 0.34451207518577576,
+          "q100": 0.5790877938270569
+        }
+      }
+    },
+    "weight_per_count_global": {
+      "values": 22453,
+      "mean": 0.23473475873470306,
+      "std": 0.06359504908323288,
+      "q00": 0.0003056191198993474,
+      "q01": 0.04132464900612831,
+      "q05": 0.09730324149131775,
+      "q10": 0.14852313697338104,
+      "q25": 0.21037594974040985,
+      "q50": 0.24648262560367584,
+      "q75": 0.27274686098098755,
+      "q90": 0.30085131525993347,
+      "q95": 0.3182637691497803,
+      "q99": 0.3553062975406647,
+      "q100": 0.7296468019485474
+    }
+  },
+  "snapshots": {
+    "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_164041__soft_confidence_readonly_audit/outputs/confidence_maps_first.png",
+    "middle": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_164041__soft_confidence_readonly_audit/outputs/confidence_maps_middle.png",
+    "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_164041__soft_confidence_readonly_audit/outputs/confidence_maps_final.png"
+  },
+  "interpretation_boundary": "This is a read-only engineering audit. No confidence formula is selected solely from these statistics."
+}

@@ -1,0 +1,42 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "quantile_levels": [
+    50,
+    75,
+    90,
+    95,
+    97.5,
+    99,
+    100
+  ],
+  "rw_lab_quantiles": [
+    9.546106088056899,
+    17.877758615157184,
+    29.98187481760979,
+    40.176803651452055,
+    49.13109374493358,
+    56.06310578028362,
+    77.36992645263672
+  ],
+  "dt_lab_quantiles": [
+    14.77844642547139,
+    22.094069480895996,
+    30.76726942062378,
+    37.01063968507866,
+    42.95057140986125,
+    51.218059541300846,
+    76.11772918701172
+  ],
+  "rw_top5_count": 56,
+  "dt_top5_count": 56,
+  "top5_overlap": 9,
+  "mean_delta_on_rw_top5": -29.73280206673647,
+  "fraction_dt_better_on_rw_top5": 0.9285714285714286,
+  "mean_delta_on_non_rw_top5": 5.2703415007664525,
+  "mean_delta_on_dt_top5": 18.994961729480103,
+  "paired_delta": {
+    "median": 4.778787753161263,
+    "p95": 21.75128499420134
+  },
+  "interpretation": "Marginal p95 uses different carrier memberships; inspect overlap and paired deltas, not p95 subtraction as a paired tail effect."
+}

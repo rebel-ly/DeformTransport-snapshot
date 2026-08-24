@@ -1,0 +1,14 @@
+{
+  "scalar_0745": {
+    "global_EPE": 0.12115440517663956,
+    "transport_EPE": 0.707556426525116,
+    "transport_angle_deg": 23.45807456970215,
+    "pred_flow_magnitude_mean": 0.18292218446731567,
+    "reference_flow_magnitude_mean": 0.10720079392194748
+  },
+  "baseline": {
+    "global_EPE": 0.12279396504163742,
+    "transport_EPE": 0.7168875932693481,
+    "transport_angle_deg": 22.002452850341797
+  }
+}

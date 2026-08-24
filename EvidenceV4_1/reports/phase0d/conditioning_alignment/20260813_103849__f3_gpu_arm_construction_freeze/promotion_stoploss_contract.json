@@ -1,0 +1,24 @@
+{
+  "primary_metrics": [
+    "TC-MAR_Lab_mean",
+    "TC-ME_transition_mean_EPE_mean"
+  ],
+  "direction_rule": "both must move downward versus DT-FULL for promotion eligibility",
+  "baseline": {
+    "RW": [
+      13.639900159270573,
+      0.5869890665947547
+    ],
+    "DT_FULL": [
+      17.144317299874714,
+      0.7265499674289193
+    ]
+  },
+  "no_p_values_seed0_directional_only": true,
+  "high_motion_flag": "AGGREGATE_GAIN_WITH_HIGH_MOTION_REGRESSION",
+  "conditional_next_stage": {
+    "frag_prune": "COUNT-MATCHED-CENTER",
+    "grid100_center": "GRID100-STABLE",
+    "wm0": "explicit user decision required"
+  }
+}

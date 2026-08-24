@@ -1,0 +1,26 @@
+{
+  "canonical_epsilon_source": "DETERMINISTIC_RECONSTRUCTION",
+  "creation_code_path": "wan_move.py:230-238 private CUDA Generator(device=self.device), manual_seed(0), torch.randn(float32, [16,21,60,104])",
+  "cuda_version": "12.1",
+  "device_at_generation": "cuda:0",
+  "dtype": "torch.float32",
+  "epsilon_status": "PROVISIONAL",
+  "file_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/FINAL_C_SHARED_EPSILON.pt",
+  "file_sha256": "c2ee63ee6bc0401615d473b1fbe70c0ea49ffee96024fe1a0aa957e2f46a05d3",
+  "finite": true,
+  "max": 4.785398483276367,
+  "mean": -0.00023144276929087937,
+  "min": -5.119814872741699,
+  "npy_runtime_binding_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/FINAL_C_SHARED_EPSILON.npy",
+  "roundtrip_exact": true,
+  "seed": 0,
+  "shape": [
+    16,
+    21,
+    60,
+    104
+  ],
+  "std": 0.9996379613876343,
+  "tensor_content_sha256": "b6f3bbbd7bbc3412b70dd57c39e1709e70ba7d38b9e0cb60bac7820776208b51",
+  "torch_version": "2.5.1+cu121"
+}

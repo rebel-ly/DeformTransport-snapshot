@@ -1,0 +1,61 @@
+{
+  "C1_C2_COMMON_CONFIG_EXACT": true,
+  "C1_C2_only_intended_difference": "TRANSPORT_CARRIER_SET_K0_VS_K1257_CORRECT",
+  "C1_C2_unexpected_diffs": [],
+  "C1_eval_material_ids_sha": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "C1_prelaunch_asserts": "PASS",
+  "C1_transport_K": 0,
+  "C1_transport_variant": "v3d",
+  "C2_attestation_basis": [
+    "frozen C2 planned manifest",
+    "run_c2.sh SHA 2d7536dd678e17cc7182a7fbd96ff8d60509f98b8c7404d4cea367621b0bda24",
+    "C2 persisted wrapper stdout/stderr and start marker",
+    "existing canonical input artifact hashes"
+  ],
+  "C2_eval_material_ids_sha": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "C2_launch_attestation": "PASS",
+  "C2_runtime_xstart_sha": "UNAVAILABLE_WITHOUT_INTERVENTION",
+  "C2_transport_K": 1257,
+  "C2_transport_variant": "v3d",
+  "common": {
+    "dtype": "bf16",
+    "epsilon_file_sha": "20911e4d396115ea12ab1c7715202c7321dd8104fe114d7515d2321485b9e288",
+    "epsilon_shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "epsilon_tensor_sha": "316cfc55f5782bb887395795d3ea0c685fbc240067c6f2f0b2964dee18a891c9",
+    "eval_material_ids_path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "eval_material_ids_sha": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+    "eval_n": 1257,
+    "evaluator_binding": "corrected-v2 N=1257",
+    "formal_overlay_generate_sha": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+    "formal_overlay_wan_move_sha": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7",
+    "fps": 16,
+    "num_inference_steps": 40,
+    "output_frame_count_contract": 81,
+    "preview_latent_file_sha": "0110c684d4c70a3d4d6f78889f50f569e1110091a1cac980ebccb78dbced2d31",
+    "preview_latent_shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "preview_latent_tensor_sha": "ed1fb8069bd65ce27edd825061943a414df7df14e33197ba771b987e9dcc4e14",
+    "resolution": "480*832 decoded 832*464",
+    "scheduler_class": "FlowUniPCMultistepScheduler",
+    "seed": 0,
+    "shift": 3.0,
+    "source_image_sha": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+    "wan_start_index": 15,
+    "wan_start_sigma": 0.8329627513885498,
+    "wan_start_timestep": 832
+  },
+  "eval_material_ids_exact_same": true,
+  "expected_xstart": "same frozen preview/epsilon/native sigma; exact deterministic reconstruction permitted but not runtime-captured",
+  "metrics_inspected": false,
+  "results_inspected": false,
+  "silent_transport_fallback_allowed": false
+}

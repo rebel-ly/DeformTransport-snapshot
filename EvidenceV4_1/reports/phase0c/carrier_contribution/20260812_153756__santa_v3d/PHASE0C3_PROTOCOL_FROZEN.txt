@@ -1,0 +1,364 @@
+当前阶段：
+
+Phase0C-3 — Carrier Contribution / Zero-Contribution Cause Audit
+
+已完成：
+
+Phase0C-1 = PASS
+Phase0C-2 = PASS
+
+Formal case:
+corrected-v2 Santa
+N=1257
+T=81
+future latent slots=20
+latent H=60
+latent W=104
+
+Frozen known result:
+
+CARRIERS_WITH_ANY_CONTRIBUTION = 1102
+ZERO_CONTRIBUTION_CARRIERS = 155
+
+本阶段禁止优化 carrier selection。
+只解释当前 frozen operator。
+
+==================================================
+1. 核心问题
+==================================================
+
+逐 carrier 分解：
+
+为什么 1257 个 persistent material carriers 中
+有 155 个在20个 future latent slots 中从未成为 winner？
+
+必须区分：
+
+- visibility absence
+- target invalidity
+- invalid/nonpositive depth
+- collision loss
+- combinations of these gates
+
+同时验证 Correct / Identity-Shuffled 的 carrier-level
+funnel 是否 exact identical。
+
+==================================================
+2. Evidence inputs
+==================================================
+
+优先只读复用：
+
+Phase0B-4R functional conditioning evidence
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/
+functional_conditioning/
+20260812_143438__santa_v3d_seed0_import_recovered
+
+Phase0C-1 evidence
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0c/
+operator_structure/<existing Phase0C1 directory>
+
+以及 corrected-v2 formal assets。
+
+禁止使用 N=1277 legacy Santa。
+
+==================================================
+3. Frozen operator semantics
+==================================================
+
+严格使用 0C-1 已冻结的 V3D arbitration：
+
+for each latent future slot tau=1..20:
+
+sampled raw frame = tau*4
+
+carrier becomes candidate only if：
+
+A. source latent cell valid
+B. target latent cell valid
+C. sampled visibility=True
+D. depth finite
+E. depth > 0
+
+同一 target latent cell 多 candidate 时：
+
+winner =
+lexicographic minimum
+(depth, material_id)
+
+禁止修改该定义。
+
+==================================================
+4. Per-carrier funnel counts
+==================================================
+
+对每个 material carrier / material ID 计算：
+
+TOTAL_SLOTS = 20
+
+VISIBLE_SLOT_COUNT
+
+TARGET_VALID_SLOT_COUNT
+
+VISIBLE_AND_TARGET_VALID_SLOT_COUNT
+
+DEPTH_VALID_SLOT_COUNT
+
+FULL_CANDIDATE_SLOT_COUNT
+
+COLLISION_INVOLVED_SLOT_COUNT
+
+COLLISION_WIN_COUNT
+
+COLLISION_LOSS_COUNT
+
+UNCONTESTED_WIN_COUNT
+
+TOTAL_WIN_COUNT
+
+TOTAL_NONWIN_CANDIDATE_COUNT
+
+并保存 carrier-level CSV。
+
+必须验证：
+
+TOTAL_WIN_COUNT
+与 Phase0C-1 carrier contribution count exact equal。
+
+否则：
+
+PHASE0C3_STATUS = FAIL
+
+==================================================
+5. Exclusive zero-contribution classification
+==================================================
+
+对 155 个 TOTAL_WIN_COUNT=0 carrier
+建立互斥分类。
+
+推荐按实际 funnel 状态定义，而不是主观命名。
+
+至少：
+
+Z0_NO_VISIBLE_SAMPLED_SLOT
+    visible_slot_count == 0
+
+Z1_VISIBLE_BUT_NO_VALID_TARGET
+    visible_slot_count > 0
+    and visible_and_target_valid_slot_count == 0
+
+Z2_TARGET_VALID_BUT_NO_VALID_DEPTH_CANDIDATE
+    visible_and_target_valid_slot_count > 0
+    and full_candidate_slot_count == 0
+
+Z3_HAS_CANDIDATES_BUT_ALWAYS_LOSES_COLLISION
+    full_candidate_slot_count > 0
+    and total_win_count == 0
+
+如果实际数据出现不能由以上覆盖的情形：
+
+不要硬塞分类。
+
+记录：
+
+Z_OTHER
+
+并报告原因。
+
+必须满足：
+
+sum(all exclusive zero-contribution classes) = 155
+
+==================================================
+6. Contribution efficiency
+==================================================
+
+对所有1257 carriers计算：
+
+candidate_to_win_ratio =
+TOTAL_WIN_COUNT / FULL_CANDIDATE_SLOT_COUNT
+
+FULL_CANDIDATE_SLOT_COUNT=0 时记 NA，
+不要除零。
+
+报告：
+
+carriers with candidate > 0
+
+mean/p50/p95 candidate slots
+
+mean/p50/p95 win slots
+
+mean/p50/p95 candidate-to-win ratio
+
+carriers winning all candidate slots
+
+carriers losing >=1 collision
+
+carriers never entering collision
+
+==================================================
+7. Visibility vs contribution relationship
+==================================================
+
+报告：
+
+visible sampled slot count vs win count
+
+至少计算：
+
+Pearson 或 Spearman 二选一，
+优先 Spearman。
+
+但这是描述性统计，
+不做 significance claim。
+
+还报告：
+
+zero-contribution carriers 的
+mean/p50 visible slot count
+
+contributing carriers 的
+mean/p50 visible slot count
+
+不得把相关性表述成因果关系。
+
+==================================================
+8. Correct vs Shuffled equivalence
+==================================================
+
+必须 exact 比较：
+
+VISIBLE_SLOT_COUNT
+TARGET_VALID_SLOT_COUNT
+FULL_CANDIDATE_SLOT_COUNT
+COLLISION_INVOLVED_SLOT_COUNT
+COLLISION_LOSS_COUNT
+UNCONTESTED_WIN_COUNT
+TOTAL_WIN_COUNT
+
+以及：
+
+zero-contribution carrier set
+zero-contribution cause class
+
+全部必须 exact equal。
+
+输出：
+
+VISIBLE_COUNT_MISMATCHES
+TARGET_VALID_COUNT_MISMATCHES
+CANDIDATE_COUNT_MISMATCHES
+COLLISION_COUNT_MISMATCHES
+WIN_COUNT_MISMATCHES
+ZERO_CONTRIBUTION_SET_EQUAL
+ZERO_CAUSE_CLASS_MISMATCHES
+
+任何 structural mismatch：
+
+PHASE0C3_STATUS = FAIL
+
+==================================================
+9. Important non-goals
+==================================================
+
+本阶段禁止：
+
+- 删除 zero-contribution carriers
+- 重新选 carrier
+- 增加 track 数
+- 改 visibility
+- 改 collision policy
+- 调 depth rule
+- 跑视频
+- 跑 WanMove 14B
+- 宣称 zero-contribution 是性能瓶颈
+
+只做解释性机制审计。
+
+==================================================
+10. Output
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0c/
+carrier_contribution/
+<TIMESTAMP>__santa_v3d
+
+生成：
+
+PHASE0C3_PROTOCOL_FROZEN.txt
+run_phase0c3.py
+carrier_funnel_statistics.csv
+zero_contribution_carriers.csv
+zero_contribution_classification.json
+carrier_contribution_audit.json
+PHASE0C3_SUMMARY.md
+phase0c3_status.json
+SHA256SUMS.txt
+
+==================================================
+11. Summary 九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+12. Final stdout
+==================================================
+
+===== PHASE0C-3 CARRIER CONTRIBUTION AUDIT =====
+
+OUT = ...
+
+N = 1257
+FUTURE_SLOTS = 20
+
+CARRIERS_WITH_ANY_CANDIDATE = ...
+CARRIERS_WITH_ANY_CONTRIBUTION = 1102
+ZERO_CONTRIBUTION_CARRIERS = 155
+
+ZERO_CLASS_NO_VISIBLE = ...
+ZERO_CLASS_NO_VALID_TARGET = ...
+ZERO_CLASS_NO_VALID_DEPTH = ...
+ZERO_CLASS_ALWAYS_COLLISION_LOSER = ...
+ZERO_CLASS_OTHER = ...
+
+CARRIERS_WITH_COLLISION_LOSS = ...
+CARRIERS_NEVER_IN_COLLISION = ...
+
+MEAN_CANDIDATE_SLOTS = ...
+P50_CANDIDATE_SLOTS = ...
+P95_CANDIDATE_SLOTS = ...
+
+MEAN_WIN_SLOTS = ...
+P50_WIN_SLOTS = ...
+P95_WIN_SLOTS = ...
+
+SPEARMAN_VISIBLE_VS_WIN = ...
+
+VISIBLE_COUNT_MISMATCHES = ...
+TARGET_VALID_COUNT_MISMATCHES = ...
+CANDIDATE_COUNT_MISMATCHES = ...
+COLLISION_COUNT_MISMATCHES = ...
+WIN_COUNT_MISMATCHES = ...
+
+ZERO_CONTRIBUTION_SET_EQUAL = True/False
+ZERO_CAUSE_CLASS_MISMATCHES = ...
+
+PHASE0C3_STATUS = PASS/FAIL/ERROR
+
+然后 STOP。
+
+不要进入 0C-4。

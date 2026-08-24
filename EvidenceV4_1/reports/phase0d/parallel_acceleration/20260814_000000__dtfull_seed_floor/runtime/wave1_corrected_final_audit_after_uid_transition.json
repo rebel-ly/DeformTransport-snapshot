@@ -1,0 +1,68 @@
+{
+  "audit_type": "UID10011_WAVE1_FINALIZATION",
+  "execution_identity_transition": "10001:1000 -> 10011:10011",
+  "container_default_config_user": "10001:1000",
+  "temporary_execution_user": "10011:10011",
+  "uid10011_workspace_write_test": "PASS",
+  "wan_move_python_import": "PASS",
+  "cuda_available": true,
+  "cuda_device_count": 4,
+  "cuda_device_names": ["NVIDIA L40", "NVIDIA L40", "NVIDIA L40", "NVIDIA L40"],
+  "surviving_wave1_generator": false,
+  "scientific_configuration_changed": false,
+  "outputs": {
+    "GPU0": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/gpu0_seed0_eligibility/santa_correct_v3d_seed000.mp4",
+      "size": 7729377,
+      "sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "decode_success": true,
+      "frame_count": 81,
+      "width": 832,
+      "height": 464,
+      "integrity": "PASS",
+      "output_contamination": false
+    },
+    "SEED1": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/seed1/santa_correct_v3d_seed001.mp4",
+      "size": 6596209,
+      "sha256": "0fbc113ac3a5374ccfad8fe658524a73d64639f10ea7570f27ffcdb813b31450",
+      "decode_success": true,
+      "frame_count": 81,
+      "width": 832,
+      "height": 464,
+      "integrity": "PASS",
+      "output_contamination": false
+    },
+    "SEED2": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/seed2/santa_correct_v3d_seed002.mp4",
+      "size": 5733310,
+      "sha256": "140f08015527780b95525d61195d9cf929d647b47a9e6a1d61cfc1df5f64182b",
+      "decode_success": true,
+      "frame_count": 81,
+      "width": 832,
+      "height": 464,
+      "integrity": "PASS",
+      "output_contamination": false
+    }
+  },
+  "output_contamination_risk": false,
+  "contamination_basis": "Duplicate wrapper group had exit code 143 with empty logs; no alternate or temporary MP4 exists; intended artifacts are unique; original completion timestamps postdate duplicate containment.",
+  "gpu0_cross_device_eligibility": {
+    "canonical_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4",
+    "canonical_mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+    "gpu0_mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+    "canonical_frame_count": 81,
+    "gpu0_frame_count": 81,
+    "frame_count_equal": true,
+    "frame_shape_equal": true,
+    "decoded_rgb_pixel_mismatch_count": 0,
+    "decoded_rgb_max_abs_diff": 0,
+    "mp4_sha_equal": true,
+    "gpu0_cross_device_generation_identity": "PASS"
+  },
+  "drop_zero62_manifest_pass": false,
+  "wave1_scientific_validity": "PASS",
+  "wave2_authorized": false,
+  "wave2_launched": false,
+  "wave2_blocker": "DROP_ZERO62_MANIFEST.json is absent; frozen artifact gate has not passed."
+}

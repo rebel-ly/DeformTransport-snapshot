@@ -1,0 +1,114 @@
+{
+  "previous_evidence": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port",
+  "source_file": "corrected_v2_preflight.json",
+  "actual_implementation_predicates": [
+    {
+      "PREDICATE_NAME": "eval_n",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.eval_n",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "ids_sha",
+      "EXPECTED": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+      "ACTUAL": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.ids_sha/EVAL_IDS_SHA",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "tracks_sha",
+      "EXPECTED": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33df7fdebfb51929",
+      "ACTUAL": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+      "SOURCE_FILE": "binding_recovery_manifest.json",
+      "SOURCE_LINE_OR_JSON_PATH": "dataset_binding.tracks_sha256 vs asset SHA",
+      "RW_STATUS": "FAIL",
+      "DT_STATUS": "FAIL"
+    },
+    {
+      "PREDICATE_NAME": "visibility_sha",
+      "EXPECTED": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+      "ACTUAL": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.visibility_sha/EVAL_VISIBILITY_SHA",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "timeline_81",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.timeline_81",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "track_mapping_valid",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.track_mapping_valid",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "patch_bounds_valid",
+      "EXPECTED": true,
+      "ACTUAL": true,
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.patch_bounds_valid",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "method_labels",
+      "EXPECTED": [
+        "rw",
+        "old_correct",
+        "dt_full"
+      ],
+      "ACTUAL": [
+        "rw",
+        "old_correct",
+        "dt_full"
+      ],
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.method_labels",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "PASS"
+    },
+    {
+      "PREDICATE_NAME": "rw_video",
+      "EXPECTED": "path+SHA+decode all true",
+      "ACTUAL": "path+SHA+decode all true; 81x464x832x3",
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.rw_video/videos.rw",
+      "RW_STATUS": "PASS",
+      "DT_STATUS": "N/A"
+    },
+    {
+      "PREDICATE_NAME": "dt_full_video",
+      "EXPECTED": "path+SHA+decode all true",
+      "ACTUAL": "path+SHA+decode all true; 81x464x832x3",
+      "SOURCE_FILE": "corrected_v2_preflight.json",
+      "SOURCE_LINE_OR_JSON_PATH": "checks.dt_full_video/videos.dt_full",
+      "RW_STATUS": "N/A",
+      "DT_STATUS": "PASS"
+    }
+  ],
+  "RW_FIRST_FAIL_PREDICATE": "tracks_sha",
+  "DTFULL_FIRST_FAIL_PREDICATE": "tracks_sha",
+  "SHARED_FIRST_FAIL": true,
+  "RW_FAIL_PREDICATES": [
+    "tracks_sha"
+  ],
+  "DTFULL_FAIL_PREDICATES": [
+    "tracks_sha"
+  ],
+  "note": "F1-R3 collapsed existence/shape/dtype and video subchecks. F1-R4 recovered preflight expands them in rw_preflight_predicates.json and dtfull_preflight_predicates.json."
+}

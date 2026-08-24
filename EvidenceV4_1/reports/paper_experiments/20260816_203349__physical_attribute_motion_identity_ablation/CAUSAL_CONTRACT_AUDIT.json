@@ -1,0 +1,18 @@
+{
+  "NODEPTH": "Only depth-based arbitration and its depth validity rejection are removed; deterministic key is ascending material_id.",
+  "NOVIS": "Only future visibility inclusion is removed; source/target coordinate validity and depth collision arbitration remain.",
+  "SC_SS_operator": "byte-identical accepted formal overlay",
+  "dry_run": "CPU artifact/shape/hash verification only; no Wan model, torch pipeline, or GPU was loaded.",
+  "formal_runtime_evidence": {
+    "generate": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+    "trajectory": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+    "wan_move": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7"
+  },
+  "formal_runtime_recovered": true,
+  "shared_randomness": {
+    "epsilon_sha256": "20911e4d396115ea12ab1c7715202c7321dd8104fe114d7515d2321485b9e288",
+    "preview_sha256": "0110c684d4c70a3d4d6f78889f50f569e1110091a1cac980ebccb78dbced2d31",
+    "seed": 0
+  },
+  "static_definition": "All t=1..80 target coordinates equal their arm-specific t=0 coordinates; future visibility and depth sidecars are unchanged."
+}

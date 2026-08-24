@@ -1,0 +1,58 @@
+{
+  "authoritative_depth_id_lineage": {
+    "aligned_depth_shape": [
+      81,
+      28264
+    ],
+    "aligned_point_id_selected_equals_selected_ids": true,
+    "aligned_point_id_shape": [
+      28264
+    ],
+    "consumed_depth_value_count": 41230,
+    "depth_finite_on_v3d_consumed_values": true,
+    "depth_selected_shape": [
+      81,
+      1257
+    ],
+    "pass": true,
+    "selected_ids_in_range": true,
+    "selected_ids_unique": 1257
+  },
+  "cpu_only": true,
+  "input_contract": {
+    "correct_shape": [
+      1,
+      81,
+      1257,
+      2
+    ],
+    "ids_dtype": "int64",
+    "ids_shape": [
+      1257
+    ],
+    "pass": true,
+    "shuffled_shape": [
+      1,
+      81,
+      1257,
+      2
+    ],
+    "visibility_shape": [
+      1,
+      81,
+      1257
+    ]
+  },
+  "phase": "Phase0B-4",
+  "phase0b3_archive_gate": true,
+  "source_drift_gate": {
+    "git_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+    "pass": true,
+    "sha256": {
+      "trajectory.py": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+      "wan_move.py": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857"
+    }
+  },
+  "status": "CPU_IMPORT_BLOCKED",
+  "timestamp_utc": "20260812_141951"
+}

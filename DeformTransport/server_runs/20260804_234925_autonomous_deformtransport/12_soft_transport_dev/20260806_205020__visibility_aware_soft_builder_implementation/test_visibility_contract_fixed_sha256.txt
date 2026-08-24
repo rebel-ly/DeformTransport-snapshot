@@ -1,0 +1,1 @@
+9a86b56a62bf98733579ff988e4f472a2289038635ad3ac7292c69e6e2e9973b  tests/test_visibility_contract.py

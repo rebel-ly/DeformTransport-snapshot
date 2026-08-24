@@ -1,0 +1,65 @@
+DATE=2026-08-05T17:26:23+00:00
+PWD=/workspace/DeformTransport
+
+=== GIT STATUS BEFORE ===
+ M .gitignore
+ M case_simulation.py
+ M demo_web/simulation/utils.py
+ M demo_web/simulation_engine.py
+ M infer_sim.py
+ M simulation/case_simulation/__init__.py
+ M simulation/genesis_simulator.py
+ M simulation/utils.py
+ M wan/modules/attention.py
+?? UPSTREAM.md
+?? candidate_case_inventory_20260805_054703.txt
+?? deform_transport/
+?? deformtransport_flow_audit_20260805_044228.tar.gz
+?? docs/
+?? hard_transport_current.py
+?? requirements-stage1-wsl-blackwell.txt
+?? requirements-stage1-wsl.txt
+?? requirements-vae-only-wsl.txt
+?? scripts/
+?? server_env/
+?? server_runs/
+?? test_hard_transport_current.py
+?? test_transport_ready_current.py
+?? tests/
+
+=== ROOT BEFORE ===
+d | artifacts
+d | assets
+d | cases
+d | deform_transport
+d | demo_web
+d | docs
+d | .git
+d | __pycache__
+d | scripts
+d | server_env
+d | server_runs
+d | simulation
+d | tests
+d | vidgen
+d | .vscode
+d | wan
+f | candidate_case_inventory_20260805_054703.txt
+f | case_simulation.py
+f | default.yml
+f | deformtransport_flow_audit_20260805_044228.tar.gz
+f | .gitignore
+f | .gitmodules
+f | hard_transport_current.py
+f | infer_sim.py
+f | LICENSE.md
+f | README.md
+f | requirements-stage1-wsl-blackwell.txt
+f | requirements-stage1-wsl.txt
+f | requirements.txt
+f | requirements-vae-only-wsl.txt
+f | test_hard_transport_current.py
+f | test_transport_ready_current.py
+f | UPSTREAM.md
+l | ckpts
+l | wan_models

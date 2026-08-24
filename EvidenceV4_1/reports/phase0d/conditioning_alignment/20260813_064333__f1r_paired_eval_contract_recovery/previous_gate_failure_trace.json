@@ -1,0 +1,17 @@
+{
+  "previous_f1_out": "reports/phase0d/conditioning_alignment/20260813_062722__f1_rw_dtfull_corrected_v2_rescore",
+  "recorded_status": "EVALUATOR_FAIL",
+  "recorded_eval_contract_gate": "FAIL",
+  "exact_recorded_blocker": "Frozen evaluator SHA is legacy N=1277/path-bound; modification is prohibited.",
+  "first_fail_predicate": "EVALUATION_SET_EXACT_EQUAL",
+  "first_fail_value": "UNVERIFIABLE_WITH_FROZEN_EVALUATOR",
+  "source": "previous paired_evaluation_contract.json: paired_evaluation_contract=FAIL; evaluation_set_exact_equal=UNVERIFIABLE_WITH_FROZEN_EVALUATOR",
+  "causal_trace": [
+    "eval_v3.py:65-75 binds Santa tracks/visibility to 20260809 bridge files.",
+    "eval_v3.py:77-84 binds Santa expect.n=1277.",
+    "eval_v3.py:790-832 loads those paths and asserts n == cfg['expect']['n'].",
+    "Corrected-v2 support is N=1257, so frozen execution cannot consume it.",
+    "eval_v3.py:169-199 creates a fixed method map, without an argument for DT-FULL Replay A."
+  ],
+  "interpretation": "The previous archive did not persist a separate boolean predicate table. Its exact recorded failing field is evaluation_set_exact_equal; the first executable predicate that makes it unresolvable is the reachable Santa N guard at eval_v3.py:829-832."
+}

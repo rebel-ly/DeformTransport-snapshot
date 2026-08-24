@@ -1,0 +1,6 @@
+job_id,优先级,任务,case,mode,状态,预计GPU显存GiB,预计时间秒,timeout秒,输入,checkpoint,seed,脚本
+DT_TRANSPORT_GPU_PARITY,P2,真实CUDA材料点transport重算一致性验证,Santa21f,Correct+Shuffled,DONE_20260805_015718,<1,60,120,transport_ready_videoproxy.pt+vae_latent_outputs.pt,无,0,04_smoke/transport_gpu_validation_queued/run_transport_gpu_validation.py
+WAN_VAE_BASELINE_SINGLE_FRAME,P2,真实Wan VAE单帧编码解码,Santa21f,Baseline-only,COVERED_BY_E2E_20260805_022223,<=6.19,120,300,transport_ready_videoproxy_v3.pt,Wan2.1_VAE.pth,0,scripts/run_wan_vae_transport_probe.py --baseline-only
+WAN_VAE_E2E_21F,P2,真实Wan VAE编码transport解码闭环,Santa21f,Correct+Shuffled,DONE_20260805_022223,实测torch_reserved_6.045GiB,实测44.715,300,transport_ready_videoproxy_v3.pt,Wan2.1_VAE.pth,0,scripts/run_wan_vae_transport_probe.py
+WAN_VAE_ARTIFACT_DECODE,P2,真实Wan VAE三路artifact解码,Santa21f,Target+Correct+Shuffled,COVERED_BY_E2E_20260805_022223,<=6.19,120,300,vae_latent_outputs.pt,Wan2.1_VAE.pth,0,04_smoke/wan_vae_transport_gpu_smoke_queued/run_gpu_smoke.py
+REALWONDER_BASELINE_SMOKE,P0,完整RealWonder Baseline最小smoke,Santa21f,Baseline,BLOCKED,未知,未知,未知,完整final_sim缺失,RealWonder step=000800.pt,0,04_smoke/baseline_smoke_queued/command.sh

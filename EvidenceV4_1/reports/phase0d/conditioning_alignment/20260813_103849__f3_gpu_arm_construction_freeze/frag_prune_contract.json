@@ -1,0 +1,14 @@
+{
+  "rule": "retain switch_count < 3",
+  "selection_variables": [
+    "frozen operational visibility_switch_count"
+  ],
+  "explicitly_not_used": [
+    "MAR",
+    "ME",
+    "motion",
+    "collision",
+    "future outputs",
+    "zero-future-visible additional filter"
+  ]
+}

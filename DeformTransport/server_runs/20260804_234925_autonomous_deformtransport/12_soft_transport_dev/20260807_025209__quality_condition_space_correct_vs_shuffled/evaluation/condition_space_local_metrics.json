@@ -1,0 +1,241 @@
+{
+  "stage": "condition_space_local_evaluation",
+  "coverage": {
+    "transport_core_fraction": 0.16657763532763534,
+    "transport_dilated_fraction": 0.20012662234884457
+  },
+  "metrics_against_simulation_target": {
+    "transport_core": {
+      "realwonder_baseline": {
+        "l1": 28.932937622070312,
+        "mse": 3039.735595703125,
+        "psnr": 13.302445517068737,
+        "temporal_change_error": 16.223155975341797,
+        "gradient_error": 9.296701570333088,
+        "selected_frame_l1": {
+          "0": 4.504509925842285,
+          "20": 26.22488021850586,
+          "40": 30.517255783081055,
+          "60": 37.22673034667969,
+          "80": 41.68556213378906
+        }
+      },
+      "quality_inter_step_correct": {
+        "l1": 29.512283325195312,
+        "mse": 3041.124755859375,
+        "psnr": 13.300461243245776,
+        "temporal_change_error": 16.105533599853516,
+        "gradient_error": 9.062920638105009,
+        "selected_frame_l1": {
+          "0": 4.502629280090332,
+          "20": 26.910747528076172,
+          "40": 31.07668685913086,
+          "60": 37.76784133911133,
+          "80": 42.006832122802734
+        }
+      },
+      "condition_correct": {
+        "l1": 29.961111068725586,
+        "mse": 3222.193115234375,
+        "psnr": 13.049287954962693,
+        "temporal_change_error": 16.430213928222656,
+        "gradient_error": 9.250898160311014,
+        "selected_frame_l1": {
+          "0": 4.505317211151123,
+          "20": 27.053279876708984,
+          "40": 30.908241271972656,
+          "60": 38.66819381713867,
+          "80": 43.68685531616211
+        }
+      },
+      "condition_shuffled": {
+        "l1": 30.810428619384766,
+        "mse": 3360.385009765625,
+        "psnr": 12.866913221573594,
+        "temporal_change_error": 16.571386337280273,
+        "gradient_error": 9.263832332591106,
+        "selected_frame_l1": {
+          "0": 4.530149936676025,
+          "20": 28.3621826171875,
+          "40": 31.505165100097656,
+          "60": 39.31315231323242,
+          "80": 43.84764099121094
+        }
+      }
+    },
+    "transport_dilated_8px": {
+      "realwonder_baseline": {
+        "l1": 27.488847732543945,
+        "mse": 2794.391845703125,
+        "psnr": 13.667930555484059,
+        "temporal_change_error": 14.657794952392578,
+        "gradient_error": 9.79470605413215,
+        "selected_frame_l1": {
+          "0": 4.759949684143066,
+          "20": 25.1746768951416,
+          "40": 28.861295700073242,
+          "60": 34.26958084106445,
+          "80": 38.068199157714844
+        }
+      },
+      "quality_inter_step_correct": {
+        "l1": 28.0634708404541,
+        "mse": 2803.909912109375,
+        "psnr": 13.65316304962128,
+        "temporal_change_error": 14.585229873657227,
+        "gradient_error": 9.579988319013879,
+        "selected_frame_l1": {
+          "0": 4.742272853851318,
+          "20": 25.884836196899414,
+          "40": 29.4495849609375,
+          "60": 35.00870132446289,
+          "80": 37.959556579589844
+        }
+      },
+      "condition_correct": {
+        "l1": 28.476003646850586,
+        "mse": 2968.27783203125,
+        "psnr": 13.405758122154573,
+        "temporal_change_error": 14.879924774169922,
+        "gradient_error": 9.768005164225443,
+        "selected_frame_l1": {
+          "0": 4.7529826164245605,
+          "20": 26.000381469726562,
+          "40": 29.39797592163086,
+          "60": 35.75808334350586,
+          "80": 39.34306716918945
+        }
+      },
+      "condition_shuffled": {
+        "l1": 29.221763610839844,
+        "mse": 3087.252685546875,
+        "psnr": 13.235081837837601,
+        "temporal_change_error": 15.0175199508667,
+        "gradient_error": 9.787954444154128,
+        "selected_frame_l1": {
+          "0": 4.775189399719238,
+          "20": 27.173553466796875,
+          "40": 29.93291473388672,
+          "60": 36.32902145385742,
+          "80": 39.272125244140625
+        }
+      }
+    },
+    "background_outside_dilated": {
+      "realwonder_baseline": {
+        "l1": 10.46218490600586,
+        "mse": 506.453857421875,
+        "psnr": 21.08540477568298,
+        "temporal_change_error": 1.0079011917114258,
+        "gradient_error": 8.423566164053813,
+        "selected_frame_l1": {
+          "0": 3.7489640712738037,
+          "20": 8.826148986816406,
+          "40": 10.793039321899414,
+          "60": 12.131548881530762,
+          "80": 12.890094757080078
+        }
+      },
+      "quality_inter_step_correct": {
+        "l1": 10.42331600189209,
+        "mse": 502.1121826171875,
+        "psnr": 21.12279602191763,
+        "temporal_change_error": 1.0342127084732056,
+        "gradient_error": 8.396444223309436,
+        "selected_frame_l1": {
+          "0": 3.75091814994812,
+          "20": 8.810750007629395,
+          "40": 10.729406356811523,
+          "60": 12.082191467285156,
+          "80": 12.879152297973633
+        }
+      },
+      "condition_correct": {
+        "l1": 10.466962814331055,
+        "mse": 507.01611328125,
+        "psnr": 21.080585991717893,
+        "temporal_change_error": 1.0358368158340454,
+        "gradient_error": 8.420732768603614,
+        "selected_frame_l1": {
+          "0": 3.7553036212921143,
+          "20": 8.819372177124023,
+          "40": 10.779679298400879,
+          "60": 12.140335083007812,
+          "80": 12.96843433380127
+        }
+      },
+      "condition_shuffled": {
+        "l1": 10.42627239227295,
+        "mse": 508.9454345703125,
+        "psnr": 21.064091379325376,
+        "temporal_change_error": 1.0116329193115234,
+        "gradient_error": 8.382678259545768,
+        "selected_frame_l1": {
+          "0": 3.7473323345184326,
+          "20": 8.768974304199219,
+          "40": 10.710373878479004,
+          "60": 12.110605239868164,
+          "80": 12.926228523254395
+        }
+      }
+    }
+  },
+  "comparisons_improvement_percent": {
+    "transport_core": {
+      "condition_correct_vs_shuffled": {
+        "l1": 2.7565911566865413,
+        "mse": 4.1123827814268346,
+        "temporal_change_error": 0.8519046396258642,
+        "gradient_error": 0.13962010338408476
+      },
+      "condition_correct_vs_baseline": {
+        "l1": -3.5536434636729495,
+        "mse": -6.0024141504006545,
+        "temporal_change_error": -1.2763111764170596,
+        "gradient_error": 0.49268452553364317
+      },
+      "condition_correct_vs_inter_step": {
+        "l1": -1.5208167344581534,
+        "mse": -5.953993141061813,
+        "temporal_change_error": -2.0159551147817525,
+        "gradient_error": -2.0741384561578755
+      }
+    },
+    "transport_dilated_8px": {
+      "condition_correct_vs_shuffled": {
+        "l1": 2.5520703470225095,
+        "mse": 3.85374524322585,
+        "temporal_change_error": 0.9162310231446462,
+        "gradient_error": 0.20381459724304146
+      },
+      "condition_correct_vs_baseline": {
+        "l1": -3.591114199879504,
+        "mse": -6.222677273965914,
+        "temporal_change_error": -1.5154381849303036,
+        "gradient_error": 0.2726053212739553
+      },
+      "condition_correct_vs_inter_step": {
+        "l1": -1.4699992340284915,
+        "mse": -5.8620970385678834,
+        "temporal_change_error": -2.0205022688394623,
+        "gradient_error": -1.962599942198235
+      }
+    }
+  },
+  "checks": {
+    "all_video_shapes_valid": true,
+    "all_videos_finite": true,
+    "latent_mask_shape_valid": true,
+    "core_mask_shape_valid": true,
+    "core_mask_nonempty": true,
+    "dilated_mask_nonempty": true
+  },
+  "all_checks_pass": true,
+  "decision_flags": {
+    "condition_correct_l1_better_than_shuffled_core": true,
+    "condition_correct_l1_better_than_baseline_core": false,
+    "condition_correct_temporal_better_than_baseline_core": false
+  },
+  "contact_sheet": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_025209__quality_condition_space_correct_vs_shuffled/evaluation/condition_space_contact_sheet.png",
+  "interpretation_boundary": "Simulation Target is a coarse mechanism reference, not real RGB ground truth."
+}

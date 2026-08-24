@@ -1,0 +1,9 @@
+{
+  "status": "NOT_EVALUATED",
+  "reason": "No A/B formal generation was authorized after container import smoke failure; no MP4 or decoded RGB exists.",
+  "decoded_rgb_sha_equal": null,
+  "pixel_scalar_mismatch_count": null,
+  "differing_frame_count": null,
+  "max_abs_pixel_difference": null,
+  "mean_abs_pixel_difference": null
+}

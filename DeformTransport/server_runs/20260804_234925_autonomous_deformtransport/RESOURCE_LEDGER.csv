@@ -1,0 +1,7 @@
+timestamp,host,mem_available_gib,swap_used_gib,gpu0_used_mib,gpu0_util_pct,gpu1_used_mib,gpu1_util_pct,gpu2_used_mib,gpu2_util_pct,gpu3_used_mib,gpu3_util_pct,decision
+2026-08-04T23:50:29+08:00,gpu3,91,0,18168,100,8334,90,14502,98,12612,92,no_gpu_job_started
+2026-08-04T23:58:19+08:00,gpu3,91,0,18168,100,8336,26,12692,75,12502,68,all_processes_class_A_available_gpu_count_0
+2026-08-05T00:36:08+08:00,gpu3,未知,0,13636,58,20140,100,12868,0,12868,93,四卡均有其他用户PID_未启动GPU任务
+2026-08-05T00:45:24+08:00,gpu3,未知,0,13644,88,22136,100,6276,0,5338,28,四卡均有其他用户PID_未启动GPU任务
+2026-08-05T00:49:43+08:00,gpu3,83,0,13894,94,22138,100,8130,0,6276,0,四卡均有其他用户PID_未启动GPU任务
+2026-08-05T04:13:28+0800,gpu3,99,0,23912, 89,23912, 100,7, 0,7, 0,完整生成阶段完成_GPU2与GPU3空闲_GPU0与GPU1其他用户任务

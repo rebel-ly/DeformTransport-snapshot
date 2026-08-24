@@ -1,0 +1,35 @@
+{
+  "status": "CURRENT_FORMAL_CORRECTED_V2",
+  "method": "RW",
+  "eval_exit_codes": {
+    "appearance": 0,
+    "motion": 0
+  },
+  "N": 1257,
+  "valid_tracks": 1110,
+  "valid_anchor_observations": 9766,
+  "video_sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+  "metrics": {
+    "TC-MAR Lab": {
+      "n": 1110,
+      "mean": 13.639900159270573,
+      "median": 9.546106088056899,
+      "p95": 40.176803651452055,
+      "direction": "lower_is_better"
+    },
+    "TC-MAR RGB-L1": {
+      "n": 1110,
+      "mean": 0.0971740217773049,
+      "median": 0.04986683472192713,
+      "p95": 0.3180196253644923,
+      "direction": "lower_is_better"
+    },
+    "TC-ME transition mean EPE": {
+      "transition_count": 80,
+      "mean": 0.5869890665947547,
+      "median": 0.5070961964161795,
+      "p95": 1.153139444856402,
+      "direction": "lower_is_better"
+    }
+  }
+}

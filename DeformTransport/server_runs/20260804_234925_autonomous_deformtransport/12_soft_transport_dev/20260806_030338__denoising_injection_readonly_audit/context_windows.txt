@@ -1,0 +1,2707 @@
+
+========================================================================================
+FILE: infer_sim.py
+MATCHED_LINES: [1, 3, 5, 38, 83, 122, 126, 127, 129, 144, 145, 161, 163, 230, 237, 245, 248, 258, 268, 269, 270, 273, 274, 275, 279, 282, 285, 287, 289, 290, 291, 292, 294, 295, 296, 297, 299, 320]
+========================================================================================
+
+--- LINES 1-341 ---
+00001: """I2V Flow inference with SDEdit from simulation results.
+00002: 
+00003: Based on infer_flow.py with SDEdit support added. Loads simulation data
+00004: (structured noise, frames, masks) from a simulation output directory and
+00005: uses CausalInferencePipelineSDEdit for simulation-guided video generation.
+00006: 
+00007: Example usage:
+00008:     python infer_sim.py \
+00009:         --checkpoint_path /path/to/model.pt \
+00010:         --sim_data_path result/tree/25-01_21-35-02/final_sim \
+00011:         --output_path ./output.mp4
+00012: """
+00013: 
+00014: import argparse
+00015: import os
+00016: from pathlib import Path
+00017: 
+00018: import numpy as np
+00019: import torch
+00020: from einops import rearrange
+00021: from omegaconf import OmegaConf
+00022: from PIL import Image
+00023: import imageio
+00024: 
+00025: from deform_transport.pipeline_integration import load_precomputed_transport_latent
+00026: from vidgen import (
+00027:     WanImageEncoder,
+00028:     WanVideoVAE,
+00029:     WanVideoUnit_ImageEmbedderCLIP,
+00030:     WanVideoUnit_ImageEmbedderVAE,
+00031:     set_seed,
+00032:     apply_config_overrides,
+00033:     gpu,
+00034:     get_cuda_free_memory_gb,
+00035:     DynamicSwapInstaller,
+00036:     load_noise,
+00037:     load_first_frame,
+00038:     CausalInferencePipelineSDEdit
+00039: )
+00040: 
+00041: def load_sim_frames(frames_dir, height=480, width=832):
+00042:     """Load simulation frames from a directory of PNGs.
+00043: 
+00044:     Returns:
+00045:         Tensor of shape [1, C, T, H, W] normalized to [-1, 1].
+00046:     """
+00047:     frames_dir = Path(frames_dir)
+00048:     frame_files = sorted(frames_dir.glob("frame_*.png"))
+00049:     if not frame_files:
+00050:         raise FileNotFoundError(f"No frame_*.png files found in {frames_dir}")
+00051: 
+00052:     frames = []
+00053:     for fp in frame_files:
+00054:         img = Image.open(fp).convert("RGB").resize((width, height))
+00055:         arr = np.array(img, dtype=np.float32) / 127.5 - 1.0  # [-1, 1]
+00056:         frames.append(torch.from_numpy(arr))
+00057: 
+00058:     # [T, H, W, C] -> [C, T, H, W]
+00059:     frames_tensor = torch.stack(frames, dim=0).permute(3, 0, 1, 2).contiguous()
+00060:     return frames_tensor.unsqueeze(0)  # [1, C, T, H, W]
+00061: 
+00062: 
+00063: def load_sim_masks(mask_path, target_frames):
+00064:     """Load and temporally resize simulation masks.
+00065: 
+00066:     Args:
+00067:         mask_path: Path to a .pt mask file of shape [T_mask, H, W].
+00068:         target_frames: Target number of latent frames.
+00069: 
+00070:     Returns:
+00071:         Tensor of shape [1, target_frames, H, W] (bool).
+00072:     """
+00073:     masks = torch.load(mask_path, map_location="cpu", weights_only=True)  # [T_mask, H, W]
+00074:     T_mask = masks.shape[0]
+00075:     if T_mask != target_frames:
+00076:         # Nearest-neighbor temporal resize
+00077:         indices = torch.linspace(0, T_mask - 1, steps=target_frames).round().long().clamp(0, T_mask - 1)
+00078:         masks = masks[indices]
+00079:     return masks.unsqueeze(0)  # [1, T, H, W]
+00080: 
+00081: 
+00082: def main():
+00083:     parser = argparse.ArgumentParser(description="I2V Flow Inference with SDEdit from Simulation")
+00084:     parser.add_argument("--checkpoint_path", type=str, required=True, help="Path to the checkpoint file")
+00085:     parser.add_argument("--sim_data_path", type=str, required=True,
+00086:                         help="Path to simulation final_sim directory (contains noises.npy, frames/, masks, etc.)")
+00087:     parser.add_argument("--output_path", type=str, default="./output_sim.mp4", help="Output video path")
+00088:     parser.add_argument("--use_ema", action="store_true", help="Whether to use EMA parameters")
+00089:     parser.add_argument("--seed", type=int, default=42, help="Random seed")
+00090:     parser.add_argument("--eval_degradation", type=float, default=0.5,
+00091:                         help="Degradation level for noise (0.0 = pure structured noise)")
+00092:     parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
+00093:     parser.add_argument(
+00094:         "--transport_latent_path",
+00095:         type=str,
+00096:         default=None,
+00097:         help=(
+00098:             "Optional VAE transport artifact produced by "
+00099:             "scripts/run_wan_vae_transport_probe.py"
+00100:         ),
+00101:     )
+00102:     parser.add_argument(
+00103:         "--transport_mode",
+00104:         choices=("correct", "shuffled", "flow", "blend"),
+00105:         default="correct",
+00106:         help="Which precomputed fused latent to inject when --transport_latent_path is set",
+00107:     )
+00108: 
+00109:     args, additional_args = parser.parse_known_args()
+00110: 
+00111:     device = torch.device("cuda")
+00112:     set_seed(args.seed)
+00113: 
+00114:     print(f'Free VRAM {get_cuda_free_memory_gb(gpu)} GB')
+00115:     low_memory = get_cuda_free_memory_gb(gpu) < 40
+00116: 
+00117:     torch.set_grad_enabled(False)
+00118: 
+00119:     sim_data_path = Path(args.sim_data_path)
+00120: 
+00121:     # -------------------------------------------------------------------------
+00122:     # Load simulation config for SDEdit parameters
+00123:     # -------------------------------------------------------------------------
+00124:     sim_config_path = sim_data_path / "config.yaml"
+00125:     sim_config = OmegaConf.load(sim_config_path)
+00126:     denoising_step_list = list(sim_config.denoising_step_list)
+00127:     mask_dropin_step = int(sim_config.mask_dropin_step)
+00128:     num_output_frames = int(sim_config.num_output_frames)
+00129:     print(f"Loaded from config.yaml: denoising_step_list={denoising_step_list}, mask_dropin_step={mask_dropin_step}, num_output_frames={num_output_frames}")
+00130: 
+00131:     # -------------------------------------------------------------------------
+00132:     # Build config
+00133:     # -------------------------------------------------------------------------
+00134:     DEFAULT_CONFIG = {
+00135:         "independent_first_frame": False,
+00136:         "warp_denoising_step": True,
+00137:         "context_noise": 0,
+00138:         "causal": True,
+00139:         "i2v": True,
+00140:         "i2v_flow": True,
+00141:         "height": 480,
+00142:         "width": 832,
+00143:         "num_frame_per_block": 3,
+00144:         "denoising_step_list": denoising_step_list,
+00145:         "mask_dropin_step": mask_dropin_step,
+00146:         "model_kwargs": {
+00147:             "sink_size": 1,
+00148:             "local_attn_size": args.local_attn_size,
+00149:             "timestep_shift": 5.0,
+00150:         },
+00151:     }
+00152:     config = OmegaConf.create(DEFAULT_CONFIG)
+00153:     config = apply_config_overrides(config, additional_args)
+00154: 
+00155:     # Create output directory
+00156:     output_dir = os.path.dirname(args.output_path)
+00157:     if output_dir:
+00158:         os.makedirs(output_dir, exist_ok=True)
+00159: 
+00160:     # -------------------------------------------------------------------------
+00161:     # Initialize pipeline (SDEdit version)
+00162:     # -------------------------------------------------------------------------
+00163:     pipeline = CausalInferencePipelineSDEdit(config, device=device)
+00164: 
+00165:     # Load checkpoint
+00166:     if args.checkpoint_path:
+00167:         state_dict = torch.load(args.checkpoint_path, map_location="cpu")
+00168:         key = 'generator_ema' if args.use_ema else 'generator'
+00169:         gen_state_dict = state_dict[key]
+00170:         try:
+00171:             pipeline.generator.load_state_dict(gen_state_dict)
+00172:         except:
+00173:             gen_state_dict = {k.replace('._fsdp_wrapped_module', ''): v for k, v in gen_state_dict.items()}
+00174:             pipeline.generator.load_state_dict(gen_state_dict)
+00175: 
+00176:     pipeline = pipeline.to(dtype=torch.bfloat16)
+00177:     if low_memory:
+00178:         DynamicSwapInstaller.install_model(pipeline.text_encoder, device=gpu)
+00179:     else:
+00180:         pipeline.text_encoder.to(device=gpu)
+00181:     pipeline.generator.to(device=gpu)
+00182:     pipeline.vae.to(device=gpu)
+00183: 
+00184:     # Setup I2V flow processors
+00185:     pipeline.processor_dtype = torch.float32
+00186:     pipeline.processor_device = gpu
+00187:     pipeline.processor_vae = WanVideoVAE().to(device=pipeline.processor_device, dtype=pipeline.processor_dtype)
+00188:     pipeline.processor_ienc = WanImageEncoder().to(device=pipeline.processor_device, dtype=pipeline.processor_dtype)
+00189: 
+00190:     pipeline.processor_vae.requires_grad_(False)
+00191:     pipeline.processor_ienc.requires_grad_(False)
+00192: 
+00193:     for p in pipeline.processor_vae.parameters():
+00194:         p.data = p.data.to(dtype=pipeline.processor_dtype)
+00195:     for b in pipeline.processor_vae.buffers():
+00196:         b.data = b.data.to(dtype=pipeline.processor_dtype)
+00197: 
+00198:     pipeline.processors = [
+00199:         WanVideoUnit_ImageEmbedderVAE(),
+00200:         WanVideoUnit_ImageEmbedderCLIP()
+00201:     ]
+00202: 
+00203:     # -------------------------------------------------------------------------
+00204:     # Load simulation data
+00205:     # -------------------------------------------------------------------------
+00206:     noise_path = sim_data_path / "noises.npy"
+00207:     first_frame_path = sim_data_path / "resized_input_image.png"
+00208:     frames_dir = sim_data_path / "frames"
+00209: 
+00210:     # 1. Load structured noise
+00211:     print(f"Loading noise from: {noise_path}")
+00212:     noise_data = load_noise(
+00213:         noise_path=str(noise_path),
+00214:         target_frames=num_output_frames,
+00215:         channel_dim=16,
+00216:         downsample_mode="nearest",
+00217:         eval_degradation=args.eval_degradation,
+00218:     )
+00219: 
+00220:     # 2. Load prompt from sim_data_path/prompt.txt
+00221:     prompt_path = sim_data_path / "prompt.txt"
+00222:     with open(prompt_path, 'r') as f:
+00223:         prompt = f.read().strip()
+00224:     print(f"Prompt: {prompt}")
+00225: 
+00226:     # 3. Load first frame
+00227:     print(f"Loading first frame from: {first_frame_path}")
+00228:     input_image = load_first_frame(str(first_frame_path), height=480, width=832)  # [C, H, W]
+00229: 
+00230:     # 4. Load simulation frames for SDEdit
+00231:     print(f"Loading simulation frames from: {frames_dir}")
+00232:     sim_frames = load_sim_frames(frames_dir, height=480, width=832)  # [1, C, T, H, W]
+00233:     print(f"  Loaded {sim_frames.shape[2]} simulation frames")
+00234: 
+00235:     # 5. Load object masks (optional, for mask dropin)
+00236:     sim_masks = None
+00237:     if mask_dropin_step > 0:
+00238:         mask_file = str(sim_data_path / "points_masks_downsampled.pt")
+00239:         if os.path.exists(mask_file):
+00240:             print(f"Loading object masks from: {mask_file}")
+00241:             sim_masks = load_sim_masks(mask_file, target_frames=num_output_frames)
+00242:             sim_masks = sim_masks.to(device=device)
+00243:             print(f"  Object mask shape: {sim_masks.shape}")
+00244:         else:
+00245:             print(f"Warning: mask_dropin_step={mask_dropin_step} but mask file not found: {mask_file}")
+00246:             print("  Proceeding without mask dropin.")
+00247: 
+00248:     # 6. Load franka/mesh masks (for weak sdedit on manipulator region)
+00249:     sim_franka_masks = None
+00250:     franka_mask_file = sim_data_path / "mesh_masks_downsampled.pt"
+00251:     if franka_mask_file.exists():
+00252:         franka_masks_raw = load_sim_masks(str(franka_mask_file), target_frames=num_output_frames)
+00253:         if franka_masks_raw.any():
+00254:             sim_franka_masks = franka_masks_raw.to(device=device)
+00255:             print(f"Loading franka masks from: {franka_mask_file}")
+00256:             print(f"  Franka mask shape: {sim_franka_masks.shape}")
+00257:         else:
+00258:             print(f"Franka masks are all False, skipping franka mask sdedit.")
+00259: 
+00260:     # -------------------------------------------------------------------------
+00261:     # Prepare tensors
+00262:     # -------------------------------------------------------------------------
+00263:     structured_noise = noise_data['structured_noise'].unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+00264:     structured_noise_sde = noise_data.get('structured_noise_sde')
+00265:     if structured_noise_sde is not None:
+00266:         structured_noise_sde = structured_noise_sde.unsqueeze(0).to(device=device, dtype=torch.bfloat16)
+00267: 
+00268:     # Encode simulation frames to latent space for SDEdit
+00269:     sim_latent = None
+00270:     if pipeline.sdedit:
+00271:         print("Encoding simulation frames to latent space...")
+00272:         sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
+00273:         sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
+00274:         sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+00275:         print(f"  sim_latent shape: {sim_latent.shape}")
+00276: 
+00277:         if args.transport_latent_path:
+00278:             print(
+00279:                 f"Loading {args.transport_mode} transported sim_latent from: "
+00280:                 f"{args.transport_latent_path}"
+00281:             )
+00282:             sim_latent = load_precomputed_transport_latent(
+00283:                 args.transport_latent_path,
+00284:                 mode=args.transport_mode,
+00285:                 reference_latent=sim_latent,
+00286:             )
+00287:             print(f"  transported sim_latent shape: {sim_latent.shape}")
+00288: 
+00289:         # Trim or pad sim_latent to match noise frames
+00290:         if sim_latent.shape[1] > num_output_frames:
+00291:             sim_latent = sim_latent[:, :num_output_frames]
+00292:         elif sim_latent.shape[1] < num_output_frames:
+00293:             # Pad by repeating last frame
+00294:             pad_size = num_output_frames - sim_latent.shape[1]
+00295:             sim_latent = torch.cat([
+00296:                 sim_latent,
+00297:                 sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
+00298:             ], dim=1)
+00299:         print(f"  sim_latent shape (after align): {sim_latent.shape}")
+00300: 
+00301:     # Prepare batch for I2V processors
+00302:     pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+00303:     batch = {
+00304:         'input_image': input_image.unsqueeze(0),  # [1, C, H, W]
+00305:         'end_image': None,
+00306:         'height': 480,
+00307:         'width': 832,
+00308:         'num_frames': pixel_num_frames,
+00309:     }
+00310: 
+00311:     # -------------------------------------------------------------------------
+00312:     # Generate video
+00313:     # -------------------------------------------------------------------------
+00314:     print("Generating video...")
+00315:     video, _ = pipeline.inference(
+00316:         noise=structured_noise,
+00317:         text_prompts=[prompt],
+00318:         return_latents=True,
+00319:         batch_sample=batch,
+00320:         sim_latent=sim_latent,
+00321:         sim_masks=sim_masks,
+00322:         sim_franka_masks=sim_franka_masks,
+00323:         low_memory=low_memory,
+00324:         device=device,
+00325:         structured_noise_sde=structured_noise_sde,
+00326:     )
+00327: 
+00328:     # Process output
+00329:     video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+00330:     video = (255.0 * video[0]).to(torch.uint8)
+00331: 
+00332:     # Clear VAE cache
+00333:     pipeline.vae.model.clear_cache()
+00334: 
+00335:     # Save the video
+00336:     print(f"Saving video to: {args.output_path}")
+00337:     imageio.mimwrite(args.output_path, video.numpy(), fps=10)
+00338:     print("Done!")
+00339: 
+00340: if __name__ == "__main__":
+00341:     main()
+
+========================================================================================
+FILE: vidgen/__init__.py
+MATCHED_LINES: [4, 35]
+========================================================================================
+
+--- LINES 1-57 ---
+00001: """Minimal I2V Flow video generation module."""
+00002: 
+00003: from vidgen.pipeline import CausalInferencePipeline
+00004: from vidgen.pipeline_sdedit import CausalInferencePipelineSDEdit
+00005: from vidgen.models import (
+00006:     WanTextEncoder,
+00007:     WanImageEncoder,
+00008:     WanVAEWrapper,
+00009:     WanVideoVAE,
+00010:     WanDiffusionWrapper,
+00011:     WanI2VDiffusionWrapper,
+00012: )
+00013: from vidgen.utils import (
+00014:     set_seed,
+00015:     apply_config_overrides,
+00016:     TextImagePairDataset,
+00017:     WanVideoUnit_ImageEmbedderCLIP,
+00018:     WanVideoUnit_ImageEmbedderVAE,
+00019:     extract_subdim,
+00020:     preprocess_image,
+00021:     load_noise,
+00022:     load_prompt,
+00023:     load_first_frame,
+00024: )
+00025: from vidgen.memory import (
+00026:     gpu,
+00027:     cpu,
+00028:     get_cuda_free_memory_gb,
+00029:     DynamicSwapInstaller,
+00030:     move_model_to_device_with_memory_preservation,
+00031: )
+00032: 
+00033: __all__ = [
+00034:     "CausalInferencePipeline",
+00035:     "CausalInferencePipelineSDEdit",
+00036:     "WanTextEncoder",
+00037:     "WanImageEncoder",
+00038:     "WanVAEWrapper",
+00039:     "WanVideoVAE",
+00040:     "WanDiffusionWrapper",
+00041:     "WanI2VDiffusionWrapper",
+00042:     "set_seed",
+00043:     "apply_config_overrides",
+00044:     "TextImagePairDataset",
+00045:     "WanVideoUnit_ImageEmbedderCLIP",
+00046:     "WanVideoUnit_ImageEmbedderVAE",
+00047:     "extract_subdim",
+00048:     "preprocess_image",
+00049:     "load_noise",
+00050:     "load_prompt",
+00051:     "load_first_frame",
+00052:     "gpu",
+00053:     "cpu",
+00054:     "get_cuda_free_memory_gb",
+00055:     "DynamicSwapInstaller",
+00056:     "move_model_to_device_with_memory_preservation",
+00057: ]
+
+========================================================================================
+FILE: vidgen/pipeline.py
+MATCHED_LINES: [32, 35, 176, 177, 178, 180, 190, 196]
+========================================================================================
+
+--- LINES 1-95 ---
+00001: """Causal inference pipeline for video generation."""
+00002: 
+00003: from typing import List, Optional
+00004: import torch
+00005: 
+00006: from vidgen.models import WanDiffusionWrapper, WanI2VDiffusionWrapper, WanTextEncoder, WanVAEWrapper
+00007: from vidgen.memory import gpu, get_cuda_free_memory_gb, move_model_to_device_with_memory_preservation
+00008: from vidgen.utils import extract_subdim
+00009: 
+00010: 
+00011: class CausalInferencePipeline(torch.nn.Module):
+00012:     """Pipeline for causal video generation inference."""
+00013: 
+00014:     def __init__(self, args, device, generator=None, text_encoder=None, vae=None):
+00015:         super().__init__()
+00016: 
+00017:         if args.i2v_flow:
+00018:             self.i2v_flow = True
+00019:             Wrapper = WanI2VDiffusionWrapper
+00020:         else:
+00021:             self.i2v_flow = False
+00022:             Wrapper = WanDiffusionWrapper
+00023: 
+00024:         # Initialize models
+00025:         self.generator = Wrapper(
+00026:             **getattr(args, "model_kwargs", {}), is_causal=True) if generator is None else generator
+00027:         self.text_encoder = WanTextEncoder() if text_encoder is None else text_encoder
+00028:         self.vae = WanVAEWrapper() if vae is None else vae
+00029: 
+00030:         # Initialize causal hyperparameters
+00031:         self.scheduler = self.generator.get_scheduler()
+00032:         self.denoising_step_list = torch.tensor(args.denoising_step_list, dtype=torch.long)
+00033:         if args.warp_denoising_step:
+00034:             timesteps = torch.cat((self.scheduler.timesteps.cpu(), torch.tensor([0], dtype=torch.float32)))
+00035:             self.denoising_step_list = timesteps[1000 - self.denoising_step_list]
+00036: 
+00037:         self.num_transformer_blocks = 30
+00038:         self.frame_seq_length = 1560
+00039:         self.kv_cache1 = None
+00040:         self.args = args
+00041:         self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
+00042:         self.independent_first_frame = args.independent_first_frame
+00043:         self.local_attn_size = self.generator.model.local_attn_size
+00044: 
+00045:         print(f"KV inference with {self.num_frame_per_block} frames per block")
+00046: 
+00047:         if self.num_frame_per_block > 1:
+00048:             self.generator.model.num_frame_per_block = self.num_frame_per_block
+00049: 
+00050:     def inference(self, noise: torch.Tensor, text_prompts: List[str],
+00051:                   initial_latent: Optional[torch.Tensor] = None,
+00052:                   return_latents: bool = False, batch_sample=None,
+00053:                   profile: bool = False, low_memory: bool = False,
+00054:                   skip_decoding: bool = False,
+00055:                   structured_noise_sde: Optional[torch.Tensor] = None,
+00056:                   device=None) -> torch.Tensor:
+00057:         """Perform causal video generation inference."""
+00058:         batch_size, num_frames, num_channels, height, width = noise.shape
+00059: 
+00060:         if not self.independent_first_frame or (self.independent_first_frame and initial_latent is not None):
+00061:             assert num_frames % self.num_frame_per_block == 0
+00062:             num_blocks = num_frames // self.num_frame_per_block
+00063:         else:
+00064:             assert (num_frames - 1) % self.num_frame_per_block == 0
+00065:             num_blocks = (num_frames - 1) // self.num_frame_per_block
+00066: 
+00067:         num_input_frames = initial_latent.shape[1] if initial_latent is not None else 0
+00068:         num_output_frames = num_frames + num_input_frames
+00069: 
+00070:         # Text encoding
+00071:         conditional_dict = self.text_encoder(text_prompts=text_prompts)
+00072: 
+00073:         # Process additional conditioning
+00074:         if hasattr(self, "processors"):
+00075:             for unit in self.processors:
+00076:                 input_data = {"device": device, "torch_dtype": self.processor_dtype}
+00077:                 for key in unit.input_params:
+00078:                     input_data[key] = batch_sample.get(key) if batch_sample else None
+00079:                 for key in unit.onload_model_names:
+00080:                     if key == "image_encoder":
+00081:                         input_data["image_encoder"] = self.processor_ienc
+00082:                     if key == "vae":
+00083:                         input_data["vae"] = self.processor_vae
+00084:                 unit_output = unit.process(**input_data)
+00085:                 for k, v in unit_output.items():
+00086:                     conditional_dict[k] = v.to(dtype=torch.bfloat16) if isinstance(v, torch.Tensor) else v
+00087: 
+00088:         if low_memory:
+00089:             gpu_memory_preservation = get_cuda_free_memory_gb(gpu) + 5
+00090:             move_model_to_device_with_memory_preservation(
+00091:                 self.text_encoder, target_device=gpu, preserved_memory_gb=gpu_memory_preservation)
+00092: 
+00093:         output = torch.zeros([batch_size, num_output_frames, num_channels, height, width],
+00094:                              device=noise.device, dtype=noise.dtype)
+00095: 
+
+--- LINES 116-256 ---
+00116:             for block_index in range(len(self.kv_cache1)):
+00117:                 self.kv_cache1[block_index]["global_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+00118:                 self.kv_cache1[block_index]["local_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+00119: 
+00120:         # Cache context feature
+00121:         current_start_frame = 0
+00122:         if initial_latent is not None:
+00123:             timestep = torch.ones([batch_size, 1], device=noise.device, dtype=torch.int64) * 0
+00124:             if self.independent_first_frame:
+00125:                 assert (num_input_frames - 1) % self.num_frame_per_block == 0
+00126:                 num_input_blocks = (num_input_frames - 1) // self.num_frame_per_block
+00127:                 output[:, :1] = initial_latent[:, :1]
+00128:                 self.generator(
+00129:                     noisy_image_or_video=initial_latent[:, :1],
+00130:                     conditional_dict=conditional_dict,
+00131:                     timestep=timestep * 0,
+00132:                     kv_cache=self.kv_cache1,
+00133:                     crossattn_cache=self.crossattn_cache,
+00134:                     current_start=current_start_frame * self.frame_seq_length,
+00135:                 )
+00136:                 current_start_frame += 1
+00137:             else:
+00138:                 assert num_input_frames % self.num_frame_per_block == 0
+00139:                 num_input_blocks = num_input_frames // self.num_frame_per_block
+00140: 
+00141:             for _ in range(num_input_blocks):
+00142:                 current_ref_latents = initial_latent[:, current_start_frame:current_start_frame + self.num_frame_per_block]
+00143:                 output[:, current_start_frame:current_start_frame + self.num_frame_per_block] = current_ref_latents
+00144:                 self.generator(
+00145:                     noisy_image_or_video=current_ref_latents,
+00146:                     conditional_dict=conditional_dict,
+00147:                     timestep=timestep * 0,
+00148:                     kv_cache=self.kv_cache1,
+00149:                     crossattn_cache=self.crossattn_cache,
+00150:                     current_start=current_start_frame * self.frame_seq_length,
+00151:                 )
+00152:                 current_start_frame += self.num_frame_per_block
+00153: 
+00154:         if profile:
+00155:             init_end.record()
+00156:             torch.cuda.synchronize()
+00157:             diffusion_start.record()
+00158: 
+00159:         curr_y = None
+00160:         full_y = conditional_dict["y"].permute(0, 2, 1, 3, 4) if "y" in conditional_dict else None
+00161: 
+00162:         # Temporal denoising loop
+00163:         all_num_frames = [self.num_frame_per_block] * num_blocks
+00164:         if self.independent_first_frame and initial_latent is None:
+00165:             all_num_frames = [1] + all_num_frames
+00166: 
+00167:         for current_num_frames in all_num_frames:
+00168:             if profile:
+00169:                 block_start.record()
+00170: 
+00171:             noisy_input = noise[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00172:             if full_y is not None:
+00173:                 curr_y = full_y[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00174: 
+00175:             # Spatial denoising loop
+00176:             for index, current_timestep in enumerate(self.denoising_step_list):
+00177:                 print(f"current_timestep: {current_timestep}")
+00178:                 timestep = torch.ones([batch_size, current_num_frames], device=noise.device, dtype=torch.int64) * current_timestep
+00179: 
+00180:                 if index < len(self.denoising_step_list) - 1:
+00181:                     _, denoised_pred = self.generator(
+00182:                         noisy_image_or_video=noisy_input,
+00183:                         conditional_dict=conditional_dict,
+00184:                         curr_y=curr_y,
+00185:                         timestep=timestep,
+00186:                         kv_cache=self.kv_cache1,
+00187:                         crossattn_cache=self.crossattn_cache,
+00188:                         current_start=current_start_frame * self.frame_seq_length
+00189:                     )
+00190:                     next_timestep = self.denoising_step_list[index + 1]
+00191:                     if structured_noise_sde is not None:
+00192:                         sde_noise = extract_subdim(structured_noise_sde, 16, return_complement=False, channel_dim=2)
+00193:                         sde_noise = sde_noise[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00194:                     else:
+00195:                         sde_noise = torch.randn_like(noisy_input)
+00196:                     noisy_input = self.scheduler.add_noise(
+00197:                         denoised_pred.flatten(0, 1),
+00198:                         sde_noise.flatten(0, 1),
+00199:                         next_timestep * torch.ones([batch_size * current_num_frames], device=noise.device, dtype=torch.long)
+00200:                     ).unflatten(0, denoised_pred.shape[:2])
+00201:                 else:
+00202:                     _, denoised_pred = self.generator(
+00203:                         noisy_image_or_video=noisy_input,
+00204:                         conditional_dict=conditional_dict,
+00205:                         curr_y=curr_y,
+00206:                         timestep=timestep,
+00207:                         kv_cache=self.kv_cache1,
+00208:                         crossattn_cache=self.crossattn_cache,
+00209:                         current_start=current_start_frame * self.frame_seq_length
+00210:                     )
+00211: 
+00212:             # Record output
+00213:             output[:, current_start_frame:current_start_frame + current_num_frames] = denoised_pred
+00214:             if full_y is not None:
+00215:                 curr_y = full_y[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00216: 
+00217:             # Update KV cache with clean context
+00218:             context_timestep = torch.ones_like(timestep) * self.args.context_noise
+00219:             self.generator(
+00220:                 noisy_image_or_video=denoised_pred,
+00221:                 conditional_dict=conditional_dict,
+00222:                 curr_y=curr_y,
+00223:                 timestep=context_timestep,
+00224:                 kv_cache=self.kv_cache1,
+00225:                 crossattn_cache=self.crossattn_cache,
+00226:                 current_start=current_start_frame * self.frame_seq_length,
+00227:             )
+00228: 
+00229:             if profile:
+00230:                 block_end.record()
+00231:                 torch.cuda.synchronize()
+00232:                 block_times.append(block_start.elapsed_time(block_end))
+00233: 
+00234:             current_start_frame += current_num_frames
+00235: 
+00236:         if profile:
+00237:             diffusion_end.record()
+00238:             torch.cuda.synchronize()
+00239:             diffusion_time = diffusion_start.elapsed_time(diffusion_end)
+00240:             init_time = init_start.elapsed_time(init_end)
+00241:             vae_start.record()
+00242: 
+00243:         # Decode output
+00244:         video = None
+00245:         if not skip_decoding:
+00246:             video = self.vae.decode_to_pixel(output, use_cache=False)
+00247:             video = (video * 0.5 + 0.5).clamp(0, 1)
+00248: 
+00249:         if profile:
+00250:             vae_end.record()
+00251:             torch.cuda.synchronize()
+00252:             vae_time = vae_start.elapsed_time(vae_end)
+00253:             total_time = init_time + diffusion_time + vae_time
+00254:             print("Profiling results:")
+00255:             print(f"  - Initialization/caching time: {init_time:.2f} ms ({100 * init_time / total_time:.2f}%)")
+00256:             print(f"  - Diffusion generation time: {diffusion_time:.2f} ms ({100 * diffusion_time / total_time:.2f}%)")
+
+========================================================================================
+FILE: vidgen/pipeline_sdedit.py
+MATCHED_LINES: [1, 3, 4, 16, 17, 36, 45, 47, 48, 49, 50, 52, 56, 58, 59, 60, 61, 63, 75, 76, 77, 88, 99, 105, 107, 176, 179, 185, 186, 187, 188, 192, 193, 194, 196, 202, 203, 204, 205, 207, 212, 213, 214, 215, 216, 285, 292, 299, 300, 301, 305, 306, 315, 317, 324, 334, 340]
+========================================================================================
+
+--- LINES 1-400 ---
+00001: """Causal inference pipeline with SDEdit support for simulation-guided video generation.
+00002: 
+00003: Based on vidgen/pipeline.py (CausalInferencePipeline) with SDEdit logic from
+00004: causal_inference_sdedit.py. This file is kept separate to avoid modifying the
+00005: cleaned vidgen module.
+00006: """
+00007: 
+00008: from typing import List, Optional
+00009: import torch
+00010: 
+00011: from vidgen.models import WanDiffusionWrapper, WanI2VDiffusionWrapper, WanTextEncoder, WanVAEWrapper
+00012: from vidgen.memory import gpu, get_cuda_free_memory_gb, move_model_to_device_with_memory_preservation
+00013: from vidgen.utils import extract_subdim
+00014: 
+00015: 
+00016: class CausalInferencePipelineSDEdit(torch.nn.Module):
+00017:     """Pipeline for causal video generation inference with SDEdit support."""
+00018: 
+00019:     def __init__(self, args, device, generator=None, text_encoder=None, vae=None,
+00020:                  use_separate_encode_vae=False):
+00021:         super().__init__()
+00022: 
+00023:         if args.i2v_flow:
+00024:             self.i2v_flow = True
+00025:             Wrapper = WanI2VDiffusionWrapper
+00026:         else:
+00027:             self.i2v_flow = False
+00028:             Wrapper = WanDiffusionWrapper
+00029: 
+00030:         # Initialize models
+00031:         self.generator = Wrapper(
+00032:             **getattr(args, "model_kwargs", {}), is_causal=True) if generator is None else generator
+00033:         self.text_encoder = WanTextEncoder() if text_encoder is None else text_encoder
+00034:         self.vae = WanVAEWrapper() if vae is None else vae
+00035: 
+00036:         # Separate VAE for encoding sim_latents to avoid cache conflicts
+00037:         # with the decoder's streaming cache on self.vae
+00038:         if use_separate_encode_vae:
+00039:             self.encode_vae = WanVAEWrapper()
+00040:         else:
+00041:             self.encode_vae = self.vae
+00042: 
+00043:         # Initialize causal hyperparameters
+00044:         self.scheduler = self.generator.get_scheduler()
+00045:         self.denoising_step_list = torch.tensor(args.denoising_step_list, dtype=torch.long)
+00046: 
+00047:         # Detect SDEdit mode: if the first denoising step < total scheduler steps,
+00048:         # we start from a noised version of sim_latent instead of pure noise.
+00049:         if self.denoising_step_list[0] < len(self.scheduler.timesteps):
+00050:             self.sdedit = True
+00051:         else:
+00052:             self.sdedit = False
+00053: 
+00054:         if args.warp_denoising_step:
+00055:             timesteps = torch.cat((self.scheduler.timesteps.cpu(), torch.tensor([0], dtype=torch.float32)))
+00056:             self.denoising_step_list = timesteps[1000 - self.denoising_step_list]
+00057: 
+00058:         if self.sdedit:
+00059:             self.mask_dropin_step = getattr(args, "mask_dropin_step", -1)
+00060:             # Franka mask SDEdit: default to last denoising step (weak sdedit)
+00061:             self.franka_step = getattr(args, "franka_step", len(args.denoising_step_list) - 1)
+00062:         else:
+00063:             self.mask_dropin_step = -1
+00064:             self.franka_step = -1
+00065: 
+00066:         self.num_transformer_blocks = 30
+00067:         self.frame_seq_length = 1560
+00068:         self.kv_cache1 = None
+00069:         self.args = args
+00070:         self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
+00071:         self.independent_first_frame = args.independent_first_frame
+00072:         self.local_attn_size = self.generator.model.local_attn_size
+00073: 
+00074:         print(f"KV inference with {self.num_frame_per_block} frames per block")
+00075:         print(f"SDEdit enabled: {self.sdedit}")
+00076:         if self.sdedit:
+00077:             print(f"  mask_dropin_step: {self.mask_dropin_step}")
+00078:             # print(f"  franka_step: {self.franka_step}")
+00079: 
+00080:         if self.num_frame_per_block > 1:
+00081:             self.generator.model.num_frame_per_block = self.num_frame_per_block
+00082: 
+00083:     def inference(
+00084:         self,
+00085:         noise: torch.Tensor,
+00086:         text_prompts: List[str],
+00087:         initial_latent: Optional[torch.Tensor] = None,
+00088:         sim_latent: Optional[torch.Tensor] = None,
+00089:         sim_masks: Optional[torch.Tensor] = None,
+00090:         sim_franka_masks: Optional[torch.Tensor] = None,
+00091:         return_latents: bool = False,
+00092:         batch_sample=None,
+00093:         profile: bool = False,
+00094:         low_memory: bool = False,
+00095:         skip_decoding: bool = False,
+00096:         structured_noise_sde: Optional[torch.Tensor] = None,
+00097:         device=None,
+00098:     ) -> torch.Tensor:
+00099:         """Perform causal video generation inference with optional SDEdit.
+00100: 
+00101:         Args:
+00102:             noise: Input noise [B, T, C, H, W].
+00103:             text_prompts: List of text prompts.
+00104:             initial_latent: Optional initial latent for I2V.
+00105:             sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+00106:             sim_masks: Object masks [B, T, H, W] (True = object region to keep generated).
+00107:             sim_franka_masks: Franka/mesh masks [B, T, H, W] (True = franka region, weak sdedit).
+00108:             return_latents: Whether to return latents alongside decoded video.
+00109:             batch_sample: Batch dict for processor conditioning.
+00110:             structured_noise_sde: Deterministic SDE noise from simulation.
+00111:             device: Device to use.
+00112:         """
+00113:         batch_size, num_frames, num_channels, height, width = noise.shape
+00114: 
+00115:         if not self.independent_first_frame or (self.independent_first_frame and initial_latent is not None):
+00116:             assert num_frames % self.num_frame_per_block == 0
+00117:             num_blocks = num_frames // self.num_frame_per_block
+00118:         else:
+00119:             assert (num_frames - 1) % self.num_frame_per_block == 0
+00120:             num_blocks = (num_frames - 1) // self.num_frame_per_block
+00121: 
+00122:         num_input_frames = initial_latent.shape[1] if initial_latent is not None else 0
+00123:         num_output_frames = num_frames + num_input_frames
+00124: 
+00125:         # Text encoding
+00126:         conditional_dict = self.text_encoder(text_prompts=text_prompts)
+00127: 
+00128:         # Process additional conditioning (I2V flow processors)
+00129:         if hasattr(self, "processors"):
+00130:             for unit in self.processors:
+00131:                 input_data = {"device": device, "torch_dtype": self.processor_dtype}
+00132:                 for key in unit.input_params:
+00133:                     input_data[key] = batch_sample.get(key) if batch_sample else None
+00134:                 for key in unit.onload_model_names:
+00135:                     if key == "image_encoder":
+00136:                         input_data["image_encoder"] = self.processor_ienc
+00137:                     if key == "vae":
+00138:                         input_data["vae"] = self.processor_vae
+00139:                 unit_output = unit.process(**input_data)
+00140:                 for k, v in unit_output.items():
+00141:                     conditional_dict[k] = v.to(dtype=torch.bfloat16) if isinstance(v, torch.Tensor) else v
+00142: 
+00143:         if low_memory:
+00144:             gpu_memory_preservation = get_cuda_free_memory_gb(gpu) + 5
+00145:             move_model_to_device_with_memory_preservation(
+00146:                 self.text_encoder, target_device=gpu, preserved_memory_gb=gpu_memory_preservation)
+00147: 
+00148:         output = torch.zeros([batch_size, num_output_frames, num_channels, height, width],
+00149:                              device=noise.device, dtype=noise.dtype)
+00150: 
+00151:         # Profiling setup
+00152:         if profile:
+00153:             init_start = torch.cuda.Event(enable_timing=True)
+00154:             init_end = torch.cuda.Event(enable_timing=True)
+00155:             diffusion_start = torch.cuda.Event(enable_timing=True)
+00156:             diffusion_end = torch.cuda.Event(enable_timing=True)
+00157:             vae_start = torch.cuda.Event(enable_timing=True)
+00158:             vae_end = torch.cuda.Event(enable_timing=True)
+00159:             block_times = []
+00160:             block_start = torch.cuda.Event(enable_timing=True)
+00161:             block_end = torch.cuda.Event(enable_timing=True)
+00162:             init_start.record()
+00163: 
+00164:         # Initialize KV cache
+00165:         if self.kv_cache1 is None:
+00166:             self._initialize_kv_cache(batch_size=batch_size, dtype=noise.dtype, device=noise.device)
+00167:             self._initialize_crossattn_cache(batch_size=batch_size, dtype=noise.dtype, device=noise.device)
+00168:         else:
+00169:             for block_index in range(self.num_transformer_blocks):
+00170:                 self.crossattn_cache[block_index]["is_init"] = False
+00171:             for block_index in range(len(self.kv_cache1)):
+00172:                 self.kv_cache1[block_index]["global_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+00173:                 self.kv_cache1[block_index]["local_end_index"] = torch.tensor([0], dtype=torch.long, device=noise.device)
+00174: 
+00175:         ############################################################
+00176:         ########################## SDEdit ##########################
+00177:         bg_noise = None
+00178:         bg_noise_franka = None
+00179:         use_franka_sdedit = (
+00180:             self.franka_step >= 0
+00181:             and sim_franka_masks is not None
+00182:             and sim_franka_masks.any()
+00183:         )
+00184: 
+00185:         if self.sdedit:
+00186:             assert sim_latent is not None, "sim_latent is required for SDEdit mode"
+00187:             assert noise.shape == sim_latent.shape, (
+00188:                 f"noise shape {noise.shape} != sim_latent shape {sim_latent.shape}"
+00189:             )
+00190: 
+00191:             # Add noise to simulated latent at the first denoising step
+00192:             sdedit_dropin_step = self.denoising_step_list[0]
+00193:             noise = self.scheduler.add_noise(
+00194:                 sim_latent.flatten(0, 1),
+00195:                 noise.flatten(0, 1),
+00196:                 sdedit_dropin_step * torch.ones(
+00197:                     [batch_size * noise.size(1)], device=noise.device, dtype=torch.long
+00198:                 )
+00199:             ).unflatten(0, noise.shape[:2])
+00200: 
+00201:             # Prepare background noise for mask dropin
+00202:             if self.mask_dropin_step > 0:
+00203:                 mask_dropin_step_diffusion = self.denoising_step_list[self.mask_dropin_step]
+00204:                 bg_noise = self.scheduler.add_noise(
+00205:                     sim_latent.flatten(0, 1),
+00206:                     noise.flatten(0, 1),
+00207:                     mask_dropin_step_diffusion * torch.ones(
+00208:                         [batch_size * noise.size(1)], device=noise.device, dtype=torch.long
+00209:                     )
+00210:                 ).unflatten(0, noise.shape[:2])
+00211: 
+00212:             # Prepare franka mask background noise (weak sdedit at a late step)
+00213:             if use_franka_sdedit and self.franka_step < len(self.denoising_step_list):
+00214:                 franka_step_diffusion = self.denoising_step_list[self.franka_step]
+00215:                 bg_noise_franka = self.scheduler.add_noise(
+00216:                     sim_latent.flatten(0, 1),
+00217:                     noise.flatten(0, 1),
+00218:                     franka_step_diffusion * torch.ones(
+00219:                         [batch_size * noise.size(1)], device=noise.device, dtype=torch.long
+00220:                     )
+00221:                 ).unflatten(0, noise.shape[:2])
+00222:         ############################################################
+00223: 
+00224:         # Cache context feature
+00225:         current_start_frame = 0
+00226:         if initial_latent is not None:
+00227:             timestep = torch.ones([batch_size, 1], device=noise.device, dtype=torch.int64) * 0
+00228:             if self.independent_first_frame:
+00229:                 assert (num_input_frames - 1) % self.num_frame_per_block == 0
+00230:                 num_input_blocks = (num_input_frames - 1) // self.num_frame_per_block
+00231:                 output[:, :1] = initial_latent[:, :1]
+00232:                 self.generator(
+00233:                     noisy_image_or_video=initial_latent[:, :1],
+00234:                     conditional_dict=conditional_dict,
+00235:                     timestep=timestep * 0,
+00236:                     kv_cache=self.kv_cache1,
+00237:                     crossattn_cache=self.crossattn_cache,
+00238:                     current_start=current_start_frame * self.frame_seq_length,
+00239:                 )
+00240:                 current_start_frame += 1
+00241:             else:
+00242:                 assert num_input_frames % self.num_frame_per_block == 0
+00243:                 num_input_blocks = num_input_frames // self.num_frame_per_block
+00244: 
+00245:             for _ in range(num_input_blocks):
+00246:                 current_ref_latents = initial_latent[:, current_start_frame:current_start_frame + self.num_frame_per_block]
+00247:                 output[:, current_start_frame:current_start_frame + self.num_frame_per_block] = current_ref_latents
+00248:                 self.generator(
+00249:                     noisy_image_or_video=current_ref_latents,
+00250:                     conditional_dict=conditional_dict,
+00251:                     timestep=timestep * 0,
+00252:                     kv_cache=self.kv_cache1,
+00253:                     crossattn_cache=self.crossattn_cache,
+00254:                     current_start=current_start_frame * self.frame_seq_length,
+00255:                 )
+00256:                 current_start_frame += self.num_frame_per_block
+00257: 
+00258:         if profile:
+00259:             init_end.record()
+00260:             torch.cuda.synchronize()
+00261:             diffusion_start.record()
+00262: 
+00263:         curr_y = None
+00264:         full_y = conditional_dict["y"].permute(0, 2, 1, 3, 4) if "y" in conditional_dict else None
+00265: 
+00266:         # Temporal denoising loop
+00267:         all_num_frames = [self.num_frame_per_block] * num_blocks
+00268:         if self.independent_first_frame and initial_latent is None:
+00269:             all_num_frames = [1] + all_num_frames
+00270: 
+00271:         for current_num_frames in all_num_frames:
+00272:             if profile:
+00273:                 block_start.record()
+00274: 
+00275:             noisy_input = noise[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00276:             if full_y is not None:
+00277:                 curr_y = full_y[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00278: 
+00279:             # Prepare mask/background for this block
+00280:             bg_noisy_input = None
+00281:             mask_current = None
+00282:             bg_noisy_input_franka = None
+00283:             mask_current_franka = None
+00284: 
+00285:             if self.sdedit and self.mask_dropin_step > 0 and bg_noise is not None:
+00286:                 bg_noisy_input = bg_noise[
+00287:                     :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00288:                 if sim_masks is not None:
+00289:                     mask_current = sim_masks[
+00290:                         :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00291: 
+00292:             if use_franka_sdedit and bg_noise_franka is not None:
+00293:                 bg_noisy_input_franka = bg_noise_franka[
+00294:                     :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00295:                 mask_current_franka = sim_franka_masks[
+00296:                     :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00297: 
+00298:             # Spatial denoising loop
+00299:             for index, current_timestep in enumerate(self.denoising_step_list):
+00300:                 print(f"current_timestep: {current_timestep}")
+00301:                 timestep = torch.ones([batch_size, current_num_frames], device=noise.device, dtype=torch.int64) * current_timestep
+00302: 
+00303:                 # Mask drop-in: replace background with sim-noised latent
+00304:                 if (
+00305:                     self.mask_dropin_step > 0
+00306:                     and self.mask_dropin_step == index
+00307:                     and mask_current is not None
+00308:                     and bg_noisy_input is not None
+00309:                 ):
+00310:                     # mask_current is True for object region (keep generated),
+00311:                     # False for background (replace with simulation)
+00312:                     noisy_input = torch.where(mask_current.unsqueeze(2), noisy_input, bg_noisy_input)
+00313: 
+00314:                 # Franka mask drop-in: where franka mask is True, replace with
+00315:                 # sim-noised latent (weak sdedit to keep structure close to simulation)
+00316:                 if (
+00317:                     use_franka_sdedit
+00318:                     and self.franka_step == index
+00319:                     and mask_current_franka is not None
+00320:                     and bg_noisy_input_franka is not None
+00321:                 ):
+00322:                     noisy_input = torch.where(mask_current_franka.unsqueeze(2), bg_noisy_input_franka, noisy_input)
+00323: 
+00324:                 if index < len(self.denoising_step_list) - 1:
+00325:                     _, denoised_pred = self.generator(
+00326:                         noisy_image_or_video=noisy_input,
+00327:                         conditional_dict=conditional_dict,
+00328:                         curr_y=curr_y,
+00329:                         timestep=timestep,
+00330:                         kv_cache=self.kv_cache1,
+00331:                         crossattn_cache=self.crossattn_cache,
+00332:                         current_start=current_start_frame * self.frame_seq_length
+00333:                     )
+00334:                     next_timestep = self.denoising_step_list[index + 1]
+00335:                     if structured_noise_sde is not None:
+00336:                         sde_noise = extract_subdim(structured_noise_sde, 16, return_complement=False, channel_dim=2)
+00337:                         sde_noise = sde_noise[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00338:                     else:
+00339:                         sde_noise = torch.randn_like(noisy_input)
+00340:                     noisy_input = self.scheduler.add_noise(
+00341:                         denoised_pred.flatten(0, 1),
+00342:                         sde_noise.flatten(0, 1),
+00343:                         next_timestep * torch.ones([batch_size * current_num_frames], device=noise.device, dtype=torch.long)
+00344:                     ).unflatten(0, denoised_pred.shape[:2])
+00345:                 else:
+00346:                     _, denoised_pred = self.generator(
+00347:                         noisy_image_or_video=noisy_input,
+00348:                         conditional_dict=conditional_dict,
+00349:                         curr_y=curr_y,
+00350:                         timestep=timestep,
+00351:                         kv_cache=self.kv_cache1,
+00352:                         crossattn_cache=self.crossattn_cache,
+00353:                         current_start=current_start_frame * self.frame_seq_length
+00354:                     )
+00355: 
+00356:             # Record output
+00357:             output[:, current_start_frame:current_start_frame + current_num_frames] = denoised_pred
+00358:             if full_y is not None:
+00359:                 curr_y = full_y[:, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+00360: 
+00361:             # Update KV cache with clean context
+00362:             context_timestep = torch.ones_like(timestep) * self.args.context_noise
+00363:             self.generator(
+00364:                 noisy_image_or_video=denoised_pred,
+00365:                 conditional_dict=conditional_dict,
+00366:                 curr_y=curr_y,
+00367:                 timestep=context_timestep,
+00368:                 kv_cache=self.kv_cache1,
+00369:                 crossattn_cache=self.crossattn_cache,
+00370:                 current_start=current_start_frame * self.frame_seq_length,
+00371:             )
+00372: 
+00373:             if profile:
+00374:                 block_end.record()
+00375:                 torch.cuda.synchronize()
+00376:                 block_times.append(block_start.elapsed_time(block_end))
+00377: 
+00378:             current_start_frame += current_num_frames
+00379: 
+00380:         if profile:
+00381:             diffusion_end.record()
+00382:             torch.cuda.synchronize()
+00383:             diffusion_time = diffusion_start.elapsed_time(diffusion_end)
+00384:             init_time = init_start.elapsed_time(init_end)
+00385:             vae_start.record()
+00386: 
+00387:         # Decode output
+00388:         video = None
+00389:         if not skip_decoding:
+00390:             video = self.vae.decode_to_pixel(output, use_cache=False)
+00391:             video = (video * 0.5 + 0.5).clamp(0, 1)
+00392: 
+00393:         if profile:
+00394:             vae_end.record()
+00395:             torch.cuda.synchronize()
+00396:             vae_time = vae_start.elapsed_time(vae_end)
+00397:             total_time = init_time + diffusion_time + vae_time
+00398:             print("Profiling results:")
+00399:             print(f"  - Initialization/caching time: {init_time:.2f} ms ({100 * init_time / total_time:.2f}%)")
+00400:             print(f"  - Diffusion generation time: {diffusion_time:.2f} ms ({100 * diffusion_time / total_time:.2f}%)")
+
+========================================================================================
+FILE: vidgen/utils.py
+MATCHED_LINES: [408, 416, 417, 469, 472, 473, 480, 483]
+========================================================================================
+
+--- LINES 348-501 ---
+00348:         self.input_params_nega = input_params_nega
+00349:         self.onload_model_names = onload_model_names
+00350: 
+00351:     def process(self, pipe, inputs: dict, positive=True, **kwargs) -> dict:
+00352:         raise NotImplementedError("`process` is not implemented.")
+00353: 
+00354: 
+00355: class WanVideoUnit_ImageEmbedderCLIP(PipelineUnit):
+00356:     """CLIP image embedder for WAN video pipeline."""
+00357: 
+00358:     def __init__(self):
+00359:         super().__init__(
+00360:             input_params=("input_image", "end_image", "height", "width"),
+00361:             onload_model_names=("image_encoder",)
+00362:         )
+00363: 
+00364:     def process(self, image_encoder, input_image, end_image, height, width, device, torch_dtype):
+00365:         image = input_image.to(device)
+00366:         clip_context = image_encoder.encode_image([image])
+00367:         clip_context = clip_context.to(dtype=torch_dtype, device=device)
+00368:         return {"clip_feature": clip_context}
+00369: 
+00370: 
+00371: class WanVideoUnit_ImageEmbedderVAE(PipelineUnit):
+00372:     """VAE image embedder for WAN video pipeline."""
+00373: 
+00374:     def __init__(self):
+00375:         super().__init__(
+00376:             input_params=("input_image", "end_image", "num_frames", "height", "width"),
+00377:             onload_model_names=("vae",)
+00378:         )
+00379: 
+00380:     def process(self, vae, input_image, end_image, num_frames, height, width, device, torch_dtype):
+00381:         image = input_image.to(device)
+00382:         msk = torch.ones(1, num_frames, height // 8, width // 8, device=device)
+00383:         msk[:, 1:] = 0
+00384:         vae_input = torch.concat([image.transpose(0, 1),
+00385:                                   torch.zeros(3, num_frames - 1, height, width).to(image.device)], dim=1)
+00386:         msk = torch.concat([torch.repeat_interleave(msk[:, 0:1], repeats=4, dim=1), msk[:, 1:]], dim=1)
+00387:         msk = msk.view(1, msk.shape[1] // 4, 4, height // 8, width // 8)
+00388:         msk = msk.transpose(1, 2)[0]
+00389: 
+00390:         y = vae.encode([vae_input.to(dtype=torch_dtype, device=device)], device=device,
+00391:                        tiled=True, tile_size=(30, 52), tile_stride=(15, 26))[0]
+00392:         y = y.to(dtype=torch_dtype, device=device)
+00393:         y = torch.concat([msk, y])
+00394:         y = y.unsqueeze(0)
+00395:         y = y.to(dtype=torch_dtype, device=device)
+00396:         return {"y": y}
+00397: 
+00398: 
+00399: # =============================================================================
+00400: # Scheduler
+00401: # =============================================================================
+00402: 
+00403: class SchedulerInterface(ABC):
+00404:     """Base class for diffusion noise schedule."""
+00405:     alphas_cumprod: torch.Tensor
+00406: 
+00407:     @abstractmethod
+00408:     def add_noise(self, clean_latent: torch.Tensor, noise: torch.Tensor, timestep: torch.Tensor):
+00409:         pass
+00410: 
+00411:     def convert_x0_to_noise(self, x0: torch.Tensor, xt: torch.Tensor, timestep: torch.Tensor) -> torch.Tensor:
+00412:         original_dtype = x0.dtype
+00413:         x0, xt, alphas_cumprod = map(lambda x: x.double().to(x0.device), [x0, xt, self.alphas_cumprod])
+00414:         alpha_prod_t = alphas_cumprod[timestep].reshape(-1, 1, 1, 1)
+00415:         beta_prod_t = 1 - alpha_prod_t
+00416:         noise_pred = (xt - alpha_prod_t ** 0.5 * x0) / beta_prod_t ** 0.5
+00417:         return noise_pred.to(original_dtype)
+00418: 
+00419:     def convert_noise_to_x0(self, noise: torch.Tensor, xt: torch.Tensor, timestep: torch.Tensor) -> torch.Tensor:
+00420:         original_dtype = noise.dtype
+00421:         noise, xt, alphas_cumprod = map(lambda x: x.double().to(noise.device), [noise, xt, self.alphas_cumprod])
+00422:         alpha_prod_t = alphas_cumprod[timestep].reshape(-1, 1, 1, 1)
+00423:         beta_prod_t = 1 - alpha_prod_t
+00424:         x0_pred = (xt - beta_prod_t ** 0.5 * noise) / alpha_prod_t ** 0.5
+00425:         return x0_pred.to(original_dtype)
+00426: 
+00427:     def convert_velocity_to_x0(self, velocity: torch.Tensor, xt: torch.Tensor, timestep: torch.Tensor) -> torch.Tensor:
+00428:         original_dtype = velocity.dtype
+00429:         velocity, xt, alphas_cumprod = map(lambda x: x.double().to(velocity.device), [velocity, xt, self.alphas_cumprod])
+00430:         alpha_prod_t = alphas_cumprod[timestep].reshape(-1, 1, 1, 1)
+00431:         beta_prod_t = 1 - alpha_prod_t
+00432:         x0_pred = (alpha_prod_t ** 0.5) * xt - (beta_prod_t ** 0.5) * velocity
+00433:         return x0_pred.to(original_dtype)
+00434: 
+00435: 
+00436: class FlowMatchScheduler:
+00437:     """Flow matching scheduler for diffusion models."""
+00438: 
+00439:     def __init__(self, num_inference_steps=100, num_train_timesteps=1000, shift=3.0,
+00440:                  sigma_max=1.0, sigma_min=0.003 / 1.002, inverse_timesteps=False,
+00441:                  extra_one_step=False, reverse_sigmas=False):
+00442:         self.num_train_timesteps = num_train_timesteps
+00443:         self.shift = shift
+00444:         self.sigma_max = sigma_max
+00445:         self.sigma_min = sigma_min
+00446:         self.inverse_timesteps = inverse_timesteps
+00447:         self.extra_one_step = extra_one_step
+00448:         self.reverse_sigmas = reverse_sigmas
+00449:         self.set_timesteps(num_inference_steps)
+00450: 
+00451:     def set_timesteps(self, num_inference_steps=100, denoising_strength=1.0, training=False):
+00452:         sigma_start = self.sigma_min + (self.sigma_max - self.sigma_min) * denoising_strength
+00453:         if self.extra_one_step:
+00454:             self.sigmas = torch.linspace(sigma_start, self.sigma_min, num_inference_steps + 1)[:-1]
+00455:         else:
+00456:             self.sigmas = torch.linspace(sigma_start, self.sigma_min, num_inference_steps)
+00457:         if self.inverse_timesteps:
+00458:             self.sigmas = torch.flip(self.sigmas, dims=[0])
+00459:         self.sigmas = self.shift * self.sigmas / (1 + (self.shift - 1) * self.sigmas)
+00460:         if self.reverse_sigmas:
+00461:             self.sigmas = 1 - self.sigmas
+00462:         self.timesteps = self.sigmas * self.num_train_timesteps
+00463:         if training:
+00464:             x = self.timesteps
+00465:             y = torch.exp(-2 * ((x - num_inference_steps / 2) / num_inference_steps) ** 2)
+00466:             y_shifted = y - y.min()
+00467:             self.linear_timesteps_weights = y_shifted * (num_inference_steps / y_shifted.sum())
+00468: 
+00469:     def step(self, model_output, timestep, sample, to_final=False):
+00470:         if timestep.ndim == 2:
+00471:             timestep = timestep.flatten(0, 1)
+00472:         self.sigmas = self.sigmas.to(model_output.device)
+00473:         self.timesteps = self.timesteps.to(model_output.device)
+00474:         timestep_id = torch.argmin((self.timesteps.unsqueeze(0) - timestep.unsqueeze(1)).abs(), dim=1)
+00475:         sigma = self.sigmas[timestep_id].reshape(-1, 1, 1, 1)
+00476:         if to_final or (timestep_id + 1 >= len(self.timesteps)).any():
+00477:             sigma_ = 1 if (self.inverse_timesteps or self.reverse_sigmas) else 0
+00478:         else:
+00479:             sigma_ = self.sigmas[timestep_id + 1].reshape(-1, 1, 1, 1)
+00480:         prev_sample = sample + model_output * (sigma_ - sigma)
+00481:         return prev_sample
+00482: 
+00483:     def add_noise(self, original_samples, noise, timestep):
+00484:         if timestep.ndim == 2:
+00485:             timestep = timestep.flatten(0, 1)
+00486:         self.sigmas = self.sigmas.to(noise.device)
+00487:         self.timesteps = self.timesteps.to(noise.device)
+00488:         timestep_id = torch.argmin((self.timesteps.unsqueeze(0) - timestep.unsqueeze(1)).abs(), dim=1)
+00489:         sigma = self.sigmas[timestep_id].reshape(-1, 1, 1, 1)
+00490:         sample = (1 - sigma) * original_samples + sigma * noise
+00491:         return sample.type_as(noise)
+00492: 
+00493:     def training_target(self, sample, noise, timestep):
+00494:         return noise - sample
+00495: 
+00496:     def training_weight(self, timestep):
+00497:         if timestep.ndim == 2:
+00498:             timestep = timestep.flatten(0, 1)
+00499:         self.linear_timesteps_weights = self.linear_timesteps_weights.to(timestep.device)
+00500:         timestep_id = torch.argmin((self.timesteps.unsqueeze(1) - timestep.unsqueeze(0)).abs(), dim=0)
+00501:         return self.linear_timesteps_weights[timestep_id]
+
+========================================================================================
+FILE: wan/utils/fm_solvers.py
+MATCHED_LINES: [191, 281, 340, 341, 343, 357, 383, 399, 408, 410, 417, 426, 468, 472, 476, 481, 488, 497, 543, 598, 606, 656, 657, 705, 708, 719, 754, 756, 757, 764, 766, 770, 777, 780, 783, 789, 815, 842]
+========================================================================================
+
+--- LINES 131-857 ---
+00131:         num_train_timesteps: int = 1000,
+00132:         solver_order: int = 2,
+00133:         prediction_type: str = "flow_prediction",
+00134:         shift: Optional[float] = 1.0,
+00135:         use_dynamic_shifting=False,
+00136:         thresholding: bool = False,
+00137:         dynamic_thresholding_ratio: float = 0.995,
+00138:         sample_max_value: float = 1.0,
+00139:         algorithm_type: str = "dpmsolver++",
+00140:         solver_type: str = "midpoint",
+00141:         lower_order_final: bool = True,
+00142:         euler_at_final: bool = False,
+00143:         final_sigmas_type: Optional[str] = "zero",  # "zero", "sigma_min"
+00144:         lambda_min_clipped: float = -float("inf"),
+00145:         variance_type: Optional[str] = None,
+00146:         invert_sigmas: bool = False,
+00147:     ):
+00148:         if algorithm_type in ["dpmsolver", "sde-dpmsolver"]:
+00149:             deprecation_message = f"algorithm_type {algorithm_type} is deprecated and will be removed in a future version. Choose from `dpmsolver++` or `sde-dpmsolver++` instead"
+00150:             deprecate("algorithm_types dpmsolver and sde-dpmsolver", "1.0.0",
+00151:                       deprecation_message)
+00152: 
+00153:         # settings for DPM-Solver
+00154:         if algorithm_type not in [
+00155:                 "dpmsolver", "dpmsolver++", "sde-dpmsolver", "sde-dpmsolver++"
+00156:         ]:
+00157:             if algorithm_type == "deis":
+00158:                 self.register_to_config(algorithm_type="dpmsolver++")
+00159:             else:
+00160:                 raise NotImplementedError(
+00161:                     f"{algorithm_type} is not implemented for {self.__class__}")
+00162: 
+00163:         if solver_type not in ["midpoint", "heun"]:
+00164:             if solver_type in ["logrho", "bh1", "bh2"]:
+00165:                 self.register_to_config(solver_type="midpoint")
+00166:             else:
+00167:                 raise NotImplementedError(
+00168:                     f"{solver_type} is not implemented for {self.__class__}")
+00169: 
+00170:         if algorithm_type not in ["dpmsolver++", "sde-dpmsolver++"
+00171:                                   ] and final_sigmas_type == "zero":
+00172:             raise ValueError(
+00173:                 f"`final_sigmas_type` {final_sigmas_type} is not supported for `algorithm_type` {algorithm_type}. Please choose `sigma_min` instead."
+00174:             )
+00175: 
+00176:         # setable values
+00177:         self.num_inference_steps = None
+00178:         alphas = np.linspace(1, 1 / num_train_timesteps,
+00179:                              num_train_timesteps)[::-1].copy()
+00180:         sigmas = 1.0 - alphas
+00181:         sigmas = torch.from_numpy(sigmas).to(dtype=torch.float32)
+00182: 
+00183:         if not use_dynamic_shifting:
+00184:             # when use_dynamic_shifting is True, we apply the timestep shifting on the fly based on the image resolution
+00185:             sigmas = shift * sigmas / (1 +
+00186:                                        (shift - 1) * sigmas)  # pyright: ignore
+00187: 
+00188:         self.sigmas = sigmas
+00189:         self.timesteps = sigmas * num_train_timesteps
+00190: 
+00191:         self.model_outputs = [None] * solver_order
+00192:         self.lower_order_nums = 0
+00193:         self._step_index = None
+00194:         self._begin_index = None
+00195: 
+00196:         # self.sigmas = self.sigmas.to(
+00197:         #     "cpu")  # to avoid too much CPU/GPU communication
+00198:         self.sigma_min = self.sigmas[-1].item()
+00199:         self.sigma_max = self.sigmas[0].item()
+00200: 
+00201:     @property
+00202:     def step_index(self):
+00203:         """
+00204:         The index counter for current timestep. It will increase 1 after each scheduler step.
+00205:         """
+00206:         return self._step_index
+00207: 
+00208:     @property
+00209:     def begin_index(self):
+00210:         """
+00211:         The index for the first timestep. It should be set from pipeline with `set_begin_index` method.
+00212:         """
+00213:         return self._begin_index
+00214: 
+00215:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.set_begin_index
+00216:     def set_begin_index(self, begin_index: int = 0):
+00217:         """
+00218:         Sets the begin index for the scheduler. This function should be run from pipeline before the inference.
+00219:         Args:
+00220:             begin_index (`int`):
+00221:                 The begin index for the scheduler.
+00222:         """
+00223:         self._begin_index = begin_index
+00224: 
+00225:     # Modified from diffusers.schedulers.scheduling_flow_match_euler_discrete.FlowMatchEulerDiscreteScheduler.set_timesteps
+00226:     def set_timesteps(
+00227:         self,
+00228:         num_inference_steps: Union[int, None] = None,
+00229:         device: Union[str, torch.device] = None,
+00230:         sigmas: Optional[List[float]] = None,
+00231:         mu: Optional[Union[float, None]] = None,
+00232:         shift: Optional[Union[float, None]] = None,
+00233:     ):
+00234:         """
+00235:         Sets the discrete timesteps used for the diffusion chain (to be run before inference).
+00236:         Args:
+00237:             num_inference_steps (`int`):
+00238:                 Total number of the spacing of the time steps.
+00239:             device (`str` or `torch.device`, *optional*):
+00240:                 The device to which the timesteps should be moved to. If `None`, the timesteps are not moved.
+00241:         """
+00242: 
+00243:         if self.config.use_dynamic_shifting and mu is None:
+00244:             raise ValueError(
+00245:                 " you have to pass a value for `mu` when `use_dynamic_shifting` is set to be `True`"
+00246:             )
+00247: 
+00248:         if sigmas is None:
+00249:             sigmas = np.linspace(self.sigma_max, self.sigma_min,
+00250:                                  num_inference_steps +
+00251:                                  1).copy()[:-1]  # pyright: ignore
+00252: 
+00253:         if self.config.use_dynamic_shifting:
+00254:             sigmas = self.time_shift(mu, 1.0, sigmas)  # pyright: ignore
+00255:         else:
+00256:             if shift is None:
+00257:                 shift = self.config.shift
+00258:             sigmas = shift * sigmas / (1 +
+00259:                                        (shift - 1) * sigmas)  # pyright: ignore
+00260: 
+00261:         if self.config.final_sigmas_type == "sigma_min":
+00262:             sigma_last = ((1 - self.alphas_cumprod[0]) /
+00263:                           self.alphas_cumprod[0])**0.5
+00264:         elif self.config.final_sigmas_type == "zero":
+00265:             sigma_last = 0
+00266:         else:
+00267:             raise ValueError(
+00268:                 f"`final_sigmas_type` must be one of 'zero', or 'sigma_min', but got {self.config.final_sigmas_type}"
+00269:             )
+00270: 
+00271:         timesteps = sigmas * self.config.num_train_timesteps
+00272:         sigmas = np.concatenate([sigmas, [sigma_last]
+00273:                                  ]).astype(np.float32)  # pyright: ignore
+00274: 
+00275:         self.sigmas = torch.from_numpy(sigmas)
+00276:         self.timesteps = torch.from_numpy(timesteps).to(
+00277:             device=device, dtype=torch.int64)
+00278: 
+00279:         self.num_inference_steps = len(timesteps)
+00280: 
+00281:         self.model_outputs = [
+00282:             None,
+00283:         ] * self.config.solver_order
+00284:         self.lower_order_nums = 0
+00285: 
+00286:         self._step_index = None
+00287:         self._begin_index = None
+00288:         # self.sigmas = self.sigmas.to(
+00289:         #     "cpu")  # to avoid too much CPU/GPU communication
+00290: 
+00291:     # Copied from diffusers.schedulers.scheduling_ddpm.DDPMScheduler._threshold_sample
+00292:     def _threshold_sample(self, sample: torch.Tensor) -> torch.Tensor:
+00293:         """
+00294:         "Dynamic thresholding: At each sampling step we set s to a certain percentile absolute pixel value in xt0 (the
+00295:         prediction of x_0 at timestep t), and if s > 1, then we threshold xt0 to the range [-s, s] and then divide by
+00296:         s. Dynamic thresholding pushes saturated pixels (those near -1 and 1) inwards, thereby actively preventing
+00297:         pixels from saturation at each step. We find that dynamic thresholding results in significantly better
+00298:         photorealism as well as better image-text alignment, especially when using very large guidance weights."
+00299:         https://arxiv.org/abs/2205.11487
+00300:         """
+00301:         dtype = sample.dtype
+00302:         batch_size, channels, *remaining_dims = sample.shape
+00303: 
+00304:         if dtype not in (torch.float32, torch.float64):
+00305:             sample = sample.float(
+00306:             )  # upcast for quantile calculation, and clamp not implemented for cpu half
+00307: 
+00308:         # Flatten sample for doing quantile calculation along each image
+00309:         sample = sample.reshape(batch_size, channels * np.prod(remaining_dims))
+00310: 
+00311:         abs_sample = sample.abs()  # "a certain percentile absolute pixel value"
+00312: 
+00313:         s = torch.quantile(
+00314:             abs_sample, self.config.dynamic_thresholding_ratio, dim=1)
+00315:         s = torch.clamp(
+00316:             s, min=1, max=self.config.sample_max_value
+00317:         )  # When clamped to min=1, equivalent to standard clipping to [-1, 1]
+00318:         s = s.unsqueeze(
+00319:             1)  # (batch_size, 1) because clamp will broadcast along dim=0
+00320:         sample = torch.clamp(
+00321:             sample, -s, s
+00322:         ) / s  # "we threshold xt0 to the range [-s, s] and then divide by s"
+00323: 
+00324:         sample = sample.reshape(batch_size, channels, *remaining_dims)
+00325:         sample = sample.to(dtype)
+00326: 
+00327:         return sample
+00328: 
+00329:     # Copied from diffusers.schedulers.scheduling_flow_match_euler_discrete.FlowMatchEulerDiscreteScheduler._sigma_to_t
+00330:     def _sigma_to_t(self, sigma):
+00331:         return sigma * self.config.num_train_timesteps
+00332: 
+00333:     def _sigma_to_alpha_sigma_t(self, sigma):
+00334:         return 1 - sigma, sigma
+00335: 
+00336:     # Copied from diffusers.schedulers.scheduling_flow_match_euler_discrete.set_timesteps
+00337:     def time_shift(self, mu: float, sigma: float, t: torch.Tensor):
+00338:         return math.exp(mu) / (math.exp(mu) + (1 / t - 1)**sigma)
+00339: 
+00340:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.convert_model_output
+00341:     def convert_model_output(
+00342:         self,
+00343:         model_output: torch.Tensor,
+00344:         *args,
+00345:         sample: torch.Tensor = None,
+00346:         **kwargs,
+00347:     ) -> torch.Tensor:
+00348:         """
+00349:         Convert the model output to the corresponding type the DPMSolver/DPMSolver++ algorithm needs. DPM-Solver is
+00350:         designed to discretize an integral of the noise prediction model, and DPM-Solver++ is designed to discretize an
+00351:         integral of the data prediction model.
+00352:         <Tip>
+00353:         The algorithm and model type are decoupled. You can use either DPMSolver or DPMSolver++ for both noise
+00354:         prediction and data prediction models.
+00355:         </Tip>
+00356:         Args:
+00357:             model_output (`torch.Tensor`):
+00358:                 The direct output from the learned diffusion model.
+00359:             sample (`torch.Tensor`):
+00360:                 A current instance of a sample created by the diffusion process.
+00361:         Returns:
+00362:             `torch.Tensor`:
+00363:                 The converted model output.
+00364:         """
+00365:         timestep = args[0] if len(args) > 0 else kwargs.pop("timestep", None)
+00366:         if sample is None:
+00367:             if len(args) > 1:
+00368:                 sample = args[1]
+00369:             else:
+00370:                 raise ValueError(
+00371:                     "missing `sample` as a required keyward argument")
+00372:         if timestep is not None:
+00373:             deprecate(
+00374:                 "timesteps",
+00375:                 "1.0.0",
+00376:                 "Passing `timesteps` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00377:             )
+00378: 
+00379:         # DPM-Solver++ needs to solve an integral of the data prediction model.
+00380:         if self.config.algorithm_type in ["dpmsolver++", "sde-dpmsolver++"]:
+00381:             if self.config.prediction_type == "flow_prediction":
+00382:                 sigma_t = self.sigmas[self.step_index]
+00383:                 x0_pred = sample - sigma_t * model_output
+00384:             else:
+00385:                 raise ValueError(
+00386:                     f"prediction_type given as {self.config.prediction_type} must be one of `epsilon`, `sample`,"
+00387:                     " `v_prediction`, or `flow_prediction` for the FlowDPMSolverMultistepScheduler."
+00388:                 )
+00389: 
+00390:             if self.config.thresholding:
+00391:                 x0_pred = self._threshold_sample(x0_pred)
+00392: 
+00393:             return x0_pred
+00394: 
+00395:         # DPM-Solver needs to solve an integral of the noise prediction model.
+00396:         elif self.config.algorithm_type in ["dpmsolver", "sde-dpmsolver"]:
+00397:             if self.config.prediction_type == "flow_prediction":
+00398:                 sigma_t = self.sigmas[self.step_index]
+00399:                 epsilon = sample - (1 - sigma_t) * model_output
+00400:             else:
+00401:                 raise ValueError(
+00402:                     f"prediction_type given as {self.config.prediction_type} must be one of `epsilon`, `sample`,"
+00403:                     " `v_prediction` or `flow_prediction` for the FlowDPMSolverMultistepScheduler."
+00404:                 )
+00405: 
+00406:             if self.config.thresholding:
+00407:                 sigma_t = self.sigmas[self.step_index]
+00408:                 x0_pred = sample - sigma_t * model_output
+00409:                 x0_pred = self._threshold_sample(x0_pred)
+00410:                 epsilon = model_output + x0_pred
+00411: 
+00412:             return epsilon
+00413: 
+00414:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.dpm_solver_first_order_update
+00415:     def dpm_solver_first_order_update(
+00416:         self,
+00417:         model_output: torch.Tensor,
+00418:         *args,
+00419:         sample: torch.Tensor = None,
+00420:         noise: Optional[torch.Tensor] = None,
+00421:         **kwargs,
+00422:     ) -> torch.Tensor:
+00423:         """
+00424:         One step for the first-order DPMSolver (equivalent to DDIM).
+00425:         Args:
+00426:             model_output (`torch.Tensor`):
+00427:                 The direct output from the learned diffusion model.
+00428:             sample (`torch.Tensor`):
+00429:                 A current instance of a sample created by the diffusion process.
+00430:         Returns:
+00431:             `torch.Tensor`:
+00432:                 The sample tensor at the previous timestep.
+00433:         """
+00434:         timestep = args[0] if len(args) > 0 else kwargs.pop("timestep", None)
+00435:         prev_timestep = args[1] if len(args) > 1 else kwargs.pop(
+00436:             "prev_timestep", None)
+00437:         if sample is None:
+00438:             if len(args) > 2:
+00439:                 sample = args[2]
+00440:             else:
+00441:                 raise ValueError(
+00442:                     " missing `sample` as a required keyward argument")
+00443:         if timestep is not None:
+00444:             deprecate(
+00445:                 "timesteps",
+00446:                 "1.0.0",
+00447:                 "Passing `timesteps` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00448:             )
+00449: 
+00450:         if prev_timestep is not None:
+00451:             deprecate(
+00452:                 "prev_timestep",
+00453:                 "1.0.0",
+00454:                 "Passing `prev_timestep` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00455:             )
+00456: 
+00457:         sigma_t, sigma_s = self.sigmas[self.step_index + 1], self.sigmas[
+00458:             self.step_index]  # pyright: ignore
+00459:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma_t)
+00460:         alpha_s, sigma_s = self._sigma_to_alpha_sigma_t(sigma_s)
+00461:         lambda_t = torch.log(alpha_t) - torch.log(sigma_t)
+00462:         lambda_s = torch.log(alpha_s) - torch.log(sigma_s)
+00463: 
+00464:         h = lambda_t - lambda_s
+00465:         if self.config.algorithm_type == "dpmsolver++":
+00466:             x_t = (sigma_t /
+00467:                    sigma_s) * sample - (alpha_t *
+00468:                                         (torch.exp(-h) - 1.0)) * model_output
+00469:         elif self.config.algorithm_type == "dpmsolver":
+00470:             x_t = (alpha_t /
+00471:                    alpha_s) * sample - (sigma_t *
+00472:                                         (torch.exp(h) - 1.0)) * model_output
+00473:         elif self.config.algorithm_type == "sde-dpmsolver++":
+00474:             assert noise is not None
+00475:             x_t = ((sigma_t / sigma_s * torch.exp(-h)) * sample +
+00476:                    (alpha_t * (1 - torch.exp(-2.0 * h))) * model_output +
+00477:                    sigma_t * torch.sqrt(1.0 - torch.exp(-2 * h)) * noise)
+00478:         elif self.config.algorithm_type == "sde-dpmsolver":
+00479:             assert noise is not None
+00480:             x_t = ((alpha_t / alpha_s) * sample - 2.0 *
+00481:                    (sigma_t * (torch.exp(h) - 1.0)) * model_output +
+00482:                    sigma_t * torch.sqrt(torch.exp(2 * h) - 1.0) * noise)
+00483:         return x_t  # pyright: ignore
+00484: 
+00485:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.multistep_dpm_solver_second_order_update
+00486:     def multistep_dpm_solver_second_order_update(
+00487:         self,
+00488:         model_output_list: List[torch.Tensor],
+00489:         *args,
+00490:         sample: torch.Tensor = None,
+00491:         noise: Optional[torch.Tensor] = None,
+00492:         **kwargs,
+00493:     ) -> torch.Tensor:
+00494:         """
+00495:         One step for the second-order multistep DPMSolver.
+00496:         Args:
+00497:             model_output_list (`List[torch.Tensor]`):
+00498:                 The direct outputs from learned diffusion model at current and latter timesteps.
+00499:             sample (`torch.Tensor`):
+00500:                 A current instance of a sample created by the diffusion process.
+00501:         Returns:
+00502:             `torch.Tensor`:
+00503:                 The sample tensor at the previous timestep.
+00504:         """
+00505:         timestep_list = args[0] if len(args) > 0 else kwargs.pop(
+00506:             "timestep_list", None)
+00507:         prev_timestep = args[1] if len(args) > 1 else kwargs.pop(
+00508:             "prev_timestep", None)
+00509:         if sample is None:
+00510:             if len(args) > 2:
+00511:                 sample = args[2]
+00512:             else:
+00513:                 raise ValueError(
+00514:                     " missing `sample` as a required keyward argument")
+00515:         if timestep_list is not None:
+00516:             deprecate(
+00517:                 "timestep_list",
+00518:                 "1.0.0",
+00519:                 "Passing `timestep_list` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00520:             )
+00521: 
+00522:         if prev_timestep is not None:
+00523:             deprecate(
+00524:                 "prev_timestep",
+00525:                 "1.0.0",
+00526:                 "Passing `prev_timestep` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00527:             )
+00528: 
+00529:         sigma_t, sigma_s0, sigma_s1 = (
+00530:             self.sigmas[self.step_index + 1],  # pyright: ignore
+00531:             self.sigmas[self.step_index],
+00532:             self.sigmas[self.step_index - 1],  # pyright: ignore
+00533:         )
+00534: 
+00535:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma_t)
+00536:         alpha_s0, sigma_s0 = self._sigma_to_alpha_sigma_t(sigma_s0)
+00537:         alpha_s1, sigma_s1 = self._sigma_to_alpha_sigma_t(sigma_s1)
+00538: 
+00539:         lambda_t = torch.log(alpha_t) - torch.log(sigma_t)
+00540:         lambda_s0 = torch.log(alpha_s0) - torch.log(sigma_s0)
+00541:         lambda_s1 = torch.log(alpha_s1) - torch.log(sigma_s1)
+00542: 
+00543:         m0, m1 = model_output_list[-1], model_output_list[-2]
+00544: 
+00545:         h, h_0 = lambda_t - lambda_s0, lambda_s0 - lambda_s1
+00546:         r0 = h_0 / h
+00547:         D0, D1 = m0, (1.0 / r0) * (m0 - m1)
+00548:         if self.config.algorithm_type == "dpmsolver++":
+00549:             # See https://arxiv.org/abs/2211.01095 for detailed derivations
+00550:             if self.config.solver_type == "midpoint":
+00551:                 x_t = ((sigma_t / sigma_s0) * sample -
+00552:                        (alpha_t * (torch.exp(-h) - 1.0)) * D0 - 0.5 *
+00553:                        (alpha_t * (torch.exp(-h) - 1.0)) * D1)
+00554:             elif self.config.solver_type == "heun":
+00555:                 x_t = ((sigma_t / sigma_s0) * sample -
+00556:                        (alpha_t * (torch.exp(-h) - 1.0)) * D0 +
+00557:                        (alpha_t * ((torch.exp(-h) - 1.0) / h + 1.0)) * D1)
+00558:         elif self.config.algorithm_type == "dpmsolver":
+00559:             # See https://arxiv.org/abs/2206.00927 for detailed derivations
+00560:             if self.config.solver_type == "midpoint":
+00561:                 x_t = ((alpha_t / alpha_s0) * sample -
+00562:                        (sigma_t * (torch.exp(h) - 1.0)) * D0 - 0.5 *
+00563:                        (sigma_t * (torch.exp(h) - 1.0)) * D1)
+00564:             elif self.config.solver_type == "heun":
+00565:                 x_t = ((alpha_t / alpha_s0) * sample -
+00566:                        (sigma_t * (torch.exp(h) - 1.0)) * D0 -
+00567:                        (sigma_t * ((torch.exp(h) - 1.0) / h - 1.0)) * D1)
+00568:         elif self.config.algorithm_type == "sde-dpmsolver++":
+00569:             assert noise is not None
+00570:             if self.config.solver_type == "midpoint":
+00571:                 x_t = ((sigma_t / sigma_s0 * torch.exp(-h)) * sample +
+00572:                        (alpha_t * (1 - torch.exp(-2.0 * h))) * D0 + 0.5 *
+00573:                        (alpha_t * (1 - torch.exp(-2.0 * h))) * D1 +
+00574:                        sigma_t * torch.sqrt(1.0 - torch.exp(-2 * h)) * noise)
+00575:             elif self.config.solver_type == "heun":
+00576:                 x_t = ((sigma_t / sigma_s0 * torch.exp(-h)) * sample +
+00577:                        (alpha_t * (1 - torch.exp(-2.0 * h))) * D0 +
+00578:                        (alpha_t * ((1.0 - torch.exp(-2.0 * h)) /
+00579:                                    (-2.0 * h) + 1.0)) * D1 +
+00580:                        sigma_t * torch.sqrt(1.0 - torch.exp(-2 * h)) * noise)
+00581:         elif self.config.algorithm_type == "sde-dpmsolver":
+00582:             assert noise is not None
+00583:             if self.config.solver_type == "midpoint":
+00584:                 x_t = ((alpha_t / alpha_s0) * sample - 2.0 *
+00585:                        (sigma_t * (torch.exp(h) - 1.0)) * D0 -
+00586:                        (sigma_t * (torch.exp(h) - 1.0)) * D1 +
+00587:                        sigma_t * torch.sqrt(torch.exp(2 * h) - 1.0) * noise)
+00588:             elif self.config.solver_type == "heun":
+00589:                 x_t = ((alpha_t / alpha_s0) * sample - 2.0 *
+00590:                        (sigma_t * (torch.exp(h) - 1.0)) * D0 - 2.0 *
+00591:                        (sigma_t * ((torch.exp(h) - 1.0) / h - 1.0)) * D1 +
+00592:                        sigma_t * torch.sqrt(torch.exp(2 * h) - 1.0) * noise)
+00593:         return x_t  # pyright: ignore
+00594: 
+00595:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.multistep_dpm_solver_third_order_update
+00596:     def multistep_dpm_solver_third_order_update(
+00597:         self,
+00598:         model_output_list: List[torch.Tensor],
+00599:         *args,
+00600:         sample: torch.Tensor = None,
+00601:         **kwargs,
+00602:     ) -> torch.Tensor:
+00603:         """
+00604:         One step for the third-order multistep DPMSolver.
+00605:         Args:
+00606:             model_output_list (`List[torch.Tensor]`):
+00607:                 The direct outputs from learned diffusion model at current and latter timesteps.
+00608:             sample (`torch.Tensor`):
+00609:                 A current instance of a sample created by diffusion process.
+00610:         Returns:
+00611:             `torch.Tensor`:
+00612:                 The sample tensor at the previous timestep.
+00613:         """
+00614: 
+00615:         timestep_list = args[0] if len(args) > 0 else kwargs.pop(
+00616:             "timestep_list", None)
+00617:         prev_timestep = args[1] if len(args) > 1 else kwargs.pop(
+00618:             "prev_timestep", None)
+00619:         if sample is None:
+00620:             if len(args) > 2:
+00621:                 sample = args[2]
+00622:             else:
+00623:                 raise ValueError(
+00624:                     " missing`sample` as a required keyward argument")
+00625:         if timestep_list is not None:
+00626:             deprecate(
+00627:                 "timestep_list",
+00628:                 "1.0.0",
+00629:                 "Passing `timestep_list` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00630:             )
+00631: 
+00632:         if prev_timestep is not None:
+00633:             deprecate(
+00634:                 "prev_timestep",
+00635:                 "1.0.0",
+00636:                 "Passing `prev_timestep` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00637:             )
+00638: 
+00639:         sigma_t, sigma_s0, sigma_s1, sigma_s2 = (
+00640:             self.sigmas[self.step_index + 1],  # pyright: ignore
+00641:             self.sigmas[self.step_index],
+00642:             self.sigmas[self.step_index - 1],  # pyright: ignore
+00643:             self.sigmas[self.step_index - 2],  # pyright: ignore
+00644:         )
+00645: 
+00646:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma_t)
+00647:         alpha_s0, sigma_s0 = self._sigma_to_alpha_sigma_t(sigma_s0)
+00648:         alpha_s1, sigma_s1 = self._sigma_to_alpha_sigma_t(sigma_s1)
+00649:         alpha_s2, sigma_s2 = self._sigma_to_alpha_sigma_t(sigma_s2)
+00650: 
+00651:         lambda_t = torch.log(alpha_t) - torch.log(sigma_t)
+00652:         lambda_s0 = torch.log(alpha_s0) - torch.log(sigma_s0)
+00653:         lambda_s1 = torch.log(alpha_s1) - torch.log(sigma_s1)
+00654:         lambda_s2 = torch.log(alpha_s2) - torch.log(sigma_s2)
+00655: 
+00656:         m0, m1, m2 = model_output_list[-1], model_output_list[
+00657:             -2], model_output_list[-3]
+00658: 
+00659:         h, h_0, h_1 = lambda_t - lambda_s0, lambda_s0 - lambda_s1, lambda_s1 - lambda_s2
+00660:         r0, r1 = h_0 / h, h_1 / h
+00661:         D0 = m0
+00662:         D1_0, D1_1 = (1.0 / r0) * (m0 - m1), (1.0 / r1) * (m1 - m2)
+00663:         D1 = D1_0 + (r0 / (r0 + r1)) * (D1_0 - D1_1)
+00664:         D2 = (1.0 / (r0 + r1)) * (D1_0 - D1_1)
+00665:         if self.config.algorithm_type == "dpmsolver++":
+00666:             # See https://arxiv.org/abs/2206.00927 for detailed derivations
+00667:             x_t = ((sigma_t / sigma_s0) * sample -
+00668:                    (alpha_t * (torch.exp(-h) - 1.0)) * D0 +
+00669:                    (alpha_t * ((torch.exp(-h) - 1.0) / h + 1.0)) * D1 -
+00670:                    (alpha_t * ((torch.exp(-h) - 1.0 + h) / h**2 - 0.5)) * D2)
+00671:         elif self.config.algorithm_type == "dpmsolver":
+00672:             # See https://arxiv.org/abs/2206.00927 for detailed derivations
+00673:             x_t = ((alpha_t / alpha_s0) * sample - (sigma_t *
+00674:                                                     (torch.exp(h) - 1.0)) * D0 -
+00675:                    (sigma_t * ((torch.exp(h) - 1.0) / h - 1.0)) * D1 -
+00676:                    (sigma_t * ((torch.exp(h) - 1.0 - h) / h**2 - 0.5)) * D2)
+00677:         return x_t  # pyright: ignore
+00678: 
+00679:     def index_for_timestep(self, timestep, schedule_timesteps=None):
+00680:         if schedule_timesteps is None:
+00681:             schedule_timesteps = self.timesteps
+00682: 
+00683:         indices = (schedule_timesteps == timestep).nonzero()
+00684: 
+00685:         # The sigma index that is taken for the **very** first `step`
+00686:         # is always the second index (or the last index if there is only 1)
+00687:         # This way we can ensure we don't accidentally skip a sigma in
+00688:         # case we start in the middle of the denoising schedule (e.g. for image-to-image)
+00689:         pos = 1 if len(indices) > 1 else 0
+00690: 
+00691:         return indices[pos].item()
+00692: 
+00693:     def _init_step_index(self, timestep):
+00694:         """
+00695:         Initialize the step_index counter for the scheduler.
+00696:         """
+00697: 
+00698:         if self.begin_index is None:
+00699:             if isinstance(timestep, torch.Tensor):
+00700:                 timestep = timestep.to(self.timesteps.device)
+00701:             self._step_index = self.index_for_timestep(timestep)
+00702:         else:
+00703:             self._step_index = self._begin_index
+00704: 
+00705:     # Modified from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.step
+00706:     def step(
+00707:         self,
+00708:         model_output: torch.Tensor,
+00709:         timestep: Union[int, torch.Tensor],
+00710:         sample: torch.Tensor,
+00711:         generator=None,
+00712:         variance_noise: Optional[torch.Tensor] = None,
+00713:         return_dict: bool = True,
+00714:     ) -> Union[SchedulerOutput, Tuple]:
+00715:         """
+00716:         Predict the sample from the previous timestep by reversing the SDE. This function propagates the sample with
+00717:         the multistep DPMSolver.
+00718:         Args:
+00719:             model_output (`torch.Tensor`):
+00720:                 The direct output from learned diffusion model.
+00721:             timestep (`int`):
+00722:                 The current discrete timestep in the diffusion chain.
+00723:             sample (`torch.Tensor`):
+00724:                 A current instance of a sample created by the diffusion process.
+00725:             generator (`torch.Generator`, *optional*):
+00726:                 A random number generator.
+00727:             variance_noise (`torch.Tensor`):
+00728:                 Alternative to generating noise with `generator` by directly providing the noise for the variance
+00729:                 itself. Useful for methods such as [`LEdits++`].
+00730:             return_dict (`bool`):
+00731:                 Whether or not to return a [`~schedulers.scheduling_utils.SchedulerOutput`] or `tuple`.
+00732:         Returns:
+00733:             [`~schedulers.scheduling_utils.SchedulerOutput`] or `tuple`:
+00734:                 If return_dict is `True`, [`~schedulers.scheduling_utils.SchedulerOutput`] is returned, otherwise a
+00735:                 tuple is returned where the first element is the sample tensor.
+00736:         """
+00737:         if self.num_inference_steps is None:
+00738:             raise ValueError(
+00739:                 "Number of inference steps is 'None', you need to run 'set_timesteps' after creating the scheduler"
+00740:             )
+00741: 
+00742:         if self.step_index is None:
+00743:             self._init_step_index(timestep)
+00744: 
+00745:         # Improve numerical stability for small number of steps
+00746:         lower_order_final = (self.step_index == len(self.timesteps) - 1) and (
+00747:             self.config.euler_at_final or
+00748:             (self.config.lower_order_final and len(self.timesteps) < 15) or
+00749:             self.config.final_sigmas_type == "zero")
+00750:         lower_order_second = ((self.step_index == len(self.timesteps) - 2) and
+00751:                               self.config.lower_order_final and
+00752:                               len(self.timesteps) < 15)
+00753: 
+00754:         model_output = self.convert_model_output(model_output, sample=sample)
+00755:         for i in range(self.config.solver_order - 1):
+00756:             self.model_outputs[i] = self.model_outputs[i + 1]
+00757:         self.model_outputs[-1] = model_output
+00758: 
+00759:         # Upcast to avoid precision issues when computing prev_sample
+00760:         sample = sample.to(torch.float32)
+00761:         if self.config.algorithm_type in ["sde-dpmsolver", "sde-dpmsolver++"
+00762:                                           ] and variance_noise is None:
+00763:             noise = randn_tensor(
+00764:                 model_output.shape,
+00765:                 generator=generator,
+00766:                 device=model_output.device,
+00767:                 dtype=torch.float32)
+00768:         elif self.config.algorithm_type in ["sde-dpmsolver", "sde-dpmsolver++"]:
+00769:             noise = variance_noise.to(
+00770:                 device=model_output.device,
+00771:                 dtype=torch.float32)  # pyright: ignore
+00772:         else:
+00773:             noise = None
+00774: 
+00775:         if self.config.solver_order == 1 or self.lower_order_nums < 1 or lower_order_final:
+00776:             prev_sample = self.dpm_solver_first_order_update(
+00777:                 model_output, sample=sample, noise=noise)
+00778:         elif self.config.solver_order == 2 or self.lower_order_nums < 2 or lower_order_second:
+00779:             prev_sample = self.multistep_dpm_solver_second_order_update(
+00780:                 self.model_outputs, sample=sample, noise=noise)
+00781:         else:
+00782:             prev_sample = self.multistep_dpm_solver_third_order_update(
+00783:                 self.model_outputs, sample=sample)
+00784: 
+00785:         if self.lower_order_nums < self.config.solver_order:
+00786:             self.lower_order_nums += 1
+00787: 
+00788:         # Cast sample back to expected dtype
+00789:         prev_sample = prev_sample.to(model_output.dtype)
+00790: 
+00791:         # upon completion increase step index by one
+00792:         self._step_index += 1  # pyright: ignore
+00793: 
+00794:         if not return_dict:
+00795:             return (prev_sample,)
+00796: 
+00797:         return SchedulerOutput(prev_sample=prev_sample)
+00798: 
+00799:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.scale_model_input
+00800:     def scale_model_input(self, sample: torch.Tensor, *args,
+00801:                           **kwargs) -> torch.Tensor:
+00802:         """
+00803:         Ensures interchangeability with schedulers that need to scale the denoising model input depending on the
+00804:         current timestep.
+00805:         Args:
+00806:             sample (`torch.Tensor`):
+00807:                 The input sample.
+00808:         Returns:
+00809:             `torch.Tensor`:
+00810:                 A scaled input sample.
+00811:         """
+00812:         return sample
+00813: 
+00814:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.scale_model_input
+00815:     def add_noise(
+00816:         self,
+00817:         original_samples: torch.Tensor,
+00818:         noise: torch.Tensor,
+00819:         timesteps: torch.IntTensor,
+00820:     ) -> torch.Tensor:
+00821:         # Make sure sigmas and timesteps have the same device and dtype as original_samples
+00822:         sigmas = self.sigmas.to(
+00823:             device=original_samples.device, dtype=original_samples.dtype)
+00824:         if original_samples.device.type == "mps" and torch.is_floating_point(
+00825:                 timesteps):
+00826:             # mps does not support float64
+00827:             schedule_timesteps = self.timesteps.to(
+00828:                 original_samples.device, dtype=torch.float32)
+00829:             timesteps = timesteps.to(
+00830:                 original_samples.device, dtype=torch.float32)
+00831:         else:
+00832:             schedule_timesteps = self.timesteps.to(original_samples.device)
+00833:             timesteps = timesteps.to(original_samples.device)
+00834: 
+00835:         # begin_index is None when the scheduler is used for training or pipeline does not implement set_begin_index
+00836:         if self.begin_index is None:
+00837:             step_indices = [
+00838:                 self.index_for_timestep(t, schedule_timesteps)
+00839:                 for t in timesteps
+00840:             ]
+00841:         elif self.step_index is not None:
+00842:             # add_noise is called after first denoising step (for inpainting)
+00843:             step_indices = [self.step_index] * timesteps.shape[0]
+00844:         else:
+00845:             # add noise is called before first denoising step to create initial latent(img2img)
+00846:             step_indices = [self.begin_index] * timesteps.shape[0]
+00847: 
+00848:         sigma = sigmas[step_indices].flatten()
+00849:         while len(sigma.shape) < len(original_samples.shape):
+00850:             sigma = sigma.unsqueeze(-1)
+00851: 
+00852:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma)
+00853:         noisy_samples = alpha_t * original_samples + sigma_t * noise
+00854:         return noisy_samples
+00855: 
+00856:     def __len__(self):
+00857:         return self.config.num_train_timesteps
+
+========================================================================================
+FILE: wan/utils/fm_solvers_unipc.py
+MATCHED_LINES: [120, 215, 279, 281, 290, 321, 335, 344, 346, 352, 362, 395, 398, 402, 420, 488, 499, 541, 543, 546, 563, 656, 666, 695, 696, 699, 706, 709, 725, 757, 758, 785]
+========================================================================================
+
+--- LINES 60-800 ---
+00060:             the sigmas are determined according to a sequence of noise levels {σi}.
+00061:         use_exponential_sigmas (`bool`, *optional*, defaults to `False`):
+00062:             Whether to use exponential sigmas for step sizes in the noise schedule during the sampling process.
+00063:         timestep_spacing (`str`, defaults to `"linspace"`):
+00064:             The way the timesteps should be scaled. Refer to Table 2 of the [Common Diffusion Noise Schedules and
+00065:             Sample Steps are Flawed](https://huggingface.co/papers/2305.08891) for more information.
+00066:         steps_offset (`int`, defaults to 0):
+00067:             An offset added to the inference steps, as required by some model families.
+00068:         final_sigmas_type (`str`, defaults to `"zero"`):
+00069:             The final `sigma` value for the noise schedule during the sampling process. If `"sigma_min"`, the final
+00070:             sigma is the same as the last sigma in the training schedule. If `zero`, the final sigma is set to 0.
+00071:     """
+00072: 
+00073:     _compatibles = [e.name for e in KarrasDiffusionSchedulers]
+00074:     order = 1
+00075: 
+00076:     @register_to_config
+00077:     def __init__(
+00078:             self,
+00079:             num_train_timesteps: int = 1000,
+00080:             solver_order: int = 2,
+00081:             prediction_type: str = "flow_prediction",
+00082:             shift: Optional[float] = 1.0,
+00083:             use_dynamic_shifting=False,
+00084:             thresholding: bool = False,
+00085:             dynamic_thresholding_ratio: float = 0.995,
+00086:             sample_max_value: float = 1.0,
+00087:             predict_x0: bool = True,
+00088:             solver_type: str = "bh2",
+00089:             lower_order_final: bool = True,
+00090:             disable_corrector: List[int] = [],
+00091:             solver_p: SchedulerMixin = None,
+00092:             timestep_spacing: str = "linspace",
+00093:             steps_offset: int = 0,
+00094:             final_sigmas_type: Optional[str] = "zero",  # "zero", "sigma_min"
+00095:     ):
+00096: 
+00097:         if solver_type not in ["bh1", "bh2"]:
+00098:             if solver_type in ["midpoint", "heun", "logrho"]:
+00099:                 self.register_to_config(solver_type="bh2")
+00100:             else:
+00101:                 raise NotImplementedError(
+00102:                     f"{solver_type} is not implemented for {self.__class__}")
+00103: 
+00104:         self.predict_x0 = predict_x0
+00105:         # setable values
+00106:         self.num_inference_steps = None
+00107:         alphas = np.linspace(1, 1 / num_train_timesteps,
+00108:                              num_train_timesteps)[::-1].copy()
+00109:         sigmas = 1.0 - alphas
+00110:         sigmas = torch.from_numpy(sigmas).to(dtype=torch.float32)
+00111: 
+00112:         if not use_dynamic_shifting:
+00113:             # when use_dynamic_shifting is True, we apply the timestep shifting on the fly based on the image resolution
+00114:             sigmas = shift * sigmas / (1 +
+00115:                                        (shift - 1) * sigmas)  # pyright: ignore
+00116: 
+00117:         self.sigmas = sigmas
+00118:         self.timesteps = sigmas * num_train_timesteps
+00119: 
+00120:         self.model_outputs = [None] * solver_order
+00121:         self.timestep_list = [None] * solver_order
+00122:         self.lower_order_nums = 0
+00123:         self.disable_corrector = disable_corrector
+00124:         self.solver_p = solver_p
+00125:         self.last_sample = None
+00126:         self._step_index = None
+00127:         self._begin_index = None
+00128: 
+00129:         self.sigmas = self.sigmas.to(
+00130:             "cpu")  # to avoid too much CPU/GPU communication
+00131:         self.sigma_min = self.sigmas[-1].item()
+00132:         self.sigma_max = self.sigmas[0].item()
+00133: 
+00134:     @property
+00135:     def step_index(self):
+00136:         """
+00137:         The index counter for current timestep. It will increase 1 after each scheduler step.
+00138:         """
+00139:         return self._step_index
+00140: 
+00141:     @property
+00142:     def begin_index(self):
+00143:         """
+00144:         The index for the first timestep. It should be set from pipeline with `set_begin_index` method.
+00145:         """
+00146:         return self._begin_index
+00147: 
+00148:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.set_begin_index
+00149:     def set_begin_index(self, begin_index: int = 0):
+00150:         """
+00151:         Sets the begin index for the scheduler. This function should be run from pipeline before the inference.
+00152: 
+00153:         Args:
+00154:             begin_index (`int`):
+00155:                 The begin index for the scheduler.
+00156:         """
+00157:         self._begin_index = begin_index
+00158: 
+00159:     # Modified from diffusers.schedulers.scheduling_flow_match_euler_discrete.FlowMatchEulerDiscreteScheduler.set_timesteps
+00160:     def set_timesteps(
+00161:         self,
+00162:         num_inference_steps: Union[int, None] = None,
+00163:         device: Union[str, torch.device] = None,
+00164:         sigmas: Optional[List[float]] = None,
+00165:         mu: Optional[Union[float, None]] = None,
+00166:         shift: Optional[Union[float, None]] = None,
+00167:     ):
+00168:         """
+00169:         Sets the discrete timesteps used for the diffusion chain (to be run before inference).
+00170:         Args:
+00171:             num_inference_steps (`int`):
+00172:                 Total number of the spacing of the time steps.
+00173:             device (`str` or `torch.device`, *optional*):
+00174:                 The device to which the timesteps should be moved to. If `None`, the timesteps are not moved.
+00175:         """
+00176: 
+00177:         if self.config.use_dynamic_shifting and mu is None:
+00178:             raise ValueError(
+00179:                 " you have to pass a value for `mu` when `use_dynamic_shifting` is set to be `True`"
+00180:             )
+00181: 
+00182:         if sigmas is None:
+00183:             sigmas = np.linspace(self.sigma_max, self.sigma_min,
+00184:                                  num_inference_steps +
+00185:                                  1).copy()[:-1]  # pyright: ignore
+00186: 
+00187:         if self.config.use_dynamic_shifting:
+00188:             sigmas = self.time_shift(mu, 1.0, sigmas)  # pyright: ignore
+00189:         else:
+00190:             if shift is None:
+00191:                 shift = self.config.shift
+00192:             sigmas = shift * sigmas / (1 +
+00193:                                        (shift - 1) * sigmas)  # pyright: ignore
+00194: 
+00195:         if self.config.final_sigmas_type == "sigma_min":
+00196:             sigma_last = ((1 - self.alphas_cumprod[0]) /
+00197:                           self.alphas_cumprod[0])**0.5
+00198:         elif self.config.final_sigmas_type == "zero":
+00199:             sigma_last = 0
+00200:         else:
+00201:             raise ValueError(
+00202:                 f"`final_sigmas_type` must be one of 'zero', or 'sigma_min', but got {self.config.final_sigmas_type}"
+00203:             )
+00204: 
+00205:         timesteps = sigmas * self.config.num_train_timesteps
+00206:         sigmas = np.concatenate([sigmas, [sigma_last]
+00207:                                  ]).astype(np.float32)  # pyright: ignore
+00208: 
+00209:         self.sigmas = torch.from_numpy(sigmas)
+00210:         self.timesteps = torch.from_numpy(timesteps).to(
+00211:             device=device, dtype=torch.int64)
+00212: 
+00213:         self.num_inference_steps = len(timesteps)
+00214: 
+00215:         self.model_outputs = [
+00216:             None,
+00217:         ] * self.config.solver_order
+00218:         self.lower_order_nums = 0
+00219:         self.last_sample = None
+00220:         if self.solver_p:
+00221:             self.solver_p.set_timesteps(self.num_inference_steps, device=device)
+00222: 
+00223:         # add an index counter for schedulers that allow duplicated timesteps
+00224:         self._step_index = None
+00225:         self._begin_index = None
+00226:         self.sigmas = self.sigmas.to(
+00227:             "cpu")  # to avoid too much CPU/GPU communication
+00228: 
+00229:     # Copied from diffusers.schedulers.scheduling_ddpm.DDPMScheduler._threshold_sample
+00230:     def _threshold_sample(self, sample: torch.Tensor) -> torch.Tensor:
+00231:         """
+00232:         "Dynamic thresholding: At each sampling step we set s to a certain percentile absolute pixel value in xt0 (the
+00233:         prediction of x_0 at timestep t), and if s > 1, then we threshold xt0 to the range [-s, s] and then divide by
+00234:         s. Dynamic thresholding pushes saturated pixels (those near -1 and 1) inwards, thereby actively preventing
+00235:         pixels from saturation at each step. We find that dynamic thresholding results in significantly better
+00236:         photorealism as well as better image-text alignment, especially when using very large guidance weights."
+00237: 
+00238:         https://arxiv.org/abs/2205.11487
+00239:         """
+00240:         dtype = sample.dtype
+00241:         batch_size, channels, *remaining_dims = sample.shape
+00242: 
+00243:         if dtype not in (torch.float32, torch.float64):
+00244:             sample = sample.float(
+00245:             )  # upcast for quantile calculation, and clamp not implemented for cpu half
+00246: 
+00247:         # Flatten sample for doing quantile calculation along each image
+00248:         sample = sample.reshape(batch_size, channels * np.prod(remaining_dims))
+00249: 
+00250:         abs_sample = sample.abs()  # "a certain percentile absolute pixel value"
+00251: 
+00252:         s = torch.quantile(
+00253:             abs_sample, self.config.dynamic_thresholding_ratio, dim=1)
+00254:         s = torch.clamp(
+00255:             s, min=1, max=self.config.sample_max_value
+00256:         )  # When clamped to min=1, equivalent to standard clipping to [-1, 1]
+00257:         s = s.unsqueeze(
+00258:             1)  # (batch_size, 1) because clamp will broadcast along dim=0
+00259:         sample = torch.clamp(
+00260:             sample, -s, s
+00261:         ) / s  # "we threshold xt0 to the range [-s, s] and then divide by s"
+00262: 
+00263:         sample = sample.reshape(batch_size, channels, *remaining_dims)
+00264:         sample = sample.to(dtype)
+00265: 
+00266:         return sample
+00267: 
+00268:     # Copied from diffusers.schedulers.scheduling_flow_match_euler_discrete.FlowMatchEulerDiscreteScheduler._sigma_to_t
+00269:     def _sigma_to_t(self, sigma):
+00270:         return sigma * self.config.num_train_timesteps
+00271: 
+00272:     def _sigma_to_alpha_sigma_t(self, sigma):
+00273:         return 1 - sigma, sigma
+00274: 
+00275:     # Copied from diffusers.schedulers.scheduling_flow_match_euler_discrete.set_timesteps
+00276:     def time_shift(self, mu: float, sigma: float, t: torch.Tensor):
+00277:         return math.exp(mu) / (math.exp(mu) + (1 / t - 1)**sigma)
+00278: 
+00279:     def convert_model_output(
+00280:         self,
+00281:         model_output: torch.Tensor,
+00282:         *args,
+00283:         sample: torch.Tensor = None,
+00284:         **kwargs,
+00285:     ) -> torch.Tensor:
+00286:         r"""
+00287:         Convert the model output to the corresponding type the UniPC algorithm needs.
+00288: 
+00289:         Args:
+00290:             model_output (`torch.Tensor`):
+00291:                 The direct output from the learned diffusion model.
+00292:             timestep (`int`):
+00293:                 The current discrete timestep in the diffusion chain.
+00294:             sample (`torch.Tensor`):
+00295:                 A current instance of a sample created by the diffusion process.
+00296: 
+00297:         Returns:
+00298:             `torch.Tensor`:
+00299:                 The converted model output.
+00300:         """
+00301:         timestep = args[0] if len(args) > 0 else kwargs.pop("timestep", None)
+00302:         if sample is None:
+00303:             if len(args) > 1:
+00304:                 sample = args[1]
+00305:             else:
+00306:                 raise ValueError(
+00307:                     "missing `sample` as a required keyward argument")
+00308:         if timestep is not None:
+00309:             deprecate(
+00310:                 "timesteps",
+00311:                 "1.0.0",
+00312:                 "Passing `timesteps` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00313:             )
+00314: 
+00315:         sigma = self.sigmas[self.step_index]
+00316:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma)
+00317: 
+00318:         if self.predict_x0:
+00319:             if self.config.prediction_type == "flow_prediction":
+00320:                 sigma_t = self.sigmas[self.step_index]
+00321:                 x0_pred = sample - sigma_t * model_output
+00322:             else:
+00323:                 raise ValueError(
+00324:                     f"prediction_type given as {self.config.prediction_type} must be one of `epsilon`, `sample`,"
+00325:                     " `v_prediction` or `flow_prediction` for the UniPCMultistepScheduler."
+00326:                 )
+00327: 
+00328:             if self.config.thresholding:
+00329:                 x0_pred = self._threshold_sample(x0_pred)
+00330: 
+00331:             return x0_pred
+00332:         else:
+00333:             if self.config.prediction_type == "flow_prediction":
+00334:                 sigma_t = self.sigmas[self.step_index]
+00335:                 epsilon = sample - (1 - sigma_t) * model_output
+00336:             else:
+00337:                 raise ValueError(
+00338:                     f"prediction_type given as {self.config.prediction_type} must be one of `epsilon`, `sample`,"
+00339:                     " `v_prediction` or `flow_prediction` for the UniPCMultistepScheduler."
+00340:                 )
+00341: 
+00342:             if self.config.thresholding:
+00343:                 sigma_t = self.sigmas[self.step_index]
+00344:                 x0_pred = sample - sigma_t * model_output
+00345:                 x0_pred = self._threshold_sample(x0_pred)
+00346:                 epsilon = model_output + x0_pred
+00347: 
+00348:             return epsilon
+00349: 
+00350:     def multistep_uni_p_bh_update(
+00351:         self,
+00352:         model_output: torch.Tensor,
+00353:         *args,
+00354:         sample: torch.Tensor = None,
+00355:         order: int = None,  # pyright: ignore
+00356:         **kwargs,
+00357:     ) -> torch.Tensor:
+00358:         """
+00359:         One step for the UniP (B(h) version). Alternatively, `self.solver_p` is used if is specified.
+00360: 
+00361:         Args:
+00362:             model_output (`torch.Tensor`):
+00363:                 The direct output from the learned diffusion model at the current timestep.
+00364:             prev_timestep (`int`):
+00365:                 The previous discrete timestep in the diffusion chain.
+00366:             sample (`torch.Tensor`):
+00367:                 A current instance of a sample created by the diffusion process.
+00368:             order (`int`):
+00369:                 The order of UniP at this timestep (corresponds to the *p* in UniPC-p).
+00370: 
+00371:         Returns:
+00372:             `torch.Tensor`:
+00373:                 The sample tensor at the previous timestep.
+00374:         """
+00375:         prev_timestep = args[0] if len(args) > 0 else kwargs.pop(
+00376:             "prev_timestep", None)
+00377:         if sample is None:
+00378:             if len(args) > 1:
+00379:                 sample = args[1]
+00380:             else:
+00381:                 raise ValueError(
+00382:                     " missing `sample` as a required keyward argument")
+00383:         if order is None:
+00384:             if len(args) > 2:
+00385:                 order = args[2]
+00386:             else:
+00387:                 raise ValueError(
+00388:                     " missing `order` as a required keyward argument")
+00389:         if prev_timestep is not None:
+00390:             deprecate(
+00391:                 "prev_timestep",
+00392:                 "1.0.0",
+00393:                 "Passing `prev_timestep` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00394:             )
+00395:         model_output_list = self.model_outputs
+00396: 
+00397:         s0 = self.timestep_list[-1]
+00398:         m0 = model_output_list[-1]
+00399:         x = sample
+00400: 
+00401:         if self.solver_p:
+00402:             x_t = self.solver_p.step(model_output, s0, x).prev_sample
+00403:             return x_t
+00404: 
+00405:         sigma_t, sigma_s0 = self.sigmas[self.step_index + 1], self.sigmas[
+00406:             self.step_index]  # pyright: ignore
+00407:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma_t)
+00408:         alpha_s0, sigma_s0 = self._sigma_to_alpha_sigma_t(sigma_s0)
+00409: 
+00410:         lambda_t = torch.log(alpha_t) - torch.log(sigma_t)
+00411:         lambda_s0 = torch.log(alpha_s0) - torch.log(sigma_s0)
+00412: 
+00413:         h = lambda_t - lambda_s0
+00414:         device = sample.device
+00415: 
+00416:         rks = []
+00417:         D1s = []
+00418:         for i in range(1, order):
+00419:             si = self.step_index - i  # pyright: ignore
+00420:             mi = model_output_list[-(i + 1)]
+00421:             alpha_si, sigma_si = self._sigma_to_alpha_sigma_t(self.sigmas[si])
+00422:             lambda_si = torch.log(alpha_si) - torch.log(sigma_si)
+00423:             rk = (lambda_si - lambda_s0) / h
+00424:             rks.append(rk)
+00425:             D1s.append((mi - m0) / rk)  # pyright: ignore
+00426: 
+00427:         rks.append(1.0)
+00428:         rks = torch.tensor(rks, device=device)
+00429: 
+00430:         R = []
+00431:         b = []
+00432: 
+00433:         hh = -h if self.predict_x0 else h
+00434:         h_phi_1 = torch.expm1(hh)  # h\phi_1(h) = e^h - 1
+00435:         h_phi_k = h_phi_1 / hh - 1
+00436: 
+00437:         factorial_i = 1
+00438: 
+00439:         if self.config.solver_type == "bh1":
+00440:             B_h = hh
+00441:         elif self.config.solver_type == "bh2":
+00442:             B_h = torch.expm1(hh)
+00443:         else:
+00444:             raise NotImplementedError()
+00445: 
+00446:         for i in range(1, order + 1):
+00447:             R.append(torch.pow(rks, i - 1))
+00448:             b.append(h_phi_k * factorial_i / B_h)
+00449:             factorial_i *= i + 1
+00450:             h_phi_k = h_phi_k / hh - 1 / factorial_i
+00451: 
+00452:         R = torch.stack(R)
+00453:         b = torch.tensor(b, device=device)
+00454: 
+00455:         if len(D1s) > 0:
+00456:             D1s = torch.stack(D1s, dim=1)  # (B, K)
+00457:             # for order 2, we use a simplified version
+00458:             if order == 2:
+00459:                 rhos_p = torch.tensor([0.5], dtype=x.dtype, device=device)
+00460:             else:
+00461:                 rhos_p = torch.linalg.solve(R[:-1, :-1],
+00462:                                             b[:-1]).to(device).to(x.dtype)
+00463:         else:
+00464:             D1s = None
+00465: 
+00466:         if self.predict_x0:
+00467:             x_t_ = sigma_t / sigma_s0 * x - alpha_t * h_phi_1 * m0
+00468:             if D1s is not None:
+00469:                 pred_res = torch.einsum("k,bkc...->bc...", rhos_p,
+00470:                                         D1s)  # pyright: ignore
+00471:             else:
+00472:                 pred_res = 0
+00473:             x_t = x_t_ - alpha_t * B_h * pred_res
+00474:         else:
+00475:             x_t_ = alpha_t / alpha_s0 * x - sigma_t * h_phi_1 * m0
+00476:             if D1s is not None:
+00477:                 pred_res = torch.einsum("k,bkc...->bc...", rhos_p,
+00478:                                         D1s)  # pyright: ignore
+00479:             else:
+00480:                 pred_res = 0
+00481:             x_t = x_t_ - sigma_t * B_h * pred_res
+00482: 
+00483:         x_t = x_t.to(x.dtype)
+00484:         return x_t
+00485: 
+00486:     def multistep_uni_c_bh_update(
+00487:         self,
+00488:         this_model_output: torch.Tensor,
+00489:         *args,
+00490:         last_sample: torch.Tensor = None,
+00491:         this_sample: torch.Tensor = None,
+00492:         order: int = None,  # pyright: ignore
+00493:         **kwargs,
+00494:     ) -> torch.Tensor:
+00495:         """
+00496:         One step for the UniC (B(h) version).
+00497: 
+00498:         Args:
+00499:             this_model_output (`torch.Tensor`):
+00500:                 The model outputs at `x_t`.
+00501:             this_timestep (`int`):
+00502:                 The current timestep `t`.
+00503:             last_sample (`torch.Tensor`):
+00504:                 The generated sample before the last predictor `x_{t-1}`.
+00505:             this_sample (`torch.Tensor`):
+00506:                 The generated sample after the last predictor `x_{t}`.
+00507:             order (`int`):
+00508:                 The `p` of UniC-p at this step. The effective order of accuracy should be `order + 1`.
+00509: 
+00510:         Returns:
+00511:             `torch.Tensor`:
+00512:                 The corrected sample tensor at the current timestep.
+00513:         """
+00514:         this_timestep = args[0] if len(args) > 0 else kwargs.pop(
+00515:             "this_timestep", None)
+00516:         if last_sample is None:
+00517:             if len(args) > 1:
+00518:                 last_sample = args[1]
+00519:             else:
+00520:                 raise ValueError(
+00521:                     " missing`last_sample` as a required keyward argument")
+00522:         if this_sample is None:
+00523:             if len(args) > 2:
+00524:                 this_sample = args[2]
+00525:             else:
+00526:                 raise ValueError(
+00527:                     " missing`this_sample` as a required keyward argument")
+00528:         if order is None:
+00529:             if len(args) > 3:
+00530:                 order = args[3]
+00531:             else:
+00532:                 raise ValueError(
+00533:                     " missing`order` as a required keyward argument")
+00534:         if this_timestep is not None:
+00535:             deprecate(
+00536:                 "this_timestep",
+00537:                 "1.0.0",
+00538:                 "Passing `this_timestep` is deprecated and has no effect as model output conversion is now handled via an internal counter `self.step_index`",
+00539:             )
+00540: 
+00541:         model_output_list = self.model_outputs
+00542: 
+00543:         m0 = model_output_list[-1]
+00544:         x = last_sample
+00545:         x_t = this_sample
+00546:         model_t = this_model_output
+00547: 
+00548:         sigma_t, sigma_s0 = self.sigmas[self.step_index], self.sigmas[
+00549:             self.step_index - 1]  # pyright: ignore
+00550:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma_t)
+00551:         alpha_s0, sigma_s0 = self._sigma_to_alpha_sigma_t(sigma_s0)
+00552: 
+00553:         lambda_t = torch.log(alpha_t) - torch.log(sigma_t)
+00554:         lambda_s0 = torch.log(alpha_s0) - torch.log(sigma_s0)
+00555: 
+00556:         h = lambda_t - lambda_s0
+00557:         device = this_sample.device
+00558: 
+00559:         rks = []
+00560:         D1s = []
+00561:         for i in range(1, order):
+00562:             si = self.step_index - (i + 1)  # pyright: ignore
+00563:             mi = model_output_list[-(i + 1)]
+00564:             alpha_si, sigma_si = self._sigma_to_alpha_sigma_t(self.sigmas[si])
+00565:             lambda_si = torch.log(alpha_si) - torch.log(sigma_si)
+00566:             rk = (lambda_si - lambda_s0) / h
+00567:             rks.append(rk)
+00568:             D1s.append((mi - m0) / rk)  # pyright: ignore
+00569: 
+00570:         rks.append(1.0)
+00571:         rks = torch.tensor(rks, device=device)
+00572: 
+00573:         R = []
+00574:         b = []
+00575: 
+00576:         hh = -h if self.predict_x0 else h
+00577:         h_phi_1 = torch.expm1(hh)  # h\phi_1(h) = e^h - 1
+00578:         h_phi_k = h_phi_1 / hh - 1
+00579: 
+00580:         factorial_i = 1
+00581: 
+00582:         if self.config.solver_type == "bh1":
+00583:             B_h = hh
+00584:         elif self.config.solver_type == "bh2":
+00585:             B_h = torch.expm1(hh)
+00586:         else:
+00587:             raise NotImplementedError()
+00588: 
+00589:         for i in range(1, order + 1):
+00590:             R.append(torch.pow(rks, i - 1))
+00591:             b.append(h_phi_k * factorial_i / B_h)
+00592:             factorial_i *= i + 1
+00593:             h_phi_k = h_phi_k / hh - 1 / factorial_i
+00594: 
+00595:         R = torch.stack(R)
+00596:         b = torch.tensor(b, device=device)
+00597: 
+00598:         if len(D1s) > 0:
+00599:             D1s = torch.stack(D1s, dim=1)
+00600:         else:
+00601:             D1s = None
+00602: 
+00603:         # for order 1, we use a simplified version
+00604:         if order == 1:
+00605:             rhos_c = torch.tensor([0.5], dtype=x.dtype, device=device)
+00606:         else:
+00607:             rhos_c = torch.linalg.solve(R, b).to(device).to(x.dtype)
+00608: 
+00609:         if self.predict_x0:
+00610:             x_t_ = sigma_t / sigma_s0 * x - alpha_t * h_phi_1 * m0
+00611:             if D1s is not None:
+00612:                 corr_res = torch.einsum("k,bkc...->bc...", rhos_c[:-1], D1s)
+00613:             else:
+00614:                 corr_res = 0
+00615:             D1_t = model_t - m0
+00616:             x_t = x_t_ - alpha_t * B_h * (corr_res + rhos_c[-1] * D1_t)
+00617:         else:
+00618:             x_t_ = alpha_t / alpha_s0 * x - sigma_t * h_phi_1 * m0
+00619:             if D1s is not None:
+00620:                 corr_res = torch.einsum("k,bkc...->bc...", rhos_c[:-1], D1s)
+00621:             else:
+00622:                 corr_res = 0
+00623:             D1_t = model_t - m0
+00624:             x_t = x_t_ - sigma_t * B_h * (corr_res + rhos_c[-1] * D1_t)
+00625:         x_t = x_t.to(x.dtype)
+00626:         return x_t
+00627: 
+00628:     def index_for_timestep(self, timestep, schedule_timesteps=None):
+00629:         if schedule_timesteps is None:
+00630:             schedule_timesteps = self.timesteps
+00631: 
+00632:         indices = (schedule_timesteps == timestep).nonzero()
+00633: 
+00634:         # The sigma index that is taken for the **very** first `step`
+00635:         # is always the second index (or the last index if there is only 1)
+00636:         # This way we can ensure we don't accidentally skip a sigma in
+00637:         # case we start in the middle of the denoising schedule (e.g. for image-to-image)
+00638:         pos = 1 if len(indices) > 1 else 0
+00639: 
+00640:         return indices[pos].item()
+00641: 
+00642:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler._init_step_index
+00643:     def _init_step_index(self, timestep):
+00644:         """
+00645:         Initialize the step_index counter for the scheduler.
+00646:         """
+00647: 
+00648:         if self.begin_index is None:
+00649:             if isinstance(timestep, torch.Tensor):
+00650:                 timestep = timestep.to(self.timesteps.device)
+00651:             self._step_index = self.index_for_timestep(timestep)
+00652:         else:
+00653:             self._step_index = self._begin_index
+00654: 
+00655:     def step(self,
+00656:              model_output: torch.Tensor,
+00657:              timestep: Union[int, torch.Tensor],
+00658:              sample: torch.Tensor,
+00659:              return_dict: bool = True,
+00660:              generator=None) -> Union[SchedulerOutput, Tuple]:
+00661:         """
+00662:         Predict the sample from the previous timestep by reversing the SDE. This function propagates the sample with
+00663:         the multistep UniPC.
+00664: 
+00665:         Args:
+00666:             model_output (`torch.Tensor`):
+00667:                 The direct output from learned diffusion model.
+00668:             timestep (`int`):
+00669:                 The current discrete timestep in the diffusion chain.
+00670:             sample (`torch.Tensor`):
+00671:                 A current instance of a sample created by the diffusion process.
+00672:             return_dict (`bool`):
+00673:                 Whether or not to return a [`~schedulers.scheduling_utils.SchedulerOutput`] or `tuple`.
+00674: 
+00675:         Returns:
+00676:             [`~schedulers.scheduling_utils.SchedulerOutput`] or `tuple`:
+00677:                 If return_dict is `True`, [`~schedulers.scheduling_utils.SchedulerOutput`] is returned, otherwise a
+00678:                 tuple is returned where the first element is the sample tensor.
+00679: 
+00680:         """
+00681:         if self.num_inference_steps is None:
+00682:             raise ValueError(
+00683:                 "Number of inference steps is 'None', you need to run 'set_timesteps' after creating the scheduler"
+00684:             )
+00685: 
+00686:         if self.step_index is None:
+00687:             self._init_step_index(timestep)
+00688: 
+00689:         use_corrector = (
+00690:             self.step_index > 0 and
+00691:             self.step_index - 1 not in self.disable_corrector and
+00692:             self.last_sample is not None  # pyright: ignore
+00693:         )
+00694: 
+00695:         model_output_convert = self.convert_model_output(
+00696:             model_output, sample=sample)
+00697:         if use_corrector:
+00698:             sample = self.multistep_uni_c_bh_update(
+00699:                 this_model_output=model_output_convert,
+00700:                 last_sample=self.last_sample,
+00701:                 this_sample=sample,
+00702:                 order=self.this_order,
+00703:             )
+00704: 
+00705:         for i in range(self.config.solver_order - 1):
+00706:             self.model_outputs[i] = self.model_outputs[i + 1]
+00707:             self.timestep_list[i] = self.timestep_list[i + 1]
+00708: 
+00709:         self.model_outputs[-1] = model_output_convert
+00710:         self.timestep_list[-1] = timestep  # pyright: ignore
+00711: 
+00712:         if self.config.lower_order_final:
+00713:             this_order = min(self.config.solver_order,
+00714:                              len(self.timesteps) -
+00715:                              self.step_index)  # pyright: ignore
+00716:         else:
+00717:             this_order = self.config.solver_order
+00718: 
+00719:         self.this_order = min(this_order,
+00720:                               self.lower_order_nums + 1)  # warmup for multistep
+00721:         assert self.this_order > 0
+00722: 
+00723:         self.last_sample = sample
+00724:         prev_sample = self.multistep_uni_p_bh_update(
+00725:             model_output=model_output,  # pass the original non-converted model output, in case solver-p is used
+00726:             sample=sample,
+00727:             order=self.this_order,
+00728:         )
+00729: 
+00730:         if self.lower_order_nums < self.config.solver_order:
+00731:             self.lower_order_nums += 1
+00732: 
+00733:         # upon completion increase step index by one
+00734:         self._step_index += 1  # pyright: ignore
+00735: 
+00736:         if not return_dict:
+00737:             return (prev_sample,)
+00738: 
+00739:         return SchedulerOutput(prev_sample=prev_sample)
+00740: 
+00741:     def scale_model_input(self, sample: torch.Tensor, *args,
+00742:                           **kwargs) -> torch.Tensor:
+00743:         """
+00744:         Ensures interchangeability with schedulers that need to scale the denoising model input depending on the
+00745:         current timestep.
+00746: 
+00747:         Args:
+00748:             sample (`torch.Tensor`):
+00749:                 The input sample.
+00750: 
+00751:         Returns:
+00752:             `torch.Tensor`:
+00753:                 A scaled input sample.
+00754:         """
+00755:         return sample
+00756: 
+00757:     # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.add_noise
+00758:     def add_noise(
+00759:         self,
+00760:         original_samples: torch.Tensor,
+00761:         noise: torch.Tensor,
+00762:         timesteps: torch.IntTensor,
+00763:     ) -> torch.Tensor:
+00764:         # Make sure sigmas and timesteps have the same device and dtype as original_samples
+00765:         sigmas = self.sigmas.to(
+00766:             device=original_samples.device, dtype=original_samples.dtype)
+00767:         if original_samples.device.type == "mps" and torch.is_floating_point(
+00768:                 timesteps):
+00769:             # mps does not support float64
+00770:             schedule_timesteps = self.timesteps.to(
+00771:                 original_samples.device, dtype=torch.float32)
+00772:             timesteps = timesteps.to(
+00773:                 original_samples.device, dtype=torch.float32)
+00774:         else:
+00775:             schedule_timesteps = self.timesteps.to(original_samples.device)
+00776:             timesteps = timesteps.to(original_samples.device)
+00777: 
+00778:         # begin_index is None when the scheduler is used for training or pipeline does not implement set_begin_index
+00779:         if self.begin_index is None:
+00780:             step_indices = [
+00781:                 self.index_for_timestep(t, schedule_timesteps)
+00782:                 for t in timesteps
+00783:             ]
+00784:         elif self.step_index is not None:
+00785:             # add_noise is called after first denoising step (for inpainting)
+00786:             step_indices = [self.step_index] * timesteps.shape[0]
+00787:         else:
+00788:             # add noise is called before first denoising step to create initial latent(img2img)
+00789:             step_indices = [self.begin_index] * timesteps.shape[0]
+00790: 
+00791:         sigma = sigmas[step_indices].flatten()
+00792:         while len(sigma.shape) < len(original_samples.shape):
+00793:             sigma = sigma.unsqueeze(-1)
+00794: 
+00795:         alpha_t, sigma_t = self._sigma_to_alpha_sigma_t(sigma)
+00796:         noisy_samples = alpha_t * original_samples + sigma_t * noise
+00797:         return noisy_samples
+00798: 
+00799:     def __len__(self):
+00800:         return self.config.num_train_timesteps

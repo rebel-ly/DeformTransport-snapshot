@@ -1,0 +1,33 @@
+{
+  "method_paths_replaced": 1,
+  "candidate_sets_trimmed": [
+    {
+      "targets": [
+        "CANDIDATES"
+      ],
+      "old_values": [
+        "v3s",
+        "v3b",
+        "v3c",
+        "v3d",
+        "v3e"
+      ],
+      "new_values": [
+        "v3d"
+      ]
+    }
+  ],
+  "reproduction_guards_removed": 2,
+  "label_contract": {
+    "old_correct": "V3D Identity-Shuffled",
+    "v3d": "V3D Correct"
+  },
+  "correct": {
+    "santa": "/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3d/santa_v3d_correct_seed0.mp4",
+    "tree": "/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3d/tree_v3d_correct_seed0.mp4"
+  },
+  "shuffled": {
+    "santa": "/workspace/DeformTransport/server_runs/wan_move_formal/20260810_124701__v3d_mechanism_and_sandhouse_heldout_seed0/santa_shuffled/santa_v3d_identity_shuffled_seed0.mp4",
+    "tree": "/workspace/DeformTransport/server_runs/wan_move_formal/20260810_124701__v3d_mechanism_and_sandhouse_heldout_seed0/tree_shuffled/tree_v3d_identity_shuffled_seed0.mp4"
+  }
+}

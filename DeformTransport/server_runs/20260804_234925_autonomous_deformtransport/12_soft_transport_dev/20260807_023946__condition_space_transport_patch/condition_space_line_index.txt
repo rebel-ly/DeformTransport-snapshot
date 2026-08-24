@@ -1,0 +1,15 @@
+113:        choices=("replace", "inter_step_residual", "condition_residual"),
+118:            "between denoising steps; condition_residual applies the "
+150:            "condition_residual",
+319:    condition_transport_residual = None
+359:                    == "condition_residual"
+361:                    condition_transport_residual = (
+417:        if condition_transport_residual is not None:
+418:            condition_transport_residual = (
+419:                condition_transport_residual.to(
+425:                condition_transport_residual.shape
+429:                    f"{tuple(condition_transport_residual.shape)} "
+436:                    condition_transport_residual
+445:                condition_transport_residual[
+465:                * condition_transport_residual.to(
+501:                "Applied condition-space transport "

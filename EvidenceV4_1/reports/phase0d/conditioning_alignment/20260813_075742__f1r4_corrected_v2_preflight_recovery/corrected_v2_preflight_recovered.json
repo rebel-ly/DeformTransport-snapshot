@@ -1,0 +1,9 @@
+{
+  "RW_CORRECTED_V2_PREFLIGHT": "PASS",
+  "DTFULL_CORRECTED_V2_PREFLIGHT": "PASS",
+  "RW_FIRST_FAIL_PREDICATE": null,
+  "DTFULL_FIRST_FAIL_PREDICATE": null,
+  "SHARED_FIRST_FAIL": true,
+  "rw_fail_predicates": [],
+  "dtfull_fail_predicates": []
+}

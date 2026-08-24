@@ -1,0 +1,35 @@
+DeformTransport V3A development experiment
+
+Method:
+Collision-Aware Material Aggregation
+
+Control:
+Old Wan-Move Correct vs V3A Correct.
+
+Only intended algorithmic change:
+When multiple persistent material trajectories map to the same
+future Wan VAE latent cell, replace random last-write arbitration
+with arithmetic mean aggregation of their t=0 source latent features.
+
+Frozen:
+- persistent trajectories
+- visibility
+- input image
+- prompt
+- seed = 0
+- frame_num = 81
+- sample_steps = 40
+- sample_shift = 3.0
+- bf16
+- t5_cpu
+- offload_model
+- checkpoint
+- trajectory-internal RNG seed protocol
+
+No alpha / scale / patch / prompt / track-count tuning.
+
+Development GO:
+V3A Correct should improve TC-MAR over old Correct,
+with no significant TC-ME regression.
+
+This is a development experiment, not yet the final formal method.

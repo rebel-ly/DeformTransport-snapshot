@@ -1,0 +1,2 @@
+ad6da28f26a7a80c987b111c7f871663b1f675a8ffa4caed585690300489852b  /workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/transport_canonical/transport_ready_165f.pt
+38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981  /workspace/DeformTransport/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth

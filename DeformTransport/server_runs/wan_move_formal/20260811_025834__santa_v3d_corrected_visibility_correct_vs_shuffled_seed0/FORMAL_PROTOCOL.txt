@@ -1,0 +1,28 @@
+Formal Santa V3D corrected-visibility mechanism rerun.
+
+Corrected bridge:
+server_runs/wan_move_bridge/20260811_024330__santa_corrected_physical_visibility
+
+Correct:
+persistent material identity preserved.
+
+Identity-Shuffled:
+only source material identity / source coordinates are permuted.
+Future trajectories are identical.
+Physical visibility is identical.
+Fixed points = 0.
+
+Generator:
+Wan-Move pre-V4 behavior.
+DeformTransport trajectory-internal RNG fairness patch retained:
+torch.manual_seed(seed) immediately before create_pos_feature_map.
+
+Seed:
+0.
+
+Purpose:
+Re-establish the Santa persistent-material-correspondence causal mechanism
+under the corrected physical visibility contract.
+
+Old Santa generations using projection-valid-as-visible contract are historical
+diagnostics only and excluded from final inferential claims.

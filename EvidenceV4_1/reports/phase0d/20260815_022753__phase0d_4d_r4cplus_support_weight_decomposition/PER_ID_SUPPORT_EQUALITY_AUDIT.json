@@ -1,0 +1,41 @@
+{
+  "COMMON_ZERO_SUPPORT_N": 83,
+  "COMMON_ZERO_SUPPORT_SET_EXACT": true,
+  "comparisons": {
+    "seed0_C1_vs_seed0_C2": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    },
+    "seed0_C1_vs_seed1_C1": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    },
+    "seed0_C2_vs_seed0_CS": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    },
+    "seed0_C2_vs_seed1_C2": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    },
+    "seed0_CS_vs_seed1_CS": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    },
+    "seed1_C1_vs_seed1_C2": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    },
+    "seed1_C2_vs_seed1_CS": {
+      "exact_equal": true,
+      "max_abs_support_count_diff": 0,
+      "support_count_diff_count": 0
+    }
+  }
+}

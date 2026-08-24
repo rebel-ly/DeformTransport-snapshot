@@ -1,0 +1,10 @@
+{
+  "key": "SC",
+  "authoritative_evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "aggregate_from_retained_rows_formal_transition_mean": 0.4753837180196287,
+  "accepted_aggregate": 0.0,
+  "exact_reproduction": false,
+  "abs_difference": 0.4753837180196287,
+  "rows": 33498,
+  "csv": "/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/post_sc_formal_closure/PER_TRACK_RAW/SC.csv"
+}

@@ -1,0 +1,131 @@
+{
+  "manifest": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/binding_recovery_manifest.json",
+  "manifest_sha256": "65f97286862e2193790a44fad20b9fc73c7c81aa4e8fa788e886c825d98f264f",
+  "original": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "original_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "output": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+  "output_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "replacement_count": 10,
+  "replacements": [
+    {
+      "start": 348,
+      "end": 406,
+      "old": "[\n    \"v3s\",\n    \"v3b\",\n    \"v3c\",\n    \"v3d\",\n    \"v3e\",\n]",
+      "new": "['dt_full']",
+      "category": "METHOD_BINDING",
+      "field": "CANDIDATES",
+      "original_lines": [
+        32,
+        38
+      ]
+    },
+    {
+      "start": 1222,
+      "end": 1368,
+      "old": "\"server_runs/\"\n            \"wan_move_bridge/\"\n            \"20260809_010015__santa_correct_tracks/\"\n            \"santa_material_tracks_correct.npy\"",
+      "new": "'/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy'",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.tracks",
+      "original_lines": [
+        66,
+        69
+      ]
+    },
+    {
+      "start": 1398,
+      "end": 1548,
+      "old": "\"server_runs/\"\n            \"wan_move_bridge/\"\n            \"20260809_010015__santa_correct_tracks/\"\n            \"santa_material_visibility_correct.npy\"",
+      "new": "'/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy'",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.vis",
+      "original_lines": [
+        72,
+        75
+      ]
+    },
+    {
+      "start": 1588,
+      "end": 1592,
+      "old": "1277",
+      "new": "1257",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.n",
+      "original_lines": [
+        78,
+        78
+      ]
+    },
+    {
+      "start": 1622,
+      "end": 1626,
+      "old": "1277",
+      "new": "1110",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.valid_tracks",
+      "original_lines": [
+        79,
+        79
+      ]
+    },
+    {
+      "start": 1647,
+      "end": 1652,
+      "old": "25540",
+      "new": "9766",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.obs",
+      "original_lines": [
+        80,
+        80
+      ]
+    },
+    {
+      "start": 1673,
+      "end": 1691,
+      "old": "21.271405488892093",
+      "new": "21.16497305149358",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.lab",
+      "original_lines": [
+        81,
+        81
+      ]
+    },
+    {
+      "start": 1712,
+      "end": 1731,
+      "old": "0.14561786886907022",
+      "new": "0.14329059195071162",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.rgb",
+      "original_lines": [
+        82,
+        82
+      ]
+    },
+    {
+      "start": 1753,
+      "end": 1771,
+      "old": "0.6146068110130727",
+      "new": "0.7040501053065034",
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.tcme",
+      "original_lines": [
+        83,
+        83
+      ]
+    },
+    {
+      "start": 35903,
+      "end": 35955,
+      "old": "[\n            \"santa\",\n            \"tree\",\n        ]",
+      "new": "['santa']",
+      "category": "OUTPUT_BINDING",
+      "field": "main.appearance_cases",
+      "original_lines": [
+        2216,
+        2219
+      ]
+    }
+  ]
+}

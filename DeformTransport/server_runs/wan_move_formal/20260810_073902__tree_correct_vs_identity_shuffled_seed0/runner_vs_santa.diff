@@ -1,0 +1,6 @@
+===== tree_correct vs santa_correct =====
+<no algorithmic parameter differences>
+allowed non-algorithmic differences: case image, prompt, tracks, visibility, output/run path, GPU argument
+===== tree_shuffled vs santa_correct =====
+<no algorithmic parameter differences>
+allowed non-algorithmic differences: case image, prompt, tracks, visibility, output/run path, GPU argument

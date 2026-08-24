@@ -1,0 +1,108 @@
+{
+  "candidate_id": "a1p000_t0p250",
+  "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221015__future_visible_alpha_tau_joint_scan/candidates/a1p000_t0p250.pt",
+  "alpha": 1.0,
+  "threshold": 0.25,
+  "latent_scan_metrics": {
+    "candidate_id": "a1p000_t0p250",
+    "alpha": 1.0,
+    "threshold": 0.25,
+    "support_cells": 22491,
+    "full_correct_target_l1": 0.07652073353528976,
+    "masked_correct_target_l1": 0.4458351135253906,
+    "full_shuffled_target_l1": 0.1015097126364708,
+    "masked_shuffled_target_l1": 0.5914291739463806,
+    "full_correct_shuffled_l1": 0.05291111022233963,
+    "masked_correct_shuffled_l1": 0.30827757716178894,
+    "correct_first_order": 0.11541001498699188,
+    "correct_second_order": 0.1883496642112732,
+    "temporal_penalty": 0.4452141711620355,
+    "identity_retention": 1.0,
+    "target_distortion_ratio": 1.0,
+    "temporal_penalty_ratio": 1.0,
+    "support_ratio": 1.0
+  },
+  "common_raw_support": {
+    "correct_vs_target": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.16314834457488708,
+      "mean_masked_mse": 0.04350702118496468,
+      "mean_masked_psnr_db": 13.681125017629851
+    },
+    "shuffled_vs_target": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.2443343566523658,
+      "mean_masked_mse": 0.08835688371349264,
+      "mean_masked_psnr_db": 10.541011241847404
+    },
+    "correct_vs_shuffled": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.1259359317245307,
+      "mean_masked_mse": 0.027157252470468296,
+      "mean_masked_psnr_db": 15.726449910547846
+    }
+  },
+  "native_support": {
+    "correct_vs_target": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.16579838823757054,
+      "mean_masked_mse": 0.044336423726269496,
+      "mean_masked_psnr_db": 13.602786066397734
+    }
+  },
+  "full_frame": {
+    "correct_vs_target": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.03172819185312147,
+      "mean_masked_mse": 0.007894466907061913,
+      "mean_masked_psnr_db": 21.072474098719624
+    }
+  },
+  "sharpness_common": {
+    "target": {
+      "mean_laplacian_variance": 0.012256907293412053,
+      "mean_sobel": 0.2814278135329117,
+      "mean_high_frequency": 0.013871836464530156
+    },
+    "correct": {
+      "mean_laplacian_variance": 0.0028804460983079525,
+      "mean_sobel": 0.14957722184466726,
+      "mean_high_frequency": 0.007612297351667543
+    },
+    "shuffled": {
+      "mean_laplacian_variance": 0.0014203434902024857,
+      "mean_sobel": 0.10406415192065416,
+      "mean_high_frequency": 0.005892528882135211
+    }
+  },
+  "temporal": {
+    "target": {
+      "mean_first_order_abs_difference": 0.012154888361692429,
+      "mean_second_order_abs_difference": 0.018790582194924355
+    },
+    "correct": {
+      "mean_first_order_abs_difference": 0.01035150047391653,
+      "mean_second_order_abs_difference": 0.01566474139690399
+    },
+    "shuffled": {
+      "mean_first_order_abs_difference": 0.008762355893850327,
+      "mean_second_order_abs_difference": 0.013543685898184776
+    }
+  },
+  "runtime_seconds": {
+    "correct_decode": 5.798810547974426,
+    "shuffled_decode": 5.846974580024835
+  },
+  "artifacts": {
+    "correct_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/correct.mp4",
+    "shuffled_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/shuffled.mp4",
+    "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/comparison.mp4",
+    "selected_images": {
+      "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/first.png",
+      "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/quarter.png",
+      "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/mid.png",
+      "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/three_quarter.png",
+      "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/final.png"
+    }
+  }
+}

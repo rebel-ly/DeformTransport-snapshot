@@ -1,0 +1,10 @@
+{
+  "policy_sha256": "2d04785c14aa9819bcaade2ecf8bdc0eb621daefa7b0f4444d94d95dc019e8c0",
+  "runtime_identity": {"python": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python", "CUDA_VISIBLE_DEVICES": "1", "physical_gpu": "GPU1 NVIDIA L40"},
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "video_sha256": {"RW":"1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7","DT-FULL":"08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935","WM-0":"9caae850cfaec1bf94a0c49e3975a1b95bcd57820ecaff2e96d65db64a93962a","DT-FRAG-PRUNE":"052d97b74b0270d9883fafc327b0dbb7cf1d399c0a38eb79f22968714db556f6","DT-GRID100-CENTER":"8a44ba0cfc17ccfed567df15fae321b4f0242f7bc809f0a6be0459168d0f974a"},
+  "sidecar_sha256": {"ids":"f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8","tracks":"a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929","visibility":"5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff","N":1257},
+  "baseline_exact_reproduction": {"RW":{"mar_mean":13.639900159270573,"mar_median":9.546106088056899,"mar_p95":40.176803651452055,"me_mean":0.5869890665947547,"me_median":0.5070961964161795,"me_p95":1.153139444856402,"exact":true},"DT-FULL":{"mar_mean":17.144317299874714,"mar_median":14.77844642547139,"mar_p95":37.01063968507866,"me_mean":0.7265499674289193,"me_median":0.6906036221851227,"me_p95":1.3080249503965733,"exact":true}},
+  "BASELINE_UNBLIND_GATE": "PASS",
+  "CANDIDATE_METRICS_UNBLINDED": false
+}

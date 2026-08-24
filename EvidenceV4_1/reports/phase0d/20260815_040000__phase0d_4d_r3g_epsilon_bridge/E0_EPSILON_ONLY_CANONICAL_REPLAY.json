@@ -1,0 +1,17 @@
+{
+  "e0_launched": true,
+  "gpu": "GPU2",
+  "exit_code": 1,
+  "completion_marker": false,
+  "mp4_exists": false,
+  "engineering_pass": false,
+  "denoise_progress_before_failure": "3/40",
+  "fatal_error": "torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 854.00 MiB.",
+  "raw_error_gpu_free_memory": "321.62 MiB",
+  "raw_error_our_process_memory": "37.78 GiB",
+  "raw_error_other_process_memory": "6.21 GiB",
+  "epsilon_only_canonical_bridge": "UNRESOLVED_E0_CUDA_OOM_NO_OUTPUT",
+  "no_auto_retry": true,
+  "no_first_divergence_probe": true,
+  "no_gpu3_use": true
+}

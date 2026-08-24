@@ -1,0 +1,18 @@
+{
+  "C2_CS_SEED1_UNEXPECTED_DIFFS": [],
+  "only_intended_scientific_difference": "CORRECT_SOURCE_IDENTITY_CORRESPONDENCE_VS_IDENTITY_SHUFFLED_SOURCE_IDENTITY_CORRESPONDENCE",
+  "future_material_states_identical": true,
+  "future_geometry_identical": true,
+  "future_tracks_t1_80_bit_identical": true,
+  "visibility_bit_identical": true,
+  "depth_identical": true,
+  "material_ids_identical": true,
+  "K_identical": true,
+  "randomness_identical": true,
+  "preview_identical": true,
+  "permutation_bijection": true,
+  "permutation_fixed_points": 0,
+  "source_t0_changed_rows": 1257,
+  "paired_randomness": "PASS",
+  "paired_randomness_basis": "same FORMAL_DIFFUSION_SEED=1, same validated external epsilon path/file/tensor SHA, same frozen preview SHA, same scheduler/start-state/common protocol; simultaneity is not required"
+}

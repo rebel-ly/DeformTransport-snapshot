@@ -1,0 +1,128 @@
+===== NATIVE WAN =====
+/workspace/Wan-Move/wan/wan_move.py:24:from .modules.trajectory import replace_feature, get_video_track_video, create_pos_feature_map
+/workspace/Wan-Move/wan/wan_move.py:279:        track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)
+/workspace/Wan-Move/wan/wan_move.py:281:        edited_y = replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]
+/workspace/Wan-Move/wan/wan_move.py:283:        y_cond = torch.concat([msk, edited_y], dim=0)
+/workspace/Wan-Move/wan/wan_move.py:323:                'y': [y_cond],
+/workspace/Wan-Move/wan/modules/trajectory.py:171:def create_pos_feature_map(
+/workspace/Wan-Move/wan/modules/trajectory.py:224:    track_pos = (
+/workspace/Wan-Move/wan/modules/trajectory.py:339:            track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:346:            track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:436:        track_pos,
+/workspace/Wan-Move/wan/modules/trajectory.py:442:    track_pos,
+/workspace/Wan-Move/wan/modules/trajectory.py:451:        == track_pos.shape[0]
+/workspace/Wan-Move/wan/modules/trajectory.py:454:    n = track_pos.shape[1]
+/workspace/Wan-Move/wan/modules/trajectory.py:457:    track_pos = track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:465:        track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:533:        track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:543:        track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:698:def replace_feature(
+/workspace/Wan-Move/wan/modules/trajectory.py:700:    track_pos: torch.Tensor,
+/workspace/Wan-Move/wan/modules/trajectory.py:716:            track_pos,
+/workspace/Wan-Move/wan/modules/trajectory.py:734:            "create_pos_feature_map "
+/workspace/Wan-Move/wan/modules/trajectory.py:741:        or track_pos.shape[0]
+/workspace/Wan-Move/wan/modules/trajectory.py:749:    n = track_pos.shape[1]
+/workspace/Wan-Move/wan/modules/trajectory.py:760:    track_pos = track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:845:        track_pos.shape[2]
+/workspace/Wan-Move/wan/modules/trajectory.py:859:        track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:871:        track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:911:            track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:923:            track_pos[
+/workspace/Wan-Move/wan/modules/trajectory.py:1301:    -  track_pos: torch.Tensor, the position embeddings, [N, T', 2], 2 = height, width
+/workspace/Wan-Move/wan/modules/trajectory.py:1317:    track_video, track_pos = create_pos_feature_map(
+/workspace/Wan-Move/wan/modules/trajectory.py:1321:    return track_video.permute(3, 0, 1, 2), track_pos, pred_tracks, pred_visibility
+/workspace/Wan-Move/wan/modules/trajectory.py:1448:    feature_map, track_pos = create_pos_feature_map(
+/workspace/Wan-Move/wan/modules/trajectory.py:1461:    return feature_map, track_pos
+
+===== V3D SOURCES =====
+/workspace/DeformTransport/scripts/assemble_final_sim_from_trajectory.py:121:        "crop契约": f"512x512 PIL bilinear resize至832x832，垂直裁剪[{crop_start}:{crop_start + 480}]",
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:1:"""Synthetic mathematical validation for normalized bilinear point transport."""
+/workspace/DeformTransport/scripts/build_flow_latent_artifact.py:44:        mode="bilinear",
+/workspace/DeformTransport/scripts/build_flow_latent_artifact.py:139:        mode="bilinear",
+/workspace/DeformTransport/scripts/audit_soft_weight_thresholds.py:3:The audit compares the legacy hard support with the continuous bilinear support.
+/workspace/DeformTransport/scripts/validate_soft_transport_cpu_gpu.py:1:"""Validate CPU/CUDA parity for continuous bilinear point transport."""
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:16:- bilinear splat support and accumulated weight;
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:224:def bilinear_splat_geometry(
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:232:    """Accumulate bilinear target-splat geometry.
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:598:    geometry = bilinear_splat_geometry(
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:16:- bilinear splat support and accumulated weight;
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:224:def bilinear_splat_geometry(
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:232:    """Accumulate bilinear target-splat geometry.
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:598:    geometry = bilinear_splat_geometry(
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:108:    grids = F.interpolate(grids, size=(height, width), mode="bilinear", align_corners=False)
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:461:                "preprocessing": "512 RGB -> PIL bilinear 832 -> vertical crop 176:656 -> area pool 60x104",
+/workspace/DeformTransport/scripts/run_precomputed_demo_simulation.py:66:        stacked, size=(832, 832), mode="bilinear", align_corners=False
+/workspace/DeformTransport/scripts/run_precomputed_demo_simulation.py:70:        cropped, size=(60, 104), mode="bilinear", align_corners=False
+/workspace/DeformTransport/scripts/compare_hard_soft_support.py:1:"""Compare hard and bilinear soft transport support on transport-ready data."""
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:605:            "continuous_bilinear_forward_splat_gate"
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:235:            "continuous_bilinear_forward_splat"
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:359:            "continuous_bilinear_forward_splat",
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/PROTOCOL_FROZEN.txt:33:  exact bilinear sampling
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/eval_v3.py:36:    "v3d",
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/eval_v3.py:1411:def bilinear_flow(
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/eval_v3.py:1915:                        bilinear_flow(
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/supervisor.log:7:v3d motion {'santa': 'PASS', 'tree': 'PASS'} appearance {'santa': 'IMPROVE', 'tree': 'TIE'} eligible True tier 2 mean_rel 0.010589
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/supervisor.log:10:WINNER= v3d
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:4:APPEARANCE LOAD santa v3s /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3s/santa_v3s_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:5:APPEARANCE LOAD santa v3b /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3b/santa_v3b_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:6:APPEARANCE LOAD santa v3c /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3c/santa_v3c_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:7:APPEARANCE LOAD santa v3d /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3d/santa_v3d_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:8:APPEARANCE LOAD santa v3e /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3e/santa_v3e_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:12:APPEARANCE LOAD tree v3s /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3s/tree_v3s_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:13:APPEARANCE LOAD tree v3b /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3b/tree_v3b_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:14:APPEARANCE LOAD tree v3c /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3c/tree_v3c_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:15:APPEARANCE LOAD tree v3d /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3d/tree_v3d_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_stdout.log:16:APPEARANCE LOAD tree v3e /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3e/tree_v3e_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:25:MOTION LOAD santa v3s /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3s/santa_v3s_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:36:MOTION LOAD santa v3b /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3b/santa_v3b_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:47:MOTION LOAD santa v3c /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3c/santa_v3c_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:58:MOTION LOAD santa v3d /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3d/santa_v3d_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:59:RAFT santa v3d 8 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:60:RAFT santa v3d 16 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:61:RAFT santa v3d 24 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:62:RAFT santa v3d 32 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:63:RAFT santa v3d 40 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:64:RAFT santa v3d 48 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:65:RAFT santa v3d 56 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:66:RAFT santa v3d 64 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:67:RAFT santa v3d 72 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:68:RAFT santa v3d 80 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_stdout.log:69:MOTION LOAD santa v3e /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/santa/v3e/santa_v3e_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:25:MOTION LOAD tree v3s /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3s/tree_v3s_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:36:MOTION LOAD tree v3b /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3b/tree_v3b_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:47:MOTION LOAD tree v3c /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3c/tree_v3c_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:58:MOTION LOAD tree v3d /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3d/tree_v3d_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:59:RAFT tree v3d 8 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:60:RAFT tree v3d 16 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:61:RAFT tree v3d 24 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:62:RAFT tree v3d 32 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:63:RAFT tree v3d 40 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:64:RAFT tree v3d 48 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:65:RAFT tree v3d 56 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:66:RAFT tree v3d 64 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:67:RAFT tree v3d 72 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:68:RAFT tree v3d 80 /80
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_stdout.log:69:MOTION LOAD tree v3e /workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0/tree/v3e/tree_v3e_correct_seed0.mp4
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_report.json:35:    "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_report.json:82:    "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/tree_motion_report.json:133:    "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_report.json:35:    "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_report.json:82:    "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/santa_motion_report.json:133:    "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/selection_stdout.log:5:v3d motion {'santa': 'PASS', 'tree': 'PASS'} appearance {'santa': 'IMPROVE', 'tree': 'TIE'} eligible True tier 2 mean_rel 0.010589
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/selection_stdout.log:8:WINNER= v3d
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/selection_report.json:3:  "winner": "v3d",
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/selection_report.json:170:      "candidate": "v3d",
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/selection_summary.tsv:5:v3d	PASS	PASS	IMPROVE	TIE	True	2	0.01058896
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/select_v3.py:10:    "v3d",
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/evaluator_sha256.txt:1:2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08  /workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/eval_v3.py
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/evaluator_sha256.txt:2:92438e2baa09dc34208f1e9d31c3cb146743f99c4c988d5e203b9a334f2e3a8c  /workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/select_v3.py
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/evaluator_sha256.txt:3:423e9b9d355262934a834032dd9df3dbee65a8168984aeb8f3387ea96dd769e7  /workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/PROTOCOL_FROZEN.txt
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/supervisor.sh:11:SUITE=/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/supervisor.failed_before_run_path_fix.sh:17:SUITE=/workspace/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_report.json:107:        "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_report.json:175:        "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_report.json:228:        "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_report.json:351:        "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_report.json:419:        "v3d": {
+/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/appearance_report.json:472:        "v3d": {

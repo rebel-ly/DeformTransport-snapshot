@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "execution": "VAE_ENCODE_ONLY_BASELINE_RECOVERY_NO_TRANSPORT_NO_DECODE",
+  "encoded_shape": [
+    16,
+    21,
+    60,
+    104
+  ],
+  "edited_shape": [
+    16,
+    21,
+    60,
+    104
+  ],
+  "future_differential_cells": 9031,
+  "expected_structural_support": 9031,
+  "differential_support_exact": true,
+  "max_abs_difference": 4.377721786499023,
+  "encoded_tensor_bytes_sha256": "c5f5a9245b7440b838bbd680ae182b7f77231e2a8f2bd780afdf642c038e07c7",
+  "edited_tensor_bytes_sha256": "3203ffdf89082d0ffac3e0338edb8024d4111e7f82cce4abfbecf1fc70edf4bd"
+}

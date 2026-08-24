@@ -1,0 +1,60 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "groups": {
+    "ZERO_SWITCH_TOTAL": {
+      "N": 62,
+      "MAR_N": 62,
+      "RW_MAR": 23.556203480112934,
+      "DT_MAR": 14.168292969801737,
+      "MAR_GAP": -9.387910510311205,
+      "ME_N": 62,
+      "RW_ME": 0.2941685320020525,
+      "DT_ME": 0.37859506935139714,
+      "ME_GAP": 0.08442653734934465
+    },
+    "ZERO_SWITCH_ZERO_VISIBLE": {
+      "N": 0,
+      "MAR_N": 0,
+      "RW_MAR": null,
+      "DT_MAR": null,
+      "MAR_GAP": null,
+      "ME_N": 0,
+      "RW_ME": null,
+      "DT_ME": null,
+      "ME_GAP": null
+    },
+    "ZERO_SWITCH_POSITIVE_VISIBLE": {
+      "N": 62,
+      "MAR_N": 62,
+      "RW_MAR": 23.556203480112934,
+      "DT_MAR": 14.168292969801737,
+      "MAR_GAP": -9.387910510311205,
+      "ME_N": 62,
+      "RW_ME": 0.2941685320020525,
+      "DT_ME": 0.37859506935139714,
+      "ME_GAP": 0.08442653734934465
+    },
+    "ZERO_SWITCH_ALWAYS_VISIBLE": {
+      "N": 62,
+      "MAR_N": 62,
+      "RW_MAR": 23.556203480112934,
+      "DT_MAR": 14.168292969801737,
+      "MAR_GAP": -9.387910510311205,
+      "ME_N": 62,
+      "RW_ME": 0.2941685320020525,
+      "DT_ME": 0.37859506935139714,
+      "ME_GAP": 0.08442653734934465
+    },
+    "ZERO_SWITCH_PARTIAL_VISIBLE_NO_SWITCH": {
+      "N": 0,
+      "MAR_N": 0,
+      "RW_MAR": null,
+      "DT_MAR": null,
+      "MAR_GAP": null,
+      "ME_N": 0,
+      "RW_ME": null,
+      "DT_ME": null,
+      "ME_GAP": null
+    }
+  }
+}

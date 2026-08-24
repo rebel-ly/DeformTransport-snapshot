@@ -1,0 +1,33 @@
+{
+  "LD_LIBRARY_PATH": "/opt/sothisai/pmix/lib:/opt/sothisai/slurm/lib:/opt/sothisai/slurm/lib64:/opt/sothisai/munge/lib:/opt/sothisai/pmix/lib:/opt/sothisai/slurm/lib:/opt/sothisai/slurm/lib64:/opt/sothisai/munge/lib:/opt/sothisai/pmix/lib:/opt/sothisai/slurm/lib:/opt/sothisai/slurm/lib64:/opt/sothisai/munge/lib",
+  "PATH": "/mnt/sdbd/home/liuyu_qyh/.codex/packages/standalone/releases/0.147.0-x86_64-unknown-linux-musl/codex-path:/workspace/.local/bin:/mnt/sdbd/home/liuyu_qyh/.local/bin:/workspace/.local/bin:/opt/sothisai/pmix/bin:/opt/sothisai/pmix/sbin:/opt/sothisai/slurm/bin:/opt/sothisai/slurm/sbin:/opt/sothisai/munge/bin:/opt/sothisai/munge/sbin:/mnt/sdbd/home/liuyu_qyh/.codex/tmp/arg0/codex-arg0zltmzg:/mnt/sdbd/home/liuyu_qyh/.codex/packages/standalone/releases/0.147.0-x86_64-unknown-linux-musl/codex-path:/mnt/sdbd/home/liuyu_qyh/.local/bin:/mnt/sdbd/home/liuyu_qyh/.local/bin:/workspace/.local/bin:/opt/sothisai/pmix/bin:/opt/sothisai/pmix/sbin:/opt/sothisai/slurm/bin:/opt/sothisai/slurm/sbin:/opt/sothisai/munge/bin:/opt/sothisai/munge/sbin:/workspace/.local/bin:/opt/sothisai/pmix/bin:/opt/sothisai/pmix/sbin:/opt/sothisai/slurm/bin:/opt/sothisai/slurm/sbin:/opt/sothisai/munge/bin:/opt/sothisai/munge/sbin:/usr/local/bin:/usr/bin:/opt/ibutils/bin:/usr/local/sbin:/usr/sbin:/mnt/sdbd/home/liuyu_qyh/.local/bin:/mnt/sdbd/home/liuyu_qyh/bin:/mnt/sdbd/home/liuyu_qyh/.local/bin:/mnt/sdbd/home/liuyu_qyh/bin",
+  "PYTHONPATH": "",
+  "cffi": {
+    "distribution_path": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cffi-2.1.1.dist-info",
+    "site_packages": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages",
+    "version": "2.1.1"
+  },
+  "cryptography": {
+    "distribution_path": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/cryptography-50.0.0.dist-info",
+    "site_packages": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages",
+    "version": "50.0.0"
+  },
+  "dashscope": {
+    "distribution_path": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/dashscope-1.26.6.dist-info",
+    "site_packages": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages",
+    "version": "1.26.6"
+  },
+  "executable": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python",
+  "pip_version": "pip 25.0.1 from /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/pip (python 3.11)",
+  "prefix": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move",
+  "pyOpenSSL": {
+    "detail": "No package metadata was found for pyOpenSSL",
+    "status": "MISSING"
+  },
+  "python_version": "Python 3.11.0",
+  "requests": {
+    "distribution_path": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages/requests-2.34.2.dist-info",
+    "site_packages": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/lib/python3.11/site-packages",
+    "version": "2.34.2"
+  }
+}

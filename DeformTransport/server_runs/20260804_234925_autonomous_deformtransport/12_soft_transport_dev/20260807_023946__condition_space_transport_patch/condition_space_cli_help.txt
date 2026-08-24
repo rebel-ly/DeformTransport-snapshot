@@ -1,0 +1,22 @@
+                    [--local_attn_size LOCAL_ATTN_SIZE]
+                    [--transport_latent_path TRANSPORT_LATENT_PATH]
+                    [--transport_mode {correct,shuffled,flow,blend}]
+                    [--transport_injection_mode {replace,inter_step_residual,condition_residual}]
+                    [--transport_injection_scale TRANSPORT_INJECTION_SCALE]
+                    [--transport_injection_step TRANSPORT_INJECTION_STEP]
+
+I2V Flow Inference with SDEdit from Simulation
+
+--
+                        scripts/run_wan_vae_transport_probe.py
+  --transport_mode {correct,shuffled,flow,blend}
+                        Which precomputed transport condition to use
+  --transport_injection_mode {replace,inter_step_residual,condition_residual}
+                        replace uses the precomputed transported latent;
+                        inter_step_residual injects an artifact-local residual
+                        between denoising steps; condition_residual applies
+                        the artifact-local residual to the fresh runtime
+                        sim_latent before the standard RealWonder SDEdit
+                        process
+  --transport_injection_scale TRANSPORT_INJECTION_SCALE
+                        Scale applied to the selected transport residual

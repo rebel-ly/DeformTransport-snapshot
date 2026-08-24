@@ -1,0 +1,641 @@
+当前阶段：
+
+Phase0D-2R-B —
+Minimal Optional-Dependency Recovery and Replay Infrastructure Fix
+
+上一阶段：
+
+Phase0D-2R-A =
+ROOT_CAUSE_IDENTIFIED
+
+已冻结根因：
+
+SYSTEM_GLIBC_VERSION = 2.17
+CRYPTOGRAPHY_VERSION = 50.0.0
+MAX_REQUIRED_GLIBC_VERSION = 2.28
+
+DASHSCOPE_VERSION = 1.26.6
+
+DASHSCOPE_IMPORT_STYLE = UNCONDITIONAL
+
+FORMAL_PROMPT_EXTENSION_ENABLED = False
+
+DASHSCOPE_FUNCTIONALLY_REQUIRED_FOR_FORMAL_RUN = False
+
+RECOMMENDED_MINIMAL_RECOVERY = R2
+
+本阶段允许最小源代码恢复，
+但禁止正式 GPU generation。
+
+==================================================
+1. Scientific invariants
+==================================================
+
+以下内容绝对不得修改：
+
+corrected-v2 Santa input
+N = 1257
+T = 81
+
+tracks
+visibility
+depth
+material IDs
+source image
+prompt
+
+SEEDS = [0,1,2,3,4]
+DETERMINISM_SEED = 0
+
+DT_TRANSPORT_VARIANT = v3d
+
+generation parameters:
+resolution
+frame_num
+sample_steps
+sample_shift
+CFG
+scheduler
+dtype
+checkpoint
+VAE/model settings
+
+特别禁止修改：
+
+trajectory.py
+wan_move.py
+
+==================================================
+2. Preserve historical evidence
+==================================================
+
+不得修改：
+
+Phase0D-2 ENGINEERING_FAIL evidence
+
+不得删除：
+
+Run A
+Run B
+stdout/stderr
+manifests
+failure reports
+
+Phase0D-2 永久保持：
+
+SAME_SEED_REPLAY = NOT_EVALUATED
+
+本次恢复后未来重新运行必须进入新的目录。
+
+==================================================
+3. Pre-patch source snapshot
+==================================================
+
+定位当前实际：
+
+wan/utils/prompt_extend.py
+
+记录：
+
+absolute path
+git status
+git diff
+SHA256
+
+保存原文件副本到 Evidence workspace：
+
+prompt_extend.original.py
+
+不得覆盖 repo 中其他文件。
+
+同时再次记录：
+
+trajectory.py SHA256
+
+必须 =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py SHA256
+
+必须 =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+如果核心 SHA drift：
+STOP。
+
+==================================================
+4. Exact DashScope-use recovery
+==================================================
+
+再次读取 prompt_extend.py。
+
+必须确定：
+
+module-level `import dashscope`
+
+具体在哪一行。
+
+确定 dashscope symbol 实际在哪些：
+
+function
+method
+class constructor
+
+中被使用。
+
+只允许实施：
+
+TRUE LAZY IMPORT
+
+即：
+
+删除 module-scope dashscope import，
+
+并把：
+
+import dashscope
+
+放入实际需要 DashScope 的最小函数/方法内部。
+
+禁止：
+
+- 删除 DashScope 功能；
+- 返回 fake result；
+- stub package；
+- monkeypatch sys.modules；
+- 修改 cryptography；
+- 修改 glibc；
+- 修改环境；
+- 使用宽泛 `except Exception` 隐藏失败；
+- 改变 prompt 内容；
+- 改变 formal generation arguments。
+
+如果 DashScope 被多个独立功能使用，
+允许在各自真正需要的函数内 lazy import，
+但不得扩大修改范围。
+
+==================================================
+5. Patch-size gate
+==================================================
+
+patch 后生成：
+
+prompt_extend.patch.diff
+
+报告：
+
+FILES_CHANGED_BY_RECOVERY
+LINES_ADDED
+LINES_REMOVED
+
+要求：
+
+FILES_CHANGED_BY_RECOVERY
+只能包含：
+
+wan/utils/prompt_extend.py
+
+如果还有其他 Wan-Move source file 改变：
+
+RECOVERY_SCOPE_GATE = FAIL
+STOP。
+
+==================================================
+6. Post-patch source freeze
+==================================================
+
+记录：
+
+PROMPT_EXTEND_ORIGINAL_SHA256
+PROMPT_EXTEND_PATCHED_SHA256
+
+再次验证：
+
+TRAJECTORY_SHA_UNCHANGED = True
+
+WAN_MOVE_SHA_UNCHANGED = True
+
+记录当前：
+
+git HEAD
+git status
+git diff -- wan/utils/prompt_extend.py
+
+不要 commit。
+不要 rewrite history。
+
+本次 formal runtime source lineage
+由：
+
+Git HEAD
++
+exact three critical source SHA
++
+prompt_extend.patch.diff
+
+共同定义。
+
+==================================================
+7. Basic import smoke
+==================================================
+
+使用 0D-1R 正式 Python interpreter。
+
+CPU-only。
+
+先执行最小：
+
+python -c "import wan.utils.prompt_extend; print('PROMPT_EXTEND_IMPORT_OK')"
+
+要求：
+
+不再触发：
+
+cryptography
+GLIBC_2.18/2.28
+DashScope import failure。
+
+然后确认：
+
+dashscope 是否真的没有被加载。
+
+可以检查：
+
+'dashscope' in sys.modules
+
+正式输出：
+
+DASHSCOPE_LOADED_AFTER_PROMPT_MODULE_IMPORT =
+False
+
+如果为 True：
+lazy import recovery 未生效。
+
+==================================================
+8. Generate.py import smoke
+==================================================
+
+执行只到 import 层面的 smoke。
+
+目标：
+
+确认此前 Phase0D-2 的失败点已经通过。
+
+不得加载 14B checkpoint。
+不得执行 generation。
+
+根据 generate.py 结构，
+采用不会进入 main generation 的安全 import 方法。
+
+例如：
+
+python -c "import generate; print('GENERATE_IMPORT_OK')"
+
+仅在确认 import generate
+不会自动启动 main() 后执行。
+
+如果 generate.py import 会自动执行，
+不得使用该方式，
+改用 AST/source-approved safe import smoke。
+
+必须记录：
+
+GENERATE_IMPORT_SMOKE = PASS/FAIL
+
+==================================================
+9. Formal prompt-disabled path audit
+==================================================
+
+重新确认 0D formal runner：
+
+PROMPT_EXTENSION_ENABLED = False
+
+且 formal command 不调用 DashScope-dependent function。
+
+记录：
+
+FORMAL_RUN_REACHES_DASHSCOPE_FUNCTION =
+False
+
+这必须来自静态 call-path/config evidence。
+
+==================================================
+10. Negative control for lazy dependency
+==================================================
+
+如果能以 CPU、无网络、无模型安全完成：
+
+验证调用真正的 DashScope-dependent function
+时仍然会尝试 import dashscope。
+
+目的不是让它成功，
+而是证明功能没有被静默删除。
+
+只允许在不会产生外部 API request
+的 import boundary 上测试。
+
+如果无法安全测试：
+
+NEGATIVE_CONTROL =
+NOT_RUN_SAFETY
+
+不构成 FAIL。
+
+==================================================
+11. Runtime dependency smoke beyond previous failure
+==================================================
+
+在不加载 14B checkpoint 的前提下，
+尽可能继续 formal import chain，
+检查是否出现新的 immediate dependency blocker。
+
+不得为了“全部通过”修改第二个包。
+
+如果遇到新 blocker：
+
+NEXT_RUNTIME_BLOCKER = <exact>
+
+PHASE0D2RB_STATUS =
+PARTIAL_RECOVERY_NEW_BLOCKER
+
+STOP。
+
+不要继续 patch。
+
+==================================================
+12. Launcher exit-code fix
+==================================================
+
+原 Phase0D-2 parallel launcher：
+
+child exit code =
+NOT_CAPTURED_BY_LAUNCHER
+
+必须创建新的 replay launcher：
+
+run_phase0d2_replay_pair.sh
+
+或等价脚本。
+
+不得修改 formal generation runner。
+
+launcher 只负责：
+
+start child A
+save PID_A
+
+start child B
+save PID_B
+
+wait PID_A
+capture RC_A
+
+wait PID_B
+capture RC_B
+
+分别写：
+
+runA_exit_code.txt
+runB_exit_code.txt
+
+重要：
+
+必须处理 `set -e`，
+不能因为第一个 wait 返回非0
+导致第二个 exit code 永远不被捕获。
+
+建议显式：
+
+set +e
+wait "$PID_A"
+RC_A=$?
+wait "$PID_B"
+RC_B=$?
+set -e
+
+然后保存两个 RC。
+
+launcher 不得修改 generation environment
+或 generation arguments。
+
+==================================================
+13. Launcher static test
+==================================================
+
+不要启动 Wan-Move。
+
+用两个小型 mock child：
+
+一个 exit 0
+一个 exit 7
+
+验证 launcher 最终记录：
+
+RC_A = 0
+RC_B = 7
+
+或反向预注册组合。
+
+如果不能准确记录：
+
+LAUNCHER_EXITCODE_FIX = FAIL。
+
+保存 mock test evidence。
+
+==================================================
+14. Recovery scientific-semantics assessment
+==================================================
+
+生成：
+
+recovery_semantics_assessment.md
+
+明确说明：
+
+本 patch 改变的是：
+
+optional dependency import timing
+
+未改变：
+
+- corrected-v2 input
+- V3D trajectory semantics
+- source feature lookup
+- visibility
+- depth
+- IDs
+- arbitration
+- direct replacement
+- diffusion seed
+- model checkpoint
+- prompt
+- generation config
+
+Formal prompt extension disabled，
+因此 DashScope-dependent functionality
+不属于本 formal execution path。
+
+结论只能写：
+
+NO_FORMAL_PATH_SEMANTIC_CHANGE_DETECTED
+
+不得写：
+
+source code unchanged
+
+因为 prompt_extend.py 确实变了。
+
+==================================================
+15. Re-freeze future replay source contract
+==================================================
+
+生成新的：
+
+runtime_source_contract.json
+
+至少包含：
+
+git_head
+
+trajectory_sha256
+wan_move_sha256
+
+prompt_extend_original_sha256
+prompt_extend_patched_sha256
+
+patch_sha256
+
+formal_prompt_extension_enabled = false
+
+recovery_reason =
+unused optional DashScope eager import incompatible
+with host GLIBC
+
+该 contract 将成为未来 0D-2R-C
+唯一合法 runtime source gate。
+
+==================================================
+16. PASS criteria
+==================================================
+
+Phase0D2RB PASS 需要：
+
+ROOT_CAUSE_PREVIOUSLY_IDENTIFIED = True
+
+RECOVERY_SCOPE_GATE = PASS
+
+TRAJECTORY_SHA_UNCHANGED = True
+WAN_MOVE_SHA_UNCHANGED = True
+
+PROMPT_EXTEND_PATCH_APPLIED = True
+
+DASHSCOPE_LOADED_AFTER_PROMPT_MODULE_IMPORT = False
+
+GENERATE_IMPORT_SMOKE = PASS
+
+FORMAL_RUN_REACHES_DASHSCOPE_FUNCTION = False
+
+NO_NEW_IMMEDIATE_RUNTIME_BLOCKER = True
+
+LAUNCHER_EXITCODE_FIX = PASS
+
+MOCK_EXITCODE_CAPTURE_TEST = PASS
+
+RECOVERY_SEMANTICS =
+NO_FORMAL_PATH_SEMANTIC_CHANGE_DETECTED
+
+==================================================
+17. Output
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+runtime_recovery/
+<TIMESTAMP>__lazy_dashscope_recovery
+
+生成：
+
+PHASE0D2RB_PROTOCOL_FROZEN.txt
+
+prompt_extend.original.py
+prompt_extend.patched.py
+prompt_extend.patch.diff
+
+source_prepatch.json
+source_postpatch.json
+
+import_smoke.txt
+formal_prompt_path_audit.md
+
+run_phase0d2_replay_pair.sh
+launcher_mock_test.txt
+launcher_exitcode_contract.json
+
+recovery_semantics_assessment.md
+runtime_source_contract.json
+
+PHASE0D2RB_SUMMARY.md
+phase0d2rb_status.json
+
+SHA256SUMS.txt
+
+==================================================
+18. Summary 九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+19. Final stdout
+==================================================
+
+===== PHASE0D-2R-B MINIMAL RUNTIME RECOVERY =====
+
+OUT = ...
+
+ROOT_CAUSE_PREVIOUSLY_IDENTIFIED = ...
+
+FILES_CHANGED_BY_RECOVERY = ...
+
+PROMPT_EXTEND_ORIGINAL_SHA256 = ...
+PROMPT_EXTEND_PATCHED_SHA256 = ...
+
+TRAJECTORY_SHA_UNCHANGED = ...
+WAN_MOVE_SHA_UNCHANGED = ...
+
+DASHSCOPE_LOADED_AFTER_PROMPT_MODULE_IMPORT = ...
+
+GENERATE_IMPORT_SMOKE = ...
+
+FORMAL_PROMPT_EXTENSION_ENABLED = False
+FORMAL_RUN_REACHES_DASHSCOPE_FUNCTION = ...
+
+NEXT_RUNTIME_BLOCKER = NONE / ...
+
+LAUNCHER_EXITCODE_FIX = ...
+MOCK_EXITCODE_CAPTURE_TEST = ...
+
+RECOVERY_SEMANTICS =
+NO_FORMAL_PATH_SEMANTIC_CHANGE_DETECTED
+
+PHASE0D2RB_STATUS =
+PASS /
+PARTIAL_RECOVERY_NEW_BLOCKER /
+FAIL /
+ERROR
+
+PROCEED_TO_PHASE0D2RC =
+True/False
+
+然后 STOP。
+
+严禁启动正式 Wan-Move generation。

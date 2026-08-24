@@ -1,0 +1,77 @@
+{
+  "experiment": "Tree four-way quick RGB-to-simulation proxy",
+  "warning": "simulation.mp4 is an engineering geometry-aligned proxy, not real future-video ground truth",
+  "videos": {
+    "gt": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/simulation.mp4",
+    "baseline": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_203228__tree__realwonder_baseline_seed0/tree_realwonder_baseline_seed0.mp4",
+    "correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212707__tree__quality_ramp4_correct_seed0/tree_quality_ramp4_correct_seed0.mp4",
+    "shuffled": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_214106__tree__quality_ramp4_shuffled_seed0/tree_quality_ramp4_shuffled_seed0.mp4",
+    "energy_matched_shuffled": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_215830__tree__quality_ramp4_shuffled_energy_matched_seed0/tree_quality_ramp4_shuffled_energy_matched_seed0.mp4"
+  },
+  "metrics": {
+    "BASELINE": {
+      "MAE": 22.98064613342285,
+      "MSE": 1539.017333984375,
+      "PSNR": 16.25836849541065,
+      "temporal_change": 3.913440227508545,
+      "sharpness_proxy": 14.108817100524902
+    },
+    "CORRECT": {
+      "MAE": 21.806392669677734,
+      "MSE": 1395.025390625,
+      "PSNR": 16.68498248664761,
+      "temporal_change": 3.946263074874878,
+      "sharpness_proxy": 14.199880599975586
+    },
+    "SHUFFLED": {
+      "MAE": 21.36299705505371,
+      "MSE": 1348.07568359375,
+      "PSNR": 16.833660858463134,
+      "temporal_change": 3.9809842109680176,
+      "sharpness_proxy": 14.228002548217773
+    },
+    "SHUFFLED_MATCH": {
+      "MAE": 22.69258689880371,
+      "MSE": 1511.3094482421875,
+      "PSNR": 16.3372696343531,
+      "temporal_change": 4.0362324714660645,
+      "sharpness_proxy": 14.068632125854492
+    }
+  },
+  "comparisons": {
+    "correct_vs_baseline": {
+      "MAE_improvement_percent": 5.109749555898227,
+      "MSE_improvement_percent": 9.356096268688088,
+      "PSNR_delta_dB": 0.42661399123695887
+    },
+    "correct_vs_shuffled": {
+      "MAE_improvement_percent": -2.0755309448452697,
+      "MSE_improvement_percent": -3.4827204141899313,
+      "PSNR_delta_dB": -0.14867837181552446
+    },
+    "correct_vs_energy_matched_shuffled": {
+      "MAE_improvement_percent": 3.905214654802949,
+      "MSE_improvement_percent": 7.694258628002236,
+      "PSNR_delta_dB": 0.3477128522945101
+    },
+    "energy_matched_shuffled_vs_baseline": {
+      "MAE_improvement_percent": 1.2534862290063715,
+      "MSE_improvement_percent": 1.8003621616433856,
+      "PSNR_delta_dB": 0.07890113894244877
+    }
+  },
+  "ranking": {
+    "MAE_best_to_worst": [
+      "SHUFFLED",
+      "CORRECT",
+      "SHUFFLED_MATCH",
+      "BASELINE"
+    ],
+    "PSNR_best_to_worst": [
+      "SHUFFLED",
+      "CORRECT",
+      "SHUFFLED_MATCH",
+      "BASELINE"
+    ]
+  }
+}

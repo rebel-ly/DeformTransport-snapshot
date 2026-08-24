@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "mapping_prefix": {
+    "host": "/mnt/sdbd/home/liuyu_qyh",
+    "container": "/workspace"
+  },
+  "items": [
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1", "container_path": "/workspace/DeformTransport_EvidenceV4_1", "container_exists": true},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport", "container_path": "/workspace/DeformTransport", "container_exists": true},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/Wan-Move", "container_path": "/workspace/Wan-Move", "container_exists": true},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/Wan-Move-14B-480P", "container_path": "/workspace/Wan-Move/Wan-Move-14B-480P", "container_exists": true},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy", "container_path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy", "container_exists": true, "sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929"},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy", "container_path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy", "container_exists": true, "sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff"},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy", "container_path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy", "container_exists": true, "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8"},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy", "container_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy", "container_exists": true, "sha256": "032d738bb2d01bbff88b78f63a2b56fa76c52d985caf3542c22f9dc573879ce1"},
+    {"host_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png", "container_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png", "container_exists": true, "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7"}
+  ],
+  "frozen_runner_contains_host_paths": true,
+  "host_to_container_path_binding_defect": true,
+  "note": "The path map is proven, but no container wrapper/translated formal runner was created because the required container import smoke encountered a new immediate dependency blocker before generation authorization."
+}

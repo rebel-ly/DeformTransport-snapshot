@@ -1,0 +1,47 @@
+{
+  "experiment": "Tree high-pass streaming quick diagnostic",
+  "metrics": {
+    "BASELINE": {
+      "global_MAE": 22.98065013074417,
+      "global_MSE": 1539.0209594198454,
+      "global_PSNR": 16.258358264825652,
+      "local_L1": 32.30182198074185,
+      "temporal": 3.9134427792801816,
+      "frame_count": 81
+    },
+    "STEP0": {
+      "global_MAE": 21.806387947052734,
+      "global_MSE": 1395.0252050296936,
+      "global_PSNR": 16.68498306443654,
+      "local_L1": 32.49658828914355,
+      "temporal": 3.946248309795673,
+      "frame_count": 81
+    },
+    "HIGHPASS": {
+      "global_MAE": 21.61690348590667,
+      "global_MSE": 1371.7835978924304,
+      "global_PSNR": 16.7579475507572,
+      "local_L1": 33.131473774326984,
+      "temporal": 3.7957979120759884,
+      "frame_count": 81
+    }
+  },
+  "comparisons": {
+    "highpass_vs_baseline_global_MAE_improvement_percent": 5.934325778769167,
+    "highpass_vs_baseline_global_MSE_improvement_percent": 10.866477191477458,
+    "highpass_vs_baseline_PSNR_delta_dB": 0.49958928593154894,
+    "highpass_vs_baseline_local_L1_improvement_percent": -2.568436523734695,
+    "highpass_vs_step0_local_L1_improvement_percent": -1.953698891509587,
+    "highpass_baseline_temporal_ratio": 0.9699382682105212
+  },
+  "global_ranking": [
+    "HIGHPASS",
+    "STEP0",
+    "BASELINE"
+  ],
+  "local_ranking": [
+    "BASELINE",
+    "STEP0",
+    "HIGHPASS"
+  ]
+}

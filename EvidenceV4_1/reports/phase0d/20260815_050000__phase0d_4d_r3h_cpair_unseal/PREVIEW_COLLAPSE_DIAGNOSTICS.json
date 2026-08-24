@@ -1,0 +1,7 @@
+{
+  "frozen_script_sha256": "1ee9dbbc4bff4addb5c7fbe570cc7a0e60b644a411ca6b94af7dce09ca3d8f66",
+  "computed": false,
+  "inspected_before_primary": false,
+  "status": "UNRESOLVED_FROZEN_TRACK_SUPPORT_MASK_NOT_PERSISTED",
+  "reason": "The frozen script requires an explicit 464x832 track-support-mask input. No authoritative persisted mask or prior invocation was found; constructing a new post-unseal mask would change the frozen diagnostic input."
+}

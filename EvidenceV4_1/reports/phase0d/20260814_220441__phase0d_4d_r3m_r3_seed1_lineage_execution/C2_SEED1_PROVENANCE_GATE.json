@@ -1,0 +1,19 @@
+{
+  "gate": "PASS",
+  "planned_manifest": "SEED1_C2_PLANNED_MANIFEST.json",
+  "lineage_audit": "SEED0_TO_SEED1_ARM_LINEAGE_AUDIT.json",
+  "C2_SEED0_TO_SEED1_UNEXPECTED_DIFFS": [],
+  "only_scientific_random_change": "FORMAL_DIFFUSION_SEED",
+  "epsilon_change": "DETERMINISTIC_CONSEQUENCE_OF_FORMAL_DIFFUSION_SEED",
+  "seed1_epsilon_file_sha256": "9b55589da21a129832555b8237c627e44c933088c26614524d30bf1a550e9002",
+  "seed1_epsilon_tensor_sha256": "df48b8742c815d043c8cf8940884d4d0eb09046b1c1e7a7b3faf8da25a548ce9",
+  "preview_file_sha256": "0110c684d4c70a3d4d6f78889f50f569e1110091a1cac980ebccb78dbced2d31",
+  "correct_tracks_sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+  "K": 1257,
+  "transport_variant": "v3d",
+  "start_index": 15,
+  "actual_sigma": 0.8329627513885498,
+  "actual_timestep": 832,
+  "effective_denoise_steps": 25,
+  "same_scheduler_model_prompt_dtype_evaluator_eval_ids": true
+}

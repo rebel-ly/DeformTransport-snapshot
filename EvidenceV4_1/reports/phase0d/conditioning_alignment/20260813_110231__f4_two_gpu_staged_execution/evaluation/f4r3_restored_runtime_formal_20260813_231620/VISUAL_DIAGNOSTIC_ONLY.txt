@@ -1,0 +1,3 @@
+VISUAL_DIAGNOSTIC_ONLY
+NOT_USED_FOR_PROMOTION_DECISION
+All frames use indices 0,20,40,60,80; 480x832 inputs are deterministically resized to 464x832 for common layout.

@@ -1,0 +1,1 @@
+{"status":"READY_BUT_NOT_AUTHORIZED_TO_LAUNCH","seeds":[1,2],"pairs":"C1_s/C2_s share native-equivalent epsilon_s; only K0 vs Correct-K1257 differs","primary":"paired delta TC-ME","statistics":"n=3 descriptive paired mean/std/direction consistency; no inflated significance test","launch_prerequisite":"Correct-vs-Shuffled seed0 mechanism test PASS"}

@@ -1,0 +1,29 @@
+{
+  "actual_wan_domain": [
+    464,
+    832
+  ],
+  "vae_stride": 8,
+  "latent_grid": [
+    58,
+    104
+  ],
+  "cases": {
+    "santa": {
+      "old_track_count": 1277,
+      "v3s_track_count": 1196,
+      "removed_source_collisions": 81,
+      "depth_source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim/point_trajectories.pt",
+      "visible_depth_positive_fraction": 1.0,
+      "ids_source": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_point_ids.npy"
+    },
+    "tree": {
+      "old_track_count": 713,
+      "v3s_track_count": 643,
+      "removed_source_collisions": 70,
+      "depth_source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/point_trajectories.pt",
+      "visible_depth_positive_fraction": 1.0,
+      "ids_source": "/workspace/DeformTransport/server_runs/wan_move_bridge/20260810_072215__tree_correct_tracks/tree_material_point_ids.npy"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "identity_check_only": true,
+  "scientific_metrics_computed": false,
+  "videos": {
+    "c1": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/c1_gpu1/c1_provisional_k0_seed000.mp4",
+      "mp4_sha256": "23d88d8e7b261869bd10ee0ed74b6a4f1ace4feca7f524962e3d64e0d7b2fa93",
+      "decoded_rgb_sha256": "cc793826e8ba6d41fc7e02142e7966d3056a937308d405792bd00a5c466e239d",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ]
+    },
+    "c2": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/c2_gpu0/c2_provisional_correct_v3d_seed000.mp4",
+      "mp4_sha256": "d1de650b0c2b2a02db54176d55ac04f661dfecd03a201d2dbfecb07f79c78dbf",
+      "decoded_rgb_sha256": "3fb4c17cd8260d5cf97924bf26d22d5f805e29118f2eeec944217ed2b7311923",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ]
+    },
+    "d1": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/d1_gpu2/d1_begin0_correct_v3d_seed000.mp4",
+      "mp4_sha256": "43fd525c47b004f9b5af0f300c8b7e494221dcfbe7175b8cdd6e83cdab628a9f",
+      "decoded_rgb_sha256": "5173773c15fff9d4c86bc85e7e82b98dea2a1e16ba068543f00520082218ccba",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ]
+    },
+    "wm0": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_110231__f4_two_gpu_staged_execution/outputs/wm0_container_seed0/santa_correct_v3d_seed000.mp4",
+      "mp4_sha256": "9caae850cfaec1bf94a0c49e3975a1b95bcd57820ecaff2e96d65db64a93962a",
+      "decoded_rgb_sha256": "d03b9b4afea4516fa74409306049e216831b8dbb0a26e71d119c720478f4aa40",
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ]
+    }
+  },
+  "canonical_dtfull_decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+  "C2_EQ_CANONICAL_DTFULL": false,
+  "C1_EQ_WM0": false,
+  "C1_EQ_C2": false,
+  "C2_EQ_D1": false
+}

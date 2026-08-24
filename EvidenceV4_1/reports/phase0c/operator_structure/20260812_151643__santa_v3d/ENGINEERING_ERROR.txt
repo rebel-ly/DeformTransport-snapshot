@@ -1,0 +1,1 @@
+ERROR: This first Phase0C-1 attempt returned after tau=1 due to harness loop indentation; it is incomplete and non-scientific. Superseded by /mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0c/operator_structure/20260812_151837__santa_v3d

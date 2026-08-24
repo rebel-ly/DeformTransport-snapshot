@@ -1,0 +1,9 @@
+{
+  "d1_canonical_bridge_status": "FAIL_RGB_NOT_EXACT",
+  "final_shared_epsilon_frozen": false,
+  "c1_provisional_status": "RUNNING_PENDING_D1_DECISION",
+  "c2_provisional_status": "COMPLETED_PENDING_D1_EXACT",
+  "result_seal": "CLOSED",
+  "next_action": "DIAGNOSE_D1",
+  "scientific_metrics_inspected": false
+}

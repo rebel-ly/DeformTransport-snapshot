@@ -1,0 +1,1 @@
+Recovered mechanically from eval_v3_corrected_v2_recovered.py motion_case and R4C companion: each transition t forms valid visible finite tracks at t,t+1, computes EPE per track, computes transition mean, then formal TC-ME is arithmetic mean of 80 transition means. Per-ID support is the count of valid transition rows.

@@ -1,0 +1,3 @@
+{
+  "phase":"Phase0D-2F/F0", "phase0d2re_closure_audit":"PASS", "dt_full_canonical_output_resolved":true, "requested_generation_domain_resolved":true, "source_image_domain_resolved":true, "track_coord_domain_resolved":true, "real_latent_domain_resolved":false, "final_output_464_cause":"UNRESOLVED", "evaluation_domain_resolved":false, "corrected_v2_eval_set_frozen":true, "eval_n":1257, "n1277_formal_path_hits":2, "phase0d3_execution":"DEFERRED", "status":"UNRESOLVED_EVALUATION_CONTRACT", "proceed_to_f1":false
+}

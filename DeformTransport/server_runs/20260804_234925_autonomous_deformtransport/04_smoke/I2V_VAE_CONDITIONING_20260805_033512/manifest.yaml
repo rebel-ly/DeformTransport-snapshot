@@ -1,0 +1,6 @@
+RUN_ID: 20260804_234925_autonomous_deformtransport
+job_id: I2V_VAE_CONDITIONING_20260805_033512
+任务: 原生WanVideoUnit_ImageEmbedderVAE条件编码回归
+GPU编号: 3
+GPU_UUID: GPU-111b4686-bb10-d8db-87fd-401b36dcbdf3
+像素帧数: 21

@@ -1,0 +1,295 @@
+
+================================================================================
+PATTERN: def load_noise
+================================================================================
+
+================================================================================
+PATTERN: def extract_subdim
+================================================================================
+
+================================================================================
+PATTERN: eval_degradation
+================================================================================
+   78:     if T_mask != target_frames:
+   79:         # Nearest-neighbor temporal resize
+   80:         indices = torch.linspace(0, T_mask - 1, steps=target_frames).round().long().clamp(0, T_mask - 1)
+   81:         masks = masks[indices]
+   82:     return masks.unsqueeze(0)  # [1, T, H, W]
+   83: 
+   84: 
+   85: def main():
+   86:     parser = argparse.ArgumentParser(description="I2V Flow Inference with SDEdit from Simulation")
+   87:     parser.add_argument("--checkpoint_path", type=str, required=True, help="Path to the checkpoint file")
+   88:     parser.add_argument("--sim_data_path", type=str, required=True,
+   89:                         help="Path to simulation final_sim directory (contains noises.npy, frames/, masks, etc.)")
+   90:     parser.add_argument("--output_path", type=str, default="./output_sim.mp4", help="Output video path")
+   91:     parser.add_argument("--use_ema", action="store_true", help="Whether to use EMA parameters")
+   92:     parser.add_argument("--seed", type=int, default=42, help="Random seed")
+   93:     parser.add_argument("--eval_degradation", type=float, default=0.5,
+   94:                         help="Degradation level for noise (0.0 = pure structured noise)")
+   95:     parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
+   96:     parser.add_argument(
+   97:         "--transport_latent_path",
+   98:         type=str,
+   99:         default=None,
+  100:         help=(
+  101:             "Optional VAE transport artifact produced by "
+  102:             "scripts/run_wan_vae_transport_probe.py"
+  103:         ),
+  104:     )
+  105:     parser.add_argument(
+  106:         "--transport_mode",
+  107:         choices=("correct", "shuffled", "flow", "blend"),
+  108:         default="correct",
+  109:         help="Which precomputed transport condition to use",
+  110:     )
+  111:     parser.add_argument(
+  112:         "--transport_injection_mode",
+  113:         choices=("replace", "inter_step_residual", "condition_residual"),
+  114:         default="replace",
+  115:         help=(
+  116:             "replace uses the precomputed transported latent; "
+  117:             "inter_step_residual injects an artifact-local residual "
+  118:             "between denoising steps; condition_residual applies the "
+  119:             "artifact-local residual to the fresh runtime sim_latent "
+  120:             "before the standard RealWonder SDEdit process"
+  121:         ),
+  122:     )
+  123:     parser.add_argument(
+  124:         "--transport_injection_scale",
+  125:         type=float,
+  126:         default=1.0,
+  127:         help="Scale applied to the selected transport residual",
+  128:     )
+  129:     parser.add_argument(
+  130:         "--transport_injection_step",
+  131:         type=int,
+  132:         default=0,
+  250: 
+  251:     # -------------------------------------------------------------------------
+  252:     # Load simulation data
+  253:     # -------------------------------------------------------------------------
+  254:     noise_path = sim_data_path / "noises.npy"
+  255:     first_frame_path = sim_data_path / "resized_input_image.png"
+  256:     frames_dir = sim_data_path / "frames"
+  257: 
+  258:     # 1. Load structured noise
+  259:     print(f"Loading noise from: {noise_path}")
+  260:     noise_data = load_noise(
+  261:         noise_path=str(noise_path),
+  262:         target_frames=num_output_frames,
+  263:         channel_dim=16,
+  264:         downsample_mode="nearest",
+  265:         eval_degradation=args.eval_degradation,
+  266:     )
+  267: 
+  268:     # 2. Load prompt from sim_data_path/prompt.txt
+  269:     prompt_path = sim_data_path / "prompt.txt"
+  270:     with open(prompt_path, 'r') as f:
+  271:         prompt = f.read().strip()
+  272:     print(f"Prompt: {prompt}")
+  273: 
+  274:     # 3. Load first frame
+  275:     print(f"Loading first frame from: {first_frame_path}")
+  276:     input_image = load_first_frame(str(first_frame_path), height=480, width=832)  # [C, H, W]
+  277: 
+  278:     # 4. Load simulation frames for SDEdit
+  279:     print(f"Loading simulation frames from: {frames_dir}")
+  280:     sim_frames = load_sim_frames(frames_dir, height=480, width=832)  # [1, C, T, H, W]
+  281:     print(f"  Loaded {sim_frames.shape[2]} simulation frames")
+  282: 
+  283:     # 5. Load object masks (optional, for mask dropin)
+  284:     sim_masks = None
+  285:     if mask_dropin_step > 0:
+  286:         mask_file = str(sim_data_path / "points_masks_downsampled.pt")
+  287:         if os.path.exists(mask_file):
+  288:             print(f"Loading object masks from: {mask_file}")
+  289:             sim_masks = load_sim_masks(mask_file, target_frames=num_output_frames)
+  290:             sim_masks = sim_masks.to(device=device)
+  291:             print(f"  Object mask shape: {sim_masks.shape}")
+  292:         else:
+  293:             print(f"Warning: mask_dropin_step={mask_dropin_step} but mask file not found: {mask_file}")
+  294:             print("  Proceeding without mask dropin.")
+  295: 
+  296:     # 6. Load franka/mesh masks (for weak sdedit on manipulator region)
+  297:     sim_franka_masks = None
+  298:     franka_mask_file = sim_data_path / "mesh_masks_downsampled.pt"
+  299:     if franka_mask_file.exists():
+  300:         franka_masks_raw = load_sim_masks(str(franka_mask_file), target_frames=num_output_frames)
+  301:         if franka_masks_raw.any():
+  302:             sim_franka_masks = franka_masks_raw.to(device=device)
+  303:             print(f"Loading franka masks from: {franka_mask_file}")
+  304:             print(f"  Franka mask shape: {sim_franka_masks.shape}")
+
+================================================================================
+PATTERN: num_frame_per_block
+================================================================================
+  176:     num_output_frames = int(sim_config.num_output_frames)
+  177:     print(f"Loaded from config.yaml: denoising_step_list={denoising_step_list}, mask_dropin_step={mask_dropin_step}, num_output_frames={num_output_frames}")
+  178: 
+  179:     # -------------------------------------------------------------------------
+  180:     # Build config
+  181:     # -------------------------------------------------------------------------
+  182:     DEFAULT_CONFIG = {
+  183:         "independent_first_frame": False,
+  184:         "warp_denoising_step": True,
+  185:         "context_noise": 0,
+  186:         "causal": True,
+  187:         "i2v": True,
+  188:         "i2v_flow": True,
+  189:         "height": 480,
+  190:         "width": 832,
+  191:         "num_frame_per_block": 3,
+  192:         "denoising_step_list": denoising_step_list,
+  193:         "mask_dropin_step": mask_dropin_step,
+  194:         "model_kwargs": {
+  195:             "sink_size": 1,
+  196:             "local_attn_size": args.local_attn_size,
+  197:             "timestep_shift": 5.0,
+  198:         },
+  199:     }
+  200:     config = OmegaConf.create(DEFAULT_CONFIG)
+  201:     config = apply_config_overrides(config, additional_args)
+  202: 
+  203:     # Create output directory
+  204:     output_dir = os.path.dirname(args.output_path)
+  205:     if output_dir:
+  206:         os.makedirs(output_dir, exist_ok=True)
+  207: 
+  208:     # -------------------------------------------------------------------------
+  209:     # Initialize pipeline (SDEdit version)
+  210:     # -------------------------------------------------------------------------
+  211:     pipeline = CausalInferencePipelineSDEdit(config, device=device)
+  212: 
+  213:     # Load checkpoint
+  214:     if args.checkpoint_path:
+  215:         state_dict = torch.load(args.checkpoint_path, map_location="cpu")
+  216:         key = 'generator_ema' if args.use_ema else 'generator'
+  217:         gen_state_dict = state_dict[key]
+  218:         try:
+  219:             pipeline.generator.load_state_dict(gen_state_dict)
+  220:         except:
+  221:             gen_state_dict = {k.replace('._fsdp_wrapped_module', ''): v for k, v in gen_state_dict.items()}
+  222:             pipeline.generator.load_state_dict(gen_state_dict)
+  223: 
+  224:     pipeline = pipeline.to(dtype=torch.bfloat16)
+  225:     if low_memory:
+  226:         DynamicSwapInstaller.install_model(pipeline.text_encoder, device=gpu)
+  227:     else:
+  228:         pipeline.text_encoder.to(device=gpu)
+  229:     pipeline.generator.to(device=gpu)
+  230:     pipeline.vae.to(device=gpu)
+
+================================================================================
+PATTERN: pixel_num_frames
+================================================================================
+  511:             )
+  512:             print(
+  513:                 "  applied condition delta mean_abs: "
+  514:                 f"{float(applied_delta.abs().mean()):.8f}"
+  515:             )
+  516:             print(
+  517:                 "  applied condition delta max_abs: "
+  518:                 f"{float(applied_delta.abs().max()):.8f}"
+  519:             )
+  520:             print(
+  521:                 "  applied condition slot0 max_abs: "
+  522:                 f"{applied_slot0_max_abs:.8f}"
+  523:             )
+  524: 
+  525:     # Prepare batch for I2V processors
+  526:     pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+  527:     batch = {
+  528:         'input_image': input_image.unsqueeze(0),  # [1, C, H, W]
+  529:         'end_image': None,
+  530:         'height': 480,
+  531:         'width': 832,
+  532:         'num_frames': pixel_num_frames,
+  533:     }
+  534: 
+  535:     # -------------------------------------------------------------------------
+  536:     # Generate video
+  537:     # -------------------------------------------------------------------------
+  538:     print("Generating video...")
+  539:     video, _ = pipeline.inference(
+  540:         noise=structured_noise,
+  541:         text_prompts=[prompt],
+  542:         return_latents=True,
+  543:         batch_sample=batch,
+  544:         sim_latent=sim_latent,
+  545:         sim_masks=sim_masks,
+  546:         sim_franka_masks=sim_franka_masks,
+  547:         transport_residual=transport_residual,
+  548:         transport_residual_scale=(
+  549:             args.transport_injection_scale
+  550:         ),
+  551:         transport_residual_step=(
+  552:             args.transport_injection_step
+  553:         ),
+  554:         low_memory=low_memory,
+  555:         device=device,
+  556:         structured_noise_sde=structured_noise_sde,
+  557:     )
+  558: 
+  559:     # Process output
+  560:     video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+  561:     video = (255.0 * video[0]).to(torch.uint8)
+  562: 
+  563:     # Clear VAE cache
+  564:     pipeline.vae.model.clear_cache()
+  565: 
+  517:                 "  applied condition delta max_abs: "
+  518:                 f"{float(applied_delta.abs().max()):.8f}"
+  519:             )
+  520:             print(
+  521:                 "  applied condition slot0 max_abs: "
+  522:                 f"{applied_slot0_max_abs:.8f}"
+  523:             )
+  524: 
+  525:     # Prepare batch for I2V processors
+  526:     pixel_num_frames = num_output_frames * 4 - 3  # 21 -> 81
+  527:     batch = {
+  528:         'input_image': input_image.unsqueeze(0),  # [1, C, H, W]
+  529:         'end_image': None,
+  530:         'height': 480,
+  531:         'width': 832,
+  532:         'num_frames': pixel_num_frames,
+  533:     }
+  534: 
+  535:     # -------------------------------------------------------------------------
+  536:     # Generate video
+  537:     # -------------------------------------------------------------------------
+  538:     print("Generating video...")
+  539:     video, _ = pipeline.inference(
+  540:         noise=structured_noise,
+  541:         text_prompts=[prompt],
+  542:         return_latents=True,
+  543:         batch_sample=batch,
+  544:         sim_latent=sim_latent,
+  545:         sim_masks=sim_masks,
+  546:         sim_franka_masks=sim_franka_masks,
+  547:         transport_residual=transport_residual,
+  548:         transport_residual_scale=(
+  549:             args.transport_injection_scale
+  550:         ),
+  551:         transport_residual_step=(
+  552:             args.transport_injection_step
+  553:         ),
+  554:         low_memory=low_memory,
+  555:         device=device,
+  556:         structured_noise_sde=structured_noise_sde,
+  557:     )
+  558: 
+  559:     # Process output
+  560:     video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+  561:     video = (255.0 * video[0]).to(torch.uint8)
+  562: 
+  563:     # Clear VAE cache
+  564:     pipeline.vae.model.clear_cache()
+  565: 
+  566:     # Save the video
+  567:     print(f"Saving video to: {args.output_path}")
+  568:     imageio.mimwrite(args.output_path, video.numpy(), fps=10)
+  569:     print("Done!")
+  570: 
+  571: if __name__ == "__main__":

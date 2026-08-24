@@ -1,0 +1,12 @@
+{
+  "previous_search_scope": ["/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py", "/mnt/sdbd/home/liuyu_qyh/DeformTransport/run_v3_joint_eval.sh"],
+  "previous_search_method": "rg -n selected evaluator/formal paths for domain/evaluator terms; F0 retained two exact Santa `valid_tracks`:1277 configuration hits.",
+  "n1277_original_hits": 2,
+  "hits": [
+    {"file":"/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py", "line":79, "context":"'expect': {'n': 1277, 'valid_tracks': 1277, ...}; later appearance_case asserts n == cfg['expect']['n'] at lines 808-814.", "classification":"LEGACY_GUARD", "runtime_reachability":"reachable only if this legacy evaluator is invoked for Santa; it loads configured legacy track path, not formal corrected-v2 assets.", "formal_generator_consumption":false, "formal_evaluator_consumption":false},
+    {"file":"/mnt/sdbd/home/liuyu_qyh/DeformTransport/run_v3_joint_eval.sh", "line":258, "context":"'expect': {'n': 1277, 'valid_tracks': 1277, ...}; later appearance_case asserts n == cfg['expect']['n'] at lines 1008-1011.", "classification":"LEGACY_GUARD", "runtime_reachability":"reachable only if the legacy joint evaluator is run; its CASES Santa tracks path is legacy 20260809 data, not corrected-v2 formal assets.", "formal_generator_consumption":false, "formal_evaluator_consumption":false}
+  ],
+  "n1277_textual_hit_count":2, "n1277_executable_reference_count":2, "n1277_runtime_artifact_load_count":0, "n1277_generator_consumption_hit_count":0, "n1277_evaluator_consumption_hit_count":0,
+  "n1277_formal_contamination":false,
+  "conclusion":"The two retained hits are executable legacy guards in evaluator lineage, not runtime artifact loads or consumption in the frozen formal generator/evaluator contract. Original F0 count is preserved but is not evidence of formal-data contamination."
+}

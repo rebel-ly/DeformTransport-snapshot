@@ -1,0 +1,33 @@
+{
+  "name": "Persistent-Noise Phase02 A0 Contract",
+  "raw_noise_contract": {
+    "shape": [
+      81,
+      60,
+      104,
+      32
+    ],
+    "dtype": "float16",
+    "spatial_order": "T,H,W,C raw numpy"
+  },
+  "realwonder_runtime": {
+    "target_latent_frames": 21,
+    "channel_dim": 16,
+    "downsample_mode": "nearest",
+    "eval_degradation": 0.5,
+    "num_frame_per_block": 3,
+    "pixel_frames": 81
+  },
+  "assets": {
+    "santa": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noises.npy",
+      "sha256": "922da8eda664919b659604a8a590e558ab98b63272e5aba5639f0bb19558977b",
+      "bytes": 32348288
+    },
+    "tree": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noises.npy",
+      "sha256": "9b78c32bfe554dd2d0aeebab314402b1411d49d3a4c0af39f68525ee39e71705",
+      "bytes": 32348288
+    }
+  }
+}

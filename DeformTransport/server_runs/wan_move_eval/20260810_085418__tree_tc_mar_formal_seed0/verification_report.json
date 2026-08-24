@@ -1,0 +1,44 @@
+{
+  "status": "TREE_TC_MAR_OUTPUT_AUDIT_OK",
+  "metric_recomputation_checks": {
+    "primary_lab_tc_mar": {
+      "correct_mean": true,
+      "shuffled_mean": true,
+      "paired_mean": true,
+      "paired_median": true,
+      "fraction": true,
+      "bootstrap_ci": true,
+      "label_swap_sign_exact": true
+    },
+    "secondary_rgb_l1": {
+      "correct_mean": true,
+      "shuffled_mean": true,
+      "paired_mean": true,
+      "paired_median": true,
+      "fraction": true,
+      "bootstrap_ci": true,
+      "label_swap_sign_exact": true
+    }
+  },
+  "visibility_counts_recomputed": {
+    "selected_tracks": 713,
+    "valid_tracks": 709,
+    "visible_observations": 8743,
+    "excluded_invisible": 5517
+  },
+  "formal_video_sha_matches": true,
+  "comparison_video": {
+    "frames": 81,
+    "shape": [
+      464,
+      1664,
+      3
+    ]
+  },
+  "contact_sheet_shape": [
+    928,
+    4160,
+    3
+  ],
+  "decision": "GO"
+}

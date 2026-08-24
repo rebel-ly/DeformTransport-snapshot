@@ -1,0 +1,16 @@
+{
+  "wrapper_pid": 73744,
+  "python_pid": 73759,
+  "CS_SEED1_LAUNCHED": true,
+  "CS_SEED1_STATUS": "RUNNING_ACTIVE",
+  "gpu_assignment": "GPU0",
+  "cuda_visible_devices": "0",
+  "formal_diffusion_seed": 1,
+  "initial_epsilon": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_100000__phase0d_4d_r3m_seed1_wave1/EPSILON_SEED1_58x104.npy",
+  "transport": {"K": 1257, "variant": "v3d", "tracks": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/santa_material_tracks_identity_shuffled_seed0.npy"},
+  "start_index": 15,
+  "immediate_traceback": false,
+  "immediate_cuda_oom": false,
+  "immediate_runtime_error": false,
+  "science_result_seal": "CLOSED"
+}

@@ -1,0 +1,76 @@
+{
+  "phase": "Phase0A-4.5",
+  "status": "COMPLETE",
+  "scope": "simulator/render-space visibility semantics only",
+  "strong_semantic_claim": "stable perceptual visibility ground truth",
+  "strong_semantic_decision": "FAIL",
+  "operational_claim": "raster-defined/frontmost-support visibility",
+  "operational_decision": "PASS",
+  "real_image_visibility_semantics": "UNRESOLVED",
+  "case_summary": {
+    "PASS": 4,
+    "FAIL": 2,
+    "UNRESOLVED": 1
+  },
+  "main_finding": "frontmost material-ID support is an exact operational raster contract, but it is not equivalent to stable perceptual visibility, especially near silhouette boundaries and high-switch regions",
+  "cases": [
+    {
+      "label": "A_stable_visible",
+      "bridge_index": 699,
+      "material_id": 2,
+      "decision": "PASS",
+      "observed_semantics": "stable exposed/frontmost surface point",
+      "interpretation": "contract agrees with simulator/render-space visibility across sampled frames"
+    },
+    {
+      "label": "B_persistent_loss",
+      "bridge_index": 753,
+      "material_id": 11316,
+      "decision": "PASS",
+      "observed_semantics": "persistent loss of frontmost support",
+      "interpretation": "consistent with sustained occlusion/non-frontmost state"
+    },
+    {
+      "label": "C_long_occlusion_reappearance",
+      "bridge_index": 1178,
+      "material_id": 24153,
+      "decision": "PASS",
+      "observed_semantics": "long loss of frontmost support followed by reappearance",
+      "interpretation": "supports coarse occlusion/reappearance semantics in simulator/render space"
+    },
+    {
+      "label": "D_rapid_switching",
+      "bridge_index": 1226,
+      "material_id": 21056,
+      "decision": "FAIL",
+      "observed_semantics": "perceptually near-continuous surface visibility despite rapid Boolean switching",
+      "interpretation": "point-ID/frontmost raster winner flicker"
+    },
+    {
+      "label": "E_moderate_switching",
+      "bridge_index": 740,
+      "material_id": 518,
+      "decision": "UNRESOLVED",
+      "observed_semantics": "weak local frontmost-support reassignment",
+      "interpretation": "possible boundary/raster reassignment; three sampled frames insufficient for a strong label"
+    },
+    {
+      "label": "F_source_silhouette_boundary",
+      "bridge_index": 490,
+      "material_id": 3204,
+      "decision": "PASS",
+      "observed_semantics": "source boundary point followed by sustained loss of frontmost support under deformation",
+      "interpretation": "consistent with coarse render-space visibility loss"
+    },
+    {
+      "label": "G_boundary_switching",
+      "bridge_index": 1248,
+      "material_id": 18290,
+      "decision": "FAIL",
+      "observed_semantics": "perceptually continuous silhouette region with Boolean frontmost ownership changes",
+      "interpretation": "boundary/frontmost raster winner flicker"
+    }
+  ],
+  "evidence_directory": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0a/semantic_visibility/render_20260811_230305",
+  "contact_sheet": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0a/semantic_visibility/render_20260811_230305/semantic_visibility_contact_sheet.png"
+}

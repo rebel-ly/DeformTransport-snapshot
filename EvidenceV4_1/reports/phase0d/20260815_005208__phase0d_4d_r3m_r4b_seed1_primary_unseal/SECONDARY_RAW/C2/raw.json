@@ -1,0 +1,7 @@
+{
+  "arm": "C2",
+  "metric": "TC-MAR",
+  "value": 9.338139079106316,
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "video_sha256": "fb1b15389debe03dc4254917cca222ace6324d384e7cbca98dcd7f1828d57122"
+}

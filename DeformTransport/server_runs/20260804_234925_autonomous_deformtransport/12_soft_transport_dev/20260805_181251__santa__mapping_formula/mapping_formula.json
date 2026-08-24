@@ -1,0 +1,263 @@
+{
+  "artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_20260805_011211/transport_ready.pt",
+  "video_size": [
+    480,
+    832
+  ],
+  "latent_size": [
+    60,
+    104
+  ],
+  "scale_xy": [
+    0.125,
+    0.125
+  ],
+  "source": {
+    "video_key": "source_points_2d_video",
+    "stored_key": "source_points_2d_latent",
+    "total_points": 28264,
+    "stored_dtype": "torch.int64",
+    "legacy_continuous_dtype": "torch.float64",
+    "candidate_reports": {
+      "floor_video_scale": {
+        "exact_match": true,
+        "matching_points": 28264,
+        "total_points": 28264,
+        "matching_ratio": 1.0,
+        "max_coordinate_error": 0
+      },
+      "nearest_video_scale": {
+        "exact_match": false,
+        "matching_points": 7034,
+        "total_points": 28264,
+        "matching_ratio": 0.24886782467365265,
+        "max_coordinate_error": 1
+      },
+      "center_aligned_nearest": {
+        "exact_match": false,
+        "matching_points": 24601,
+        "total_points": 28264,
+        "matching_ratio": 0.8704004883766174,
+        "max_coordinate_error": 1
+      },
+      "align_corners_true_nearest": {
+        "exact_match": false,
+        "matching_points": 22682,
+        "total_points": 28264,
+        "matching_ratio": 0.8025049567222595,
+        "max_coordinate_error": 1
+      }
+    },
+    "legacy_fraction_mean": 0.5015913368519865,
+    "legacy_fraction_max": 0.9996986389160156,
+    "legacy_noninteger_points": 28264,
+    "legacy_continuous_sample": [
+      [
+        34.22607421875,
+        29.898448944091797
+      ],
+      [
+        34.22607421875,
+        30.101551055908203
+      ],
+      [
+        34.41709899902344,
+        29.28854751586914
+      ],
+      [
+        34.41709899902344,
+        29.492050170898438
+      ],
+      [
+        34.42578125,
+        29.695281982421875
+      ],
+      [
+        34.42466735839844,
+        29.898395538330078
+      ],
+      [
+        34.42578125,
+        30.101612091064453
+      ],
+      [
+        34.626487731933594,
+        28.47591781616211
+      ],
+      [
+        34.626487731933594,
+        28.679847717285156
+      ],
+      [
+        34.626487731933594,
+        28.882701873779297
+      ]
+    ],
+    "stored_sample": [
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        30
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        30
+      ],
+      [
+        34,
+        28
+      ],
+      [
+        34,
+        28
+      ],
+      [
+        34,
+        28
+      ]
+    ]
+  },
+  "target": {
+    "video_key": "points_2d_video",
+    "stored_key": "points_2d_latent",
+    "total_points": 2289384,
+    "stored_dtype": "torch.int64",
+    "legacy_continuous_dtype": "torch.float64",
+    "candidate_reports": {
+      "floor_video_scale": {
+        "exact_match": true,
+        "matching_points": 2289384,
+        "total_points": 2289384,
+        "matching_ratio": 1.0,
+        "max_coordinate_error": 0
+      },
+      "nearest_video_scale": {
+        "exact_match": false,
+        "matching_points": 566453,
+        "total_points": 2289384,
+        "matching_ratio": 0.24742594361305237,
+        "max_coordinate_error": 1
+      },
+      "center_aligned_nearest": {
+        "exact_match": false,
+        "matching_points": 2005312,
+        "total_points": 2289384,
+        "matching_ratio": 0.8759177327156067,
+        "max_coordinate_error": 1
+      },
+      "align_corners_true_nearest": {
+        "exact_match": false,
+        "matching_points": 1591639,
+        "total_points": 2289384,
+        "matching_ratio": 0.6952258944511414,
+        "max_coordinate_error": 1
+      }
+    },
+    "legacy_fraction_mean": 0.5010873272377211,
+    "legacy_fraction_max": 0.9999961853027344,
+    "legacy_noninteger_points": 2289384,
+    "legacy_continuous_sample": [
+      [
+        34.484397888183594,
+        30.008255004882812
+      ],
+      [
+        34.58973693847656,
+        30.2447509765625
+      ],
+      [
+        34.659236907958984,
+        29.363624572753906
+      ],
+      [
+        34.66792297363281,
+        29.581092834472656
+      ],
+      [
+        34.685298919677734,
+        29.79339599609375
+      ],
+      [
+        34.684329986572266,
+        29.996788024902344
+      ],
+      [
+        34.79914855957031,
+        30.24936294555664
+      ],
+      [
+        34.92938995361328,
+        28.558635711669922
+      ],
+      [
+        34.92070770263672,
+        28.763771057128906
+      ],
+      [
+        34.89466094970703,
+        28.959678649902344
+      ]
+    ],
+    "stored_sample": [
+      [
+        34,
+        30
+      ],
+      [
+        34,
+        30
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        29
+      ],
+      [
+        34,
+        30
+      ],
+      [
+        34,
+        28
+      ],
+      [
+        34,
+        28
+      ],
+      [
+        34,
+        28
+      ]
+    ]
+  }
+}

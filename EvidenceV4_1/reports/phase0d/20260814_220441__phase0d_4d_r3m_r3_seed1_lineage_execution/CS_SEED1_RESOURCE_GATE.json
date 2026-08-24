@@ -1,0 +1,13 @@
+{
+  "execution_mode": "SERIAL_SAME_CLEAN_GPU",
+  "checked_gpu": "GPU0",
+  "gpu_uuid": "GPU-14bb1875-6456-dba9-fde5-e1383c8d480b",
+  "model": "NVIDIA L40",
+  "memory_total_mib": 46068,
+  "memory_free_mib": 45378,
+  "memory_used_mib": 7,
+  "external_compute_pids": [],
+  "GPU0_CLEAN_BEFORE_CS": true,
+  "decision": "PASS_LAUNCH_CS_SEED1_ONLY",
+  "gpu3_used": false
+}

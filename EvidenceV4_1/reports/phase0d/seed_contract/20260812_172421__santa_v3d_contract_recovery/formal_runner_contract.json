@@ -1,0 +1,36 @@
+{
+  "CORRECTED_V2_TRACK_PATH_BOUND": true,
+  "DEPTH_PATH_BOUND": true,
+  "MATERIAL_ID_PATH_BOUND": true,
+  "N1277_PATH_HITS": 0,
+  "OUTPUT_ARGUMENT_BOUND": true,
+  "SEED_ARGUMENT_BOUND": true,
+  "SOURCE_IMAGE_BOUND": true,
+  "V3D_VARIANT_BOUND": true,
+  "VISIBILITY_PATH_BOUND": true,
+  "parameters": {
+    "checkpoint": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/Wan-Move-14B-480P",
+    "determinism_seed": 0,
+    "dtype": "bf16",
+    "frame_num": 81,
+    "guidance_cfg": 5.0,
+    "offload_model": true,
+    "sample_shift": 3.0,
+    "sample_steps": 40,
+    "scheduler": "unipc",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "size": "480*832",
+    "t5_cpu": true,
+    "task": "wan-move-i2v"
+  },
+  "runner_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172421__santa_v3d_contract_recovery/formal_run_corrected_v2_v3d.sh",
+  "runner_sha256": "d04328094314cff752f8e6b82b16a77fe8c1f2dc8b1316b7e22fe473d8856147",
+  "shell_syntax_check": "PASS",
+  "status": "PASS"
+}

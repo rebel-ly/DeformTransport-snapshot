@@ -1,0 +1,27 @@
+案例,变体,seed,指标,数值,状态,结论边界
+Santa21f,Correct,0,latent区域平均L1,0.35778485362728435,历史proxy,非完整RealWonder生成
+Santa21f,Shuffled,0,latent区域平均L1,0.5239393909772238,历史proxy,非完整RealWonder生成
+Santa21f,Correct,0,解码域平均masked L1,0.12154973617621831,历史proxy,非完整RealWonder生成
+Santa21f,Shuffled,0,解码域平均masked L1,0.23445780788149154,历史proxy,非完整RealWonder生成
+Santa21f,Correct相对Shuffled,0,latent胜出帧,6/6,历史proxy,非完整RealWonder生成
+Santa21f,Correct相对Shuffled,0,解码域不劣帧,21/21,历史proxy,非完整RealWonder生成
+Santa21f,Correct,0,视频域masked PSNR_dB,16.766367678062597,历史压缩视频proxy,参考为coarse target而非未来GT
+Santa21f,Shuffled,0,视频域masked PSNR_dB,11.073283696688529,历史压缩视频proxy,参考为coarse target而非未来GT
+Santa21f,Correct,0,视频域masked SSIM,0.479773542710713,历史压缩视频proxy,本地Gaussian SSIM
+Santa21f,Shuffled,0,视频域masked SSIM,0.2964095657780057,历史压缩视频proxy,本地Gaussian SSIM
+Santa21f,Correct,0,视频域时序差分L1,0.014852525666356087,历史压缩视频proxy,全帧且非未来GT
+Santa21f,Shuffled,0,视频域时序差分L1,0.01548737846314907,历史压缩视频proxy,全帧且非未来GT
+Santa21f,Correct,0,GPU transport与历史artifact最大绝对差,0.0,本轮真实GPU重算,GPU2共享轻量任务
+Santa21f,Shuffled,0,GPU transport与历史artifact最大绝对差,0.0,本轮真实GPU重算,GPU2共享轻量任务
+Santa21f,Correct与Shuffled,0,GPU transport峰值已分配MiB,26.36083984375,本轮真实GPU重算,torch统计
+Santa21f,Correct与Shuffled,0,GPU transport峰值已保留MiB,30.0,本轮真实GPU重算,torch统计
+Santa21f,Correct与Shuffled,0,GPU transport计算总秒数,1.4177862069918774,本轮真实GPU重算,不含容器启动归档开销
+Santa21f_v3_proxy,Correct,0,latent区域平均L1,0.3590465461214383,本轮真实GPU闭环,coarse RGB/latent proxy，非未来GT
+Santa21f_v3_proxy,Shuffled,0,latent区域平均L1,0.5289507557948431,本轮真实GPU闭环,coarse RGB/latent proxy，非未来GT
+Santa21f_v3_proxy,Correct,0,解码域平均masked L1,0.11782164091155642,本轮真实GPU闭环,coarse RGB proxy，非未来GT
+Santa21f_v3_proxy,Shuffled,0,解码域平均masked L1,0.23089800349303655,本轮真实GPU闭环,coarse RGB proxy，非未来GT
+Santa21f_v3_proxy,Correct相对Shuffled,0,latent胜出帧,6/6,本轮真实GPU闭环,自动检查通过
+Santa21f_v3_proxy,Correct相对Shuffled,0,解码域胜出帧,21/21,本轮真实GPU闭环,自动检查通过
+Santa21f_v3_proxy,闭环,0,torch峰值已分配MiB,4320.06494140625,本轮真实GPU闭环,进程级nvidia-smi峰值5810MiB
+Santa21f_v3_proxy,闭环,0,torch峰值已保留MiB,6190.0,本轮真实GPU闭环,共享运行最低整卡空闲34151MiB
+Santa21f_v3_proxy,闭环,0,计算总秒数,44.7149142720009,本轮真实GPU闭环,包装器墙钟约86秒，含哈希/启动/归档

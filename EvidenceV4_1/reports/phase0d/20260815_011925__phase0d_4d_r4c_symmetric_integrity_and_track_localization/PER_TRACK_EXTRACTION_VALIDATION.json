@@ -1,0 +1,69 @@
+{
+  "N_ALIGNED_MATERIAL_IDS": 1174,
+  "PER_TRACK_EXTRACTION_BATCH_STATUS": "PASS_NORMAL_COMPLETION",
+  "PER_TRACK_EXTRACTION_VALIDITY": "PASS",
+  "PER_TRACK_ID_ALIGNMENT": "FAIL",
+  "accepted_provenance": {
+    "seed0": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_004423__phase0d_4d_r3m_r4a_evaluator_lineage_recovery/SEED0_AUTHORITATIVE_METRIC_PROVENANCE.json",
+    "seed1": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/SEED1_PRIMARY_TCME_RESULTS.json"
+  },
+  "missing_id_sets": {
+    "seed0_C1": [],
+    "seed0_C2": [],
+    "seed0_CS": [],
+    "seed1_C1": [],
+    "seed1_C2": [],
+    "seed1_CS": []
+  },
+  "six_arm": {
+    "seed0_C1": {
+      "abs_diff": 0.0,
+      "authoritative_tcme": 0.47438763126111494,
+      "exact_reproduction": true,
+      "reaggregated_tcme": 0.47438763126111494,
+      "rel_diff": 0.0,
+      "rows": 33498
+    },
+    "seed0_C2": {
+      "abs_diff": 0.0,
+      "authoritative_tcme": 0.42167144903579584,
+      "exact_reproduction": true,
+      "reaggregated_tcme": 0.42167144903579584,
+      "rel_diff": 0.0,
+      "rows": 33498
+    },
+    "seed0_CS": {
+      "abs_diff": 0.0,
+      "authoritative_tcme": 0.5138549546231557,
+      "exact_reproduction": true,
+      "reaggregated_tcme": 0.5138549546231557,
+      "rel_diff": 0.0,
+      "rows": 33498
+    },
+    "seed1_C1": {
+      "abs_diff": 0.0,
+      "authoritative_tcme": 0.39610003385941484,
+      "exact_reproduction": true,
+      "reaggregated_tcme": 0.39610003385941484,
+      "rel_diff": 0.0,
+      "rows": 33498
+    },
+    "seed1_C2": {
+      "abs_diff": 0.0,
+      "authoritative_tcme": 0.39736386332028023,
+      "exact_reproduction": true,
+      "reaggregated_tcme": 0.39736386332028023,
+      "rel_diff": 0.0,
+      "rows": 33498
+    },
+    "seed1_CS": {
+      "abs_diff": 0.0,
+      "authoritative_tcme": 0.40577810212784815,
+      "exact_reproduction": true,
+      "reaggregated_tcme": 0.40577810212784815,
+      "rel_diff": 0.0,
+      "rows": 33498
+    }
+  },
+  "support_count_equality": true
+}

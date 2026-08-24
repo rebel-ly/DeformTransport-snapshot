@@ -1,0 +1,7 @@
+{
+  "arm": "C1",
+  "metric": "TC-ME",
+  "value": 0.39610003385941484,
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "video_sha256": "cb1f81c25549b9fccedcb5473f6453cce2fe5982d4b2687fc9ac1975b17e7a1a"
+}

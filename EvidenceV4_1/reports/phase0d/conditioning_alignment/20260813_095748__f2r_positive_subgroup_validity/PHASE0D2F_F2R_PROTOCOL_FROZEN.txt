@@ -1,0 +1,27 @@
+PHASE0D-2F / F2-R POSITIVE-SUBGROUP & DIAGNOSTIC VALIDITY AUDIT
+FROZEN_AT=2026-08-13T09:57:48+08:00
+
+PREREQUISITE
+F2 SHA256SUMS PASS; per-sample formal reproduction PASS with max absolute difference 0; exact material-ID join 1257/1257.
+
+SCOPE
+- R1: deterministically regroup frozen F2 per-carrier arrays; no formal metric recomputation or outcome-based carrier selection.
+- R2: audit canonical RW coarse raster support using authoritative occupancy/raster lineage, then report support-conditioned TC-MAR as DIAGNOSTIC_ONLY.
+- R3: audit support and temporal semantic symmetry of the preserved RW/DT condition TC-ME diagnostics.
+- R4: bounded audit of exact historical Tree bridge/export/evaluator assets for timeline offset.
+- Precompute only CPU structural counts for future FRAG-PRUNE rule retain switch_count < 3.
+
+FROZEN R1 DEFINITIONS
+- switch_count, motion variables, material IDs, MAR/ME arrays and transport variables are read unchanged from F2.
+- STABLE_OPERATIONAL: switch_count < 3; FRAGMENTED_OPERATIONAL: switch_count >= 3.
+- Q4 uses the frozen F2 3D-motion Q4 lower edge 0.5810624591086517 and the same assignment (> edge).
+- ZERO_SWITCH_* means the exact existing F2 switch_count == 0 group, decomposed by frozen visible_slot_count == 0 versus > 0.
+- No future video performance is used to set any rule.
+
+FROZEN FUTURE RULE
+FRAG_PRUNE retains switch_count < 3 and removes switch_count >= 3. Zero-future-visible carriers are not additionally removed.
+
+PROHIBITED
+No diffusion/RealWonder generation; no GRID100/FRAG-PRUNE/WM-0 video; no F3; no formal evaluator/data/mapping modification; no carrier selection by MAR/ME; no package installation; no deletion/supersession of old evidence.
+
+LOCAL_CODEX_ONLY=ENABLED

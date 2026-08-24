@@ -1,0 +1,33 @@
+{
+  "entrypoint_sha256": "34f8b6d2f34b99369680208cf399752bbecd6d3d54c3c47e55dfec4cc73fd9b8",
+  "frozen_candidate_parameters": {
+    "DT_TRANSPORT_VARIANT": "v3d",
+    "checkpoint": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/Wan-Move-14B-480P",
+    "determinism_seed": 0,
+    "dtype": "bf16",
+    "frame_num": 81,
+    "guidance_cfg": 5.0,
+    "offload_model": true,
+    "resolution": "480x832",
+    "sample_shift": 3.0,
+    "sample_steps": 40,
+    "scheduler": "unipc",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "t5_cpu": true
+  },
+  "located_historical_entrypoint": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/run_v3d_formal_validation.sh",
+  "located_runner_problem": "Santa branch binds historical 20260809 N=1277 tracks; cannot be promoted or reused for corrected-v2 N=1257 formal generation.",
+  "missing_required_binding": [
+    "new corrected-v2 N=1257 runner command",
+    "corrected-v2 depth/ID sidecar preparation and exact paths",
+    "formal output destination/replay naming"
+  ],
+  "observed_command": "generate.py --task wan-move-i2v --size 480*832 --frame_num 81 --ckpt_dir Wan-Move-14B-480P --base_seed 0 --sample_steps 40 --sample_shift 3.0 --t5_cpu --offload_model True --dtype bf16",
+  "status": "UNRESOLVED_NO_CORRECTED_V2_N1257_ENTRYPOINT"
+}

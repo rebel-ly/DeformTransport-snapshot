@@ -1,0 +1,8 @@
+{
+  "A2_B2_MANIFEST_ONLY_SOURCE_DIFF": true,
+  "A2_MANIFEST_MATCH_CANONICAL": true,
+  "B2_MANIFEST_MATCH_CANONICAL": true,
+  "CANONICAL_MANIFEST_COMPLETE": true,
+  "launch_authorized": true,
+  "launcher_sha256": "68760b3984bf9cbc7a6a77e2d22f8271c37ba857c1d14e0136fd0c7bf9eb2dde"
+}

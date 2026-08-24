@@ -1,0 +1,22 @@
+/workspace/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/workspace/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+PROMPT_EXTEND_IMPORT=PASS
+DASHSCOPE_LOADED_AFTER_IMPORT=False
+PROMPT_RC=0
+/workspace/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/workspace/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+WAN_MOVE_14B_CONFIG_IMPORT=PASS
+CONFIG_RC=0
+/workspace/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/workspace/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+GENERATE_IMPORT_SMOKE=PASS
+GENERATE_RC=0
+EASYDICT_IMPORT=PASS
+TORCH_VERSION=2.5.1+cu121
+TORCH_CUDA_VERSION=12.1

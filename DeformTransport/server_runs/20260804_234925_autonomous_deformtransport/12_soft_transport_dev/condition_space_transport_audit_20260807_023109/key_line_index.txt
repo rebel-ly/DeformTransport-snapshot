@@ -1,0 +1,83 @@
+infer_sim.py:27:    load_precomputed_transport_residual,
+infer_sim.py:112:        "--transport_injection_mode",
+infer_sim.py:113:        choices=("replace", "inter_step_residual"),
+infer_sim.py:117:            "behavior; inter_step_residual keeps the fresh runtime "
+infer_sim.py:118:            "sim_latent and injects an artifact-local residual "
+infer_sim.py:146:        args.transport_injection_mode
+infer_sim.py:147:        == "inter_step_residual"
+infer_sim.py:152:            "inter_step_residual injection"
+infer_sim.py:313:    sim_latent = None
+infer_sim.py:314:    transport_residual = None
+infer_sim.py:318:        sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
+infer_sim.py:319:        sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+infer_sim.py:320:        print(f"  sim_latent shape: {sim_latent.shape}")
+infer_sim.py:323:            if args.transport_injection_mode == "replace":
+infer_sim.py:326:                    "sim_latent from: "
+infer_sim.py:329:                sim_latent = load_precomputed_transport_latent(
+infer_sim.py:332:                    reference_latent=sim_latent,
+infer_sim.py:335:                    "  transported sim_latent shape: "
+infer_sim.py:336:                    f"{sim_latent.shape}"
+infer_sim.py:344:                transport_residual = (
+infer_sim.py:345:                    load_precomputed_transport_residual(
+infer_sim.py:348:                        reference_latent=sim_latent,
+infer_sim.py:352:                residual_float = transport_residual.to(
+infer_sim.py:358:                    f"{transport_residual.shape}"
+infer_sim.py:377:        # Trim or pad sim_latent to match noise frames
+infer_sim.py:378:        if sim_latent.shape[1] > num_output_frames:
+infer_sim.py:379:            sim_latent = sim_latent[:, :num_output_frames]
+infer_sim.py:380:        elif sim_latent.shape[1] < num_output_frames:
+infer_sim.py:382:            pad_size = num_output_frames - sim_latent.shape[1]
+infer_sim.py:383:            sim_latent = torch.cat([
+infer_sim.py:384:                sim_latent,
+infer_sim.py:385:                sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
+infer_sim.py:387:        print(f"  sim_latent shape (after align): {sim_latent.shape}")
+infer_sim.py:403:    video, _ = pipeline.inference(
+infer_sim.py:408:        sim_latent=sim_latent,
+infer_sim.py:411:        transport_residual=transport_residual,
+infer_sim.py:412:        transport_residual_scale=(
+infer_sim.py:415:        transport_residual_step=(
+vidgen/pipeline_sdedit.py:16:def apply_transport_residual(
+vidgen/pipeline_sdedit.py:18:    transport_residual: torch.Tensor,
+vidgen/pipeline_sdedit.py:24:        transport_residual.shape
+vidgen/pipeline_sdedit.py:35:    if not bool(torch.isfinite(transport_residual).all()):
+vidgen/pipeline_sdedit.py:46:        * transport_residual.to(torch.float32)
+vidgen/pipeline_sdedit.py:70:        # Separate VAE for encoding sim_latents to avoid cache conflicts
+vidgen/pipeline_sdedit.py:82:        # we start from a noised version of sim_latent instead of pure noise.
+vidgen/pipeline_sdedit.py:122:        sim_latent: Optional[torch.Tensor] = None,
+vidgen/pipeline_sdedit.py:125:        transport_residual: Optional[torch.Tensor] = None,
+vidgen/pipeline_sdedit.py:126:        transport_residual_scale: float = 0.0,
+vidgen/pipeline_sdedit.py:127:        transport_residual_step: int = 0,
+vidgen/pipeline_sdedit.py:142:            sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+vidgen/pipeline_sdedit.py:145:            transport_residual: Artifact-local masked latent residual [B,T,C,H,W].
+vidgen/pipeline_sdedit.py:146:            transport_residual_scale: Residual strength.
+vidgen/pipeline_sdedit.py:147:            transport_residual_step: Step index after which to inject the residual.
+vidgen/pipeline_sdedit.py:226:            assert sim_latent is not None, "sim_latent is required for SDEdit mode"
+vidgen/pipeline_sdedit.py:227:            assert noise.shape == sim_latent.shape, (
+vidgen/pipeline_sdedit.py:228:                f"noise shape {noise.shape} != sim_latent shape {sim_latent.shape}"
+vidgen/pipeline_sdedit.py:231:            if transport_residual is not None:
+vidgen/pipeline_sdedit.py:232:                if tuple(transport_residual.shape) != tuple(
+vidgen/pipeline_sdedit.py:233:                    sim_latent.shape
+vidgen/pipeline_sdedit.py:236:                        "transport_residual shape "
+vidgen/pipeline_sdedit.py:237:                        f"{tuple(transport_residual.shape)} "
+vidgen/pipeline_sdedit.py:238:                        "does not match sim_latent "
+vidgen/pipeline_sdedit.py:239:                        f"{tuple(sim_latent.shape)}"
+vidgen/pipeline_sdedit.py:244:                        transport_residual
+vidgen/pipeline_sdedit.py:248:                        "transport_residual contains NaN or Inf"
+vidgen/pipeline_sdedit.py:251:                if transport_residual_scale < 0:
+vidgen/pipeline_sdedit.py:253:                        "transport_residual_scale must be "
+vidgen/pipeline_sdedit.py:259:                    <= transport_residual_step
+vidgen/pipeline_sdedit.py:263:                        "transport_residual_step must identify "
+vidgen/pipeline_sdedit.py:270:                sim_latent.flatten(0, 1),
+vidgen/pipeline_sdedit.py:281:                    sim_latent.flatten(0, 1),
+vidgen/pipeline_sdedit.py:292:                    sim_latent.flatten(0, 1),
+vidgen/pipeline_sdedit.py:374:            transport_residual_current = None
+vidgen/pipeline_sdedit.py:376:            if transport_residual is not None:
+vidgen/pipeline_sdedit.py:385:                transport_residual_current = (
+vidgen/pipeline_sdedit.py:386:                    transport_residual[
+vidgen/pipeline_sdedit.py:430:                        transport_residual_current
+vidgen/pipeline_sdedit.py:433:                        == transport_residual_step
+vidgen/pipeline_sdedit.py:434:                        and transport_residual_scale != 0
+vidgen/pipeline_sdedit.py:442:                            f"{transport_residual_scale}"
+vidgen/pipeline_sdedit.py:446:                            apply_transport_residual(
+vidgen/pipeline_sdedit.py:448:                                transport_residual_current,
+vidgen/pipeline_sdedit.py:449:                                transport_residual_scale,

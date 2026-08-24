@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "projection_passed": true,
+    "future_passed": true,
+    "same_target_decode": true,
+    "same_evaluation_mask": true
+  },
+  "all_checks_pass": true,
+  "future_visible_kept_region": {
+    "projection_correct": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.16977090393135577,
+      "mean_masked_mse": 0.04638753539342203,
+      "mean_masked_psnr_db": 13.416494381280593
+    },
+    "future_correct": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.1657975124264205,
+      "mean_masked_mse": 0.04433613633851946,
+      "mean_masked_psnr_db": 13.602821267681357
+    },
+    "projection_shuffled": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.24751165656395901,
+      "mean_masked_mse": 0.08942922278318877,
+      "mean_masked_psnr_db": 10.488972628558123
+    },
+    "future_shuffled": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.2491811740177649,
+      "mean_masked_mse": 0.09056575807892246,
+      "mean_masked_psnr_db": 10.434640849078143
+    },
+    "correct_l1_percent_change": -2.340443157763865,
+    "correct_mse_percent_change": -4.422306633677005,
+    "correct_psnr_db_change": 0.18632688640076367
+  },
+  "correct_shuffled_separation": {
+    "projection": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.12297711006285232,
+      "mean_masked_mse": 0.025981508517338905,
+      "mean_masked_psnr_db": 15.927660942077637
+    },
+    "future_visible": {
+      "valid_frames": 81,
+      "mean_masked_l1": 0.12819057445467255,
+      "mean_masked_mse": 0.02774344481251858,
+      "mean_masked_psnr_db": 15.632059320991422
+    }
+  },
+  "sharpness": {
+    "target": {
+      "mean_laplacian_variance": 0.01152734162952797,
+      "mean_sobel": 0.2750025792622272,
+      "mean_high_frequency": 0.013183208090471632
+    },
+    "projection_correct": {
+      "mean_laplacian_variance": 0.002014800967982062,
+      "mean_sobel": 0.1376682711236271,
+      "mean_high_frequency": 0.007095556056563869
+    },
+    "future_correct": {
+      "mean_laplacian_variance": 0.001952191620754699,
+      "mean_sobel": 0.1376360500300372,
+      "mean_high_frequency": 0.006876821325011092
+    }
+  },
+  "interpretation": {
+    "criterion": "Future-visible is genuinely better on shared transport support only if its error remains lower when both methods are evaluated on the future mask."
+  }
+}

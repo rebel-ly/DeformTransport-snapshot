@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/tmp/f0r2_vae_probe.py", line 8, in <module>
+    from wan.modules.vae import WanVAE
+ModuleNotFoundError: No module named 'wan'

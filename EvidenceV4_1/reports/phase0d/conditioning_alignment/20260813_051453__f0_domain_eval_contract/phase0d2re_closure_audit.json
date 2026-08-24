@@ -1,0 +1,14 @@
+{
+  "source_evidence": "reports/phase0d/same_seed_replay_recovery/20260813_030959__santa_v3d_seed0_formal_replay",
+  "source_sha256s_verified": true,
+  "required_artifacts_present": ["PHASE0D2RE_SUMMARY.md", "phase0d2re_status.json", "RunA_manifest.json", "RunB_manifest.json", "run_pair_contract.json", "decoded_comparison.json"],
+  "status": "PASS",
+  "cross_device_replay_exact": true,
+  "mp4_sha_equal": true,
+  "decoded_rgb_sha_equal": true,
+  "pixel_scalar_mismatch_count": 0,
+  "phase0d2re_closure_audit": "PASS",
+  "historical_proceed_to_phase0d3": true,
+  "phase0d3_execution": "DEFERRED",
+  "defer_reason": "PRE-REGISTERED CONDITIONING-ALIGNMENT AUDIT BEFORE MULTI-SEED GPU EXPENDITURE"
+}

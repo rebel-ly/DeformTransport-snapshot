@@ -1,0 +1,70 @@
+{
+  "method_label": "WM-0",
+  "seed": 0,
+  "execute_in_f3": false,
+  "cpu_construction_only": true,
+  "source_image": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+  "source_sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+  "prompt": "Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement.",
+  "action_simulation_lineage": "official_santa_81f_aligned_final_sim_20260806_234410",
+  "tracks": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_tracks.npy",
+    "shape": [
+      1,
+      81,
+      0,
+      2
+    ],
+    "dtype": "float32",
+    "sha256": "5f2a3ff02a8af40138f3fc376752211310548c1cb558423c0db37e6ce41a1112"
+  },
+  "visibility": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_visibility.npy",
+    "shape": [
+      1,
+      81,
+      0
+    ],
+    "dtype": "bool",
+    "sha256": "76555ccc7ef6819c24a52de5b949aace3024d87c22c620315f0c8e0191e5789a"
+  },
+  "ids": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_ids.npy",
+    "shape": [
+      0
+    ],
+    "dtype": "int64",
+    "sha256": "e734dac55ea9fbbe782af2d8c02c3c5992131906228afb2aaaf137d6f3ed74db"
+  },
+  "depth": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_depth.npy",
+    "shape": [
+      81,
+      0
+    ],
+    "dtype": "float32",
+    "sha256": "c7d5e350e0f7f644fc66e18d95f688d9689881ea618bc968eea17b26f643e979"
+  },
+  "N_condition": 0,
+  "wan_move_source_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+  "runtime_python": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python",
+  "runtime_python_sha256": "edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3",
+  "checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P",
+  "resolution": "480x832",
+  "frame_count": 81,
+  "generation_arguments": {
+    "task": "wan-move-i2v",
+    "variant": "v3d",
+    "sample_steps": 40,
+    "sample_shift": 3.0,
+    "guidance_cfg": 5.0,
+    "t5_cpu": true,
+    "offload_model": true,
+    "dtype": "bf16"
+  },
+  "expected_output_directory": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/f3_wm0_seed000_DO_NOT_CREATE",
+  "runner": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/runtime_recovery/20260813_025331__wanmove_python_runtime_binding/run_with_formal_wanmove_python.sh",
+    "sha256": "c444b496c536fa40e18cd3596c2a2e899b838e664fc36fa20255da31050e7097"
+  }
+}

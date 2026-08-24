@@ -1,0 +1,7 @@
+Tree visibility-aware TC-MAR formal audit
+counts={"excluded_boundary_observations": 0, "excluded_invisible_observations": 5517, "selected_tracks": 713, "total_anchor_slots": 14260, "valid_observations_per_method": 8743, "valid_tracks_at_least_one_visible_anchor": 709, "visible_anchor_observations": 8743}
+observation_set_correct_equals_shuffled=true
+anchors=4,8,...,80
+patch=8x8 exact bilinear
+bootstrap=10000 tracks seed=0
+decision=GO

@@ -1,0 +1,21 @@
+{
+  "conditioning_seed_invariance_evidence_level": "STATIC/ALGEBRAIC",
+  "determinism_seed": 0,
+  "formal_evaluation_contract": "UNRESOLVED",
+  "formal_generation_contract": "UNRESOLVED_NO_CORRECTED_V2_N1257_ENTRYPOINT",
+  "formal_input_contract": "PASS",
+  "gpu2_preflight": "PASS",
+  "phase": "Phase0D-1",
+  "previous_stage_gate": "PASS",
+  "proceed_to_phase0d2": false,
+  "reusable_cached_formal_runs": 0,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "status": "UNRESOLVED",
+  "wan_move_source_gate": "PASS"
+}

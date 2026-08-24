@@ -1,0 +1,63 @@
+{
+  "status": "TREE_QUALITY_RAMP4_FULL_GENERATION_READY",
+  "base_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_210730__tree__future_visible_soft_gate025/tree_soft_future_visible_gate025.pt",
+  "base_sha256": "bc2940476bd1c39eab28cae843ebc1a0f2f73110b7709f8e1629837d2ef40712",
+  "candidate": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_a0p250_t0p750_ramp4.pt",
+  "candidate_sha256": "d1927aae7ff3333f783a2c98145cf97fd78d74bef64b8087a09af64633b86f70",
+  "full_generation": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+  "full_generation_sha256": "fdec761d9349eefc147370e6873c351e06232be70482f0f936c3b5624db163ec",
+  "frozen_recipe": {
+    "soft_gate": 0.25,
+    "quality_tau": 0.75,
+    "alpha": 0.25,
+    "schedule": [
+      0.0,
+      0.0833333358168602,
+      0.1666666716337204,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "mask_formula": "hard_reference_mask OR (soft_only_mask AND transport_weight >= 0.75)",
+    "fused_formula": "target + alpha_schedule * mask * (raw_transport - target)"
+  },
+  "support": {
+    "gate025_cells": 15911,
+    "hard_cells": 14438,
+    "quality_cells": 15513,
+    "removed_from_gate025": 398
+  },
+  "residual": {
+    "correct_mean_abs": 0.012252077460289001,
+    "shuffled_mean_abs": 0.013705126009881496,
+    "correct_vs_shuffled_mean_abs": 0.00482562743127346
+  },
+  "checks": {
+    "indices_exact": true,
+    "quality_mask_subset_gate025": true,
+    "mask_count_contract": true,
+    "correct_slot0_fused_exact": true,
+    "shuffled_slot0_fused_exact": true,
+    "correct_slot0_residual_zero": true,
+    "shuffled_slot0_residual_zero": true,
+    "correct_residual_exact": true,
+    "shuffled_residual_exact": true,
+    "candidate_saved_exact": true
+  },
+  "all_checks_pass": true
+}

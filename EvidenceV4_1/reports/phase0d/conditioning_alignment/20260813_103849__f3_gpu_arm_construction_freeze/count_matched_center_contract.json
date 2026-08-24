@@ -1,0 +1,5 @@
+{
+  "method_name": "DT-COUNT218-CENTER",
+  "rule": "farthest-point occupied-bin order; first nearest-center carrier per bin; then round-robin next-nearest unused carrier",
+  "selection_independent_of_switch_count": true
+}

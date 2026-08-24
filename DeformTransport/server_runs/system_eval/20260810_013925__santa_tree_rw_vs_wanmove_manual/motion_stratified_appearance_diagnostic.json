@@ -1,0 +1,222 @@
+{
+  "purpose": "POST-HOC DIAGNOSTIC ONLY. Not a new primary metric and not a replacement for frozen system gates.",
+  "motion_definition": "Per-track mean Euclidean displacement from P_i(0) to visible TC-MAR anchors 4,8,...,80 in the aligned 832x480 domain.",
+  "cases": {
+    "santa": {
+      "valid_tracks": 1277,
+      "overall_motion_px": {
+        "mean": 131.7558428131564,
+        "median": 133.68873813419245,
+        "p25": 63.6982170811036,
+        "p75": 204.39785278545475,
+        "p95": 249.30353789276464
+      },
+      "quartiles": {
+        "Q1": {
+          "n": 320,
+          "motion_px": {
+            "mean": 25.59696783276405,
+            "median": 24.602526457313857,
+            "min": 0.0,
+            "max": 63.6982170811036
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 15.729092886615543,
+            "correct_mean": 16.147996965590863,
+            "shuffled_mean": 28.043354034945366,
+            "rw_minus_correct_mean": -0.41890407897531984,
+            "rw_minus_correct_median": -2.766800446063281,
+            "fraction_rw_worse_than_correct": 0.365625,
+            "shuffled_minus_correct_mean": 11.895357069354505
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.12376066046315826,
+            "correct_mean": 0.1517200147244148,
+            "rw_minus_correct_mean": -0.02795935426125652
+          }
+        },
+        "Q2": {
+          "n": 319,
+          "motion_px": {
+            "mean": 98.72220909972562,
+            "median": 99.39254060945571,
+            "min": 63.86578595376261,
+            "max": 133.68873813419245
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 17.899453346188352,
+            "correct_mean": 17.404218864310124,
+            "shuffled_mean": 27.19005198379669,
+            "rw_minus_correct_mean": 0.49523448187822827,
+            "rw_minus_correct_median": -1.8518355727195734,
+            "fraction_rw_worse_than_correct": 0.4012539184952978,
+            "shuffled_minus_correct_mean": 9.785833119486567
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.07866671620955731,
+            "correct_mean": 0.0956691017749553,
+            "rw_minus_correct_mean": -0.017002385565397977
+          }
+        },
+        "Q3": {
+          "n": 319,
+          "motion_px": {
+            "mean": 169.7568573624004,
+            "median": 171.78435133214614,
+            "min": 133.76631689848492,
+            "max": 204.39785278545475
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 21.490601675326825,
+            "correct_mean": 26.284495880667315,
+            "shuffled_mean": 35.791728533855796,
+            "rw_minus_correct_mean": -4.793894205340491,
+            "rw_minus_correct_median": -6.356648984551427,
+            "fraction_rw_worse_than_correct": 0.29780564263322884,
+            "shuffled_minus_correct_mean": 9.507232653188481
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.14897722577822883,
+            "correct_mean": 0.20756028436159357,
+            "rw_minus_correct_mean": -0.058583058583364774
+          }
+        },
+        "Q4": {
+          "n": 319,
+          "motion_px": {
+            "mean": 233.28012339968035,
+            "median": 234.2312671378583,
+            "min": 204.5527815545193,
+            "max": 264.61119362266527
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 14.448516063423693,
+            "correct_mean": 25.264971086765904,
+            "shuffled_mean": 36.20412222877565,
+            "rw_minus_correct_mean": -10.816455023342211,
+            "rw_minus_correct_median": -12.531278902292252,
+            "fraction_rw_worse_than_correct": 0.15673981191222572,
+            "shuffled_minus_correct_mean": 10.939151142009749
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.08126869393351305,
+            "correct_mean": 0.1559673648610781,
+            "rw_minus_correct_mean": -0.07469867092756508
+          }
+        }
+      },
+      "correlations": {
+        "motion_vs_rw_minus_correct_lab": -0.2858114122920055,
+        "motion_vs_shuffled_minus_correct_lab": -0.023731596471033515
+      }
+    },
+    "tree": {
+      "valid_tracks": 709,
+      "overall_motion_px": {
+        "mean": 47.60909450201144,
+        "median": 46.62892012179749,
+        "p25": 19.886802669576152,
+        "p75": 72.22436613562385,
+        "p95": 99.42507312467436
+      },
+      "quartiles": {
+        "Q1": {
+          "n": 178,
+          "motion_px": {
+            "mean": 10.025216730534403,
+            "median": 10.952137389006378,
+            "min": 0.15596556745377366,
+            "max": 19.886802669576152
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 12.461029683263655,
+            "correct_mean": 20.1918946601684,
+            "shuffled_mean": 21.73697679977045,
+            "rw_minus_correct_mean": -7.730864976904749,
+            "rw_minus_correct_median": -6.514605929454168,
+            "fraction_rw_worse_than_correct": 0.16292134831460675,
+            "shuffled_minus_correct_mean": 1.5450821396020444
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.10720614935680776,
+            "correct_mean": 0.1544121075743873,
+            "rw_minus_correct_mean": -0.04720595821757955
+          }
+        },
+        "Q2": {
+          "n": 177,
+          "motion_px": {
+            "mean": 32.29804572845935,
+            "median": 31.893503620564363,
+            "min": 19.97231757629013,
+            "max": 46.62892012179749
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 13.09054888742505,
+            "correct_mean": 19.264642994602156,
+            "shuffled_mean": 20.3965187812824,
+            "rw_minus_correct_mean": -6.174094107177108,
+            "rw_minus_correct_median": -5.329840012959072,
+            "fraction_rw_worse_than_correct": 0.1638418079096045,
+            "shuffled_minus_correct_mean": 1.1318757866802405
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.10169677203521547,
+            "correct_mean": 0.14281732830822144,
+            "rw_minus_correct_mean": -0.04112055627300595
+          }
+        },
+        "Q3": {
+          "n": 177,
+          "motion_px": {
+            "mean": 59.806105928004634,
+            "median": 59.68275163325077,
+            "min": 46.663520831098,
+            "max": 72.22436613562385
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 14.097906751934993,
+            "correct_mean": 17.419049130897466,
+            "shuffled_mean": 17.23836387110305,
+            "rw_minus_correct_mean": -3.321142378962473,
+            "rw_minus_correct_median": -3.2923267781734467,
+            "fraction_rw_worse_than_correct": 0.1751412429378531,
+            "shuffled_minus_correct_mean": -0.18068525979441832
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.10519667907200288,
+            "correct_mean": 0.13084064862191638,
+            "rw_minus_correct_mean": -0.025643969549913524
+          }
+        },
+        "Q4": {
+          "n": 177,
+          "motion_px": {
+            "mean": 88.5193479135416,
+            "median": 85.59615104123176,
+            "min": 72.28838362727572,
+            "max": 142.05961682225117
+          },
+          "tc_mar_lab": {
+            "realwonder_mean": 15.547598611064139,
+            "correct_mean": 18.972005439909513,
+            "shuffled_mean": 20.068941213727996,
+            "rw_minus_correct_mean": -3.424406828845374,
+            "rw_minus_correct_median": -3.7011039614677443,
+            "fraction_rw_worse_than_correct": 0.20903954802259886,
+            "shuffled_minus_correct_mean": 1.0969357738184804
+          },
+          "proxy_track_l1": {
+            "realwonder_mean": 0.11433722560049177,
+            "correct_mean": 0.13722758925361542,
+            "rw_minus_correct_mean": -0.022890363653123653
+          }
+        }
+      },
+      "correlations": {
+        "motion_vs_rw_minus_correct_lab": 0.19893772052726863,
+        "motion_vs_shuffled_minus_correct_lab": -0.04219701782263116
+      }
+    }
+  }
+}

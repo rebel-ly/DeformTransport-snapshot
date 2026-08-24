@@ -1,0 +1,633 @@
+当前阶段：
+
+Phase0D-2 —
+Same-Seed Replay Determinism Audit
+
+用户确认当前 GPU1、GPU2 均空闲。
+
+目标是在不改变任何正式 generation contract 的情况下，
+验证 corrected-v2 Santa Correct V3D、seed=0 的最终生成视频
+是否 replay-reproducible。
+
+禁止进入 Phase0D-3。
+禁止运行 seed1/2/3/4。
+
+==================================================
+1. Phase0D-1R gate
+==================================================
+
+注意：
+
+原 Phase0D-1 status 是 UNRESOLVED，
+必须永久保留。
+
+本阶段只能由新的 Phase0D-1R recovery evidence 解锁。
+
+找到并读取真实服务器上的：
+
+phase0d1r_status.json
+
+不要使用旧：
+
+phase0d1_status.json
+
+要求：
+
+PHASE0D1R_STATUS == PASS
+
+PROCEED_TO_PHASE0D2 == true
+
+CORRECTED_V2_RUNNER_CONTRACT == PASS
+
+N1277_PATH_HITS == 0
+
+CONDITIONING_SEED_INVARIANCE == PASS
+
+PHASE0D_SCOPE ==
+PAIRWISE_OUTPUT_STOCHASTICITY_ONLY
+
+如果任一不满足：
+
+PREVIOUS_STAGE_GATE = FAIL
+STOP。
+
+记录：
+
+PHASE0D1R_STATUS_PATH
+PHASE0D1R_STATUS_SHA256
+
+==================================================
+2. Freeze formal generation runner
+==================================================
+
+从 0D-1R evidence 读取，而不是猜：
+
+formal_run_corrected_v2_v3d.sh
+
+记录其 exact path 和 SHA256。
+
+验证：
+
+runner SHA 与 0D-1R frozen SHA exact match。
+
+不得修改 runner。
+
+不得为了并行复制后再修改其中任何 generation parameter。
+
+==================================================
+3. Source-code gate
+==================================================
+
+再次验证：
+
+Wan-Move HEAD =
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+
+trajectory.py SHA256 =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py SHA256 =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+任何 drift：
+
+SOURCE_DRIFT
+STOP。
+
+==================================================
+4. Preflight both GPUs and host memory
+==================================================
+
+记录：
+
+nvidia-smi -i 1
+nvidia-smi -i 2
+nvidia-smi -L
+
+free -h
+df -h
+
+同时记录：
+
+GPU model
+GPU UUID
+driver version
+CUDA version
+VRAM total/free
+running processes
+
+确认 GPU1 / GPU2 型号一致。
+
+如果任一 GPU 非空闲：
+不要杀用户进程。
+改用空闲卡或 STOP 报告。
+
+==================================================
+5. Parallel execution policy
+==================================================
+
+首选：
+
+PARALLEL_CROSS_DEVICE_REPLAY
+
+Run A:
+GPU1
+seed = 0
+
+Run B:
+GPU2
+seed = 0
+
+但：
+
+由于 t5_cpu=true / offload_model=true，
+并行前必须确认 host memory 没有明显压力。
+
+不得启用 swap 作为完成实验的方法。
+
+如果双进程启动会导致 OOM/swap/明显 memory pressure：
+
+PARALLEL_MODE = DISABLED_HOST_MEMORY_SAFETY
+
+改为：
+
+GPU1 Run A
+then
+GPU1 Run B
+
+这种降级不是 scientific FAIL。
+
+必须记录实际 execution mode：
+
+CROSS_DEVICE_PARALLEL
+或
+SAME_DEVICE_SEQUENTIAL
+
+==================================================
+6. Frozen output directories
+==================================================
+
+严格使用 0D-1R frozen naming。
+
+Run A：
+
+.../phase0d/formal_runs/
+santa_correct_v3d_seed000_replayA
+
+Run B：
+
+.../phase0d/formal_runs/
+santa_correct_v3d_seed000_replayB
+
+如果后续需要 diagnostic Run C：
+
+.../phase0d/formal_runs/
+santa_correct_v3d_seed000_replayC_gpu1
+
+每个目录必须是新目录。
+
+禁止覆盖。
+禁止删除历史失败 run。
+
+==================================================
+7. Run-level manifest before generation
+==================================================
+
+在 Run A / Run B 启动前分别写：
+
+pre_generation_manifest.json
+
+至少包含：
+
+run_id
+seed
+GPU physical index
+GPU UUID
+
+runner path
+runner SHA256
+
+Wan-Move HEAD
+trajectory.py SHA
+wan_move.py SHA
+
+source image path/SHA
+tracks path/SHA
+visibility path/SHA
+depth path/SHA
+material IDs path/SHA
+
+formal track count = 1257
+
+prompt SHA/text provenance
+
+resolution
+frame_num
+sample_steps
+sample_shift
+guidance CFG
+scheduler
+dtype
+DT_TRANSPORT_VARIANT
+
+checkpoint path
+
+command
+environment variables
+
+start time
+
+A/B contract comparison必须确认：
+
+除：
+run_id
+GPU index/UUID
+output dir
+timestamps
+
+之外，
+
+所有 formal-generation fields exact equal。
+
+如果不 equal：
+
+RUN_CONTRACT_PAIRING = FAIL
+禁止启动 generation。
+
+==================================================
+8. Generation
+==================================================
+
+只允许：
+
+seed = 0
+
+不得运行：
+1
+2
+3
+4
+
+使用 0D-1R frozen runner。
+
+保存完整：
+
+stdout.log
+stderr.log
+exit_code.txt
+
+禁止使用 tee/pipeline 导致误记录 exit code；
+必须保留真实 process return code。
+
+任何失败：
+
+保留目录和 logs，
+不得删除后重来装作第一次。
+
+ENGINEERING_FAIL
+然后 STOP，
+不要改变 seed。
+
+==================================================
+9. Post-generation lineage verification
+==================================================
+
+每个 run 成功后验证：
+
+实际 output 存在
+output size > 0
+
+并确认 generation log/manifest 对应：
+
+corrected-v2
+N=1257
+V3D
+seed=0
+
+记录：
+
+MP4 path
+MP4 SHA256
+MP4 bytes
+
+注意：
+
+MP4 SHA mismatch
+不是 determinism FAIL。
+
+==================================================
+10. Decode contract
+==================================================
+
+记录：
+
+ffmpeg -version
+ffprobe -version
+
+使用完全相同 decode path。
+
+优先：
+
+ffmpeg
+-v error
+-i <video>
+-map 0:v:0
+-vsync 0
+-pix_fmt rgb24
+-f rawvideo
+<decoded.rgb>
+
+不要 resize。
+不要 crop。
+不要 colorspace transform beyond required rgb24 decode。
+
+分别生成：
+
+decoded_A.rgb
+decoded_B.rgb
+
+记录 SHA256。
+
+==================================================
+11. Frame-shape validation
+==================================================
+
+使用 ffprobe / decoded byte size 验证：
+
+FRAME_COUNT_A
+FRAME_COUNT_B
+
+WIDTH_A
+WIDTH_B
+
+HEIGHT_A
+HEIGHT_B
+
+EXPECTED：
+81 frames
+832 x 480
+RGB24
+
+如果 formal runner 实际输出与 contract 不同：
+
+OUTPUT_SHAPE_CONTRACT = FAIL
+STOP。
+
+decoded raw expected byte size 应由：
+
+frame_count * H * W * 3
+
+精确计算。
+
+验证 raw file size exact。
+
+==================================================
+12. Exact decoded comparison
+==================================================
+
+比较 A/B：
+
+DECODED_RGB_SHA_EQUAL
+
+PIXEL_SCALAR_MISMATCH_COUNT
+
+MAX_ABS_PIXEL_DIFFERENCE
+
+MEAN_ABS_PIXEL_DIFFERENCE
+
+DIFFERING_FRAME_COUNT
+
+FIRST_DIFFERING_FRAME
+（exact equal 时 NA）
+
+不得提前设置 tolerance。
+
+==================================================
+13. Decision tree
+==================================================
+
+CASE A：
+
+如果 A/B：
+
+decoded RGB exact equal
+
+则：
+
+SAME_SEED_REPLAY = PASS
+CROSS_DEVICE_REPLAY_EXACT = True
+RUNTIME_OUTPUT_NONDETERMINISM = NOT_DETECTED
+
+不需要 Run C。
+
+--------------------------------------------------
+
+CASE B：
+
+如果 A/B 不 exact，
+且实际模式为 CROSS_DEVICE_PARALLEL：
+
+不要判 Phase0D-2 FAIL。
+
+自动进入 diagnostic Run C：
+
+GPU1
+seed=0
+same frozen runner
+same formal contract
+
+Run C 必须在 Run A 完成后独立重新运行。
+
+然后比较：
+
+A vs C
+
+如果：
+
+A vs C exact equal
+
+则：
+
+SAME_DEVICE_REPLAY = PASS
+CROSS_DEVICE_REPLAY = MISMATCH
+DEVICE_ASSOCIATED_OUTPUT_DIFFERENCE = DETECTED
+
+PHASE0D2_STATUS =
+PASS_WITH_DEVICE_LIMITATION
+
+PROCEED_TO_PHASE0D3 =
+False
+
+先回主对话裁决 GPU assignment protocol。
+
+--------------------------------------------------
+
+CASE C：
+
+如果：
+
+A vs B mismatch
+
+并且：
+
+A vs C mismatch
+
+则：
+
+SAME_DEVICE_REPLAY = NON_EXACT
+
+PHASE0D2_STATUS =
+UNRESOLVED_RUNTIME_NONDETERMINISM
+
+PROCEED_TO_PHASE0D3 =
+False
+
+不得启动 multi-seed experiment。
+
+==================================================
+14. Important interpretation limits
+==================================================
+
+即使 decoded RGB exact equal：
+
+允许说：
+
+final decoded video output is exactly replay-reproducible
+for the audited seed=0 contract.
+
+不得说：
+
+all internal latent tensors are bitwise deterministic.
+
+本实验审计的是：
+
+final generated output determinism
+
+不是所有内部 tensor determinism。
+
+==================================================
+15. No quality metrics yet
+==================================================
+
+本阶段不计算：
+
+GT quality
+LPIPS-to-GT
+SSIM-to-GT
+FVD
+
+formal reference 仍 unresolved。
+
+本阶段也不需要计算 cross-seed metrics，
+因为只有 seed0。
+
+==================================================
+16. Output
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+same_seed_replay/
+<TIMESTAMP>__santa_v3d_seed0
+
+至少生成：
+
+PHASE0D2_PROTOCOL_FROZEN.txt
+
+gpu_preflight.txt
+host_memory_preflight.txt
+
+run_pair_contract.json
+
+RunA_manifest.json
+RunB_manifest.json
+
+如需要：
+RunC_manifest.json
+
+decode_contract.txt
+
+decoded_comparison.json
+
+PHASE0D2_SUMMARY.md
+phase0d2_status.json
+SHA256SUMS.txt
+
+==================================================
+17. Summary 固定九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+18. Final stdout
+==================================================
+
+===== PHASE0D-2 SAME-SEED REPLAY AUDIT =====
+
+OUT = ...
+
+PREVIOUS_STAGE_GATE = ...
+
+EXECUTION_MODE = ...
+
+GPU_A = ...
+GPU_B = ...
+
+FORMAL_RUNNER_SHA_MATCH = ...
+
+RUN_CONTRACT_PAIRING = ...
+
+SEED_A = 0
+SEED_B = 0
+
+TRACK_COUNT_A = ...
+TRACK_COUNT_B = ...
+
+FRAME_COUNT_A = ...
+FRAME_COUNT_B = ...
+
+FRAME_SHAPE_A = ...
+FRAME_SHAPE_B = ...
+
+MP4_SHA_EQUAL = ...
+
+DECODED_RGB_SHA_EQUAL = ...
+
+PIXEL_SCALAR_MISMATCH_COUNT = ...
+DIFFERING_FRAME_COUNT = ...
+MAX_ABS_PIXEL_DIFFERENCE = ...
+MEAN_ABS_PIXEL_DIFFERENCE = ...
+
+CROSS_DEVICE_REPLAY_EXACT = ...
+
+如执行 Run C，再打印：
+
+A_C_DECODED_RGB_SHA_EQUAL = ...
+A_C_PIXEL_SCALAR_MISMATCH_COUNT = ...
+A_C_MAX_ABS_PIXEL_DIFFERENCE = ...
+
+SAME_DEVICE_REPLAY = ...
+
+PHASE0D2_STATUS =
+PASS /
+PASS_WITH_DEVICE_LIMITATION /
+UNRESOLVED_RUNTIME_NONDETERMINISM /
+FAIL /
+ERROR
+
+PROCEED_TO_PHASE0D3 =
+True/False
+
+然后 STOP。
+
+严禁运行 seed1/2/3/4。

@@ -1,0 +1,27 @@
+{
+  "arm": "CS",
+  "normalized_contract": "FORMAL_DIFFUSION_SEED plus deterministic external epsilon replacement are allowed; all remaining fields must match exactly",
+  "raw_expected_differences": [
+    {
+      "field": "FORMAL_DIFFUSION_SEED",
+      "seed0": 0,
+      "seed1": 1
+    },
+    {
+      "field": "external_epsilon.file_sha256",
+      "seed0": "20911e4d396115ea12ab1c7715202c7321dd8104fe114d7515d2321485b9e288",
+      "seed1": "9b55589da21a129832555b8237c627e44c933088c26614524d30bf1a550e9002"
+    },
+    {
+      "field": "external_epsilon.path",
+      "seed0": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/R3_SHARED_EPSILON_58x104.npy",
+      "seed1": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_100000__phase0d_4d_r3m_seed1_wave1/EPSILON_SEED1_58x104.npy"
+    },
+    {
+      "field": "external_epsilon.tensor_sha256",
+      "seed0": "0a71855c890fb782a642a1722043e64c8c8d243edc09a959365e6298fb15cfdd",
+      "seed1": "df48b8742c815d043c8cf8940884d4d0eb09046b1c1e7a7b3faf8da25a548ce9"
+    }
+  ],
+  "unexpected_scientific_differences": []
+}

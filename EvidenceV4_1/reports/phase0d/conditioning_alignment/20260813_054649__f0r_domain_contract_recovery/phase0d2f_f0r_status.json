@@ -1,0 +1,3 @@
+{
+  "phase":"Phase0D-2F/F0-R", "n1277_formal_contamination":false, "raw_vae_latent_shape":"UNRESOLVED", "real_transport_y_shape":"UNRESOLVED", "real_transport_latent_hw":"UNRESOLVED", "final_output_464_cause":"UNRESOLVED_REQUIRES_DIFFUSION_OUTPUT", "status":"UNRESOLVED_REAL_LATENT", "phase0d2f_f0_recovered_status":"UNRESOLVED_REAL_LATENT", "proceed_to_f1":false
+}

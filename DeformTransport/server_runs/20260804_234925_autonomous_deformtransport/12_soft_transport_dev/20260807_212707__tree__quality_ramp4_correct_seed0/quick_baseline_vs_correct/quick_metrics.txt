@@ -1,0 +1,8 @@
+BASELINE = {'MAE_to_sim': 22.98064613342285, 'MSE_to_sim': 1539.017333984375, 'PSNR_to_sim': 16.25836849541065, 'temporal_change': 3.913440227508545, 'sharpness_proxy': 14.108817100524902}
+CORRECT  = {'MAE_to_sim': 21.806392669677734, 'MSE_to_sim': 1395.025390625, 'PSNR_to_sim': 16.68498248664761, 'temporal_change': 3.946263074874878, 'sharpness_proxy': 14.199880599975586}
+
+Correct minus Baseline MAE = -1.1742534637451172
+Correct minus Baseline PSNR = 0.42661399123695887
+Correct / Baseline temporal = 1.0083872106019693
+Correct / Baseline sharpness = 1.0064543681303584
+TREE_BASELINE_VS_CORRECT_QUICK_METRICS_OK

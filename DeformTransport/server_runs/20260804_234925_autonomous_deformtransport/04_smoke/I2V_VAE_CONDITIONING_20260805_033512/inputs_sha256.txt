@@ -1,0 +1,1 @@
+895099a95d73f13e449cd87816086e79b9cab1dbc8f1f5de6fc94356e1627004  /mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/resized_input_image.png

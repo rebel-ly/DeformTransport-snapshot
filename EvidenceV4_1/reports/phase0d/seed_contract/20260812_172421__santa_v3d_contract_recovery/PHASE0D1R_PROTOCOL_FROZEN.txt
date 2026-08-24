@@ -1,0 +1,542 @@
+当前阶段：
+
+Phase0D-1R —
+Formal Corrected-v2 Runner Recovery and Pairwise Seed-Floor Contract
+
+上一阶段：
+
+Phase0D-1 = UNRESOLVED
+PROCEED_TO_PHASE0D2 = False
+
+该历史记录不得修改。
+
+本阶段不是重做 0D-1，
+而是解决其中可恢复的 formal-contract blockers。
+
+禁止正式 GPU generation。
+
+==================================================
+1. 本阶段目标
+==================================================
+
+解决三个问题：
+
+A. 建立 corrected-v2 Santa N=1257 的正式 V3D generation runner；
+B. 将 conditioning seed invariance 加强为
+   FUNCTIONAL_SYNTHETIC + ALGEBRAIC_GENERAL；
+C. 冻结 pairwise-only seed stochasticity evaluator。
+
+formal future-video GT/reference evaluator
+允许继续保持 UNRESOLVED。
+
+如果 A/B/C 全部 PASS，
+主对话授权后续进入 Phase0D-2，
+但 scope 仅为 PAIRWISE_ONLY。
+
+==================================================
+2. Previous evidence gate
+==================================================
+
+读取原 Phase0D-1：
+
+phase0d1_status.json
+
+必须确认：
+
+status == UNRESOLVED
+formal_input_contract == PASS
+wan_move_source_gate == PASS
+formal_generation_contract ==
+  UNRESOLVED_NO_CORRECTED_V2_N1257_ENTRYPOINT
+formal_evaluation_contract == UNRESOLVED
+proceed_to_phase0d2 == false
+
+不要修改该文件。
+
+==================================================
+3. Formal input
+==================================================
+
+只允许：
+
+corrected-v2 Santa
+N = 1257
+T = 81
+timeline = 0,10,...,800
+
+从 Phase0D-1 formal_input_contract.json
+读取并复用已冻结的：
+
+source image
+prompt
+tracks
+visibility
+material IDs
+authoritative selected depth
+
+不得猜文件名。
+不得重新导出 tracks。
+不得重新选 IDs。
+不得生成新的 visibility/depth。
+
+历史 N=1277：
+LEGACY / REJECTED。
+
+==================================================
+4. Frozen source gate
+==================================================
+
+再次验证：
+
+Wan-Move Git HEAD =
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+
+trajectory.py SHA256 =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py SHA256 =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+任何 drift：
+SOURCE_DRIFT
+STOP。
+
+==================================================
+5. Corrected-v2 generation runner recovery
+==================================================
+
+历史：
+
+/workspace/DeformTransport/run_v3d_formal_validation.sh
+
+只能作为 invocation reference。
+
+禁止修改历史 runner。
+禁止直接复用其 Santa N=1277 binding。
+
+必须读取：
+
+历史 runner
+generate.py CLI
+wan_move.py
+trajectory.py
+
+确认当前 patched V3D 实际从何处读取：
+
+tracks
+visibility
+depth
+material IDs
+DT_TRANSPORT_VARIANT
+
+特别检查：
+
+环境变量名称
+命令行参数
+sidecar path lookup
+工作目录依赖
+
+不得猜 DT_* 变量名。
+
+==================================================
+6. Frozen generation parameters
+==================================================
+
+只有在代码/config evidence 支持时，
+冻结 Phase0D-1 已定位参数：
+
+task = wan-move-i2v
+size = 480*832
+frame_num = 81
+checkpoint =
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/Wan-Move-14B-480P
+
+sample_steps = 40
+sample_shift = 3.0
+guidance/CFG = 5.0
+scheduler = unipc
+dtype = bf16
+t5_cpu = true
+offload_model = true
+
+DT_TRANSPORT_VARIANT = v3d
+
+SEEDS = [0,1,2,3,4]
+DETERMINISM_SEED = 0
+
+如果某参数与真实 active code/config 不一致：
+不得静默改。
+记录 discrepancy 并 STOP/UNRESOLVED。
+
+==================================================
+7. New formal runner
+==================================================
+
+在 Evidence workspace 创建新的 runner，
+不要修改 legacy repo runner。
+
+建议位置：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+seed_contract/
+<TIMESTAMP>__santa_v3d_contract_recovery/
+
+formal_run_corrected_v2_v3d.sh
+
+该 runner 必须：
+
+- 接受 SEED 参数；
+- 接受 OUTPUT_DIR 参数；
+- 只绑定 corrected-v2 N=1257 assets；
+- 显式设置 V3D variant；
+- 显式设置 tracks/visibility/depth/IDs；
+- 显式记录 source image/prompt；
+- 不包含任何 N=1277 path；
+- 不自动执行；
+- 不覆盖旧结果。
+
+必须有 dry-run / echo mode，
+只打印最终 command/environment，
+不启动模型。
+
+==================================================
+8. Runner static validation
+==================================================
+
+对新 runner 执行：
+
+shell syntax check
+
+以及 dry-run。
+
+然后机器检查：
+
+N1277_PATH_HITS = 0
+
+CORRECTED_V2_TRACK_PATH_BOUND = True
+VISIBILITY_PATH_BOUND = True
+DEPTH_PATH_BOUND = True
+MATERIAL_ID_PATH_BOUND = True
+SOURCE_IMAGE_BOUND = True
+V3D_VARIANT_BOUND = True
+SEED_ARGUMENT_BOUND = True
+OUTPUT_ARGUMENT_BOUND = True
+
+任何 False：
+RUNNER_CONTRACT = FAIL。
+
+记录 runner SHA256。
+
+==================================================
+9. Output naming freeze
+==================================================
+
+不执行，只冻结命名模板：
+
+Phase0D-2 same-seed replay：
+
+.../phase0d/formal_runs/
+santa_correct_v3d_seed000_replayA
+
+.../phase0d/formal_runs/
+santa_correct_v3d_seed000_replayB
+
+Phase0D-3：
+
+seed0 正式复用 replayA，
+其余：
+
+santa_correct_v3d_seed001
+santa_correct_v3d_seed002
+santa_correct_v3d_seed003
+santa_correct_v3d_seed004
+
+禁止 seed0 第三次重复生成。
+
+==================================================
+10. Conditioning seed-invariance functional audit
+==================================================
+
+禁止 instantiate WanMove 14B。
+
+使用已经冻结的 Phase0B-4R synthetic VAE harness：
+
+shape [1,4,21,60,104]
+
+以及当前 frozen：
+create_pos_feature_map
+replace_feature
+V3D semantics
+
+对：
+
+seed = 0,1,2,3,4
+
+分别执行 CPU functional conditioning path。
+
+必须保持完全相同：
+
+synthetic source y
+Correct corrected-v2 tracks
+visibility
+depth
+IDs
+variant
+
+唯一改变 seed。
+
+对每个 seed 保存/报告：
+
+edited_y SHA256
+future support SHA256
+winner mapping SHA256
+
+比较：
+
+EDITED_Y_EXACT_EQUAL_ALL_SEEDS
+SUPPORT_EXACT_EQUAL_ALL_SEEDS
+WINNER_MAPPING_EXACT_EQUAL_ALL_SEEDS
+
+同时记录各 seed 内部 randperm
+确实发生变化与否。
+
+我们要证明的是：
+
+即便 internal permutation 随 seed 改变，
+最终 generator-consumed V3D conditioning
+仍 permutation invariant。
+
+==================================================
+11. Algebraic generality proof
+==================================================
+
+另外生成：
+
+conditioning_seed_invariance_proof.md
+
+必须基于 frozen source 写出：
+
+- permutation jointly reorders tracks/visibility/depth/IDs；
+- target candidate multiset invariant；
+- winner=min(depth, material_id) 对排列不变；
+- material ID unique；
+- corresponding source feature 与 carrier 同步重排；
+- direct replacement 写入同一 winner target cell。
+
+因此对于任意固定 vae_feature：
+
+edited_y 不依赖这些 internal randperm 的顺序。
+
+证据等级正式写：
+
+FUNCTIONAL_SYNTHETIC + ALGEBRAIC_GENERAL
+
+不得写：
+
+FUNCTIONAL_REAL_LATENT
+
+除非真的执行过 real latent functional test。
+
+==================================================
+12. Pairwise-only evaluator contract
+==================================================
+
+由于 formal future-video GT/reference 仍 UNRESOLVED，
+本阶段明确授权的 Phase0D scope 是：
+
+PAIRWISE_OUTPUT_STOCHASTICITY_ONLY
+
+不是 task-quality evaluation。
+
+Phase0D-2 same-seed determinism 必须至少比较：
+
+decoded RGB frames
+
+报告：
+
+frame count
+H/W/C
+dtype
+decoded tensor SHA256
+pixel scalar mismatch count
+max abs pixel difference
+
+不要用 MP4 file SHA 代替 decoded-frame equality。
+
+==================================================
+13. Phase0D-3 pairwise stochasticity metrics
+==================================================
+
+审计当前环境/已有 evaluator 中
+可以可靠用于任意两条生成视频直接比较的 metric。
+
+优先：
+
+decoded RGB exact mismatch
+MAE
+RMSE
+PSNR
+
+SSIM：
+仅在存在明确、可冻结实现时使用。
+
+LPIPS：
+仅在存在明确 model/checkpoint/normalization
+且能冻结实现时使用。
+
+不要为了 LPIPS/SSIM 安装新包。
+
+不得使用 source-texture proxy
+作为 future-video GT。
+
+生成：
+
+pairwise_evaluation_contract.json
+
+其中必须区分：
+
+PIXEL_PAIRWISE_METRICS = PASS/...
+SSIM = AVAILABLE/UNAVAILABLE
+LPIPS = AVAILABLE/UNAVAILABLE
+
+formal_reference_quality_metrics =
+UNRESOLVED_NO_GT_REFERENCE
+
+==================================================
+14. Important interpretation
+==================================================
+
+如果后续 Phase0D-3 完成：
+
+允许结论：
+
+"same-condition output stochasticity across seeds"
+
+不允许结论：
+
+"task-quality seed noise floor"
+
+除非未来补齐 formal reference evaluator。
+
+==================================================
+15. Future Phase0D-2 gate
+==================================================
+
+允许：
+
+PROCEED_TO_PHASE0D2 = True
+
+仅当：
+
+PREVIOUS_0D1_RECORD_PRESERVED = True
+FORMAL_INPUT_GATE = PASS
+SOURCE_GATE = PASS
+CORRECTED_V2_RUNNER_CONTRACT = PASS
+N1277_PATH_HITS = 0
+PAIRWISE_EVALUATION_CONTRACT = PASS
+CONDITIONING_SEED_INVARIANCE = PASS
+
+formal reference evaluator 可以：
+
+UNRESOLVED
+
+但必须同时：
+
+PHASE0D_SCOPE =
+PAIRWISE_OUTPUT_STOCHASTICITY_ONLY
+
+==================================================
+16. Output
+==================================================
+
+创建 timestamped：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+seed_contract/
+<TIMESTAMP>__santa_v3d_contract_recovery
+
+生成：
+
+PHASE0D1R_PROTOCOL_FROZEN.txt
+formal_run_corrected_v2_v3d.sh
+formal_runner_contract.json
+formal_runner_dryrun.txt
+
+conditioning_seed_invariance.json
+conditioning_seed_invariance_proof.md
+
+pairwise_evaluation_contract.json
+phase0d_future_output_naming.json
+
+PHASE0D1R_SUMMARY.md
+phase0d1r_status.json
+SHA256SUMS.txt
+
+==================================================
+17. Summary 固定九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+必须明确保留：
+
+formal future-video reference/evaluator lineage
+仍 UNRESOLVED。
+
+==================================================
+18. Final stdout
+==================================================
+
+===== PHASE0D-1R CONTRACT RECOVERY =====
+
+OUT = ...
+
+PREVIOUS_0D1_RECORD_PRESERVED = ...
+
+FORMAL_INPUT_GATE = ...
+SOURCE_GATE = ...
+
+CORRECTED_V2_RUNNER_CONTRACT = ...
+N1277_PATH_HITS = ...
+
+FORMAL_RUNNER = ...
+FORMAL_RUNNER_SHA256 = ...
+
+SEEDS = [0,1,2,3,4]
+
+CONDITIONING_SEED_INVARIANCE_EVIDENCE_LEVEL =
+...
+
+EDITED_Y_EXACT_EQUAL_ALL_SEEDS = ...
+SUPPORT_EXACT_EQUAL_ALL_SEEDS = ...
+WINNER_MAPPING_EXACT_EQUAL_ALL_SEEDS = ...
+
+PAIRWISE_EVALUATION_CONTRACT = ...
+
+PIXEL_PAIRWISE_METRICS = ...
+SSIM = ...
+LPIPS = ...
+
+FORMAL_REFERENCE_QUALITY_METRICS =
+UNRESOLVED_NO_GT_REFERENCE
+
+PHASE0D_SCOPE =
+PAIRWISE_OUTPUT_STOCHASTICITY_ONLY
+
+PHASE0D1R_STATUS =
+PASS/UNRESOLVED/FAIL/ERROR
+
+PROCEED_TO_PHASE0D2 =
+True/False
+
+然后 STOP。
+
+禁止启动 Wan-Move generation。

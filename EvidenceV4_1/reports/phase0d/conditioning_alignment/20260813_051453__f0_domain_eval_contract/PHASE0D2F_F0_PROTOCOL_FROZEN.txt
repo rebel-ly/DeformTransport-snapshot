@@ -1,0 +1,5 @@
+Frozen protocol source (verbatim authority):
+/mnt/sdbd/home/liuyu_qyh/.codex/attachments/f5675f74-98df-463e-9255-ade563091002/pasted-text.txt
+SHA256: a9cd47d31f30a672df6ca1a91a9ea805afacb5a4da85006f15f4516420b4f9c2
+
+This F0 archive was conducted read-only under that protocol. No diffusion generation, evaluator execution, asset/source/environment change, or historical-evidence modification was performed. One permitted VAE-only probe was attempted; it loaded no T5/CLIP/14B model and did not yield a tensor result.

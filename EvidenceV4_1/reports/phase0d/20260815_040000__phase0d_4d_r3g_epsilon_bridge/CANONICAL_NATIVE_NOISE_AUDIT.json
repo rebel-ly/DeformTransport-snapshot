@@ -1,0 +1,230 @@
+{
+  "scheduler_class": "FlowUniPCMultistepScheduler",
+  "num_train_timesteps": 1000,
+  "num_inference_steps": 40,
+  "shift": 3.0,
+  "device_for_schedule": "cpu",
+  "actual_schedule": [
+    {
+      "index": 0,
+      "timestep": 999,
+      "sigma": 0.9996664524078369
+    },
+    {
+      "index": 1,
+      "timestep": 991,
+      "sigma": 0.9911891222000122
+    },
+    {
+      "index": 2,
+      "timestep": 982,
+      "sigma": 0.982419490814209
+    },
+    {
+      "index": 3,
+      "timestep": 973,
+      "sigma": 0.9733423590660095
+    },
+    {
+      "index": 4,
+      "timestep": 963,
+      "sigma": 0.9639410972595215
+    },
+    {
+      "index": 5,
+      "timestep": 954,
+      "sigma": 0.9541981220245361
+    },
+    {
+      "index": 6,
+      "timestep": 944,
+      "sigma": 0.9440944194793701
+    },
+    {
+      "index": 7,
+      "timestep": 933,
+      "sigma": 0.9336096048355103
+    },
+    {
+      "index": 8,
+      "timestep": 922,
+      "sigma": 0.9227216839790344
+    },
+    {
+      "index": 9,
+      "timestep": 911,
+      "sigma": 0.911406934261322
+    },
+    {
+      "index": 10,
+      "timestep": 899,
+      "sigma": 0.8996397852897644
+    },
+    {
+      "index": 11,
+      "timestep": 887,
+      "sigma": 0.887392520904541
+    },
+    {
+      "index": 12,
+      "timestep": 874,
+      "sigma": 0.8746352195739746
+    },
+    {
+      "index": 13,
+      "timestep": 861,
+      "sigma": 0.8613352179527283
+    },
+    {
+      "index": 14,
+      "timestep": 847,
+      "sigma": 0.8474572896957397
+    },
+    {
+      "index": 15,
+      "timestep": 832,
+      "sigma": 0.8329627513885498
+    },
+    {
+      "index": 16,
+      "timestep": 817,
+      "sigma": 0.8178097009658813
+    },
+    {
+      "index": 17,
+      "timestep": 801,
+      "sigma": 0.8019521832466125
+    },
+    {
+      "index": 18,
+      "timestep": 785,
+      "sigma": 0.7853399515151978
+    },
+    {
+      "index": 19,
+      "timestep": 767,
+      "sigma": 0.7679176926612854
+    },
+    {
+      "index": 20,
+      "timestep": 749,
+      "sigma": 0.7496247887611389
+    },
+    {
+      "index": 21,
+      "timestep": 730,
+      "sigma": 0.7303943037986755
+    },
+    {
+      "index": 22,
+      "timestep": 710,
+      "sigma": 0.7101522088050842
+    },
+    {
+      "index": 23,
+      "timestep": 688,
+      "sigma": 0.688816487789154
+    },
+    {
+      "index": 24,
+      "timestep": 666,
+      "sigma": 0.666296124458313
+    },
+    {
+      "index": 25,
+      "timestep": 642,
+      "sigma": 0.6424896717071533
+    },
+    {
+      "index": 26,
+      "timestep": 617,
+      "sigma": 0.6172835826873779
+    },
+    {
+      "index": 27,
+      "timestep": 590,
+      "sigma": 0.5905508399009705
+    },
+    {
+      "index": 28,
+      "timestep": 562,
+      "sigma": 0.5621483325958252
+    },
+    {
+      "index": 29,
+      "timestep": 531,
+      "sigma": 0.5319145321846008
+    },
+    {
+      "index": 30,
+      "timestep": 499,
+      "sigma": 0.49966657161712646
+    },
+    {
+      "index": 31,
+      "timestep": 465,
+      "sigma": 0.4651961028575897
+    },
+    {
+      "index": 32,
+      "timestep": 428,
+      "sigma": 0.42826521396636963
+    },
+    {
+      "index": 33,
+      "timestep": 388,
+      "sigma": 0.38860076665878296
+    },
+    {
+      "index": 34,
+      "timestep": 345,
+      "sigma": 0.34588751196861267
+    },
+    {
+      "index": 35,
+      "timestep": 299,
+      "sigma": 0.29975995421409607
+    },
+    {
+      "index": 36,
+      "timestep": 249,
+      "sigma": 0.24979163706302643
+    },
+    {
+      "index": 37,
+      "timestep": 195,
+      "sigma": 0.1954820156097412
+    },
+    {
+      "index": 38,
+      "timestep": 136,
+      "sigma": 0.1362396627664566
+    },
+    {
+      "index": 39,
+      "timestep": 71,
+      "sigma": 0.07136054337024689
+    }
+  ],
+  "native_noise_semantics": {
+    "generator": "torch.Generator(device=self.device)",
+    "seed": 0,
+    "randn_shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "dtype": "torch.float32",
+    "device": "cuda:0",
+    "call_order": "first and only use of private seed_g before optional initial_epsilon replacement"
+  },
+  "native_noise_tensor_sha256": "df48b8742c815d043c8cf8940884d4d0eb09046b1c1e7a7b3faf8da25a548ce9",
+  "external_epsilon_tensor_sha256": "df48b8742c815d043c8cf8940884d4d0eb09046b1c1e7a7b3faf8da25a548ce9",
+  "native_noise_equals_external_epsilon": true,
+  "different_scalar_count": 0,
+  "max_abs_diff": 0.0,
+  "mean_abs_diff": 0.0,
+  "private_generator_reused_after_initial_noise": false,
+  "private_generator_reuse_evidence": "static source: seed_g occurs only in its construction/manual_seed and the single torch.randn call"
+}

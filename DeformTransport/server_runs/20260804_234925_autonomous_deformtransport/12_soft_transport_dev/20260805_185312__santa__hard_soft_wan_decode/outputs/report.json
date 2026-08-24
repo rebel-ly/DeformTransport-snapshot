@@ -1,0 +1,371 @@
+{
+  "stage": "hard_soft_wan_vae_decode_comparison",
+  "case": "official_santa_81f",
+  "inputs": {
+    "transport_ready": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt",
+      "sha256": "154a08e074abcb6aa458b08cfd37c033dbc8245ffe02d182524e9bc275252723"
+    },
+    "hard_artifact": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/vae_latent_outputs.pt",
+      "sha256": "57f12610f0038cd6bba5577a7cc231f6b8d5172a6c53766b972eaa08d1afd18c"
+    },
+    "soft_artifact": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_184845__santa__soft_wan_gate025_artifact_retry1/outputs/vae_latent_outputs_soft_gate025.pt",
+      "sha256": "38ab294a9c5cdd2f5a54dadaf87ffbd6fb16d1c7a0868d000cc7c37d2a7975fb"
+    },
+    "checkpoint": {
+      "path": "/workspace/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth",
+      "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+    }
+  },
+  "fairness": {
+    "latent_frame_indices_equal": true,
+    "source_latents_exactly_equal": true,
+    "target_latents_exactly_equal": true,
+    "hard_support_subset_of_soft": true,
+    "hard_mask_cells": 20813,
+    "soft_mask_cells": 22453,
+    "retained_soft_only_cells": 1640
+  },
+  "latent_statistics": {
+    "original": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mean": 0.11669106781482697,
+      "std": 1.0522958040237427,
+      "min": -3.609375,
+      "max": 4.625,
+      "finite": true
+    },
+    "hard_correct": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mean": 0.09728112816810608,
+      "std": 1.0227588415145874,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "hard_shuffled": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mean": 0.0957166999578476,
+      "std": 1.0153034925460815,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "soft_correct": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mean": 0.09628943353891373,
+      "std": 1.0175007581710815,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "soft_shuffled": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "mean": 0.09438890963792801,
+      "std": 1.0097581148147583,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    }
+  },
+  "decoded_statistics": {
+    "original": {
+      "shape": [
+        81,
+        3,
+        480,
+        832
+      ],
+      "mean": 0.11673973500728607,
+      "std": 0.20406252145767212,
+      "min": 0.0,
+      "max": 1.0,
+      "finite": true
+    },
+    "hard_correct": {
+      "shape": [
+        81,
+        3,
+        480,
+        832
+      ],
+      "mean": 0.12244413793087006,
+      "std": 0.1864892840385437,
+      "min": 0.0,
+      "max": 1.0,
+      "finite": true
+    },
+    "hard_shuffled": {
+      "shape": [
+        81,
+        3,
+        480,
+        832
+      ],
+      "mean": 0.11850140243768692,
+      "std": 0.16969870030879974,
+      "min": 0.0,
+      "max": 1.0,
+      "finite": true
+    },
+    "soft_correct": {
+      "shape": [
+        81,
+        3,
+        480,
+        832
+      ],
+      "mean": 0.12468414753675461,
+      "std": 0.18603000044822693,
+      "min": 0.0,
+      "max": 1.0,
+      "finite": true
+    },
+    "soft_shuffled": {
+      "shape": [
+        81,
+        3,
+        480,
+        832
+      ],
+      "mean": 0.1204676628112793,
+      "std": 0.17052766680717468,
+      "min": 0.0,
+      "max": 1.0,
+      "finite": true
+    }
+  },
+  "latent_proxy_metrics": {
+    "hard_correct_on_hard_support": {
+      "selected_values": 333008,
+      "mae": 0.4327337443828583,
+      "mse": 0.31592804193496704
+    },
+    "soft_correct_on_hard_support": {
+      "selected_values": 333008,
+      "mae": 0.4389789402484894,
+      "mse": 0.3212893605232239
+    },
+    "hard_shuffled_on_hard_support": {
+      "selected_values": 333008,
+      "mae": 0.5817381739616394,
+      "mse": 0.5338027477264404
+    },
+    "soft_shuffled_on_hard_support": {
+      "selected_values": 333008,
+      "mae": 0.573653519153595,
+      "mse": 0.5165717005729675
+    },
+    "soft_correct_on_retained_soft_only": {
+      "selected_values": 26240,
+      "mae": 0.6422085165977478,
+      "mse": 0.6525421142578125
+    },
+    "soft_shuffled_on_retained_soft_only": {
+      "selected_values": 26240,
+      "mae": 0.7802980542182922,
+      "mse": 0.9747233390808105
+    }
+  },
+  "decoded_coarse_rgb_proxy_metrics": {
+    "original": {
+      "full_frame_vs_coarse": {
+        "selected_values": 97044480,
+        "mae": 0.014074727892875671,
+        "mse": 0.0008476548828184605,
+        "psnr_db": 30.717809319358018
+      },
+      "hard_support_vs_coarse": {
+        "selected_values": 15248832,
+        "mae": 0.016008423641324043,
+        "mse": 0.0015350126195698977,
+        "psnr_db": 28.138880497717835
+      },
+      "soft_support_vs_coarse": {
+        "selected_values": 16457088,
+        "mae": 0.01718492992222309,
+        "mse": 0.0017143653240054846,
+        "psnr_db": 27.65896626232079
+      }
+    },
+    "hard_correct": {
+      "full_frame_vs_coarse": {
+        "selected_values": 97044480,
+        "mae": 0.03752204775810242,
+        "mse": 0.007309280335903168,
+        "psnr_db": 21.361253811176603
+      },
+      "hard_support_vs_coarse": {
+        "selected_values": 15248832,
+        "mae": 0.1534903198480606,
+        "mse": 0.039408355951309204,
+        "psnr_db": 14.044116827737687
+      },
+      "soft_support_vs_coarse": {
+        "selected_values": 16457088,
+        "mae": 0.1499098241329193,
+        "mse": 0.03856070712208748,
+        "psnr_db": 14.138550106508243
+      }
+    },
+    "hard_shuffled": {
+      "full_frame_vs_coarse": {
+        "selected_values": 97044480,
+        "mae": 0.052918773144483566,
+        "mse": 0.015222189947962761,
+        "psnr_db": 18.175228630780193
+      },
+      "hard_support_vs_coarse": {
+        "selected_values": 15248832,
+        "mae": 0.24553896486759186,
+        "mse": 0.08783858269453049,
+        "psnr_db": 10.563146803269346
+      },
+      "soft_support_vs_coarse": {
+        "selected_values": 16457088,
+        "mae": 0.23697856068611145,
+        "mse": 0.08408617228269577,
+        "psnr_db": 10.752754167475375
+      }
+    },
+    "soft_correct": {
+      "full_frame_vs_coarse": {
+        "selected_values": 97044480,
+        "mae": 0.04161865636706352,
+        "mse": 0.008893020451068878,
+        "psnr_db": 20.509507089464357
+      },
+      "hard_support_vs_coarse": {
+        "selected_values": 15248832,
+        "mae": 0.1611393243074417,
+        "mse": 0.041739534586668015,
+        "psnr_db": 13.794523978093471
+      },
+      "soft_support_vs_coarse": {
+        "selected_values": 16457088,
+        "mae": 0.1694493591785431,
+        "mse": 0.04666760563850403,
+        "psnr_db": 13.309844807660285
+      },
+      "retained_soft_only_vs_coarse": {
+        "selected_values": 1208256,
+        "mae": 0.2743264436721802,
+        "mse": 0.10886237770318985,
+        "psnr_db": 9.63122184330006
+      }
+    },
+    "soft_shuffled": {
+      "full_frame_vs_coarse": {
+        "selected_values": 97044480,
+        "mae": 0.055646780878305435,
+        "mse": 0.01649867743253708,
+        "psnr_db": 17.82550868317752
+      },
+      "hard_support_vs_coarse": {
+        "selected_values": 15248832,
+        "mae": 0.24555426836013794,
+        "mse": 0.08853272348642349,
+        "psnr_db": 10.52896175598155
+      },
+      "soft_support_vs_coarse": {
+        "selected_values": 16457088,
+        "mae": 0.24824866652488708,
+        "mse": 0.0902981236577034,
+        "psnr_db": 10.443212739785421
+      },
+      "retained_soft_only_vs_coarse": {
+        "selected_values": 1208256,
+        "mae": 0.28225353360176086,
+        "mse": 0.1125783920288086,
+        "psnr_db": 9.485449587136799
+      }
+    }
+  },
+  "pairwise_decoded_differences": {
+    "decoded_hard_correct_vs_soft_correct_full": {
+      "selected_values": 97044480,
+      "mae": 0.011091508902609348,
+      "mse": 0.002010282827541232,
+      "psnr_db": 26.967428372066014
+    },
+    "decoded_hard_correct_vs_soft_correct_hard_support": {
+      "selected_values": 15248832,
+      "mae": 0.035008352249860764,
+      "mse": 0.004187764134258032,
+      "psnr_db": 23.78017786896457
+    },
+    "decoded_soft_correct_vs_soft_shuffled": {
+      "selected_values": 16457088,
+      "mae": 0.12374967336654663,
+      "mse": 0.026362067088484764,
+      "psnr_db": 15.790205390732613
+    },
+    "decoded_hard_correct_vs_hard_shuffled": {
+      "selected_values": 15248832,
+      "mae": 0.13240890204906464,
+      "mse": 0.03030129335820675,
+      "psnr_db": 15.185388339945733
+    }
+  },
+  "runtime_seconds": {
+    "model_load": 1.2351963359978981,
+    "decode": {
+      "original": 10.92710165499011,
+      "hard_correct": 5.688973266980611,
+      "hard_shuffled": 5.690309358993545,
+      "soft_correct": 5.701641193998512,
+      "soft_shuffled": 5.723217459017178
+    },
+    "total": 59.84392096000374
+  },
+  "gpu_peak_memory_mib": {
+    "allocated": 4458.21630859375,
+    "reserved": 6042.0
+  },
+  "artifacts": {
+    "videos": {
+      "original": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/original.mp4",
+      "hard_correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/hard_correct.mp4",
+      "hard_shuffled": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/hard_shuffled.mp4",
+      "soft_correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/soft_correct.mp4",
+      "soft_shuffled": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/soft_shuffled.mp4"
+    },
+    "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/hard_soft_comparison.mp4",
+    "comparison_first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/comparison_first.png",
+    "comparison_middle": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/comparison_middle.png",
+    "comparison_final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/comparison_final.png"
+  },
+  "interpretation_boundary": "The coarse RGB input and its VAE latent are geometry-aligned proxies, not real future-video ground truth. Lower proxy error does not by itself prove better future-video quality."
+}

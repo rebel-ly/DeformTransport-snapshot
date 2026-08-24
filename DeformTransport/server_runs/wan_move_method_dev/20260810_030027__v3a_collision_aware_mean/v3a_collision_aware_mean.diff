@@ -1,0 +1,211 @@
+diff --git a/wan/modules/trajectory.py b/wan/modules/trajectory.py
+index 2ee59d1..71bc8c0 100644
+--- a/wan/modules/trajectory.py
++++ b/wan/modules/trajectory.py
+@@ -132,42 +132,158 @@ def replace_feature(
+     vae_feature: torch.Tensor,  # [B, C', T', H', W']
+     track_pos: torch.Tensor,    # [B, N, T', 2]
+ ) -> torch.Tensor:
+-    b, _, t, h, w = vae_feature.shape
+-    assert b == track_pos.shape[0], "Batch size mismatch."
++    """
++    DeformTransport V3A:
++    Collision-Aware Material Aggregation.
++
++    Original Wan-Move behavior:
++      - shuffle trajectory order
++      - hard-write one source feature to each future target cell
++      - when multiple tracks land in the same future latent cell,
++        duplicate advanced-index assignments effectively arbitrate
++        between material identities.
++
++    V3A behavior:
++      - preserve the same trajectory shuffle/RNG consumption
++      - preserve the same integer latent positions
++      - preserve the same source t=0 features
++      - preserve in-place mutation semantics
++      - if exactly one track reaches a target cell: exact hard copy
++      - if multiple tracks reach the same target cell:
++        assign the arithmetic mean of their source material features
++
++    No tunable parameter is introduced.
++    """
++
++    b, c, t, h, w = vae_feature.shape
++
++    assert b == track_pos.shape[0], \
++        "Batch size mismatch."
++
+     n = track_pos.shape[1]
+-    
+-    # Shuffle the trajectory order
+-    track_pos = track_pos[:, torch.randperm(n), :, :]
+-    
+-    # Extract coordinates at time steps ≥ 1 and generate a valid mask
+-    current_pos = track_pos[:, :, 1:, :]  # [B, N, T-1, 2]
+-    mask = (current_pos[..., 0] >= 0) & (current_pos[..., 1] >= 0)  # [B, N, T-1]
+-    
+-    # Get all valid indices
+-    valid_indices = mask.nonzero(as_tuple=False)  # [num_valid, 3]
+-    num_valid = valid_indices.shape[0]
+-    
+-    if num_valid == 0:
+-        return vae_feature
+-    
+-    # Decompose valid indices into each dimension
+-    batch_idx = valid_indices[:, 0]
+-    track_idx = valid_indices[:, 1]
+-    t_rel = valid_indices[:, 2]
+-    t_target = t_rel + 1  # Convert to original time step indices
+-    
+-    # Extract target position coordinates
+-    h_target = current_pos[batch_idx, track_idx, t_rel, 0].long()  # Ensure integer indices
+-    w_target = current_pos[batch_idx, track_idx, t_rel, 1].long()
+-    
+-    # Extract source position coordinates (t=0)
+-    h_source = track_pos[batch_idx, track_idx, 0, 0].long()
+-    w_source = track_pos[batch_idx, track_idx, 0, 1].long()
+-    
+-    # Get source features and assign to target positions
+-    src_features = vae_feature[batch_idx, :, 0, h_source, w_source]
+-    vae_feature[batch_idx, :, t_target, h_target, w_target] = src_features
+-    
++
++    # Preserve original Wan-Move RNG consumption/order contract.
++    track_pos = track_pos[
++        :,
++        torch.randperm(n),
++        :,
++        :
++    ]
++
++    for batch_idx in range(b):
++
++        source_pos = track_pos[
++            batch_idx,
++            :,
++            0,
++            :
++        ]
++
++        source_valid = (
++            (source_pos[:, 0] >= 0)
++            & (source_pos[:, 1] >= 0)
++            & (source_pos[:, 0] < h)
++            & (source_pos[:, 1] < w)
++        )
++
++        for t_target in range(1, t):
++
++            target_pos = track_pos[
++                batch_idx,
++                :,
++                t_target,
++                :
++            ]
++
++            target_valid = (
++                (target_pos[:, 0] >= 0)
++                & (target_pos[:, 1] >= 0)
++                & (target_pos[:, 0] < h)
++                & (target_pos[:, 1] < w)
++            )
++
++            valid = (
++                source_valid
++                & target_valid
++            )
++
++            valid_track_idx = torch.where(
++                valid
++            )[0]
++
++            if valid_track_idx.numel() == 0:
++                continue
++
++            target_h = target_pos[
++                valid_track_idx,
++                0
++            ].long()
++
++            target_w = target_pos[
++                valid_track_idx,
++                1
++            ].long()
++
++            flat_target = (
++                target_h * w
++                + target_w
++            )
++
++            unique_cells = torch.unique(
++                flat_target,
++                sorted=True
++            )
++
++            for cell_tensor in unique_cells:
++
++                cell = int(
++                    cell_tensor.item()
++                )
++
++                member_mask = (
++                    flat_target
++                    == cell_tensor
++                )
++
++                members = valid_track_idx[
++                    member_mask
++                ]
++
++                source_h = source_pos[
++                    members,
++                    0
++                ].long()
++
++                source_w = source_pos[
++                    members,
++                    1
++                ].long()
++
++                # [C, M] -> [M, C]
++                src_features = vae_feature[
++                    batch_idx,
++                    :,
++                    0,
++                    source_h,
++                    source_w
++                ].transpose(0, 1)
++
++                # Parameter-free collision aggregation.
++                mean_feature = src_features.mean(
++                    dim=0
++                )
++
++                target_cell_h = cell // w
++                target_cell_w = cell % w
++
++                vae_feature[
++                    batch_idx,
++                    :,
++                    t_target,
++                    target_cell_h,
++                    target_cell_w
++                ] = mean_feature
++
+     return vae_feature
+ 
+ def get_video_track_video(
+diff --git a/wan/wan_move.py b/wan/wan_move.py
+index 8d59630..4e3c250 100644
+--- a/wan/wan_move.py
++++ b/wan/wan_move.py
+@@ -274,6 +274,8 @@ class WanMove:
+         ])[0]
+  
+         # Edit y to enable motion control
++        # DeformTransport formal protocol: freeze trajectory-internal RNG
++        torch.manual_seed(seed)
+         track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)
+         track_feats = track_feats.permute(3, 0, 1, 2)
+         edited_y = replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]

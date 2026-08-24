@@ -1,0 +1,5 @@
+artifact = /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_232607__full_generation_compatible_candidates/quality_ramp4_full_generation.pt
+correct mean_abs = 0.01730065979063511
+shuffled mean_abs = 0.022453056648373604
+checks = {'correct_shape': True, 'shuffled_shape': True, 'correct_finite': True, 'shuffled_finite': True, 'correct_slot0_zero': True, 'shuffled_slot0_zero': True, 'scale_zero_exact_reference': True, 'correct_changes_future': True, 'shuffled_changes_future': True, 'correct_differs_from_shuffled': True}
+all_checks_pass = True

@@ -1,0 +1,13 @@
+{
+  "process_alive": false,
+  "exit_code": 0,
+  "completion_marker": true,
+  "fatal_traceback_oom_killed_runtimeerror": false,
+  "mp4_exists": true,
+  "frame_count": 81,
+  "width": 832,
+  "height": 464,
+  "engineering_completion_status": "PASS_NORMAL_COMPLETION",
+  "provisional_status": "COMPLETED_PENDING_VALIDITY_DECISION",
+  "scientific_result_inspected": false
+}

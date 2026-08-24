@@ -1,0 +1,12 @@
+{
+  "wan_move_source_root": "/mnt/sdbd/home/liuyu_qyh/Wan-Move",
+  "git_head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+  "prompt_extend_path": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/utils/prompt_extend.py",
+  "prompt_extend_original_sha256": "a7d81b451377a47413e932d440d573ea010c0d608c8bb668b3af9c01261c0a67",
+  "trajectory_path": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/trajectory.py",
+  "trajectory_sha256": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+  "wan_move_path": "/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/wan_move.py",
+  "wan_move_sha256": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857",
+  "git_status_before_recovery": ["M wan/modules/trajectory.py", "M wan/wan_move.py", "?? Wan-Move/", "?? nohup.out"],
+  "note": "These pre-existing working-tree entries were recorded but were not modified by this recovery."
+}

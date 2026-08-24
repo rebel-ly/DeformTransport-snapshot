@@ -1,0 +1,19 @@
+2026-08-05T05:11:14+0800
+gpu3
+liuyu_qyh
+/mnt/sdbd/home/liuyu_qyh/DeformTransport
+CONTAINER ID                                                       IMAGE                                                                              COMMAND                                   CREATED             STATUS              PORTS               NAMES
+1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14   image.ac.com:5000/gpu/admin/codeserver/vscode-pytorch:pytorch1.14-py3.8-cuda11.8   "/opt/nvidia/nvidia_entrypoint.sh bash"   22 hours ago        Up 22 hours                             deformtransport-dev
+
+HOST_PROCESSES
+291997 163093 liuyu_q+ Ss   Wed Aug  5 04:03:20 2026    4073 bash server_runs/20260804_234925_autonomous_deformtransport/gpu_scheduler/gpu_watcher.sh
+
+CONTAINER_PROCESSES
+
+FINAL_HANDOFF_VERIFICATION
+核验日期: 2026-08-05
+PID 291997: ACTIVE；/proc存在；状态S(sleeping)；命令=bash server_runs/20260804_234925_autonomous_deformtransport/gpu_scheduler/gpu_watcher.sh；保持原状
+PID 89794: NOT_PRESENT；81帧chain已自然退出；current_stage=03_assemble_final_sim；exit_code=1；未重启
+PID 86928: NOT_PRESENT
+PID 86942: NOT_PRESENT
+未发现其他当前RUN_ID活动任务；trio scheduler未启动。

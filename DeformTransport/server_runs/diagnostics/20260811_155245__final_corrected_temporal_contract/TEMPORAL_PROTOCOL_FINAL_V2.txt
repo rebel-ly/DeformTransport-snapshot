@@ -1,0 +1,60 @@
+FINAL TEMPORAL DIAGNOSTIC PROTOCOL V2
+
+Scientific questions are case-specific and MUST NOT be cross-case averaged.
+
+SANTA
+Question:
+Does correct persistent material identity outperform identity shuffling?
+
+Comparison:
+rw   = corrected Identity-Shuffled
+v3d  = corrected Correct
+
+Appearance primary support:
+83 anchor-balanced material tracks.
+
+Motion companion support:
+71 tracks.
+This is a strict subset of the 83 appearance tracks and additionally requires,
+for every anchor t=4,8,...,80:
+- visibility at t-1 and t;
+- finite material coordinates at t-1 and t;
+- valid previous-frame RAFT sampling center.
+
+TREE
+Question:
+Does block-3 Persistent-Noise A2 outperform original RealWonder A0?
+
+Comparison:
+rw   = RealWonder A0
+v3d  = Persistent-Noise A2
+
+Appearance primary support:
+156 anchor-balanced material tracks.
+
+Motion companion support:
+133 tracks, using the same additional transition-validity requirements.
+
+Temporal anchors:
+4,8,...,80.
+
+Windows:
+Early = 4..40.
+Late  = 44..80.
+
+Primary appearance metric:
+TC-MAR, lower is better.
+
+Motion companion:
+TC-ME, lower is better.
+
+Inference:
+whole-material-track bootstrap.
+Time anchors are never independent statistical units.
+
+Sensitivity:
+Santa strict all-frame-visible = 63 tracks.
+Tree strict all-frame-visible  = 121 tracks.
+
+Cross-case averaging between Santa and Tree is FORBIDDEN because
+the two comparisons test different scientific hypotheses.

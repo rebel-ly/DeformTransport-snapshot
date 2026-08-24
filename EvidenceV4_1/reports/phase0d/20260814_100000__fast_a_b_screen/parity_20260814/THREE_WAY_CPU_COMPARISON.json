@@ -1,0 +1,60 @@
+{
+  "inputs": {
+    "A": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/parity_20260814/original/santa_correct_v3d_seed000.mp4",
+      "video_sha256": "25e0be0caf53dfb334784ef239f9759fe4f210f43fdb3ea20c746998d75afb07",
+      "frame_count": 81,
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "decoded_rgb_sha256": "2fd99bf71cb031955c72457af6d3393d184002aba02a0e0b7e8afaa1a26c1030"
+    },
+    "B": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/parity_20260814/overlay/santa_correct_v3d_seed000.mp4",
+      "video_sha256": "b8eebb17ad1753851fa95632249bd1ad971dc7b0107331a17d64407b89329f69",
+      "frame_count": 81,
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "decoded_rgb_sha256": "ef0180d58a635baf5c2d14dbc6cc2f39a5dfb293ff81417d347029f1c8240069"
+    },
+    "CANONICAL": {
+      "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/gpu0_seed0_eligibility/santa_correct_v3d_seed000.mp4",
+      "video_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "frame_count": 81,
+      "shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6"
+    }
+  },
+  "comparisons": {
+    "A_vs_CANONICAL": {
+      "decoded_rgb_exact": false,
+      "different_channel_values": 60092735,
+      "max_abs_diff": 255,
+      "mean_abs_diff": 7.633401927545546
+    },
+    "B_vs_CANONICAL": {
+      "decoded_rgb_exact": false,
+      "different_channel_values": 59950886,
+      "max_abs_diff": 255,
+      "mean_abs_diff": 7.430861622103241
+    },
+    "A_vs_B": {
+      "decoded_rgb_exact": false,
+      "different_channel_values": 55284397,
+      "max_abs_diff": 214,
+      "mean_abs_diff": 2.511267623770617
+    }
+  }
+}\n

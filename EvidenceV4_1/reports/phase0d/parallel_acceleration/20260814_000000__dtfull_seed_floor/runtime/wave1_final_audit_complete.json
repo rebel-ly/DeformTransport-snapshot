@@ -1,0 +1,47 @@
+{
+  "GPU0_SEED0": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/gpu0_seed0_eligibility/santa_correct_v3d_seed000.mp4",
+    "exists": false,
+    "sha256": null,
+    "frames": 0,
+    "width": 0,
+    "height": 0,
+    "decodable": false,
+    "integrity": "FAIL"
+  },
+  "SEED1": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/seed1/santa_correct_v3d_seed001.mp4",
+    "exists": false,
+    "sha256": null,
+    "frames": 0,
+    "width": 0,
+    "height": 0,
+    "decodable": false,
+    "integrity": "FAIL"
+  },
+  "SEED2": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/outputs/seed2/santa_correct_v3d_seed002.mp4",
+    "exists": false,
+    "sha256": null,
+    "frames": 0,
+    "width": 0,
+    "height": 0,
+    "decodable": false,
+    "integrity": "FAIL"
+  },
+  "gpu0_identity": {
+    "canonical_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+    "FRAME_COUNT_EQUAL": false,
+    "FRAME_SHAPE_EQUAL": true,
+    "DECODED_RGB_PIXEL_MISMATCH_COUNT": 0,
+    "DECODED_RGB_MAX_ABS_DIFF": 0,
+    "GPU0_CROSS_DEVICE_GENERATION_IDENTITY": "FAIL"
+  },
+  "duplicate_output_write_detected": {
+    "GPU0": false,
+    "SEED1": false,
+    "SEED2": false,
+    "basis": "terminated duplicate stderr/stdout empty; no MP4 existed in first post-containment audit"
+  },
+  "OUTPUT_CONTAMINATION_RISK": false
+}

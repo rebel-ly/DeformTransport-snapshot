@@ -1,0 +1,11 @@
+{
+  "seed0_result_dir": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_050000__phase0d_4d_r3h_cpair_unseal",
+  "evaluator_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "eval_ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "eval_n": 1257,
+  "tcme": {"C1": 0.47438763126111494, "C2": 0.42167144903579584, "CS": 0.5138549546231557},
+  "tcmar": {"C1": 10.2725907004925, "C2": 10.261138980605933, "CS": 11.860088155174827},
+  "raw_result_files": ["C1_tcme_primary.json", "C2_tcme_primary.json", "CS_tcme_primary.json", "C1_tcmar_secondary.json", "C2_tcmar_secondary.json", "CS_tcmar_secondary.json"],
+  "primary_runner": "run_cpair_primary.py"
+}

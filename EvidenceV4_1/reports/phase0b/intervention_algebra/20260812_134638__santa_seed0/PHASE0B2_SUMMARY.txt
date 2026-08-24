@@ -1,0 +1,9 @@
+Phase0B-2 Intervention Algebra Audit
+
+STATUS=QUALIFIED_PASS
+
+Source assignment is isolated and all future absolute states plus all transitions after frame1 are exact. However the frame0->frame1 transition and all geometry expressed relative to source frame0 are changed. Therefore the strong claim that the full motion input is identical is not established. Wan-Move consumption must be audited in Phase0B-3.
+
+Future-state invariance=True
+Post-source kinematic invariance=True
+Full-track kinematic invariance=False

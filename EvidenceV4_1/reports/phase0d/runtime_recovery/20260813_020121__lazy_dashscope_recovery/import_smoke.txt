@@ -1,0 +1,16 @@
+=== prompt_extend import smoke ===
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+PROMPT_EXTEND_IMPORT_OK
+DASHSCOPE_LOADED_AFTER_PROMPT_MODULE_IMPORT=False
+PROMPT_EXTEND_RC=0
+
+=== generate import smoke ===
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/model.py:31: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+/mnt/sdbd/home/liuyu_qyh/Wan-Move/wan/modules/model.py:42: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  @amp.autocast(enabled=False)
+GENERATE_IMPORT_OK
+GENERATE_IMPORT_RC=0

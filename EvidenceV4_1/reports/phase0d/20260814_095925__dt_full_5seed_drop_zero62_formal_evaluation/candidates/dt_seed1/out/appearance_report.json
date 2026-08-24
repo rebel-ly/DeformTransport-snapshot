@@ -1,0 +1,105 @@
+{
+  "protocol": "frozen TC-MAR development evaluation",
+  "cases": {
+    "santa": {
+      "case": "santa",
+      "metric": "Track-Conditioned Material Appearance Retention (TC-MAR)",
+      "anchors": [
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80
+      ],
+      "valid_tracks": 1110,
+      "total_valid_anchor_observations": 9766,
+      "methods": {
+        "rw": {
+          "tc_mar_lab": {
+            "n": 1110,
+            "mean": 13.639900159270573,
+            "median": 9.546106088056899,
+            "p95": 40.176803651452055
+          },
+          "tc_mar_rgb_l1": {
+            "n": 1110,
+            "mean": 0.0971740217773049,
+            "median": 0.04986683472192713,
+            "p95": 0.3180196253644923
+          },
+          "sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7"
+        },
+        "old_correct": {
+          "tc_mar_lab": {
+            "n": 1110,
+            "mean": 21.16497305149358,
+            "median": 19.007424074506005,
+            "p95": 44.08863298365103
+          },
+          "tc_mar_rgb_l1": {
+            "n": 1110,
+            "mean": 0.14329059195071162,
+            "median": 0.1012165859962503,
+            "p95": 0.3716458222403058
+          },
+          "sha256": "1c20d32c82049e0cb5fd8f19b08957b4e5b0b70020267c357293cc568d43cf14"
+        },
+        "dt_full": {
+          "tc_mar_lab": {
+            "n": 1110,
+            "mean": 18.46314615351694,
+            "median": 15.697774118847317,
+            "p95": 42.26366441488266
+          },
+          "tc_mar_rgb_l1": {
+            "n": 1110,
+            "mean": 0.12451959930154036,
+            "median": 0.08807754330337048,
+            "p95": 0.33464854937046756
+          },
+          "sha256": "0fbc113ac3a5374ccfad8fe658524a73d64639f10ea7570f27ffcdb813b31450"
+        }
+      },
+      "vs_old_correct": {
+        "dt_full": {
+          "definition": "OldCorrect TC-MAR Lab - candidate; positive means candidate better",
+          "paired_mean_difference": 2.7018268979766376,
+          "paired_median_difference": 3.275282059397016,
+          "fraction_candidate_better": 0.6162162162162163,
+          "bootstrap_95_ci": [
+            1.835340918930481,
+            3.535673731445158
+          ],
+          "status": "IMPROVE",
+          "relative_mean_improvement": 0.12765557940485892
+        }
+      },
+      "vs_realwonder": {
+        "dt_full": {
+          "definition": "RealWonder TC-MAR Lab - candidate; positive means candidate better",
+          "paired_mean_difference": -4.823245994246369,
+          "bootstrap_95_ci": [
+            -5.653904434950117,
+            -4.018288375756132
+          ],
+          "decision": "LOSS"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+===== WRAPPER =====
+2ae648333d885e6ac1b82438738f53c35384a353c3075820c21641d95bb3f27c  /workspace/DeformTransport/server_runs/diagnostics/20260811_153631__final_motion_treeA2_correctedSanta/eval_motion_frozen_wrapper.py
+===== FROZEN EVALUATOR =====
+2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08  /workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/eval_v3.py
+===== TREE A2 =====
+c4c021072f4fd363c56dafeeaf3f26948487c78c0e54b88c8cc368140c987045  /workspace/DeformTransport/server_runs/diagnostics/20260811_153631__final_motion_treeA2_correctedSanta/suite/tree/v3d/tree_v3d_correct_seed0.mp4
+===== SANTA SHUFFLED =====
+4017af9ee9174cb649e454577074f9c037ba1c10893e28440c25bd38a973295a  /workspace/DeformTransport/server_runs/diagnostics/20260811_153631__final_motion_treeA2_correctedSanta/suite/santa/v3d/santa_v3d_correct_seed0.mp4
+===== SANTA CORRECT =====
+df5e50ad3446f64666d48497110ef8622738d145dd95ef2241676451099c643d  /workspace/DeformTransport/server_runs/wan_move_formal/20260811_025834__santa_v3d_corrected_visibility_correct_vs_shuffled_seed0/correct/santa_v3d_corrected_visibility_correct_seed0.mp4

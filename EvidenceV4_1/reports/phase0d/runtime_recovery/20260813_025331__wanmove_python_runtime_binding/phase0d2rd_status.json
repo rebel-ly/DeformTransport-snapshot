@@ -1,0 +1,23 @@
+{
+  "historical_runtime_provenance": "PASS",
+  "formal_wanmove_python_resolved": true,
+  "formal_wanmove_python": "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+  "easydict_import": "PASS",
+  "prompt_extend_import": "PASS",
+  "dashscope_loaded_after_import": false,
+  "wan_move_14b_config_import": "PASS",
+  "generate_import_smoke": "PASS",
+  "cuda_gpu1_smoke": "PASS",
+  "cuda_gpu2_smoke": "PASS",
+  "source_gate": "PASS",
+  "next_runtime_blocker": "NONE",
+  "dryrun_actual_python_match": true,
+  "generation_parameter_changes": 0,
+  "scientific_input_changes": 0,
+  "seed_changes": 0,
+  "source_code_core_changes": 0,
+  "generation_run": false,
+  "phase0d2rc_same_seed_replay": "NOT_EVALUATED",
+  "status": "PASS",
+  "proceed_to_phase0d2re": true
+}

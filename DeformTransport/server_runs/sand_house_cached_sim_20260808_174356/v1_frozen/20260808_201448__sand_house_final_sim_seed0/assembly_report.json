@@ -1,0 +1,24 @@
+{
+  "case": "sand_house",
+  "pixel_frames": 165,
+  "latent_slots": 42,
+  "point_mask_shape": [
+    42,
+    60,
+    104
+  ],
+  "point_mask_true": 65667,
+  "mesh_mask_shape": [
+    42,
+    60,
+    104
+  ],
+  "mesh_mask_true": 0,
+  "denoising_step_list": [
+    500,
+    250,
+    100
+  ],
+  "mask_dropin_step": 2,
+  "noise_status": "PENDING"
+}

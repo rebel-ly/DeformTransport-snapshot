@@ -1,0 +1,7 @@
+{
+  "final_decoded_rgb_hw": [464,832], "frame_count": 81, "channels": 3,
+  "evidence": "Phase0D-2R-E decoded_comparison and decord CPU decode, no resize/crop/resample.",
+  "save_path": "Wan-Move/generate.py:535-542 -> wan/utils/utils.py:23-55 cache_video; cache_video serializes the supplied tensor without spatial resize/crop.",
+  "final_output_464_cause": "UNRESOLVED", "exact_rule_or_line": null,
+  "finding": "No explicit 480->464 operation was identified in the frozen formal runner, generate.py non-eval path, wan_move.py, or cache_video. Therefore it must not be attributed to numerical noise, crop, or VAE behavior without further admissible evidence."
+}

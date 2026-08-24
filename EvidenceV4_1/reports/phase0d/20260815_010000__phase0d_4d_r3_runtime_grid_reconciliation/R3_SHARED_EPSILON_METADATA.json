@@ -1,0 +1,20 @@
+{
+  "canonical_source": "wan_move.py private Generator(device=self.device), manual_seed(0), torch.randn; actual runtime shape",
+  "dtype": "torch.float32",
+  "epsilon_status": "PROVISIONAL_PENDING_BEGIN0",
+  "finite": true,
+  "max": 4.785398483276367,
+  "mean": -0.0003667346900328994,
+  "min": -5.119814872741699,
+  "npy_file_sha256": "20911e4d396115ea12ab1c7715202c7321dd8104fe114d7515d2321485b9e288",
+  "pt_file_sha256": "11f943937843034ac420b81ebacf3a34d513ccba5005150d8ec07b7b52f15dc8",
+  "roundtrip_exact": true,
+  "shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "std": 0.999748170375824,
+  "tensor_content_sha256": "316cfc55f5782bb887395795d3ea0c685fbc240067c6f2f0b2964dee18a891c9"
+}

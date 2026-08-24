@@ -1,0 +1,29 @@
+{
+  "decode_comparison": "NOT_APPLICABLE_NO_OUTPUTS",
+  "execution_mode": "CROSS_DEVICE_PARALLEL",
+  "formal_runner_sha_match": true,
+  "gpu_A": 1,
+  "gpu_B": 2,
+  "phase": "Phase0D-2",
+  "phase0d1r_status_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172755__santa_v3d_contract_recovery/phase0d1r_status.json",
+  "phase0d1r_status_sha256": "dc1927aed986e74a62db44df0c8b2e52976d6eabdf4e1122b3c465be5b31eb9a",
+  "previous_stage_gate": "PASS",
+  "proceed_to_phase0d3": false,
+  "run_A": {
+    "exit_code": "NOT_CAPTURED_BY_LAUNCHER",
+    "failure": "GLIBC_2.18 missing for cryptography Rust binding via dashscope",
+    "mp4_exists": false,
+    "status": "ENGINEERING_FAIL_BEFORE_MODEL_LOAD"
+  },
+  "run_B": {
+    "exit_code": "NOT_CAPTURED_BY_LAUNCHER",
+    "failure": "GLIBC_2.18 missing for cryptography Rust binding via dashscope",
+    "mp4_exists": false,
+    "status": "ENGINEERING_FAIL_BEFORE_MODEL_LOAD"
+  },
+  "run_contract_pairing": "PASS",
+  "same_seed_replay": "NOT_EVALUATED",
+  "seed_A": 0,
+  "seed_B": 0,
+  "status": "ENGINEERING_FAIL"
+}

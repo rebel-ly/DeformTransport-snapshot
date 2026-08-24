@@ -1,0 +1,20 @@
+{
+  "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_032909__quality_motion_neutral_correct/motion_neutral_correct/aligned_santa_quality_motion_neutral_correct_seed0.mp4",
+  "bytes": 1090587,
+  "shape": [
+    81,
+    480,
+    832,
+    3
+  ],
+  "dtype": "uint8",
+  "mean": 26.563182830810547,
+  "std": 51.811553955078125,
+  "checks": {
+    "frame_count_81": true,
+    "resolution_480x832": true,
+    "finite": true,
+    "not_collapsed": true
+  },
+  "all_checks_pass": true
+}

@@ -1,0 +1,15 @@
+{
+  "formal_runner": "reports/phase0d/runtime_recovery/20260813_025331__wanmove_python_runtime_binding/run_with_formal_wanmove_python.sh",
+  "cli_size_string": "480*832",
+  "requested_width": 832,
+  "requested_height": 480,
+  "requested_generation_domain_resolved": true,
+  "formal_non_eval_path": "Wan-Move/generate.py:497-510 calls WanMove.generate(... eval_bench=False); wan/wan_move.py:207-220 derives target h,w and scales tracks.",
+  "canonical_output": "reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4",
+  "canonical_role": "DT_FULL_SEED0_CANONICAL_OUTPUT",
+  "replay_b_role": "DETERMINISM_REPLAY_EVIDENCE",
+  "mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+  "decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+  "decoded_frame_shape": [81,464,832,3],
+  "decode_backend": "decord 0.6.0 CPU RGB; no resize/crop/resample"
+}

@@ -1,0 +1,27 @@
+{
+  "evaluator_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "gate_policy": "No tolerance was specified in the frozen F4-R1 protocol; exact numerical reproduction is required.",
+  "rw": {
+    "tc_mar_lab_mean_expected": 13.639900159270573,
+    "tc_mar_lab_mean_actual": 13.639900159270573,
+    "tc_mar_lab_mean_residual": 0.0,
+    "tc_me_mean_expected": 0.5869890665947547,
+    "tc_me_mean_actual": 0.586977941501839,
+    "tc_me_mean_residual": -0.00001112509291572936,
+    "status": "FAIL"
+  },
+  "dt_full": {
+    "tc_mar_lab_mean_expected": 17.144317299874714,
+    "tc_mar_lab_mean_actual": 17.144317299874714,
+    "tc_mar_lab_mean_residual": 0.0,
+    "tc_me_mean_expected": 0.7265499674289193,
+    "tc_me_mean_actual": 0.7265571851768204,
+    "tc_me_mean_residual": 0.0000072177479011076,
+    "status": "FAIL"
+  },
+  "RW_BASELINE_REPRODUCTION": "FAIL",
+  "DTFULL_BASELINE_REPRODUCTION": "FAIL",
+  "F4_FORMAL_RESULTS_VALID": false,
+  "required_action": "Stop before candidate ranking, subgroup interpretation, Pareto, promotion, or route decision."
+}

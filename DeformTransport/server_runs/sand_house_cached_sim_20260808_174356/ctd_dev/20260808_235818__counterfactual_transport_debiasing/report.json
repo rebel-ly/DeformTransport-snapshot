@@ -1,0 +1,20 @@
+{
+  "method": "Counterfactual Transport Debiasing",
+  "source": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_203011__frozen_quality075_ramp4/sand_house_quality075_ramp4_full_generation.pt",
+  "formula_frozen_before_generation": true,
+  "manual_hyperparameters": 0,
+  "correct_actual_mean_abs": 0.01591038205005771,
+  "shuffled_actual_mean_abs": 0.015910383762741214,
+  "correct_shuffled_cosine": 0.9269074297436197,
+  "projection_beta": 0.9450309803328032,
+  "diff_mean_abs": 0.005595596780658086,
+  "orth_mean_abs": 0.005608333938879836,
+  "orth_relative_dot": 1.8041821441466997e-08,
+  "mask_cells": 48109,
+  "slot0_zero": true,
+  "inference_scale": 1.0,
+  "artifacts": {
+    "CTD_DIFF": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/ctd_dev/20260808_235818__counterfactual_transport_debiasing/sand_house_ctd_diff.pt",
+    "CTD_ORTH": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/ctd_dev/20260808_235818__counterfactual_transport_debiasing/sand_house_ctd_orth.pt"
+  }
+}

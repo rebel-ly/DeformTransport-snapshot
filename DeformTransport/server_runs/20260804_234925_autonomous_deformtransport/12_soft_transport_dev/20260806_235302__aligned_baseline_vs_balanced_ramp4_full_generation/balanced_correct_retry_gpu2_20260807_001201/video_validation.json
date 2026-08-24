@@ -1,0 +1,18 @@
+{
+  "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/balanced_correct_retry_gpu2_20260807_001201/aligned_santa_balanced_ramp4_correct_seed0.mp4",
+  "bytes": 1068823,
+  "shape": [
+    81,
+    480,
+    832,
+    3
+  ],
+  "std": 49.573909759521484,
+  "checks": {
+    "frame_count_81": true,
+    "resolution_480x832": true,
+    "finite": true,
+    "not_collapsed": true
+  },
+  "all_checks_pass": true
+}

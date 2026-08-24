@@ -1,0 +1,8 @@
+{
+  "formal_config": "wan/configs/wan_move_14B.py:22-24", "vae_stride": [4,8,8], "vae_channels": 16,
+  "source_code_contract": "wan/wan_move.py:207-214 derives h,w from requested max area and source aspect; :222-243 constructs 21 temporal mask slots; :266-284 VAE-encodes [3,81,h,w] and concatenates mask with y. wan/modules/vae.py:647-662 is encode/decode API.",
+  "runtime_tensor_artifact_available": false,
+  "vae_only_probe": {"attempted": true, "formal_python_sha256": "edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3", "loaded_components": ["PIL source image", "WanVAE checkpoint"], "excluded_components": ["T5", "CLIP", "14B diffusion transformer", "generation"], "result": "NO_TENSOR_RESULT"},
+  "real_vae_y_shape": "UNRESOLVED", "real_vae_channels": 16, "real_vae_temporal_slots": 21, "real_vae_latent_hw": "UNRESOLVED", "real_latent_domain_resolved": false,
+  "prohibited_inference_note": "No conclusion is drawn from FINAL_RGB 464/8. Source-code formulas alone do not substitute for a captured real y tensor in this audit."
+}

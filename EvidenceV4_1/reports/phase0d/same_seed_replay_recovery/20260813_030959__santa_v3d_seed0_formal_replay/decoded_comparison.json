@@ -1,0 +1,35 @@
+{
+  "a": {
+    "dtype": "uint8",
+    "frame_count": 81,
+    "raw_bytes": 93809664,
+    "sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+    "shape": [
+      81,
+      464,
+      832,
+      3
+    ]
+  },
+  "b": {
+    "dtype": "uint8",
+    "frame_count": 81,
+    "raw_bytes": 93809664,
+    "sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+    "shape": [
+      81,
+      464,
+      832,
+      3
+    ]
+  },
+  "decode_pipeline": "VideoReader(cpu(0)); get_batch(all frames); uint8 RGB frame array; C-order raw RGB24 bytes; no resize/crop/resample",
+  "decoded_rgb_sha_equal": true,
+  "decoder": "decord",
+  "decoder_version": "0.6.0",
+  "differing_frame_count": 0,
+  "first_differing_frame": null,
+  "max_abs_pixel_difference": 0,
+  "mean_abs_pixel_difference": 0,
+  "pixel_scalar_mismatch_count": 0
+}

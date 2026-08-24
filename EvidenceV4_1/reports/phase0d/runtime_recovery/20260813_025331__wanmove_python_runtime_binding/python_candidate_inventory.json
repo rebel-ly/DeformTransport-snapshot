@@ -1,0 +1,17 @@
+{
+  "selection_principle": ["historical successful Wan-Move provenance", "explicit runner binding", "complete frozen-Wan-Move import", "CUDA/Torch availability", "environment name last"],
+  "candidates_discovered": [
+    "/workspace/tools/miniforge3/envs/deformtransport-recon/bin/python",
+    "/workspace/tools/miniforge3/envs/realwonder/bin/python",
+    "/workspace/tools/miniforge3/envs/realwonder-full/bin/python",
+    "/workspace/tools/miniforge3/envs/realwonder-gen/bin/python",
+    "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+    "/workspace/tools/venvs/deformtransport-sim/bin/python",
+    "/workspace/tools/venvs/modelscope-download/bin/python"
+  ],
+  "selected": "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+  "selected_exists": true,
+  "selected_python_version": "Python 3.11.0",
+  "selected_sys_prefix": "/workspace/tools/miniforge3/envs/wan-move",
+  "selection_reason": "Explicitly recorded in historical successful Santa Wan-Move resource_watch.log commands executing generate.py; passed all required no-model import and CUDA smokes."
+}

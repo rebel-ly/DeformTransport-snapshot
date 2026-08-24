@@ -1,0 +1,75 @@
+{
+  "formal_initial_noise_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "formal_overlay_wan_move_sha256": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7",
+  "formal_source_rgb_shape": [
+    3,
+    480,
+    832
+  ],
+  "formal_source_vae_input_shape": [
+    3,
+    81,
+    464,
+    832
+  ],
+  "formal_target_h": 464,
+  "formal_target_w": 832,
+  "grid_contract": "SINGLE_58x104",
+  "preprocess": "torchvision TF.to_tensor -> (x-0.5)/0.5; torch.nn.functional.interpolate per RGB frame, mode=bicubic, default align_corners/antialias; no crop/pad/evaluator preprocessing",
+  "preprocess_code_site": "wan/wan_move.py formal source VAE input construction",
+  "runtime_latent_grid": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "sdedit_required_preview_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "sdedit_start_state_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "source_image_sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+  "source_vae_latent_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "transport_edited_y_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "transport_input_y_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "vae_checkpoint_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+  "y_cond_at_model_shape": [
+    20,
+    21,
+    58,
+    104
+  ],
+  "y_cond_pre_model_shape": [
+    20,
+    21,
+    58,
+    104
+  ]
+}

@@ -1,0 +1,24 @@
+--- /mnt/sdbd/home/liuyu_qyh/Wan-Move/generate.py	2026-08-09 08:42:57.000000000 +0800
++++ experimental/20260814__wanmove_preview_sdedit_overlay/generate.py	2026-08-14 13:01:46.000000000 +0800
+@@ -208,6 +208,9 @@
+         type=str,
+         default=None,
+         help="The visibility of point trajectories.")
++    parser.add_argument("--preview_latent", type=str, default=None, help="Experimental preview latent .npy")
++    parser.add_argument("--initial_epsilon", type=str, default=None, help="Experimental frozen epsilon .npy")
++    parser.add_argument("--start_index", type=int, default=None, help="Experimental UniPC start index")
+ 
+     # Specified for MoveBench evaluation
+     parser.add_argument(
+@@ -507,7 +510,10 @@
+             guide_scale=args.sample_guide_scale,
+             seed=args.base_seed,
+             offload_model=args.offload_model,
+-            eval_bench=args.eval_bench)
++            eval_bench=args.eval_bench,
++            preview_latent=(torch.from_numpy(np.load(args.preview_latent)) if args.preview_latent else None),
++            initial_epsilon=(torch.from_numpy(np.load(args.initial_epsilon)) if args.initial_epsilon else None),
++            start_index=args.start_index)
+ 
+     else:
+         raise ValueError(f"Unkown task type: {args.task}")

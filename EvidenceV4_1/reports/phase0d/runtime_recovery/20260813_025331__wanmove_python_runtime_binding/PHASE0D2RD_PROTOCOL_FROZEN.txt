@@ -1,0 +1,786 @@
+当前阶段：
+
+Phase0D-2R-D —
+Formal Wan-Move Python Runtime Binding Recovery
+
+这是纯运行环境恢复阶段。
+
+禁止正式 Wan-Move generation。
+禁止运行 seed1/2/3/4。
+禁止安装、卸载或升级任何 Python package。
+
+==================================================
+0. 已冻结历史
+==================================================
+
+Phase0D-2：
+ENGINEERING_FAIL
+SAME_SEED_REPLAY = NOT_EVALUATED
+
+原因：
+host execution 中 dashscope -> cryptography Rust binding
+与 GLIBC 2.17 不兼容。
+
+Phase0D-2R-A：
+ROOT_CAUSE_IDENTIFIED
+
+Phase0D-2R-B：
+PASS
+
+只修改：
+wan/utils/prompt_extend.py
+
+patched SHA256 =
+61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19
+
+trajectory.py SHA unchanged
+wan_move.py SHA unchanged
+
+lazy DashScope recovery 已通过：
+
+GENERATE_IMPORT_SMOKE = PASS
+FORMAL_RUN_REACHES_DASHSCOPE_FUNCTION = False
+
+Phase0D-2R-C：
+ENGINEERING_FAIL_RECOVERY_REPLAY
+
+但是 generation 从未启动。
+
+当前精确 blocker：
+
+ModuleNotFoundError:
+No module named 'easydict'
+
+at:
+wan/configs/wan_move_14B.py:3
+
+当前实际 container Python 被确认是错误的默认：
+
+/usr/bin/python
+
+因此：
+
+SAME_SEED_REPLAY = NOT_EVALUATED
+GPU computation = NOT_STARTED
+MP4 = NOT_CREATED
+
+该历史全部保留，不得覆盖。
+
+==================================================
+1. 本阶段唯一目标
+==================================================
+
+找到、验证并冻结一个：
+
+EXISTING
+UNMODIFIED
+WAN-MOVE-COMPATIBLE
+
+Python interpreter。
+
+不得通过：
+
+pip install
+conda install
+environment rebuild
+
+来让错误的 /usr/bin/python 工作。
+
+核心问题：
+
+历史 Wan-Move 成功运行时到底使用哪个 Python？
+
+==================================================
+2. 禁止事项
+==================================================
+
+严格禁止：
+
+- pip install easydict
+- pip install任何其他缺包
+- conda install
+- conda update
+- pip uninstall
+- 修改系统 Python
+- 修改 /usr/bin/python
+- 修改 GLIBC
+- 修改 LD_LIBRARY_PATH 去强塞 libc
+- 创建新 conda env
+- 重装 Wan-Move
+- 修改 trajectory.py
+- 修改 wan_move.py
+- 修改 prompt_extend.py
+- 正式加载 14B checkpoint
+- 正式 video generation
+- seed1-4
+
+==================================================
+3. Current container context
+==================================================
+
+正式 container 已确认：
+
+Evidence root =
+/workspace/DeformTransport_EvidenceV4_1
+
+Repo =
+/workspace/DeformTransport
+
+Wan-Move =
+/workspace/Wan-Move
+
+记录：
+
+hostname
+whoami
+pwd
+
+which python
+python --version
+
+/usr/bin/python --version
+
+python -c:
+sys.executable
+sys.prefix
+sys.path
+
+生成：
+
+current_python_context.json
+
+==================================================
+4. Historical interpreter provenance audit
+==================================================
+
+不要先猜环境名。
+
+优先从真实历史证据反查：
+
+- historical successful Wan-Move runners
+- launch scripts
+- successful generation logs
+- shell wrappers
+- Evidence scripts
+- shebangs
+- explicit python executable paths
+- conda activation records in scripts
+
+重点有界审计：
+
+/workspace/DeformTransport
+/workspace/Wan-Move
+/workspace/DeformTransport_EvidenceV4_1
+/workspace/tools
+
+以及 container 中实际存在的 tools/miniforge/venv mounts。
+
+搜索关键词：
+
+python
+conda activate
+source activate
+miniforge
+envs/
+wan-move
+generate.py
+
+不得扫描无关全盘。
+
+生成：
+
+historical_python_provenance.md
+
+对每个历史成功 evidence 标记：
+
+SUCCESSFUL_RUN_EVIDENCE = True/False
+
+PYTHON_PATH_EXPLICIT = True/False
+
+==================================================
+5. Existing environment inventory
+==================================================
+
+只盘点已存在 interpreter。
+
+候选位置例如但不限于：
+
+/workspace/tools/miniforge3/envs/*/bin/python
+/workspace/tools/venvs/*/bin/python
+
+以及 container 内实际存在的等价目录。
+
+如果 host-mounted tools 以其他路径暴露，
+记录真实 container path。
+
+对每个候选仅记录：
+
+path
+exists
+python version
+sys.prefix
+
+不要修改环境。
+
+生成：
+
+python_candidate_inventory.json
+
+==================================================
+6. Candidate ranking principle
+==================================================
+
+候选排序必须按：
+
+1. 有历史成功 Wan-Move provenance
+2. 与 historical runner 显式绑定
+3. 能完整 import frozen Wan-Move
+4. 与当前 CUDA/Torch 可用
+5. 最后才考虑环境名字
+
+不得因为名字叫：
+
+wan-move
+
+就自动认定正确。
+
+==================================================
+7. Minimal dependency smoke per candidate
+==================================================
+
+对高可信候选逐个只读测试。
+
+首先：
+
+<python> -c "import easydict; print('EASYDICT_OK')"
+
+然后：
+
+<python> -c "
+import torch
+print(torch.__version__)
+print(torch.version.cuda)
+print(torch.cuda.is_available())
+"
+
+记录：
+
+EASYDICT_IMPORT
+TORCH_IMPORT
+TORCH_VERSION
+TORCH_CUDA_VERSION
+CUDA_AVAILABLE
+
+失败候选保留 evidence，
+不要给它安装包。
+
+==================================================
+8. Frozen critical dependency inventory
+==================================================
+
+对每个通过基础 smoke 的候选，
+使用 importlib.metadata 记录已有版本：
+
+easydict
+torch
+torchvision
+transformers
+diffusers
+accelerate
+safetensors
+einops
+
+以及 generate.py 实际 import chain 中
+存在的其他关键 distribution。
+
+不要人为规定必须等于某个版本，
+先记录真实值。
+
+如果历史成功 run 有对应版本 evidence，
+做 exact comparison。
+
+生成：
+
+candidate_dependency_matrix.json
+
+==================================================
+9. Frozen source gate
+==================================================
+
+使用候选 interpreter 前再次确认：
+
+Wan-Move Git HEAD =
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+
+trajectory.py SHA256 =
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae
+
+wan_move.py SHA256 =
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857
+
+prompt_extend.py SHA256 =
+61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19
+
+任何 drift：
+
+SOURCE_GATE = FAIL
+STOP。
+
+==================================================
+10. Prompt-extend smoke with candidate
+==================================================
+
+从 /workspace/Wan-Move root：
+
+使用候选 interpreter 执行：
+
+import wan.utils.prompt_extend
+
+报告：
+
+PROMPT_EXTEND_IMPORT = PASS/FAIL
+
+同时确认：
+
+'dashscope' in sys.modules
+
+要求：
+
+DASHSCOPE_LOADED_AFTER_IMPORT = False
+
+如果 DashScope 被加载：
+STOP。
+
+==================================================
+11. Generate import smoke
+==================================================
+
+只在已经证明：
+
+import generate
+
+不会自动调用 main/generation 的前提下执行。
+
+使用候选 interpreter：
+
+import generate
+
+不得加载 14B checkpoint。
+
+报告：
+
+GENERATE_IMPORT_SMOKE = PASS/FAIL
+
+如失败：
+
+记录第一个 exact traceback blocker。
+
+不要自动安装缺包。
+不要测试第二轮 patch。
+
+==================================================
+12. Wan-Move config smoke
+==================================================
+
+特别验证当前 blocker：
+
+wan/configs/wan_move_14B.py
+
+能否被候选 interpreter 正常 import。
+
+报告：
+
+WAN_MOVE_14B_CONFIG_IMPORT = PASS/FAIL
+
+要求 easydict blocker 完全消失。
+
+==================================================
+13. CUDA identity smoke
+==================================================
+
+不加载模型。
+
+使用候选 interpreter：
+
+CUDA_VISIBLE_DEVICES=1
+CUDA_VISIBLE_DEVICES=2
+
+分别查询：
+
+torch.cuda.is_available()
+torch.cuda.device_count()
+torch.cuda.get_device_name(0)
+torch.cuda.get_device_properties(0).total_memory
+
+不得运行大型 tensor。
+
+要求两卡均识别为 NVIDIA L40。
+
+记录：
+
+candidate_cuda_smoke.json
+
+==================================================
+14. Stronger no-model runtime smoke
+==================================================
+
+尽可能沿 formal generation import path继续，
+但严格停止在：
+
+checkpoint/model loading之前。
+
+目标是一次性找出：
+
+easydict 后是否还有新的 immediate blocker。
+
+如果出现：
+
+NEXT_RUNTIME_BLOCKER = ...
+
+则：
+
+PHASE0D2RD_STATUS =
+PARTIAL_RECOVERY_NEW_BLOCKER
+
+STOP。
+
+不要修第二个 blocker。
+
+如果没有：
+
+NEXT_RUNTIME_BLOCKER = NONE
+
+==================================================
+15. Select formal interpreter
+==================================================
+
+只有一个候选满足：
+
+- strongest historical provenance
+- EASYDICT PASS
+- source gate PASS
+- prompt_extend PASS
+- DashScope not eagerly loaded
+- wan_move_14B config PASS
+- generate import PASS
+- CUDA L40 PASS
+- no new immediate blocker
+
+才能：
+
+FORMAL_WANMOVE_PYTHON = <absolute container path>
+
+记录：
+
+python binary SHA256
+python version
+sys.prefix
+
+以及 environment package manifest。
+
+不要复制 interpreter。
+不要修改环境。
+
+==================================================
+16. Environment reproducibility fingerprint
+==================================================
+
+生成：
+
+formal_python_runtime_contract.json
+
+至少包含：
+
+python_path
+python_sha256
+python_version
+sys_prefix
+
+torch_version
+torch_cuda_version
+
+critical package versions
+
+Wan-Move HEAD
+
+trajectory SHA
+wan_move SHA
+prompt_extend SHA
+
+container hostname/runtime context
+
+不得生成巨大的完整 pip freeze，
+除非已有 protocol需要。
+
+可以同时保存完整：
+
+pip list --format=json
+
+作为 artifact，
+但 summary 只保留关键依赖。
+
+==================================================
+17. Bind runtime without modifying frozen formal runner
+==================================================
+
+优先不要修改：
+
+formal_run_corrected_v2_v3d.sh
+
+创建一个新的 execution wrapper：
+
+run_with_formal_wanmove_python.sh
+
+最小职责：
+
+确保 frozen formal runner 内的 `python`
+解析到：
+
+FORMAL_WANMOVE_PYTHON
+
+优先采用：
+
+export PATH="<FORMAL_ENV_BIN>:$PATH"
+
+然后：
+
+exec/bash frozen runner
+
+如果这样会产生语义不确定，
+则创建 container runner copy，
+只允许改变：
+
+python executable path
+host/container path prefix
+
+不得改变 generation parameters。
+
+==================================================
+18. Exact wrapper audit
+==================================================
+
+保存：
+
+wrapper source
+SHA256
+exact diff / environment binding
+
+要求：
+
+GENERATION_PARAMETER_CHANGES = 0
+
+SCIENTIFIC_INPUT_CHANGES = 0
+
+SEED_CHANGES = 0
+
+SOURCE_CODE_CORE_CHANGES = 0
+
+只允许：
+
+PYTHON_RUNTIME_BINDING_CHANGE
+和已经确认必要的
+HOST_CONTAINER_PATH_TRANSLATION。
+
+==================================================
+19. Dry-run only
+==================================================
+
+使用正式 interpreter binding，
+执行新的 container formal runner：
+
+DRY RUN ONLY
+
+只打印：
+
+python path
+command
+environment
+input paths
+output path placeholder
+seed placeholder
+
+不得调用 14B generation。
+
+机器确认：
+
+ACTUAL_PYTHON ==
+FORMAL_WANMOVE_PYTHON
+
+不是：
+
+/usr/bin/python
+
+==================================================
+20. Re-run all pre-generation import gates
+==================================================
+
+从未来正式 0D-2 replay
+将使用的 exact wrapper/context 中：
+
+PROMPT_IMPORT = PASS
+DASHSCOPE_NOT_LOADED = True
+WAN_MOVE_CONFIG_IMPORT = PASS
+GENERATE_IMPORT = PASS
+CUDA_VISIBLE_GPU1 = PASS
+CUDA_VISIBLE_GPU2 = PASS
+
+要求：
+
+NEXT_RUNTIME_BLOCKER = NONE
+
+==================================================
+21. PASS rule
+==================================================
+
+PASS 需要：
+
+HISTORICAL_RUNTIME_PROVENANCE =
+PASS 或 STRONGEST_AVAILABLE_EVIDENCE
+
+FORMAL_WANMOVE_PYTHON_RESOLVED = True
+
+EASYDICT_IMPORT = PASS
+
+PROMPT_EXTEND_IMPORT = PASS
+
+DASHSCOPE_LOADED_AFTER_IMPORT = False
+
+WAN_MOVE_14B_CONFIG_IMPORT = PASS
+
+GENERATE_IMPORT_SMOKE = PASS
+
+CUDA_GPU1_SMOKE = PASS
+CUDA_GPU2_SMOKE = PASS
+
+SOURCE_GATE = PASS
+
+NEXT_RUNTIME_BLOCKER = NONE
+
+DRYRUN_ACTUAL_PYTHON_MATCH = True
+
+GENERATION_PARAMETER_CHANGES = 0
+
+==================================================
+22. Status semantics
+==================================================
+
+允许：
+
+PASS
+PARTIAL_RECOVERY_NEW_BLOCKER
+UNRESOLVED_NO_VALID_EXISTING_ENV
+FAIL
+ERROR
+
+如果没有合法既有环境：
+
+UNRESOLVED_NO_VALID_EXISTING_ENV
+
+不要因此安装包。
+
+==================================================
+23. Output
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/
+runtime_recovery/
+<TIMESTAMP>__wanmove_python_runtime_binding
+
+生成：
+
+PHASE0D2RD_PROTOCOL_FROZEN.txt
+
+current_python_context.json
+historical_python_provenance.md
+python_candidate_inventory.json
+candidate_dependency_matrix.json
+
+candidate_import_smokes.json
+candidate_cuda_smoke.json
+
+formal_python_runtime_contract.json
+
+run_with_formal_wanmove_python.sh
+runtime_binding_dryrun.txt
+runtime_binding_audit.md
+
+PHASE0D2RD_SUMMARY.md
+phase0d2rd_status.json
+SHA256SUMS.txt
+
+==================================================
+24. Summary 九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+必须明确：
+
+Phase0D-2R-C failed before generation，
+determinism remains NOT_EVALUATED。
+
+==================================================
+25. Final stdout
+==================================================
+
+===== PHASE0D-2R-D WAN-MOVE PYTHON RUNTIME RECOVERY =====
+
+OUT = ...
+
+DEFAULT_CONTAINER_PYTHON = ...
+
+HISTORICAL_SUCCESSFUL_PYTHON =
+...
+
+FORMAL_WANMOVE_PYTHON =
+...
+
+FORMAL_PYTHON_VERSION = ...
+FORMAL_PYTHON_SHA256 = ...
+
+EASYDICT_IMPORT = ...
+
+TORCH_VERSION = ...
+TORCH_CUDA_VERSION = ...
+
+PROMPT_EXTEND_IMPORT = ...
+DASHSCOPE_LOADED_AFTER_IMPORT = ...
+
+WAN_MOVE_14B_CONFIG_IMPORT = ...
+
+GENERATE_IMPORT_SMOKE = ...
+
+CUDA_GPU1_SMOKE = ...
+CUDA_GPU2_SMOKE = ...
+
+SOURCE_GATE = ...
+
+NEXT_RUNTIME_BLOCKER = ...
+
+DRYRUN_ACTUAL_PYTHON_MATCH = ...
+
+GENERATION_PARAMETER_CHANGES = 0
+
+PHASE0D2RD_STATUS =
+PASS /
+PARTIAL_RECOVERY_NEW_BLOCKER /
+UNRESOLVED_NO_VALID_EXISTING_ENV /
+FAIL /
+ERROR
+
+PROCEED_TO_PHASE0D2RE =
+True/False
+
+然后 STOP。
+
+严禁启动正式 Wan-Move generation。

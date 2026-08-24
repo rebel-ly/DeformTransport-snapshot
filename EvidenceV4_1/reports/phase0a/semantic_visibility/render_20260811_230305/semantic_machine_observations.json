@@ -1,0 +1,538 @@
+{
+  "artifact_kind": "Phase0A-4.5 semantic visibility machine observations",
+  "status": "VISUAL_ADJUDICATION_PENDING",
+  "bridge": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline",
+  "candidate_manifest": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0a/semantic_visibility/semantic_candidate_manifest.json",
+  "coordinate_system": "realwonder_512_uv_xy",
+  "observation_count": 21,
+  "important_scope": "Simulation/render-space visibility semantics only; not real-world RGB visibility ground truth.",
+  "observations": [
+    {
+      "case_label": "A_stable_visible",
+      "bridge_index": 699,
+      "material_id": 2,
+      "frame": 0,
+      "simulation_step": 0,
+      "contract_visible": true,
+      "render_xy": [
+        169.43801879882812,
+        252.49746704101562
+      ],
+      "rounded_render_pixel_xy": [
+        169,
+        252
+      ],
+      "target_raster_pixel_count": 8,
+      "target_raster_bbox_xyxy": [
+        167,
+        250,
+        170,
+        252
+      ],
+      "raster_id_at_rounded_projection": 13,
+      "target_depth": 1.751953125,
+      "front_id_depth_at_rounded_projection": 1.7509765625,
+      "target_minus_front_depth": 0.0009765625
+    },
+    {
+      "case_label": "A_stable_visible",
+      "bridge_index": 699,
+      "material_id": 2,
+      "frame": 40,
+      "simulation_step": 400,
+      "contract_visible": true,
+      "render_xy": [
+        289.9025573730469,
+        237.0150146484375
+      ],
+      "rounded_render_pixel_xy": [
+        290,
+        237
+      ],
+      "target_raster_pixel_count": 8,
+      "target_raster_bbox_xyxy": [
+        287,
+        234,
+        291,
+        237
+      ],
+      "raster_id_at_rounded_projection": 3,
+      "target_depth": 1.703125,
+      "front_id_depth_at_rounded_projection": 1.701171875,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "A_stable_visible",
+      "bridge_index": 699,
+      "material_id": 2,
+      "frame": 80,
+      "simulation_step": 800,
+      "contract_visible": true,
+      "render_xy": [
+        319.3919677734375,
+        196.91885375976562
+      ],
+      "rounded_render_pixel_xy": [
+        319,
+        197
+      ],
+      "target_raster_pixel_count": 12,
+      "target_raster_bbox_xyxy": [
+        317,
+        194,
+        320,
+        198
+      ],
+      "raster_id_at_rounded_projection": 3,
+      "target_depth": 1.650390625,
+      "front_id_depth_at_rounded_projection": 1.646484375,
+      "target_minus_front_depth": 0.00390625
+    },
+    {
+      "case_label": "B_persistent_loss",
+      "bridge_index": 753,
+      "material_id": 11316,
+      "frame": 39,
+      "simulation_step": 390,
+      "contract_visible": true,
+      "render_xy": [
+        342.38262939453125,
+        210.36306762695312
+      ],
+      "rounded_render_pixel_xy": [
+        342,
+        210
+      ],
+      "target_raster_pixel_count": 1,
+      "target_raster_bbox_xyxy": [
+        340,
+        211,
+        340,
+        211
+      ],
+      "raster_id_at_rounded_projection": 11936,
+      "target_depth": 1.71484375,
+      "front_id_depth_at_rounded_projection": 1.70703125,
+      "target_minus_front_depth": 0.0078125
+    },
+    {
+      "case_label": "B_persistent_loss",
+      "bridge_index": 753,
+      "material_id": 11316,
+      "frame": 40,
+      "simulation_step": 400,
+      "contract_visible": false,
+      "render_xy": [
+        342.9125061035156,
+        209.550537109375
+      ],
+      "rounded_render_pixel_xy": [
+        343,
+        210
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 12141,
+      "target_depth": 1.7138671875,
+      "front_id_depth_at_rounded_projection": 1.705078125,
+      "target_minus_front_depth": 0.0087890625
+    },
+    {
+      "case_label": "B_persistent_loss",
+      "bridge_index": 753,
+      "material_id": 11316,
+      "frame": 45,
+      "simulation_step": 450,
+      "contract_visible": false,
+      "render_xy": [
+        345.70245361328125,
+        205.912109375
+      ],
+      "rounded_render_pixel_xy": [
+        346,
+        206
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 12948,
+      "target_depth": 1.708984375,
+      "front_id_depth_at_rounded_projection": 1.693359375,
+      "target_minus_front_depth": 0.015625
+    },
+    {
+      "case_label": "C_long_occlusion_reappearance",
+      "bridge_index": 1178,
+      "material_id": 24153,
+      "frame": 0,
+      "simulation_step": 0,
+      "contract_visible": true,
+      "render_xy": [
+        312.5044250488281,
+        337.508544921875
+      ],
+      "rounded_render_pixel_xy": [
+        313,
+        338
+      ],
+      "target_raster_pixel_count": 1,
+      "target_raster_bbox_xyxy": [
+        314,
+        338,
+        314,
+        338
+      ],
+      "raster_id_at_rounded_projection": 23963,
+      "target_depth": 1.8330078125,
+      "front_id_depth_at_rounded_projection": 1.83203125,
+      "target_minus_front_depth": 0.0009765625
+    },
+    {
+      "case_label": "C_long_occlusion_reappearance",
+      "bridge_index": 1178,
+      "material_id": 24153,
+      "frame": 35,
+      "simulation_step": 350,
+      "contract_visible": false,
+      "render_xy": [
+        446.5363464355469,
+        281.4217529296875
+      ],
+      "rounded_render_pixel_xy": [
+        447,
+        281
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 23966,
+      "target_depth": 1.7734375,
+      "front_id_depth_at_rounded_projection": 1.76953125,
+      "target_minus_front_depth": 0.00390625
+    },
+    {
+      "case_label": "C_long_occlusion_reappearance",
+      "bridge_index": 1178,
+      "material_id": 24153,
+      "frame": 70,
+      "simulation_step": 700,
+      "contract_visible": true,
+      "render_xy": [
+        490.9905700683594,
+        189.98995971679688
+      ],
+      "rounded_render_pixel_xy": [
+        491,
+        190
+      ],
+      "target_raster_pixel_count": 2,
+      "target_raster_bbox_xyxy": [
+        490,
+        187,
+        491,
+        187
+      ],
+      "raster_id_at_rounded_projection": 23566,
+      "target_depth": 1.732421875,
+      "front_id_depth_at_rounded_projection": 1.7265625,
+      "target_minus_front_depth": 0.005859375
+    },
+    {
+      "case_label": "D_rapid_switching",
+      "bridge_index": 1226,
+      "material_id": 21056,
+      "frame": 2,
+      "simulation_step": 20,
+      "contract_visible": true,
+      "render_xy": [
+        301.6512451171875,
+        349.4372253417969
+      ],
+      "rounded_render_pixel_xy": [
+        302,
+        349
+      ],
+      "target_raster_pixel_count": 1,
+      "target_raster_bbox_xyxy": [
+        302,
+        351,
+        302,
+        351
+      ],
+      "raster_id_at_rounded_projection": 20840,
+      "target_depth": 1.82421875,
+      "front_id_depth_at_rounded_projection": 1.822265625,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "D_rapid_switching",
+      "bridge_index": 1226,
+      "material_id": 21056,
+      "frame": 3,
+      "simulation_step": 30,
+      "contract_visible": false,
+      "render_xy": [
+        304.8533935546875,
+        351.4898986816406
+      ],
+      "rounded_render_pixel_xy": [
+        305,
+        351
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 20840,
+      "target_depth": 1.82421875,
+      "front_id_depth_at_rounded_projection": 1.822265625,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "D_rapid_switching",
+      "bridge_index": 1226,
+      "material_id": 21056,
+      "frame": 5,
+      "simulation_step": 50,
+      "contract_visible": true,
+      "render_xy": [
+        311.6867980957031,
+        356.1129455566406
+      ],
+      "rounded_render_pixel_xy": [
+        312,
+        356
+      ],
+      "target_raster_pixel_count": 2,
+      "target_raster_bbox_xyxy": [
+        311,
+        358,
+        312,
+        358
+      ],
+      "raster_id_at_rounded_projection": 21054,
+      "target_depth": 1.822265625,
+      "front_id_depth_at_rounded_projection": 1.8203125,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "E_moderate_switching",
+      "bridge_index": 740,
+      "material_id": 518,
+      "frame": 40,
+      "simulation_step": 400,
+      "contract_visible": false,
+      "render_xy": [
+        306.6402587890625,
+        238.6993408203125
+      ],
+      "rounded_render_pixel_xy": [
+        307,
+        239
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 405,
+      "target_depth": 1.7509765625,
+      "front_id_depth_at_rounded_projection": 1.7490234375,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "E_moderate_switching",
+      "bridge_index": 740,
+      "material_id": 518,
+      "frame": 41,
+      "simulation_step": 410,
+      "contract_visible": true,
+      "render_xy": [
+        307.5103759765625,
+        237.94140625
+      ],
+      "rounded_render_pixel_xy": [
+        308,
+        238
+      ],
+      "target_raster_pixel_count": 1,
+      "target_raster_bbox_xyxy": [
+        309,
+        236,
+        309,
+        236
+      ],
+      "raster_id_at_rounded_projection": 405,
+      "target_depth": 1.7490234375,
+      "front_id_depth_at_rounded_projection": 1.7470703125,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "E_moderate_switching",
+      "bridge_index": 740,
+      "material_id": 518,
+      "frame": 42,
+      "simulation_step": 420,
+      "contract_visible": true,
+      "render_xy": [
+        308.39599609375,
+        237.14944458007812
+      ],
+      "rounded_render_pixel_xy": [
+        308,
+        237
+      ],
+      "target_raster_pixel_count": 1,
+      "target_raster_bbox_xyxy": [
+        310,
+        236,
+        310,
+        236
+      ],
+      "raster_id_at_rounded_projection": 352,
+      "target_depth": 1.748046875,
+      "front_id_depth_at_rounded_projection": 1.744140625,
+      "target_minus_front_depth": 0.00390625
+    },
+    {
+      "case_label": "F_source_silhouette_boundary",
+      "bridge_index": 490,
+      "material_id": 3204,
+      "frame": 0,
+      "simulation_step": 0,
+      "contract_visible": true,
+      "render_xy": [
+        209.506103515625,
+        223.50494384765625
+      ],
+      "rounded_render_pixel_xy": [
+        210,
+        224
+      ],
+      "target_raster_pixel_count": 1,
+      "target_raster_bbox_xyxy": [
+        211,
+        224,
+        211,
+        224
+      ],
+      "raster_id_at_rounded_projection": 3030,
+      "target_depth": 1.7734375,
+      "front_id_depth_at_rounded_projection": 1.7685546875,
+      "target_minus_front_depth": 0.0048828125
+    },
+    {
+      "case_label": "F_source_silhouette_boundary",
+      "bridge_index": 490,
+      "material_id": 3204,
+      "frame": 40,
+      "simulation_step": 400,
+      "contract_visible": false,
+      "render_xy": [
+        288.0168151855469,
+        194.38671875
+      ],
+      "rounded_render_pixel_xy": [
+        288,
+        194
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 1714,
+      "target_depth": 1.763671875,
+      "front_id_depth_at_rounded_projection": 1.736328125,
+      "target_minus_front_depth": 0.02734375
+    },
+    {
+      "case_label": "F_source_silhouette_boundary",
+      "bridge_index": 490,
+      "material_id": 3204,
+      "frame": 80,
+      "simulation_step": 800,
+      "contract_visible": false,
+      "render_xy": [
+        296.46337890625,
+        185.33218383789062
+      ],
+      "rounded_render_pixel_xy": [
+        296,
+        185
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 273,
+      "target_depth": 1.7666015625,
+      "front_id_depth_at_rounded_projection": 1.68359375,
+      "target_minus_front_depth": 0.0830078125
+    },
+    {
+      "case_label": "G_boundary_switching",
+      "bridge_index": 1248,
+      "material_id": 18290,
+      "frame": 39,
+      "simulation_step": 390,
+      "contract_visible": false,
+      "render_xy": [
+        436.33282470703125,
+        291.58099365234375
+      ],
+      "rounded_render_pixel_xy": [
+        436,
+        292
+      ],
+      "target_raster_pixel_count": 0,
+      "target_raster_bbox_xyxy": null,
+      "raster_id_at_rounded_projection": 18289,
+      "target_depth": 1.7890625,
+      "front_id_depth_at_rounded_projection": 1.787109375,
+      "target_minus_front_depth": 0.001953125
+    },
+    {
+      "case_label": "G_boundary_switching",
+      "bridge_index": 1248,
+      "material_id": 18290,
+      "frame": 40,
+      "simulation_step": 400,
+      "contract_visible": true,
+      "render_xy": [
+        439.2118835449219,
+        288.43505859375
+      ],
+      "rounded_render_pixel_xy": [
+        439,
+        288
+      ],
+      "target_raster_pixel_count": 3,
+      "target_raster_bbox_xyxy": [
+        438,
+        290,
+        440,
+        290
+      ],
+      "raster_id_at_rounded_projection": 18498,
+      "target_depth": 1.787109375,
+      "front_id_depth_at_rounded_projection": 1.7841796875,
+      "target_minus_front_depth": 0.0029296875
+    },
+    {
+      "case_label": "G_boundary_switching",
+      "bridge_index": 1248,
+      "material_id": 18290,
+      "frame": 41,
+      "simulation_step": 410,
+      "contract_visible": true,
+      "render_xy": [
+        441.9954833984375,
+        285.2452392578125
+      ],
+      "rounded_render_pixel_xy": [
+        442,
+        285
+      ],
+      "target_raster_pixel_count": 2,
+      "target_raster_bbox_xyxy": [
+        441,
+        287,
+        442,
+        287
+      ],
+      "raster_id_at_rounded_projection": 18499,
+      "target_depth": 1.7861328125,
+      "front_id_depth_at_rounded_projection": 1.7822265625,
+      "target_minus_front_depth": 0.00390625
+    }
+  ]
+}

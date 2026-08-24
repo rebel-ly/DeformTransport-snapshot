@@ -1,0 +1,118 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "correlations": {
+    "visible_slot_count": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "visibility_switch_count": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "winning_write_count": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "collision_exposure_count": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "collision_loss_count": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "source_to_future_displacement_2d": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "trajectory_energy_2d": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "source_to_future_displacement_3d": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "trajectory_energy_3d": {
+      "delta_mar_lab": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1110,
+        "rho": null
+      },
+      "delta_me_carrier": {
+        "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+        "N": 1174,
+        "rho": null
+      }
+    },
+    "delta_mar_vs_delta_me": {
+      "status": "NOT_COMPUTED_DEPENDENCY_UNAVAILABLE",
+      "N": 1100,
+      "rho": null
+    }
+  }
+}

@@ -1,0 +1,7 @@
+3a60efeea42e2f533945a867001e5d4a0f297cfee8c246f1ed8342ba4f0e6f85  /mnt/sdbd/home/liuyu_qyh/model_staging/ckpts/Realwonder-Distilled-AR-I2V-Flow/sink_size=1-attn_size=21-frame_per_block=3-denoising_steps=4/step=000800.pt
+38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981  /mnt/sdbd/home/liuyu_qyh/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth
+4ec199076538b946935ebcb3ba808d3c427e638f29519a3c3c98d31d821e5eed  /mnt/sdbd/home/liuyu_qyh/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/diffusion_pytorch_model.safetensors
+628c9998b613391f193eb67ff68da9667d75f492911e4eb3decf23460a158c38  /mnt/sdbd/home/liuyu_qyh/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/models_clip_open-clip-xlm-roberta-large-vit-huge-14.pth
+7cace0da2b446bbbbc57d031ab6cf163a3d59b366da94e5afe36745b746fd81d  /mnt/sdbd/home/liuyu_qyh/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/models_t5_umt5-xxl-enc-bf16.pth
+75be54392fae1695bd072fe26c6b417a614b87f4dd4c1768719856d5105c8779  /mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/noises.npy
+f2ad921d3548d1d22acbee4d36896e0c16f9ff576f165dbef3d27b387613345c  /mnt/sdbd/home/liuyu_qyh/DeformTransport/artifacts/transport_validation/santa_cloth_21f/wan_vae/vae_latent_outputs.pt

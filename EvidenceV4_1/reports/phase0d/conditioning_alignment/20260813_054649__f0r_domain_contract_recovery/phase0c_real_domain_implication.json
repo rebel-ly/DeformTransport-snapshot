@@ -1,0 +1,7 @@
+{
+  "real_transport_latent_hw":"UNRESOLVED", "phase0c_synthetic_hw":"60x104", "phase0c_7p24_real_domain_valid":"Unresolved", "real_domain_intervention_fraction":"NEEDS_REAL_DOMAIN_RECOUNT",
+  "phase0b_causal_contract_impact":"NO_EVIDENCE_OF_INVALIDATION: latent HW recovery is unresolved and does not reopen frozen causal contract evidence.",
+  "phase0c_structural_equivalence_impact":"NO_EVIDENCE_OF_INVALIDATION: frozen synthetic structural artifact results remain artifact-level facts.",
+  "phase0c_differential_decomposition_impact":"NO_EVIDENCE_OF_INVALIDATION: frozen differential decomposition is not changed by absent real-HW capture.",
+  "phase0c_real_coverage_magnitude_impact":"UNRESOLVED: 9031/(20*60*104) is synthetic-domain coverage only until real transport HW and real-domain recount are closed."
+}

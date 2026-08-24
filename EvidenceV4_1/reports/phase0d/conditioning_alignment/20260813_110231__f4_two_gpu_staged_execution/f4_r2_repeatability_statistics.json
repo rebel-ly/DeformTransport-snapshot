@@ -1,0 +1,15 @@
+{
+  "successful_repeats": 5,
+  "all_repeats_bitwise_equal_within_method": true,
+  "RW": {
+    "TCME_MEAN": {"min": 0.586977941501839, "max": 0.586977941501839, "mean": 0.586977941501839, "std": 0.0, "range": 0.0, "max_pairwise_abs_diff": 0.0, "max_abs_diff_from_f1_reference": 0.00001112509291572936},
+    "TCME_MEDIAN": {"min": 0.5070277183138368, "max": 0.5070277183138368, "mean": 0.5070277183138368, "std": 0.0, "range": 0.0, "max_pairwise_abs_diff": 0.0, "max_abs_diff_from_f1_reference": 0.00006847810234269637},
+    "TCME_P95": {"min": 1.1530684333264338, "max": 1.1530684333264338, "mean": 1.1530684333264338, "std": 0.0, "range": 0.0, "max_pairwise_abs_diff": 0.0, "max_abs_diff_from_f1_reference": 0.00007101152996816651}
+  },
+  "DT-FULL": {
+    "TCME_MEAN": {"min": 0.7265571851768204, "max": 0.7265571851768204, "mean": 0.7265571851768204, "std": 0.0, "range": 0.0, "max_pairwise_abs_diff": 0.0, "max_abs_diff_from_f1_reference": 0.0000072177479011076},
+    "TCME_MEDIAN": {"min": 0.6906574705303352, "max": 0.6906574705303352, "mean": 0.6906574705303352, "std": 0.0, "range": 0.0, "max_pairwise_abs_diff": 0.0, "max_abs_diff_from_f1_reference": 0.00005435240821270095},
+    "TCME_P95": {"min": 1.3079478992418658, "max": 1.3079478992418658, "mean": 1.3079478992418658, "std": 0.0, "range": 0.0, "max_pairwise_abs_diff": 0.0, "max_abs_diff_from_f1_reference": 0.00007705115470757916}
+  },
+  "RAW_TRANSITION_REPRODUCTION_AUDIT": "UNRESOLVED"
+}

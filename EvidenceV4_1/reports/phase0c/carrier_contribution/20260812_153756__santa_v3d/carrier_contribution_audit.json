@@ -1,0 +1,60 @@
+{
+  "N": 1257,
+  "future_slots": 20,
+  "invariants": {
+    "candidate_count_mismatches": 0,
+    "collision_count_mismatches": 0,
+    "phase0c1_total_win_count_exact": true,
+    "target_valid_count_mismatches": 0,
+    "visible_count_mismatches": 0,
+    "win_count_mismatches": 0,
+    "zero_cause_class_mismatches": 0,
+    "zero_contribution_set_equal": true
+  },
+  "metrics": {
+    "candidate_slots": {
+      "mean": 7.769291964996023,
+      "p50": 6.0,
+      "p95": 20.0
+    },
+    "candidate_to_win_ratio": {
+      "mean": 0.916806477506942,
+      "p50": 1.0,
+      "p95": 1.0
+    },
+    "carriers_never_in_collision": 640,
+    "carriers_winning_all_candidate_slots": 701,
+    "carriers_with_any_candidate": 1110,
+    "carriers_with_any_contribution": 1102,
+    "carriers_with_collision_loss": 409,
+    "contributing_visible_slots": {
+      "mean": 8.852994555353902,
+      "p50": 8.0,
+      "p95": 20.0
+    },
+    "visible_vs_win_spearman": null,
+    "visible_vs_win_spearman_note": "Descriptive Spearman was computed but is undefined because visible sampled-slot count has zero variance across the frozen carrier array; no correlation or significance claim is made.",
+    "visible_vs_win_spearman_status": "UNDEFINED_CONSTANT_VISIBLE_SLOT_COUNT",
+    "win_slots": {
+      "mean": 7.1845664280031825,
+      "p50": 6.0,
+      "p95": 19.0
+    },
+    "zero_classes": {
+      "Z0_NO_VISIBLE_SAMPLED_SLOT": 147,
+      "Z1_VISIBLE_BUT_NO_VALID_TARGET": 0,
+      "Z2_TARGET_VALID_BUT_NO_VALID_DEPTH_CANDIDATE": 0,
+      "Z3_HAS_CANDIDATES_BUT_ALWAYS_LOSES_COLLISION": 8,
+      "Z_OTHER": 0
+    },
+    "zero_contribution_carriers": 155,
+    "zero_visible_slots": {
+      "mean": 0.06451612903225806,
+      "p50": 0.0,
+      "p95": 0.29999999999998295
+    }
+  },
+  "operator_semantics": "Frozen V3D candidate gates plus lexicographic min(depth, material_id) arbitration.",
+  "phase": "Phase0C-3",
+  "status": "PASS"
+}

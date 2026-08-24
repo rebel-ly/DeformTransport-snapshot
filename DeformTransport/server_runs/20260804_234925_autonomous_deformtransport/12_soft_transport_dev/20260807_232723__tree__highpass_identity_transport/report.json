@@ -1,0 +1,22 @@
+{
+  "status": "TREE_HIGHPASS_IDENTITY_TRANSPORT_READY",
+  "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_232723__tree__highpass_identity_transport/tree_quality_correct_highpass3x3_energy_matched.pt",
+  "filter": "normalized masked 3x3 high-pass",
+  "original_mean_abs": 0.012252077460289001,
+  "highpass_mean_abs_before": 0.006006213836371899,
+  "energy_scale": 2.0399003089257253,
+  "highpass_mean_abs_after": 0.012252077460289001,
+  "original_rms": 0.04646586999297142,
+  "highpass_rms": 0.04888696223497391,
+  "original_max_abs": 0.9596481323242188,
+  "highpass_max_abs": 1.2690179347991943,
+  "checks": {
+    "saved_residual_exact": true,
+    "fused_exact": true,
+    "slot0_zero": true,
+    "mask_count_contract": true,
+    "finite": true
+  },
+  "all_checks_pass": true
+}

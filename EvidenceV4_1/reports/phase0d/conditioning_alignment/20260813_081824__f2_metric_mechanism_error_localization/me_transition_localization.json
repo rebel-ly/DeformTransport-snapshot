@@ -1,0 +1,53 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "transition_delta_summary": {
+    "median": 0.0882645180639681,
+    "p95": 0.5847283022479105,
+    "min": -0.42657689970862755,
+    "max": 0.967896518426728
+  },
+  "worst_10_transitions": [
+    {
+      "transition": 6,
+      "delta": 0.967896518426728
+    },
+    {
+      "transition": 14,
+      "delta": 0.8734393335772405
+    },
+    {
+      "transition": 18,
+      "delta": 0.8567353311321748
+    },
+    {
+      "transition": 2,
+      "delta": 0.7914775300973456
+    },
+    {
+      "transition": 35,
+      "delta": 0.5738467639400462
+    },
+    {
+      "transition": 9,
+      "delta": 0.5562028674465829
+    },
+    {
+      "transition": 22,
+      "delta": 0.5531844100048141
+    },
+    {
+      "transition": 17,
+      "delta": 0.5410665030667752
+    },
+    {
+      "transition": 30,
+      "delta": 0.5061121414056591
+    },
+    {
+      "transition": 29,
+      "delta": 0.5010728312872954
+    }
+  ],
+  "early_0_39_mean": 0.23402780514001123,
+  "late_40_79_mean": 0.045093996528317845
+}

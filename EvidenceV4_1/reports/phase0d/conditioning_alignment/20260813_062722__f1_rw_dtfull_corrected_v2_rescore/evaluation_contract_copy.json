@@ -1,0 +1,2 @@
+{
+  "eval_n":1257,"eval_ids_sha":"f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8","eval_tracks_sha":"a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929","eval_visibility_sha":"5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff","evaluator":"/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py","evaluator_sha":"2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08","evaluator_rgb_domain":"464x832","track_mapping":"x identity; y*=464/480","conditioning_evaluation_decoupled":true}

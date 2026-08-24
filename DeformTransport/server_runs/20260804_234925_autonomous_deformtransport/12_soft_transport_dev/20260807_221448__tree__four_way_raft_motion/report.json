@@ -1,0 +1,73 @@
+{
+  "experiment": "Tree four-way RAFT motion diagnostic",
+  "reference_flow": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/flows.npy",
+  "reference_shape": [
+    80,
+    2,
+    240,
+    416
+  ],
+  "video_preprocessing": "480x832 RGB -> area resize 240x416 -> torchvision RAFT transforms",
+  "transport_region": "Quality transport mask mapped causally to destination frames 1..80",
+  "metrics": {
+    "BASELINE": {
+      "EPE_global": 0.12279396504163742,
+      "magnitude_error_global": 0.10290779173374176,
+      "angle_error_deg_global": 23.08377456665039,
+      "pred_flow_magnitude_mean": 0.18512515723705292,
+      "reference_flow_magnitude_mean": 0.10720079392194748,
+      "EPE_transport_region": 0.7168875932693481,
+      "magnitude_error_transport_region": 0.6160711050033569,
+      "angle_error_deg_transport_region": 22.002452850341797
+    },
+    "CORRECT": {
+      "EPE_global": 0.12554922699928284,
+      "magnitude_error_global": 0.10545957833528519,
+      "angle_error_deg_global": 25.47317886352539,
+      "pred_flow_magnitude_mean": 0.18916942179203033,
+      "reference_flow_magnitude_mean": 0.10720079392194748,
+      "EPE_transport_region": 0.7432404160499573,
+      "magnitude_error_transport_region": 0.6384785771369934,
+      "angle_error_deg_transport_region": 24.391048431396484
+    },
+    "SHUFFLED": {
+      "EPE_global": 0.12490751594305038,
+      "magnitude_error_global": 0.10475929826498032,
+      "angle_error_deg_global": 24.30171012878418,
+      "pred_flow_magnitude_mean": 0.1894461065530777,
+      "reference_flow_magnitude_mean": 0.10720079392194748,
+      "EPE_transport_region": 0.7266801595687866,
+      "magnitude_error_transport_region": 0.6226930022239685,
+      "angle_error_deg_transport_region": 23.19949722290039
+    },
+    "SHUFFLED_MATCH": {
+      "EPE_global": 0.1238579973578453,
+      "magnitude_error_global": 0.10375615209341049,
+      "angle_error_deg_global": 25.62285041809082,
+      "pred_flow_magnitude_mean": 0.18700774013996124,
+      "reference_flow_magnitude_mean": 0.10720079392194748,
+      "EPE_transport_region": 0.7175933718681335,
+      "magnitude_error_transport_region": 0.6153644919395447,
+      "angle_error_deg_transport_region": 24.483890533447266
+    }
+  },
+  "comparisons": {
+    "correct_vs_baseline_global_EPE_improvement_percent": -2.2438089336973133,
+    "correct_vs_matched_global_EPE_improvement_percent": -1.3654585715214667,
+    "correct_vs_baseline_transport_EPE_improvement_percent": -3.6760048615749836,
+    "correct_vs_matched_transport_EPE_improvement_percent": -3.574035824084602,
+    "correct_vs_shuffled_transport_EPE_improvement_percent": -2.278892063187406
+  },
+  "global_EPE_ranking": [
+    "BASELINE",
+    "SHUFFLED_MATCH",
+    "SHUFFLED",
+    "CORRECT"
+  ],
+  "transport_EPE_ranking": [
+    "BASELINE",
+    "SHUFFLED_MATCH",
+    "SHUFFLED",
+    "CORRECT"
+  ]
+}

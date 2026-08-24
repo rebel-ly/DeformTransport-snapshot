@@ -1,0 +1,55 @@
+DeformTransport Evidence V4.1
+Phase0B-2 Intervention Algebra / Kinematic Invariance Audit
+
+PURPOSE
+
+Determine exactly which geometric quantities remain invariant after
+the Phase0B-1 source-identity derangement.
+
+IMPORTANT DISTINCTION
+
+Future-state invariance:
+    shuffled[t] == correct[t] for t=1..80
+
+is NOT equivalent to:
+
+Full-track kinematic invariance:
+    shuffled[t] - shuffled[t-1]
+    ==
+    correct[t] - correct[t-1]
+
+for all transitions.
+
+NO equivalence margin is defined.
+
+Therefore all invariance claims in this audit require exact equality.
+
+EXPECTED ALGEBRA FROM THE FROZEN INTERVENTION
+
+Because only frame0 is permuted:
+
+- absolute coordinates at frames1..80 should remain exact;
+- transition frame0->frame1 may change;
+- transitions frame1->frame2 through frame79->frame80
+  should remain exact;
+- source coordinate set should remain exact;
+- source cell set should remain exact;
+- per-frame future coordinate sets should remain exact;
+- visibility support should remain exact.
+
+DECISION LANGUAGE
+
+If only the first transition changes:
+
+FUTURE_STATE_INVARIANCE = PASS
+POST_SOURCE_KINEMATICS_T1_TO_T80 = PASS
+FULL_TRACK_KINEMATIC_INVARIANCE = FAIL
+
+This does NOT by itself invalidate the Identity-Shuffled control.
+
+It means that the stronger claim
+"only appearance identity changes and motion input is identical"
+cannot yet be made.
+
+Phase0B-3 must inspect how Wan-Move consumes frame0 and trajectory
+coordinates before the final causal interpretation is decided.

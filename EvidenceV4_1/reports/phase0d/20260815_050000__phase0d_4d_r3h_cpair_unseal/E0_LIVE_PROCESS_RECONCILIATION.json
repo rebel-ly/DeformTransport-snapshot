@@ -1,0 +1,16 @@
+{
+  "gpu2_pid_174965_is_e0": true,
+  "e0_current_pid": 174965,
+  "e0_process_alive": true,
+  "gpu_uuid": "GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf",
+  "gpu_memory_mib": 41100,
+  "gpu_utilization_percent": 100,
+  "process_command_matches_e0": true,
+  "e0_current_progress": "UNRESOLVED_LOG_STALE_AFTER_3/40; live CPU/GPU activity confirmed twice",
+  "previous_e0_failure_classification": "SUPERSEDED_BY_LIVE_PROCESS_EVIDENCE",
+  "e0_attempt_1": "OOM trace persisted in shared log",
+  "e0_attempt_2": "RUNNING_LIVE_PID_174965",
+  "e0_status": "RUNNING_ACTIVE",
+  "e0_retry_launched": false,
+  "epsilon_only_canonical_bridge": "UNRESOLVED_RUNNING"
+}

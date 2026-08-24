@@ -1,0 +1,70 @@
+{
+  "santa": [
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/flows.npy",
+      "bytes": 31948928,
+      "shape": [
+        80,
+        2,
+        240,
+        416
+      ],
+      "dtype": "float16"
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noise_generation_report.json",
+      "bytes": 1402
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noises.npy",
+      "bytes": 32348288,
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16"
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/pre_noise_validation.json",
+      "bytes": 467
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/pre_noise_validation_exit_code.txt",
+      "bytes": 2
+    }
+  ],
+  "tree": [
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/flows.npy",
+      "bytes": 31948928,
+      "shape": [
+        80,
+        2,
+        240,
+        416
+      ],
+      "dtype": "float16"
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noise_generation_audit/generate_tree_noise.py",
+      "bytes": 9979
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noise_generation_report.json",
+      "bytes": 1769
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noises.npy",
+      "bytes": 32348288,
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16"
+    }
+  ]
+}

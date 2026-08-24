@@ -1,0 +1,221 @@
+{
+  "inputs": {
+    "transport_ready": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt",
+      "sha256": "154a08e074abcb6aa458b08cfd37c033dbc8245ffe02d182524e9bc275252723"
+    },
+    "raster_npy": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flow_source_point_indices.npy",
+      "sha256": "9a7b02d53099c06fe00313d39ff94330c1f794ea80f6ac76eb95e478073f62aa"
+    },
+    "flow_npy": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flows.npy",
+      "sha256": "f32045e27ae4447d5877563306c43c647583a29e71d9ac21b8d1609a5f93f33b"
+    },
+    "source_dir": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source",
+    "final_sim": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim"
+  },
+  "raster": {
+    "shape": [
+      81,
+      512,
+      512
+    ],
+    "dtype": "int32",
+    "minimum": -1,
+    "maximum": 28263,
+    "background_value_is_negative": true,
+    "source_unique_point_ids": 19126
+  },
+  "flow": {
+    "shape": [
+      81,
+      2,
+      512,
+      512
+    ],
+    "dtype": "float32"
+  },
+  "source_contract": {
+    "saved_source_visible": 19126,
+    "saved_source_raster_ids": 19126,
+    "reconstructed_source_visible": 19126,
+    "raster_ids_exact_match": true,
+    "visibility_exact_match": true
+  },
+  "image_assembly_contract": {
+    "initial_vs_old_frame0_raw": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 1.4091542959213257,
+      "mse_0_255": 119.63184356689453,
+      "psnr_db": 27.352335654574993,
+      "max_abs_difference": 237.0,
+      "different_values": 64071
+    },
+    "processed_initial_vs_final_input": {
+      "shape_equal": true,
+      "exactly_equal": true,
+      "mae_0_255": 0.0,
+      "mse_0_255": 0.0,
+      "psnr_db": "inf",
+      "max_abs_difference": 0.0,
+      "different_values": 0
+    },
+    "processed_raw_frame0_vs_final_frame0": {
+      "shape_equal": true,
+      "exactly_equal": true,
+      "mae_0_255": 0.0,
+      "mse_0_255": 0.0,
+      "psnr_db": "inf",
+      "max_abs_difference": 0.0,
+      "different_values": 0
+    },
+    "processed_raw_frame79_vs_final_frame79": {
+      "shape_equal": true,
+      "exactly_equal": true,
+      "mae_0_255": 0.0,
+      "mse_0_255": 0.0,
+      "psnr_db": "inf",
+      "max_abs_difference": 0.0,
+      "different_values": 0
+    },
+    "processed_raw_frame80_vs_final_frame80": {
+      "shape_equal": true,
+      "exactly_equal": true,
+      "mae_0_255": 0.0,
+      "mse_0_255": 0.0,
+      "psnr_db": "inf",
+      "max_abs_difference": 0.0,
+      "different_values": 0
+    }
+  },
+  "current_contract": {
+    "input_state": "simulation step 0",
+    "coarse_frames": "simulation steps 10..810",
+    "future_point_states": "simulation steps 10..810",
+    "available_previous_rasters": "simulation steps 0..800",
+    "step_810_current_raster_saved": false
+  },
+  "aligned_candidate_contract": {
+    "frame_count": 81,
+    "simulation_steps": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      160,
+      170,
+      180,
+      190,
+      200,
+      210,
+      220,
+      230,
+      240,
+      250,
+      260,
+      270,
+      280,
+      290,
+      300,
+      310,
+      320,
+      330,
+      340,
+      350,
+      360,
+      370,
+      380,
+      390,
+      400,
+      410,
+      420,
+      430,
+      440,
+      450,
+      460,
+      470,
+      480,
+      490,
+      500,
+      510,
+      520,
+      530,
+      540,
+      550,
+      560,
+      570,
+      580,
+      590,
+      600,
+      610,
+      620,
+      630,
+      640,
+      650,
+      660,
+      670,
+      680,
+      690,
+      700,
+      710,
+      720,
+      730,
+      740,
+      750,
+      760,
+      770,
+      780,
+      790,
+      800
+    ],
+    "images": "frame_initial + old frame_0000..frame_0079",
+    "points": "source_points + old future_points[0:80]",
+    "raster": "flow_source_point_indices[0:81]",
+    "flow": "old flows[0:80]",
+    "discarded_old_state": "old frame_0080 / step 810",
+    "visibility_count": {
+      "minimum": 6182,
+      "mean": 9857.568359375,
+      "maximum": 19126,
+      "first": 19126,
+      "middle": 9478,
+      "final": 6182
+    },
+    "per_frame_csv": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_192002__raster_timeline_contract_readonly_audit/outputs/aligned_visibility_counts.csv"
+  },
+  "checks": {
+    "raster_shape_is_81x512x512": true,
+    "raster_integer_dtype": true,
+    "flow_frame_count_is_81": true,
+    "source_raster_ids_match_saved_ids": true,
+    "source_visibility_exactly_reconstructed": true,
+    "initial_preprocess_matches_final_input": true,
+    "raw_frame0_matches_final_frame0": true,
+    "raw_frame79_matches_final_frame79": true,
+    "raw_frame80_matches_final_frame80": true,
+    "aligned_contract_has_81_frames": true,
+    "aligned_steps_are_0_to_800": true,
+    "aligned_points_shape": true,
+    "aligned_visibility_shape": true,
+    "current_step810_lacks_saved_current_raster": true
+  },
+  "all_checks_pass": true,
+  "interpretation": {
+    "raster_visibility": "Frontmost point identity under the exact saved PyTorch3D raster contract, not projection validity and not a depth-threshold estimate.",
+    "scope": "Read-only audit. No aligned transport artifact, final_sim, or future visibility artifact was written."
+  }
+}

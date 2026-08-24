@@ -1,0 +1,43 @@
+usage: infer_sim.py [-h] --checkpoint_path CHECKPOINT_PATH --sim_data_path
+                    SIM_DATA_PATH [--output_path OUTPUT_PATH] [--use_ema]
+                    [--seed SEED] [--eval_degradation EVAL_DEGRADATION]
+                    [--local_attn_size LOCAL_ATTN_SIZE]
+                    [--transport_latent_path TRANSPORT_LATENT_PATH]
+                    [--transport_mode {correct,shuffled,flow,blend}]
+                    [--transport_injection_mode {replace,inter_step_residual}]
+                    [--transport_injection_scale TRANSPORT_INJECTION_SCALE]
+                    [--transport_injection_step TRANSPORT_INJECTION_STEP]
+
+I2V Flow Inference with SDEdit from Simulation
+
+options:
+  -h, --help            show this help message and exit
+  --checkpoint_path CHECKPOINT_PATH
+                        Path to the checkpoint file
+  --sim_data_path SIM_DATA_PATH
+                        Path to simulation final_sim directory (contains
+                        noises.npy, frames/, masks, etc.)
+  --output_path OUTPUT_PATH
+                        Output video path
+  --use_ema             Whether to use EMA parameters
+  --seed SEED           Random seed
+  --eval_degradation EVAL_DEGRADATION
+                        Degradation level for noise (0.0 = pure structured
+                        noise)
+  --local_attn_size LOCAL_ATTN_SIZE
+                        Local attention size for causal model
+  --transport_latent_path TRANSPORT_LATENT_PATH
+                        Optional VAE transport artifact produced by
+                        scripts/run_wan_vae_transport_probe.py
+  --transport_mode {correct,shuffled,flow,blend}
+                        Which precomputed transport condition to use
+  --transport_injection_mode {replace,inter_step_residual}
+                        replace preserves the existing precomputed-latent
+                        behavior; inter_step_residual keeps the fresh runtime
+                        sim_latent and injects an artifact-local residual
+                        between denoising steps
+  --transport_injection_scale TRANSPORT_INJECTION_SCALE
+                        Scale applied to an inter-step transport residual
+  --transport_injection_step TRANSPORT_INJECTION_STEP
+                        Denoising-step index after which the residual is
+                        injected, before re-noising to the next step

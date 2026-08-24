@@ -1,0 +1,10 @@
+--- reports/phase0d/20260815_050000__phase0d_4d_r3h_cpair_unseal/run_cpair_secondary.py	2026-08-15 03:51:26.000000000 +0800
++++ reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/nodepth_final_20260818T190000Z/formal_outcome_evaluation/run_nodepth_tcmar.py	2026-08-20 00:35:54.000000000 +0800
+@@ -1,6 +1,6 @@
+ import importlib.util, json, sys
+ from pathlib import Path
+-ROOT=Path('/workspace/DeformTransport'); R=Path('/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_050000__phase0d_4d_r3h_cpair_unseal'); E=Path('/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py')
++ROOT=Path('/workspace/DeformTransport'); R=Path('/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/nodepth_final_20260818T190000Z/formal_outcome_evaluation'); E=Path('/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py')
+ arm=sys.argv[1]; video=Path(sys.argv[2]); suite=R/('suite_'+arm); target=suite/'santa/dt_full/santa_dt_full_correct_seed0.mp4'; target.parent.mkdir(parents=True,exist_ok=True)
+ if target.exists() or target.is_symlink(): target.unlink()
+ target.symlink_to(video)

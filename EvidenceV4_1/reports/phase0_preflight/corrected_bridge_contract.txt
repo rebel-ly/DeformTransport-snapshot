@@ -1,0 +1,118 @@
+===== FROZEN CONTRACT =====
+Santa corrected physical-visibility bridge.
+
+Status: FROZEN FOR FORMAL RE-RUN.
+
+Contract:
+1. Candidate material points must be physically source-visible.
+2. One persistent material point is selected per occupied 8x8 Wan-VAE source cell.
+3. Future visibility uses authoritative source_and_aligned_visible.
+4. Tracks remain persistent material identities.
+5. Correct vs Identity-Shuffled changes source-coordinate identity only.
+6. Future trajectories and visibility are identical between the pair.
+
+Integrity:
+N=1277
+source_visible_fraction=1.0
+visibility_true_fraction=0.4049324709726694
+visibility_exact_upstream_match=true
+visibility_difference_fraction=0.0
+all_frame_visible_count=63
+unique_vae_cells=1277
+identity_shuffle_fixed_points=0
+2026-08-11T02:48:57+00:00
+
+===== REPORT =====
+{
+  "method": "DeformTransport material trajectories to Wan-Move",
+  "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim/point_trajectories.pt",
+  "source_coordinate_system": "pytorch3d_world_and_realwonder_512_uv",
+  "source_image_size": 512,
+  "alignment": {
+    "resize": "512x512 -> 832x832",
+    "scale": 1.625,
+    "center_crop_top": 176,
+    "output_size": [
+      480,
+      832
+    ],
+    "formula": "x=1.625*u; y=1.625*v-176"
+  },
+  "sampling": {
+    "type": "one persistent point per occupied Wan-Move VAE 8x8 source cell",
+    "manual_track_count": false,
+    "vae_stride": 8,
+    "latent_grid": [
+      60,
+      104
+    ],
+    "selected_tracks": 1277,
+    "initial_valid_points": 19126
+  },
+  "tracks": {
+    "shape": [
+      1,
+      81,
+      1277,
+      2
+    ],
+    "dtype": "float32",
+    "x_min": 276.09234619140625,
+    "x_max": 819.2837524414062,
+    "y_min": 45.36772155761719,
+    "y_max": 413.95166015625
+  },
+  "visibility": {
+    "shape": [
+      1,
+      81,
+      1277
+    ],
+    "dtype": "bool",
+    "global_fraction": 0.4049324709726694,
+    "track_fraction_mean": 0.40493247097266943,
+    "track_fraction_min": 0.012345679012345678
+  },
+  "motion": {
+    "valid_step_mean_px": 3.1802642345428467,
+    "valid_step_p95_px": 7.834540557861328,
+    "start_to_end_mean_px": 150.9198760986328,
+    "start_to_end_p95_px": 380.2064453125
+  },
+  "candidate_comparison": {
+    "uv_max_abs_diff": 0.0,
+    "projection_valid_equal": true,
+    "depth_max_abs_diff": 0.0
+  },
+  "wan_move_contract": {
+    "tracks": "[1,81,N,2] float32 pixel XY",
+    "visibility": "[1,81,N] bool",
+    "input_resolution": [
+      480,
+      832
+    ],
+    "wan_move_additional_scale": "1.0 when used with aligned 480x832 input image"
+  }
+}
+===== VISIBILITY INTEGRITY =====
+{
+  "n_tracks": 1277,
+  "source_visible_fraction": 1.0,
+  "visibility_true_fraction": 0.4049324709726694,
+  "visibility_exact_upstream_match": true,
+  "visibility_difference_fraction": 0.0,
+  "all_frame_visible_count": 63,
+  "all_frame_visible_fraction": 0.04933437744714174,
+  "unique_vae_cells": 1277
+}
+
+===== SHUFFLE REPORT =====
+{
+  "seed": 0,
+  "n_tracks": 1277,
+  "fixed_points": 0,
+  "source_coordinates_permuted_only": true,
+  "future_tracks_identical": true,
+  "visibility_identical": true,
+  "point_ids_unchanged": true
+}

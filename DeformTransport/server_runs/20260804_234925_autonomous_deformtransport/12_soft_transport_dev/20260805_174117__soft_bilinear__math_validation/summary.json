@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "correct_finite": true,
+    "weight_finite": true,
+    "mask_equals_positive_weight": true,
+    "correct_shuffled_same_mask": true,
+    "correct_shuffled_same_count": true,
+    "correct_shuffled_same_weight": true,
+    "correct_shuffled_different_features": true,
+    "constant_field_preserved": true
+  },
+  "frame_support_cells": [
+    16,
+    16,
+    16
+  ],
+  "frame_weight_sum": [
+    4.0,
+    3.999999523162842,
+    4.0
+  ],
+  "valid_point_count": [
+    4,
+    4,
+    4
+  ],
+  "all_checks_pass": true
+}

@@ -1,0 +1,193 @@
+{
+  "stage": "motion_neutral_stoploss_evaluation",
+  "motion_neutral_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_032909__quality_motion_neutral_correct/motion_neutral_correct/aligned_santa_quality_motion_neutral_correct_seed0.mp4",
+  "local_metrics_against_simulation_target": {
+    "transport_core": {
+      "l1": 29.491296768188477,
+      "mse": 3129.74658203125,
+      "psnr": 13.175711870534313,
+      "temporal_change_error": 16.365272521972656,
+      "gradient_error": 9.313444488124222,
+      "selected_frame_l1": {
+        "0": 4.4654645919799805,
+        "20": 26.89876937866211,
+        "40": 30.99151611328125,
+        "60": 37.87374496459961,
+        "80": 42.6645393371582
+      }
+    },
+    "transport_dilated_8px": {
+      "l1": 27.966184616088867,
+      "mse": 2870.861083984375,
+      "psnr": 13.55068182623809,
+      "temporal_change_error": 14.775239944458008,
+      "gradient_error": 9.80480641839448,
+      "selected_frame_l1": {
+        "0": 4.722612380981445,
+        "20": 25.821542739868164,
+        "40": 29.32231330871582,
+        "60": 34.90236282348633,
+        "80": 38.36552429199219
+      }
+    },
+    "background_outside_dilated": {
+      "l1": 10.447746276855469,
+      "mse": 504.9853820800781,
+      "psnr": 21.098015541826026,
+      "temporal_change_error": 1.0156497955322266,
+      "gradient_error": 8.415215429489002,
+      "selected_frame_l1": {
+        "0": 3.747702121734619,
+        "20": 8.795659065246582,
+        "40": 10.772419929504395,
+        "60": 12.12341022491455,
+        "80": 12.89295482635498
+      }
+    }
+  },
+  "local_comparisons_improvement_percent": {
+    "transport_core": {
+      "motion_neutral_vs_realwonder_baseline": {
+        "l1": -1.929839110744989,
+        "mse": -2.961145254059653,
+        "temporal_change_error": -0.8760104806171365,
+        "gradient_error": -0.18009524845417388
+      },
+      "motion_neutral_vs_quality_inter_step_correct": {
+        "l1": 0.07111126162481379,
+        "mse": -2.9141134707192187,
+        "temporal_change_error": -1.6127309319419445,
+        "gradient_error": -2.764272799277168
+      }
+    },
+    "transport_dilated_8px": {
+      "motion_neutral_vs_realwonder_baseline": {
+        "l1": -1.7364746903516237,
+        "mse": -2.7365252442614683,
+        "temporal_change_error": -0.8012459749019701,
+        "gradient_error": -0.10312064707719305
+      },
+      "motion_neutral_vs_quality_inter_step_correct": {
+        "l1": 0.34666497568431265,
+        "mse": -2.3877789933925797,
+        "temporal_change_error": -1.3027567782388094,
+        "gradient_error": -2.346747113818427
+      }
+    }
+  },
+  "motion_metrics_against_simulation_flow": {
+    "transport_core_moving_gt_0p25": {
+      "realwonder_baseline": {
+        "pixel_count": 859979,
+        "epe_mean": 0.7134919762611389,
+        "epe_median": 0.5436537861824036,
+        "epe_p90": 1.517069149017334,
+        "flow_magnitude_mae": 0.6354169845581055,
+        "target_magnitude_mean": 1.9879378080368042,
+        "predicted_magnitude_mean": 2.02455472946167,
+        "direction_cosine_mean": 0.9719240665435791,
+        "angle_error_degrees_mean": 9.16075611114502
+      },
+      "quality_inter_step_correct": {
+        "pixel_count": 859979,
+        "epe_mean": 0.7337844967842102,
+        "epe_median": 0.5702984929084778,
+        "epe_p90": 1.5311966180801395,
+        "flow_magnitude_mae": 0.657223105430603,
+        "target_magnitude_mean": 1.9879378080368042,
+        "predicted_magnitude_mean": 2.0290486812591553,
+        "direction_cosine_mean": 0.9701905250549316,
+        "angle_error_degrees_mean": 9.371898651123047
+      },
+      "motion_neutral_correct": {
+        "pixel_count": 859979,
+        "epe_mean": 0.7273838520050049,
+        "epe_median": 0.5570518970489502,
+        "epe_p90": 1.5374595880508426,
+        "flow_magnitude_mae": 0.6508293151855469,
+        "target_magnitude_mean": 1.9879378080368042,
+        "predicted_magnitude_mean": 2.028067111968994,
+        "direction_cosine_mean": 0.9727380275726318,
+        "angle_error_degrees_mean": 9.016730308532715
+      }
+    },
+    "transport_dilated_moving_gt_0p25": {
+      "realwonder_baseline": {
+        "pixel_count": 880166,
+        "epe_mean": 0.7194832563400269,
+        "epe_median": 0.546892523765564,
+        "epe_p90": 1.5293935537338257,
+        "flow_magnitude_mae": 0.6419112086296082,
+        "target_magnitude_mean": 1.9930613040924072,
+        "predicted_magnitude_mean": 2.0322775840759277,
+        "direction_cosine_mean": 0.9718051552772522,
+        "angle_error_degrees_mean": 9.144248008728027
+      },
+      "quality_inter_step_correct": {
+        "pixel_count": 880166,
+        "epe_mean": 0.7399505376815796,
+        "epe_median": 0.5732272863388062,
+        "epe_p90": 1.5432307720184326,
+        "flow_magnitude_mae": 0.6638870239257812,
+        "target_magnitude_mean": 1.9930613040924072,
+        "predicted_magnitude_mean": 2.0382730960845947,
+        "direction_cosine_mean": 0.9700660705566406,
+        "angle_error_degrees_mean": 9.348737716674805
+      },
+      "motion_neutral_correct": {
+        "pixel_count": 880166,
+        "epe_mean": 0.7332970499992371,
+        "epe_median": 0.5607244968414307,
+        "epe_p90": 1.5483076572418213,
+        "flow_magnitude_mae": 0.657291829586029,
+        "target_magnitude_mean": 1.9930613040924072,
+        "predicted_magnitude_mean": 2.036177635192871,
+        "direction_cosine_mean": 0.9726272225379944,
+        "angle_error_degrees_mean": 8.997441291809082
+      }
+    }
+  },
+  "motion_comparisons_improvement_percent": {
+    "transport_core_moving_gt_0p25": {
+      "motion_neutral_vs_realwonder_baseline": {
+        "epe_improvement_percent": -1.9470262043677873,
+        "magnitude_mae_improvement_percent": -2.425545901666409,
+        "angle_improvement_percent": 1.5722043122301033
+      },
+      "motion_neutral_vs_quality_inter_step_correct": {
+        "epe_improvement_percent": 0.8722785514351921,
+        "magnitude_mae_improvement_percent": 0.9728492793732554,
+        "angle_improvement_percent": 3.789715998985667
+      }
+    },
+    "transport_dilated_moving_gt_0p25": {
+      "motion_neutral_vs_realwonder_baseline": {
+        "epe_improvement_percent": -1.9199604073457166,
+        "magnitude_mae_improvement_percent": -2.3960667378369047,
+        "angle_improvement_percent": 1.605454235042847
+      },
+      "motion_neutral_vs_quality_inter_step_correct": {
+        "epe_improvement_percent": 0.8991800591414263,
+        "magnitude_mae_improvement_percent": 0.9934211849408736,
+        "angle_improvement_percent": 3.757688315922432
+      }
+    }
+  },
+  "decision_flags": {
+    "local_l1_better_than_baseline": false,
+    "local_l1_better_than_quality_inter_step": true,
+    "motion_epe_better_than_baseline": false,
+    "motion_epe_better_than_quality_inter_step": true,
+    "advance_to_motion_neutral_shuffled": false
+  },
+  "checks": {
+    "target_video_shape_valid": true,
+    "motion_neutral_video_shape_valid": true,
+    "motion_neutral_flow_shape_valid": true,
+    "all_values_finite": true,
+    "core_masks_nonempty": true
+  },
+  "all_checks_pass": true,
+  "gpu_peak_allocated_mib": 342.306640625,
+  "motion_neutral_flow": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_032909__quality_motion_neutral_correct/evaluation/motion_neutral_correct_raft_flow.npy"
+}

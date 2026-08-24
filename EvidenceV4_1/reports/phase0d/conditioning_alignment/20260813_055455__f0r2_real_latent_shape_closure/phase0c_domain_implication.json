@@ -1,0 +1,4 @@
+{
+  "real_transport_latent_hw":"60x104", "phase0c_synthetic_hw":"60x104", "real_domain_denominator":"20*60*104=124800", "phase0c_7p24_real_domain_valid":true, "real_domain_intervention_fraction":"7.236378% (9031/124800)",
+  "phase0b_causal_contract_impact":"NO_EVIDENCE_OF_INVALIDATION", "phase0c_structural_equivalence_impact":"NO_EVIDENCE_OF_INVALIDATION", "phase0c_differential_decomposition_impact":"NO_EVIDENCE_OF_INVALIDATION", "phase0c_real_coverage_magnitude_impact":"REAL_DOMAIN_MATCH_CONFIRMED"
+}

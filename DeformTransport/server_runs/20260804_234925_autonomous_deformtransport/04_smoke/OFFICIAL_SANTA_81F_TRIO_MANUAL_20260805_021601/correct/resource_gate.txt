@@ -1,0 +1,4 @@
+physical_gpu=2
+free_mib=45378
+temperature_c=55
+mem_available_kib=100141892

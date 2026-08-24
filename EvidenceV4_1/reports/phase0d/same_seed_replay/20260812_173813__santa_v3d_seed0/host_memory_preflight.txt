@@ -1,0 +1,6 @@
+              total        used        free      shared  buff/cache   available
+Mem:           125G         18G         98G        601M        8.5G        102G
+Swap:           63G        575M         63G
+
+Filesystem      Size  Used Avail Use% Mounted on
+parastor_sdbd   1.6P  171T  1.4P  11% /mnt/sdbd

@@ -1,0 +1,32 @@
+PHASE0D-2F / F2 METRIC MECHANISM & ERROR LOCALIZATION DIAGNOSTIC
+FROZEN_AT=2026-08-13T08:18:24+08:00
+
+PREREQUISITE
+F1-R4 PASS; CURRENT_FORMAL_CORRECTED_V2; PROCEED_TO_F2=True.
+Formal F1 metrics and evaluator semantics are immutable.
+
+SCOPE
+- Recover per-carrier TC-MAR and per-transition/per-carrier TC-ME contributions from canonical existing RW and DT-FULL videos.
+- Hard-gate all localization on exact reproduction of the frozen F1 summaries.
+- Join all 1257 material IDs to frozen Phase0C operator evidence and deterministic visibility/motion/trajectory diagnostics.
+- Evaluate RW coarse simulation conditioning only where the frozen video metric representation is directly applicable.
+- Reuse a formal real edited_y only if exact lineage exists; otherwise allow one VAE-only reconstruction, never transformer/diffusion generation.
+- All newly derived quantities are DIAGNOSTIC_ONLY.
+
+PROHIBITED
+No GRID100 construction or selection; no k sweep; no WM-0; no diffusion generation; no RealWonder generation; no new seeds; no F3; no evaluator/metric/data/video modification; no package changes; no outcome-dependent thresholds.
+
+FORMAL ASSETS
+N=1257
+IDS_SHA=f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8
+TRACKS_SHA=a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929
+VISIBILITY_SHA=5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff
+RW_SHA=1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7
+DT_FULL_SHA=08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935
+EVALUATOR_SHA=e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5
+
+STOP CONDITIONS
+If per-sample reduction fails to reproduce F1, status=FAIL_DIAGNOSTIC_REPRODUCTION and stop localization.
+If material-ID join is materially incomplete, do not silently analyze a partial set.
+
+LOCAL_CODEX_ONLY=ENABLED

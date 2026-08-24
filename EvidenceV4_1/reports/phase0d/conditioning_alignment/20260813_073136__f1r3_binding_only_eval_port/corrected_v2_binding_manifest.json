@@ -1,0 +1,46 @@
+{
+  "schema": "f1r3-binding-manifest-v1",
+  "name": "corrected_v2_n1257_rw_dtfull",
+  "original_evaluator": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "original_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "mode": "binding_port",
+  "dataset_binding": {
+    "case": "santa",
+    "ids_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+    "tracks_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+    "tracks_sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33df7fdebfb51929",
+    "visibility_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+    "visibility_sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+    "expect": {
+      "n": 1257,
+      "valid_tracks": 1110,
+      "obs": 9766,
+      "lab": 21.271405488892093,
+      "rgb": 0.14561786886907022,
+      "tcme": 0.6146068110130727
+    }
+  },
+  "method_binding": {
+    "root_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport",
+    "candidate_labels": ["dt_full"],
+    "rw_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+    "rw_sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+    "legacy_reference_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/correct/santa_formal_correct_seed0.mp4",
+    "legacy_reference_sha256": "1c20d32c82049e0cb5fd8f19b08957b4e5b0b70020267c357293cc568d43cf14",
+    "dt_full_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4",
+    "dt_full_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+    "suite_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/formal_suite"
+  },
+  "output_binding": {
+    "appearance_cases": ["santa"],
+    "out_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/runtime/corrected_v2"
+  },
+  "binding_changes": [
+    "DATASET_BINDING: CASES.santa.tracks",
+    "DATASET_BINDING: CASES.santa.vis",
+    "DATASET_BINDING: CASES.santa.expect",
+    "METHOD_BINDING: CANDIDATES",
+    "OUTPUT_BINDING: main appearance case selection"
+  ]
+}

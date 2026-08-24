@@ -1,0 +1,18 @@
+run_id: 20260804_234925_autonomous_deformtransport
+task: SIM_RUNTIME_RECOVERY
+started_at: "2026-08-05T04:33:58+08:00"
+scope: "在隔离 venv 中恢复预计算官方 case 所需的 Genesis/PyTorch3D 仿真运行时"
+base_python: /workspace/tools/miniforge3/envs/realwonder-gen/bin/python
+target_venv: /workspace/tools/venvs/deformtransport-sim
+gl_library_prefix: /workspace/tools/conda-libs/deformtransport-gl
+requirements: /workspace/DeformTransport/requirements-stage1-wsl.txt
+isolation: system-site-packages overlay
+protects_environment: realwonder-gen
+source_contract:
+  genesis_commit: 3aa206cd84729bc7cc14fb4007aeb95a0bead7aa
+  torch: 2.5.1+cu121
+  pytorch3d: 0.7.8+pt2.5.1cu121
+notes:
+  - "不安装 SAM3D、SAM2、MoGe 或 Flux 重建前端。"
+  - "复用 demo_web/simulation_engine.py 的 _MinimalSVR 预计算资产加载路径。"
+  - "OpenCV运行库使用4.9.0.80 headless wheel；保留同版本opencv-python元数据以满足Genesis声明并通过pip check。"

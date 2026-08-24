@@ -1,0 +1,10 @@
+{
+  "seed": 0,
+  "derangement_attempts": 1,
+  "num_tracks": 1277,
+  "fixed_points": 0,
+  "future_trajectory_max_abs_diff": 0.0,
+  "source_binding_displacement_mean_px": 153.51803588867188,
+  "source_binding_displacement_p50_px": 150.8865203857422,
+  "source_binding_displacement_p95_px": 288.44011840820315
+}

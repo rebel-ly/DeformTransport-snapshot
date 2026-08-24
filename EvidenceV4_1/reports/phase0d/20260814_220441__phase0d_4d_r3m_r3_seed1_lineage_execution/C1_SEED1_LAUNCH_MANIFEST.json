@@ -1,0 +1,17 @@
+{
+  "arm": "C1",
+  "formal_diffusion_seed": 1,
+  "gpu_assignment": "GPU0",
+  "cuda_visible_devices": "0",
+  "source_manifest": "SEED1_C1_PLANNED_MANIFEST.json",
+  "seed0_to_seed1_lineage_audit": "PASS",
+  "preview_latent": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/WAN_FORMAL_PREVIEW_LATENT_58x104.npy",
+  "initial_epsilon": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_100000__phase0d_4d_r3m_seed1_wave1/EPSILON_SEED1_58x104.npy",
+  "start_index": 15,
+  "start_sigma": 0.8329627513885498,
+  "start_timestep": 832,
+  "effective_denoise_steps": 25,
+  "transport": {"K": 0, "variant": "v3d"},
+  "science_result_seal": "CLOSED",
+  "resolved_command": "/workspace/tools/miniforge3/envs/wan-move/bin/python /workspace/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay/generate.py --task wan-move-i2v --size 480*832 --frame_num 81 --ckpt_dir /workspace/Wan-Move/Wan-Move-14B-480P --image /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png --track /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_tracks.npy --track_visibility /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_visibility.npy --base_seed 1 --sample_steps 40 --sample_shift 3.0 --t5_cpu --offload_model True --dtype bf16 --preview_latent /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/WAN_FORMAL_PREVIEW_LATENT_58x104.npy --initial_epsilon /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_100000__phase0d_4d_r3m_seed1_wave1/EPSILON_SEED1_58x104.npy --start_index 15 --save_file /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/c1_seed1_gpu0/c1_preview_k0_v3d_seed001.mp4"
+}

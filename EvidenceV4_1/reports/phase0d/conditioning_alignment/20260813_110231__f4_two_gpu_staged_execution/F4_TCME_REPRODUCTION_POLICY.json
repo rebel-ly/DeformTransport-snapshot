@@ -1,0 +1,17 @@
+{
+  "SOURCE_CLASS": "CLASS_C_RUNTIME_DRIFT",
+  "EVALUATOR_SHA": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "BASELINE_VIDEO_SHAS": {"RW": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7", "DT-FULL": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935"},
+  "RUNTIME_IDENTITY": {"historical_restored": "host /mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python with CUDA_VISIBLE_DEVICES=1", "current_repeat_runtime": "deformtransport-dev container /workspace/tools/miniforge3/envs/wan-move/bin/python with default visible device", "difference": "execution namespace/device binding; evaluator SHA and baseline video SHA identical"},
+  "NUMBER_OF_REPEATS": 5,
+  "RW_REPEAT_VALUES": [0.586977941501839,0.586977941501839,0.586977941501839,0.586977941501839,0.586977941501839],
+  "DTFULL_REPEAT_VALUES": [0.7265571851768204,0.7265571851768204,0.7265571851768204,0.7265571851768204,0.7265571851768204],
+  "RW_REPEAT_RANGE": 0.0, "DTFULL_REPEAT_RANGE": 0.0,
+  "RAW_TRANSITION_AUDIT_STATUS": "UNRESOLVED: historical and current per-transition arrays were not preserved by the frozen evaluator.",
+  "HISTORICAL_REFERENCE_COMPATIBLE": true,
+  "RESTORATION_PROBE": {"runtime": "host + CUDA_VISIBLE_DEVICES=1", "RW_TCME_MEAN": 0.5869890665947547, "DTFULL_TCME_MEAN": 0.7265499674289193, "exact_match_to_historical": true},
+  "REPRODUCTION_RULE": "For later formal TC-ME candidate evaluation, use the restored historical host runtime, exact frozen evaluator SHA, original baseline bindings, and CUDA_VISIBLE_DEVICES=1. Require exact RW and DT-FULL reproduction before candidate metrics are unblinded or interpreted. No epsilon/envelope is authorized.",
+  "REPRODUCTION_ENVELOPE": null,
+  "CANDIDATE_METRICS_UNBLINDED": false,
+  "POLICY_FROZEN": true
+}

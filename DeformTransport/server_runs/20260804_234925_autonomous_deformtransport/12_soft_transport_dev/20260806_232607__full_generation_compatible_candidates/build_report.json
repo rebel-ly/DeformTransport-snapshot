@@ -1,0 +1,44 @@
+{
+  "stage": "full_generation_compatibility_artifact_build",
+  "artifacts": {
+    "balanced": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_232607__full_generation_compatible_candidates/balanced_ramp4_full_generation.pt",
+      "sha256": "eabdec3abbb85fcd62df5532bb30b7dd271db549bb736f11cfa6258b80a6d784",
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/balanced_a0p500_t0p750_ramp4.pt",
+      "candidate_id": "balanced_a0p500_t0p750_ramp4",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "schedule_name": "ramp4",
+      "checks": {
+        "mask_equals_count_positive": true,
+        "correct_slot0_residual_zero": true,
+        "shuffled_slot0_residual_zero": true,
+        "correct_residual_loader_exact": true,
+        "correct_replace_loader_exact": true,
+        "shuffled_residual_loader_exact": true,
+        "shuffled_replace_loader_exact": true
+      },
+      "all_checks_pass": true
+    },
+    "quality": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_232607__full_generation_compatible_candidates/quality_ramp4_full_generation.pt",
+      "sha256": "4050d43f3aa1deb5a6e0560b7ce6a18b774aa101ee26fd1550788d8514b59f47",
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224606__selected_alpha_temporal_schedule_scan/candidates/quality_a0p250_t0p750_ramp4.pt",
+      "candidate_id": "quality_a0p250_t0p750_ramp4",
+      "alpha": 0.25,
+      "threshold": 0.75,
+      "schedule_name": "ramp4",
+      "checks": {
+        "mask_equals_count_positive": true,
+        "correct_slot0_residual_zero": true,
+        "shuffled_slot0_residual_zero": true,
+        "correct_residual_loader_exact": true,
+        "correct_replace_loader_exact": true,
+        "shuffled_residual_loader_exact": true,
+        "shuffled_replace_loader_exact": true
+      },
+      "all_checks_pass": true
+    }
+  },
+  "all_checks_pass": true
+}

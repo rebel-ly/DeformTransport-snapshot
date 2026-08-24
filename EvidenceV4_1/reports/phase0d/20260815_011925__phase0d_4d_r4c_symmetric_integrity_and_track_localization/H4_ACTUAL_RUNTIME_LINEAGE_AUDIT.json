@@ -1,0 +1,15 @@
+{
+  "H4_SEED0_SEED1_RUNTIME_LINEAGE": "PASS",
+  "per_arm_unexpected_diffs": {
+    "C1": null,
+    "C2": null,
+    "CS": null
+  },
+  "runtime_attestation_paths": {
+    "C1": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/C1_SEED1_LAUNCH_ATTESTATION.json",
+    "C2": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/C2_SEED1_LAUNCH_ATTESTATION.json",
+    "CS": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/CS_SEED1_LAUNCH_ATTESTATION.json"
+  },
+  "source_lineage_audit": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_220441__phase0d_4d_r3m_r3_seed1_lineage_execution/SEED0_TO_SEED1_ARM_LINEAGE_AUDIT.json",
+  "source_lineage_audit_sha256": "6c875fbbe7a6d34534b0380af7c997163983e1a798e45d4c7e93066de622d594"
+}

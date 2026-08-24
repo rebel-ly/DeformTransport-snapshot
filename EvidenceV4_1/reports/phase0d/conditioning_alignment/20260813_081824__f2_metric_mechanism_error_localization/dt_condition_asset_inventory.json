@@ -1,0 +1,46 @@
+{
+  "canonical_dt_video_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+  "existing_formal_real_edited_y_search": "NOT_FOUND_IN_FORMAL_REPLAY_A_DIRECTORY_OR_FROZEN_REPORTS",
+  "existing_phase0b_artifact": {
+    "path": "reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/correct_edited_y.npy",
+    "sha256": "0d08d60d86d06e805531a095ae41c99fc78a31bc8d48fdf33eafa33795f30769",
+    "shape": [
+      1,
+      4,
+      21,
+      60,
+      104
+    ],
+    "classification": "SYNTHETIC_FUNCTIONAL_HARNESS_NOT_FORMAL_REAL_VAE_LATENT",
+    "reused_as_formal_condition": false
+  },
+  "reconstruction": {
+    "status": "PASS",
+    "execution": "VAE-only source encode + frozen seed0 V3D + VAE-only decode; no transformer/diffusion",
+    "encoded_shape": [
+      16,
+      21,
+      60,
+      104
+    ],
+    "edited_shape": [
+      16,
+      21,
+      60,
+      104
+    ],
+    "decoded_shape": [
+      3,
+      81,
+      480,
+      832
+    ],
+    "structural_write_support": 9031,
+    "winner_map_exact_phase0c": true,
+    "differential_support_exact": true,
+    "encoded_sha256": "c5f5a9245b7440b838bbd680ae182b7f77231e2a8f2bd780afdf642c038e07c7",
+    "edited_sha256": "3203ffdf89082d0ffac3e0338edb8024d4111e7f82cce4abfbecf1fc70edf4bd",
+    "edited_file_sha256": "91affdb978792ac7f3cec8c794b3fddbe228e4871944b7fa4831e18ed28b45b6"
+  },
+  "attempt1_note": "Initial audit saved encoded_y after in-place replace alias; structure/decode valid, encoded-vs-edited comparison invalid. Attempt retained; encode-only baseline recovery proved exactly 9031 differential cells."
+}

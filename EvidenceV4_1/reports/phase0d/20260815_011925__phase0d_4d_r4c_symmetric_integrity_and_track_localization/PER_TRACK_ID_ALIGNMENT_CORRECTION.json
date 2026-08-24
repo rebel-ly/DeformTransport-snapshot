@@ -1,0 +1,9 @@
+{
+  "PER_TRACK_ID_ALIGNMENT": "PASS",
+  "all_arms_same_per_id_support_counts": true,
+  "all_arms_same_supported_id_set": true,
+  "canonical_material_id_universe": 1257,
+  "finite_supported_material_ids": 1174,
+  "interpretation": "Explicit material_id join; 83 canonical IDs have zero valid transition support in every arm and are excluded only from finite per-track deltas.",
+  "zero_support_material_ids_common_to_all_arms": 83
+}

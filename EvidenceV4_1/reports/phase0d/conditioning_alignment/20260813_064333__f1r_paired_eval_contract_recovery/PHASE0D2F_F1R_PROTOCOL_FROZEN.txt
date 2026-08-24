@@ -1,0 +1,19 @@
+Phase0D-2F / F1-R — Paired Evaluation Contract Failure Localization and Minimal Recovery
+
+Authority: user protocol supplied in the active local Codex task.
+Scope is restricted to frozen F1 failure localization, paired invocation-contract audit, deterministic loader preflight, and (only if semantics-preserving) minimal recovery.
+
+Prohibited and not performed: evaluator source modification; metric, TC-MAR, coordinate-map, support, N=1257 asset, source-video, resize/crop/resample change; generation; GRID100; WM-0; F2; Phase0D-3; seeds 1-4; package install/update.
+
+LOCAL_CODEX_ONLY_POLICY=ENABLED
+SERVER_ROLE=SSH_EXECUTION_TARGET_ONLY
+
+Frozen evaluator:
+/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py
+SHA256=2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08
+
+Corrected-v2 contract:
+EVAL_N=1257
+EVAL_IDS_SHA=f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8
+EVAL_TRACKS_SHA=a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929
+EVAL_VISIBILITY_SHA=5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff

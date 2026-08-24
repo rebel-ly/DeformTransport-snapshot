@@ -1,0 +1,684 @@
+{
+  "inputs": {
+    "transport_ready": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt",
+    "confidence_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_165939__santa__confidence_weighted_residual_artifact_retry1/outputs/vae_latent_outputs_soft_confidence_wpc_smooth_l010_h025.pt",
+    "final_sim": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim"
+  },
+  "transport_top_level_keys": [
+    "camera",
+    "case_name",
+    "continuous_coordinate_extension_version",
+    "continuous_coordinate_mapping",
+    "coordinate_system",
+    "depth",
+    "format_version",
+    "frame_ids",
+    "latent_height",
+    "latent_width",
+    "material_type",
+    "object_id",
+    "object_point_ranges",
+    "paths",
+    "point_id",
+    "point_particle_binding",
+    "point_particle_binding_by_object",
+    "points_2d_latent",
+    "points_2d_latent_continuous",
+    "points_2d_render",
+    "points_2d_video",
+    "points_3d",
+    "projection_valid",
+    "render_height",
+    "render_projection_valid",
+    "render_width",
+    "simulation_steps",
+    "source_depth",
+    "source_points_2d_latent",
+    "source_points_2d_latent_continuous",
+    "source_points_2d_render",
+    "source_points_2d_video",
+    "source_points_3d",
+    "source_raster_visible_point_ids",
+    "source_render_projection_valid",
+    "source_valid",
+    "source_visible",
+    "source_visible_point_ids",
+    "video_height",
+    "video_width"
+  ],
+  "confidence_artifact_keys": [
+    "artifact_kind",
+    "confidence_high",
+    "confidence_low",
+    "confidence_map",
+    "confidence_method",
+    "confidence_ratio",
+    "contribution_count",
+    "correct_fused_latent",
+    "correct_transport_residual",
+    "correct_transported_latent",
+    "format_version",
+    "latent_frame_indices",
+    "shuffled_fused_latent",
+    "shuffled_transport_residual",
+    "shuffled_transported_latent",
+    "soft_only_mask",
+    "source_files",
+    "source_latent",
+    "target_latent",
+    "transport_mask",
+    "transport_method",
+    "transport_weight"
+  ],
+  "coordinate_fields": {
+    "source_points_2d_render": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 56528,
+      "finite": true,
+      "min": 136.04852294921875,
+      "max": 358.9423828125,
+      "mean": 253.29461669921875,
+      "std": 51.31909942626953,
+      "nonzero_values": 56528
+    },
+    "source_points_2d_video": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 56528,
+      "finite": true,
+      "min": 45.078857421875,
+      "max": 583.2813720703125,
+      "mean": 323.6037292480469,
+      "std": 131.89146423339844,
+      "nonzero_values": 56528
+    },
+    "source_points_2d_latent": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        2
+      ],
+      "dtype": "torch.int64",
+      "numel": 56528,
+      "min": 5,
+      "max": 72,
+      "nonzero_values": 56528
+    },
+    "source_points_2d_latent_continuous": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 56528,
+      "finite": true,
+      "min": 5.634857177734375,
+      "max": 72.91017150878906,
+      "mean": 40.45046615600586,
+      "std": 16.486433029174805,
+      "nonzero_values": 56528
+    },
+    "points_2d_render": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 4578768,
+      "finite": true,
+      "min": 135.70919799804688,
+      "max": 505.4375305175781,
+      "mean": 270.56353759765625,
+      "std": 83.14546203613281,
+      "nonzero_values": 4578768
+    },
+    "points_2d_video": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 4578768,
+      "finite": true,
+      "min": 44.52745056152344,
+      "max": 821.3359985351562,
+      "mean": 351.6656799316406,
+      "std": 208.3636016845703,
+      "nonzero_values": 4578768
+    },
+    "points_2d_latent": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264,
+        2
+      ],
+      "dtype": "torch.int64",
+      "numel": 4578768,
+      "min": 5,
+      "max": 102,
+      "nonzero_values": 4578768
+    },
+    "points_2d_latent_continuous": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 4578768,
+      "finite": true,
+      "min": 5.56593132019043,
+      "max": 102.66699981689453,
+      "mean": 43.95820999145508,
+      "std": 26.04545021057129,
+      "nonzero_values": 4578768
+    }
+  },
+  "coordinate_bounds": {
+    "source_video": {
+      "available": true,
+      "valid_xy_shape": true,
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          28264,
+          2
+        ],
+        "dtype": "torch.float32",
+        "numel": 56528,
+        "finite": true,
+        "min": 45.078857421875,
+        "max": 583.2813720703125,
+        "mean": 323.6037292480469,
+        "std": 131.89146423339844,
+        "nonzero_values": 56528
+      },
+      "finite_points": 28264,
+      "in_bounds_points": 28264,
+      "fractional_points": 28264,
+      "total_points": 28264,
+      "in_bounds_ratio": 1.0
+    },
+    "future_video": {
+      "available": true,
+      "valid_xy_shape": true,
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          81,
+          28264,
+          2
+        ],
+        "dtype": "torch.float32",
+        "numel": 4578768,
+        "finite": true,
+        "min": 44.52745056152344,
+        "max": 821.3359985351562,
+        "mean": 351.6656799316406,
+        "std": 208.3636016845703,
+        "nonzero_values": 4578768
+      },
+      "finite_points": 2289384,
+      "in_bounds_points": 2289384,
+      "fractional_points": 2289384,
+      "total_points": 2289384,
+      "in_bounds_ratio": 1.0
+    },
+    "source_latent_continuous": {
+      "available": true,
+      "valid_xy_shape": true,
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          28264,
+          2
+        ],
+        "dtype": "torch.float32",
+        "numel": 56528,
+        "finite": true,
+        "min": 5.634857177734375,
+        "max": 72.91017150878906,
+        "mean": 40.45046615600586,
+        "std": 16.486433029174805,
+        "nonzero_values": 56528
+      },
+      "finite_points": 28264,
+      "in_bounds_points": 28264,
+      "fractional_points": 28264,
+      "total_points": 28264,
+      "in_bounds_ratio": 1.0
+    },
+    "future_latent_continuous": {
+      "available": true,
+      "valid_xy_shape": true,
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          81,
+          28264,
+          2
+        ],
+        "dtype": "torch.float32",
+        "numel": 4578768,
+        "finite": true,
+        "min": 5.56593132019043,
+        "max": 102.66699981689453,
+        "mean": 43.95820999145508,
+        "std": 26.04545021057129,
+        "nonzero_values": 4578768
+      },
+      "finite_points": 2289384,
+      "in_bounds_points": 2289384,
+      "fractional_points": 2289384,
+      "total_points": 2289384,
+      "in_bounds_ratio": 1.0
+    },
+    "selected_future_video": {
+      "available": true,
+      "valid_xy_shape": true,
+      "inventory": {
+        "type": "Tensor",
+        "shape": [
+          21,
+          28264,
+          2
+        ],
+        "dtype": "torch.float32",
+        "numel": 1187088,
+        "finite": true,
+        "min": 44.52745056152344,
+        "max": 821.0579833984375,
+        "mean": 351.05694580078125,
+        "std": 207.94847106933594,
+        "nonzero_values": 1187088
+      },
+      "finite_points": 593544,
+      "in_bounds_points": 593544,
+      "fractional_points": 593544,
+      "total_points": 593544,
+      "in_bounds_ratio": 1.0
+    }
+  },
+  "validity_candidate_keys": {
+    "projection_valid": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264
+      ],
+      "dtype": "torch.bool",
+      "numel": 2289384,
+      "true_values": 2289384,
+      "false_values": 0
+    },
+    "render_projection_valid": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264
+      ],
+      "dtype": "torch.bool",
+      "numel": 2289384,
+      "true_values": 2289384,
+      "false_values": 0
+    },
+    "source_raster_visible_point_ids": {
+      "type": "Tensor",
+      "shape": [
+        19126
+      ],
+      "dtype": "torch.int64",
+      "numel": 19126,
+      "min": 0,
+      "max": 28261,
+      "nonzero_values": 19125
+    },
+    "source_render_projection_valid": {
+      "type": "Tensor",
+      "shape": [
+        28264
+      ],
+      "dtype": "torch.bool",
+      "numel": 28264,
+      "true_values": 28264,
+      "false_values": 0
+    },
+    "source_valid": {
+      "type": "Tensor",
+      "shape": [
+        28264
+      ],
+      "dtype": "torch.bool",
+      "numel": 28264,
+      "true_values": 28264,
+      "false_values": 0
+    },
+    "source_visible": {
+      "type": "Tensor",
+      "shape": [
+        28264
+      ],
+      "dtype": "torch.bool",
+      "numel": 28264,
+      "true_values": 19126,
+      "false_values": 9138
+    },
+    "source_visible_point_ids": {
+      "type": "Tensor",
+      "shape": [
+        19126
+      ],
+      "dtype": "torch.int64",
+      "numel": 19126,
+      "min": 0,
+      "max": 28261,
+      "nonzero_values": 19125
+    }
+  },
+  "identity_candidate_keys": {
+    "material_type": {
+      "type": "list",
+      "repr": "['pbd_cloth']"
+    },
+    "point_id": {
+      "type": "Tensor",
+      "shape": [
+        28264
+      ],
+      "dtype": "torch.int64",
+      "numel": 28264,
+      "min": 0,
+      "max": 28263,
+      "nonzero_values": 28263
+    },
+    "point_particle_binding": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        5
+      ],
+      "dtype": "torch.int64",
+      "numel": 141320,
+      "min": 2,
+      "max": 9981,
+      "nonzero_values": 141320
+    },
+    "point_particle_binding_by_object": {
+      "type": "list",
+      "repr": "[tensor([[9620, 3984, 9621, 3983, 3998],\n        [9620, 9621, 3998, 9865, 3976],\n        [3984, 3983, 9604, 9620, 9603],\n        ...,\n        [  62, 4060,   33, 4059, 4062],\n        [4033,   26,   25,   21, 9927],\n        [4013,   23, 4029, 4035, 4014]])]"
+    },
+    "source_raster_visible_point_ids": {
+      "type": "Tensor",
+      "shape": [
+        19126
+      ],
+      "dtype": "torch.int64",
+      "numel": 19126,
+      "min": 0,
+      "max": 28261,
+      "nonzero_values": 19125
+    },
+    "source_visible_point_ids": {
+      "type": "Tensor",
+      "shape": [
+        19126
+      ],
+      "dtype": "torch.int64",
+      "numel": 19126,
+      "min": 0,
+      "max": 28261,
+      "nonzero_values": 19125
+    }
+  },
+  "temporal_candidate_keys": {
+    "frame_ids": {
+      "type": "Tensor",
+      "shape": [
+        81
+      ],
+      "dtype": "torch.int64",
+      "numel": 81,
+      "min": 0,
+      "max": 80,
+      "nonzero_values": 80
+    },
+    "simulation_steps": {
+      "type": "Tensor",
+      "shape": [
+        81
+      ],
+      "dtype": "torch.int64",
+      "numel": 81,
+      "min": 10,
+      "max": 810,
+      "nonzero_values": 81
+    }
+  },
+  "artifact_temporal_contract": {
+    "latent_frame_indices": {
+      "type": "Tensor",
+      "shape": [
+        21
+      ],
+      "dtype": "torch.int64",
+      "numel": 21,
+      "min": 0,
+      "max": 80,
+      "nonzero_values": 20
+    },
+    "latent_frame_indices_values": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      44,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68,
+      72,
+      76,
+      80
+    ],
+    "transport_mask": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.bool",
+      "numel": 131040,
+      "true_values": 22453,
+      "false_values": 108587
+    },
+    "confidence_map": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "numel": 131040,
+      "finite": true,
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.1422804296016693,
+      "std": 0.3373818099498749,
+      "nonzero_values": 21290
+    },
+    "confidence_ratio": {
+      "type": "Tensor",
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "numel": 131040,
+      "finite": true,
+      "min": 0.0,
+      "max": 0.7296468019485474,
+      "mean": 0.040220536291599274,
+      "std": 0.09228474646806717,
+      "nonzero_values": 22453
+    }
+  },
+  "final_sim_contract": {
+    "config_exists": true,
+    "noise_exists": true,
+    "first_frame_exists": true,
+    "frame_directory_exists": true,
+    "frame_file_count": 81,
+    "first_frame_file": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/frames/frame_0000.png",
+    "final_frame_file": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/frames/frame_0080.png"
+  },
+  "generated_videos": {
+    "santa_final_code_baseline_seed0": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_173303__final_confidence_code_baseline_regression/santa_final_code_baseline_seed0.mp4",
+      "exists": true,
+      "frame_count": 81,
+      "first_shape": [
+        480,
+        832,
+        3
+      ],
+      "middle_shape": [
+        480,
+        832,
+        3
+      ],
+      "final_shape": [
+        480,
+        832,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "santa_interstep_correct_g020_seed0": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_034301__santa__interstep_correct_g010_vs_g020_seed0/interstep_correct_g020/santa_interstep_correct_g020_seed0.mp4",
+      "exists": true,
+      "frame_count": 81,
+      "first_shape": [
+        480,
+        832,
+        3
+      ],
+      "middle_shape": [
+        480,
+        832,
+        3
+      ],
+      "final_shape": [
+        480,
+        832,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "santa_interstep_shuffled_g020_seed0": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/interstep_shuffled_g020/santa_interstep_shuffled_g020_seed0.mp4",
+      "exists": true,
+      "frame_count": 81,
+      "first_shape": [
+        480,
+        832,
+        3
+      ],
+      "middle_shape": [
+        480,
+        832,
+        3
+      ],
+      "final_shape": [
+        480,
+        832,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "santa_confidence_interstep_correct_g020_seed0": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/confidence_correct_g020/santa_confidence_interstep_correct_g020_seed0.mp4",
+      "exists": true,
+      "frame_count": 81,
+      "first_shape": [
+        480,
+        832,
+        3
+      ],
+      "middle_shape": [
+        480,
+        832,
+        3
+      ],
+      "final_shape": [
+        480,
+        832,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "santa_confidence_interstep_shuffled_g020_seed0": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/confidence_shuffled_g020/santa_confidence_interstep_shuffled_g020_seed0.mp4",
+      "exists": true,
+      "frame_count": 81,
+      "first_shape": [
+        480,
+        832,
+        3
+      ],
+      "middle_shape": [
+        480,
+        832,
+        3
+      ],
+      "final_shape": [
+        480,
+        832,
+        3
+      ],
+      "dtype": "uint8"
+    }
+  },
+  "metric_readiness": {
+    "has_source_video_coordinates": true,
+    "has_future_video_coordinates": true,
+    "has_source_continuous_latent_coordinates": true,
+    "has_future_continuous_latent_coordinates": true,
+    "has_any_visibility_or_validity_field": true,
+    "has_material_identity_field": true,
+    "has_21_latent_indices": true,
+    "all_videos_have_81_frames": true,
+    "all_videos_are_480x832": true
+  },
+  "interpretation_boundary": "This is a read-only contract audit. It does not compute or validate MIC, TAE, or Warp Consistency scores."
+}

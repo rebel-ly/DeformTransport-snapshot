@@ -1,0 +1,467 @@
+{
+  "audit_epoch": 1785859065.639336,
+  "gpu_snapshot": {
+    "GPU-0e2857f8-18bc-0f5b-c1ff-5b67f892cd60": {
+      "gpu_util_pct": 90,
+      "index": 1,
+      "memory_free_mib": 37048,
+      "memory_used_mib": 8336,
+      "temperature_c": 87
+    },
+    "GPU-111b4686-bb10-d8db-87fd-401b36dcbdf3": {
+      "gpu_util_pct": 63,
+      "index": 3,
+      "memory_free_mib": 32882,
+      "memory_used_mib": 12502,
+      "temperature_c": 89
+    },
+    "GPU-14bb1875-6456-dba9-fde5-e1383c8d480b": {
+      "gpu_util_pct": 100,
+      "index": 0,
+      "memory_free_mib": 27217,
+      "memory_used_mib": 18168,
+      "temperature_c": 87
+    },
+    "GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf": {
+      "gpu_util_pct": 16,
+      "index": 2,
+      "memory_free_mib": 32692,
+      "memory_used_mib": 12692,
+      "temperature_c": 88
+    }
+  },
+  "pmon_error": null,
+  "processes": [
+    {
+      "belongs_to_deformtransport_dev": false,
+      "cgroup": "11:hugetlb:/\n10:memory:/user.slice\n9:perf_event:/\n8:pids:/user.slice\n7:cpuset:/\n6:cpuacct,cpu:/user.slice\n5:freezer:/\n4:net_prio,net_cls:/\n3:blkio:/user.slice\n2:devices:/user.slice\n1:name=systemd:/user.slice/user-2107.slice/session-228.scope",
+      "cgroup_error": null,
+      "cmdline": "python main.py --mode meta --model esm2 --train_size 40 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --protein all",
+      "cmdline_error": null,
+      "cpu_ticks_delta_over_sample": 503,
+      "cwd": null,
+      "cwd_error": "PermissionError: [Errno 13] Permission denied: '/proc/153796/cwd'",
+      "deformtransport_container_id": "1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14",
+      "deformtransport_project_link": false,
+      "docker_marker": null,
+      "gpu": {
+        "gpu_util_pct": 100,
+        "index": 0,
+        "memory_free_mib": 27217,
+        "memory_used_mib": 18168,
+        "temperature_c": 87
+      },
+      "gpu_uuid": "GPU-14bb1875-6456-dba9-fde5-e1383c8d480b",
+      "io_delta_over_sample": {},
+      "parent": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n153795 pengzhe+ Tue Aug  4 04:58:03 2026    18:59:41 S  0.0  0.0      1 sh run_active.sh",
+      "pid": 153796,
+      "pmon_samples": [
+        {
+          "command": "10994",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "19",
+          "sm_pct": "78",
+          "type": "C"
+        },
+        {
+          "command": "10994",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "11",
+          "sm_pct": "42",
+          "type": "C"
+        },
+        {
+          "command": "10994",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "22",
+          "sm_pct": "86",
+          "type": "C"
+        },
+        {
+          "command": "10994",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "23",
+          "sm_pct": "93",
+          "type": "C"
+        },
+        {
+          "command": "10994",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "24",
+          "sm_pct": "93",
+          "type": "C"
+        }
+      ],
+      "process_name": "python",
+      "project_fd_error": "PermissionError: [Errno 13] Permission denied: '/proc/153796/fd'",
+      "project_fd_links_after": [],
+      "project_fd_links_before": [],
+      "ps": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n153796 pengzhe+ Tue Aug  4 04:58:03 2026    18:59:41 R  100  4.0 153795 python main.py --mode meta --model esm2 --train_size 40 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --protein all",
+      "status_error": null,
+      "status_excerpt": [
+        "Name:\tpython",
+        "State:\tS (sleeping)",
+        "Pid:\t153796",
+        "PPid:\t153795",
+        "VmRSS:\t 5372372 kB",
+        "Threads:\t102"
+      ],
+      "used_memory_mib": 10994
+    },
+    {
+      "belongs_to_deformtransport_dev": false,
+      "cgroup": "11:hugetlb:/\n10:memory:/user.slice\n9:perf_event:/\n8:pids:/user.slice\n7:cpuset:/\n6:cpuacct,cpu:/user.slice\n5:freezer:/\n4:net_prio,net_cls:/\n3:blkio:/user.slice\n2:devices:/user.slice\n1:name=systemd:/user.slice/user-2107.slice/session-1887.scope",
+      "cgroup_error": null,
+      "cmdline": "python main_multimodal.py --mode meta --model esm2 --protein all --train_size 80 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --use_structure --structure_dir data/structures --gearnet_weight checkpoints/gearnet_edge.pth --freeze_gearnet",
+      "cmdline_error": null,
+      "cpu_ticks_delta_over_sample": 503,
+      "cwd": null,
+      "cwd_error": "PermissionError: [Errno 13] Permission denied: '/proc/207627/cwd'",
+      "deformtransport_container_id": "1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14",
+      "deformtransport_project_link": false,
+      "docker_marker": null,
+      "gpu": {
+        "gpu_util_pct": 100,
+        "index": 0,
+        "memory_free_mib": 27217,
+        "memory_used_mib": 18168,
+        "temperature_c": 87
+      },
+      "gpu_uuid": "GPU-14bb1875-6456-dba9-fde5-e1383c8d480b",
+      "io_delta_over_sample": {},
+      "parent": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n207626 pengzhe+ Tue Aug  4 17:20:40 2026    06:37:04 S  0.0  0.0 190683 sh run_80.sh",
+      "pid": 207627,
+      "pmon_samples": [
+        {
+          "command": "7156",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "3",
+          "sm_pct": "16",
+          "type": "C"
+        },
+        {
+          "command": "7156",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "13",
+          "sm_pct": "55",
+          "type": "C"
+        },
+        {
+          "command": "7156",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "2",
+          "sm_pct": "12",
+          "type": "C"
+        },
+        {
+          "command": "7156",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "-",
+          "sm_pct": "-",
+          "type": "C"
+        },
+        {
+          "command": "7156",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 0,
+          "mem_pct": "-",
+          "sm_pct": "-",
+          "type": "C"
+        }
+      ],
+      "process_name": "python",
+      "project_fd_error": "PermissionError: [Errno 13] Permission denied: '/proc/207627/fd'",
+      "project_fd_links_after": [],
+      "project_fd_links_before": [],
+      "ps": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n207627 pengzhe+ Tue Aug  4 17:20:40 2026    06:37:04 R 99.5  3.6 207626 python main_multimodal.py --mode meta --model esm2 --protein all --train_size 80 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --use_structure --structure_dir data/structures --gearnet_weight checkpoints/gearnet_edge.pth --freeze_gearnet",
+      "status_error": null,
+      "status_excerpt": [
+        "Name:\tpython",
+        "State:\tR (running)",
+        "Pid:\t207627",
+        "PPid:\t207626",
+        "VmRSS:\t 4770712 kB",
+        "Threads:\t105"
+      ],
+      "used_memory_mib": 7156
+    },
+    {
+      "belongs_to_deformtransport_dev": false,
+      "cgroup": "11:hugetlb:/\n10:memory:/user.slice\n9:perf_event:/\n8:pids:/user.slice\n7:cpuset:/\n6:cpuacct,cpu:/user.slice\n5:freezer:/\n4:net_prio,net_cls:/\n3:blkio:/user.slice\n2:devices:/user.slice\n1:name=systemd:/user.slice/user-2107.slice/session-228.scope",
+      "cgroup_error": null,
+      "cmdline": "python main.py --mode meta --model esm2 --train_size 40 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --protein all",
+      "cmdline_error": null,
+      "cpu_ticks_delta_over_sample": 503,
+      "cwd": null,
+      "cwd_error": "PermissionError: [Errno 13] Permission denied: '/proc/154746/cwd'",
+      "deformtransport_container_id": "1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14",
+      "deformtransport_project_link": false,
+      "docker_marker": null,
+      "gpu": {
+        "gpu_util_pct": 90,
+        "index": 1,
+        "memory_free_mib": 37048,
+        "memory_used_mib": 8336,
+        "temperature_c": 87
+      },
+      "gpu_uuid": "GPU-0e2857f8-18bc-0f5b-c1ff-5b67f892cd60",
+      "io_delta_over_sample": {},
+      "parent": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n154745 pengzhe+ Tue Aug  4 04:58:57 2026    18:58:47 S  0.0  0.0      1 sh run_active.sh",
+      "pid": 154746,
+      "pmon_samples": [
+        {
+          "command": "8324",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 1,
+          "mem_pct": "12",
+          "sm_pct": "96",
+          "type": "C"
+        },
+        {
+          "command": "8324",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 1,
+          "mem_pct": "12",
+          "sm_pct": "87",
+          "type": "C"
+        },
+        {
+          "command": "8324",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 1,
+          "mem_pct": "12",
+          "sm_pct": "96",
+          "type": "C"
+        },
+        {
+          "command": "8324",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 1,
+          "mem_pct": "11",
+          "sm_pct": "86",
+          "type": "C"
+        },
+        {
+          "command": "8324",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 1,
+          "mem_pct": "13",
+          "sm_pct": "75",
+          "type": "C"
+        }
+      ],
+      "process_name": "python",
+      "project_fd_error": "PermissionError: [Errno 13] Permission denied: '/proc/154746/fd'",
+      "project_fd_links_after": [],
+      "project_fd_links_before": [],
+      "ps": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n154746 pengzhe+ Tue Aug  4 04:58:57 2026    18:58:47 R  100  3.3 154745 python main.py --mode meta --model esm2 --train_size 40 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --protein all",
+      "status_error": null,
+      "status_excerpt": [
+        "Name:\tpython",
+        "State:\tR (running)",
+        "Pid:\t154746",
+        "PPid:\t154745",
+        "VmRSS:\t 4398724 kB",
+        "Threads:\t102"
+      ],
+      "used_memory_mib": 8324
+    },
+    {
+      "belongs_to_deformtransport_dev": false,
+      "cgroup": "11:hugetlb:/\n10:memory:/user.slice\n9:perf_event:/\n8:pids:/user.slice\n7:cpuset:/\n6:cpuacct,cpu:/user.slice\n5:freezer:/\n4:net_prio,net_cls:/\n3:blkio:/user.slice\n2:devices:/user.slice\n1:name=systemd:/user.slice/user-2107.slice/session-228.scope",
+      "cgroup_error": null,
+      "cmdline": "python main_multimodal.py --mode meta --model esm2 --protein all --train_size 20 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --use_structure --structure_dir data/structures --gearnet_weight checkpoints/gearnet_edge.pth --freeze_gearnet",
+      "cmdline_error": null,
+      "cpu_ticks_delta_over_sample": 502,
+      "cwd": null,
+      "cwd_error": "PermissionError: [Errno 13] Permission denied: '/proc/161499/cwd'",
+      "deformtransport_container_id": "1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14",
+      "deformtransport_project_link": false,
+      "docker_marker": null,
+      "gpu": {
+        "gpu_util_pct": 16,
+        "index": 2,
+        "memory_free_mib": 32692,
+        "memory_used_mib": 12692,
+        "temperature_c": 88
+      },
+      "gpu_uuid": "GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf",
+      "io_delta_over_sample": {},
+      "parent": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n161498 pengzhe+ Tue Aug  4 05:03:44 2026    18:54:00 S  0.0  0.0      1 sh run_20.sh",
+      "pid": 161499,
+      "pmon_samples": [
+        {
+          "command": "12680",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 2,
+          "mem_pct": "21",
+          "sm_pct": "56",
+          "type": "C"
+        },
+        {
+          "command": "12680",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 2,
+          "mem_pct": "12",
+          "sm_pct": "44",
+          "type": "C"
+        },
+        {
+          "command": "12680",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 2,
+          "mem_pct": "13",
+          "sm_pct": "76",
+          "type": "C"
+        },
+        {
+          "command": "12680",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 2,
+          "mem_pct": "10",
+          "sm_pct": "52",
+          "type": "C"
+        },
+        {
+          "command": "12680",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 2,
+          "mem_pct": "33",
+          "sm_pct": "76",
+          "type": "C"
+        }
+      ],
+      "process_name": "python",
+      "project_fd_error": "PermissionError: [Errno 13] Permission denied: '/proc/161499/fd'",
+      "project_fd_links_after": [],
+      "project_fd_links_before": [],
+      "ps": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n161499 pengzhe+ Tue Aug  4 05:03:44 2026    18:54:00 S  100  3.7 161498 python main_multimodal.py --mode meta --model esm2 --protein all --train_size 20 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --use_structure --structure_dir data/structures --gearnet_weight checkpoints/gearnet_edge.pth --freeze_gearnet",
+      "status_error": null,
+      "status_excerpt": [
+        "Name:\tpython",
+        "State:\tS (sleeping)",
+        "Pid:\t161499",
+        "PPid:\t161498",
+        "VmRSS:\t 4937920 kB",
+        "Threads:\t102"
+      ],
+      "used_memory_mib": 12680
+    },
+    {
+      "belongs_to_deformtransport_dev": false,
+      "cgroup": "11:hugetlb:/\n10:memory:/user.slice\n9:perf_event:/\n8:pids:/user.slice\n7:cpuset:/\n6:cpuacct,cpu:/user.slice\n5:freezer:/\n4:net_prio,net_cls:/\n3:blkio:/user.slice\n2:devices:/user.slice\n1:name=systemd:/user.slice/user-2107.slice/session-228.scope",
+      "cgroup_error": null,
+      "cmdline": "python main_multimodal.py --mode meta --model esm2 --protein all --train_size 60 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --use_structure --structure_dir data/structures --gearnet_weight checkpoints/gearnet_edge.pth --freeze_gearnet",
+      "cmdline_error": null,
+      "cpu_ticks_delta_over_sample": 502,
+      "cwd": null,
+      "cwd_error": "PermissionError: [Errno 13] Permission denied: '/proc/162085/cwd'",
+      "deformtransport_container_id": "1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14",
+      "deformtransport_project_link": false,
+      "docker_marker": null,
+      "gpu": {
+        "gpu_util_pct": 63,
+        "index": 3,
+        "memory_free_mib": 32882,
+        "memory_used_mib": 12502,
+        "temperature_c": 89
+      },
+      "gpu_uuid": "GPU-111b4686-bb10-d8db-87fd-401b36dcbdf3",
+      "io_delta_over_sample": {},
+      "parent": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n162084 pengzhe+ Tue Aug  4 05:04:14 2026    18:53:30 S  0.0  0.0      1 sh run_60.sh",
+      "pid": 162085,
+      "pmon_samples": [
+        {
+          "command": "12490",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 3,
+          "mem_pct": "18",
+          "sm_pct": "38",
+          "type": "C"
+        },
+        {
+          "command": "12490",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 3,
+          "mem_pct": "22",
+          "sm_pct": "49",
+          "type": "C"
+        },
+        {
+          "command": "12490",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 3,
+          "mem_pct": "13",
+          "sm_pct": "33",
+          "type": "C"
+        },
+        {
+          "command": "12490",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 3,
+          "mem_pct": "25",
+          "sm_pct": "49",
+          "type": "C"
+        },
+        {
+          "command": "12490",
+          "dec_pct": "-",
+          "enc_pct": "-",
+          "gpu_index": 3,
+          "mem_pct": "40",
+          "sm_pct": "79",
+          "type": "C"
+        }
+      ],
+      "process_name": "python",
+      "project_fd_error": "PermissionError: [Errno 13] Permission denied: '/proc/162085/fd'",
+      "project_fd_links_after": [],
+      "project_fd_links_before": [],
+      "ps": "PID USER                      STARTED     ELAPSED S %CPU %MEM   PPID COMMAND\n162085 pengzhe+ Tue Aug  4 05:04:14 2026    18:53:30 R  100  3.6 162084 python main_multimodal.py --mode meta --model esm2 --protein all --train_size 60 --train_batch 1 --eval_batch 52000 --lora_r 16 --learning_rate 1e-4 --epochs 100 --patience 15 --list_size 10 --max_iter 5 --retr_metric cosine --augment GEMME --meta_tasks 3 --meta_train_batch 16 --meta_eval_batch 128 --adapt_lr 5e-3 --adapt_steps 5 --cross_validation 4 --use_structure --structure_dir data/structures --gearnet_weight checkpoints/gearnet_edge.pth --freeze_gearnet",
+      "status_error": null,
+      "status_excerpt": [
+        "Name:\tpython",
+        "State:\tR (running)",
+        "Pid:\t162085",
+        "PPid:\t162084",
+        "VmRSS:\t 4853644 kB",
+        "Threads:\t102"
+      ],
+      "used_memory_mib": 12490
+    }
+  ],
+  "sample_seconds": 5
+}

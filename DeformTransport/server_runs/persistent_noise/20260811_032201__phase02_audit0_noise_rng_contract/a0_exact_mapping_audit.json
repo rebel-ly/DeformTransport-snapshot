@@ -1,0 +1,84 @@
+{
+  "santa": {
+    "temporal_indices": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      44,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68,
+      72,
+      76,
+      80
+    ],
+    "structured_noise_shape": [
+      21,
+      16,
+      60,
+      104
+    ],
+    "structured_noise_sde_shape": [
+      21,
+      16,
+      60,
+      104
+    ],
+    "structured_vs_first16_maxabs": 0.0,
+    "structured_vs_last16_maxabs": 7.208984375,
+    "sde_vs_first16_maxabs": 7.208984375,
+    "sde_vs_last16_maxabs": 0.0
+  },
+  "tree": {
+    "temporal_indices": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      44,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68,
+      72,
+      76,
+      80
+    ],
+    "structured_noise_shape": [
+      21,
+      16,
+      60,
+      104
+    ],
+    "structured_noise_sde_shape": [
+      21,
+      16,
+      60,
+      104
+    ],
+    "structured_vs_first16_maxabs": 0.0,
+    "structured_vs_last16_maxabs": 7.26171875,
+    "sde_vs_first16_maxabs": 7.26171875,
+    "sde_vs_last16_maxabs": 0.0
+  }
+}

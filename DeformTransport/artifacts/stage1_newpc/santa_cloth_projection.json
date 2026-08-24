@@ -1,0 +1,51 @@
+{
+  "case": "santa_cloth",
+  "data_path": "E:\\DeformTransport\\demo_web\\demo_data\\santa_cloth",
+  "uses_bundled_realwonder_data": true,
+  "source_render_size": [
+    512,
+    512
+  ],
+  "video_size": [
+    480,
+    832
+  ],
+  "crop_start": 176,
+  "objects": [
+    {
+      "file": "demo_web\\demo_data\\santa_cloth\\fg_pcs\\pc_00.pt",
+      "point_count": 28264,
+      "render_valid_count": 28264,
+      "render_valid_ratio": 1.0,
+      "crop_valid_count": 28264,
+      "crop_valid_ratio": 1.0,
+      "depth_min": 1.7105501890182495,
+      "depth_max": 1.8700114488601685,
+      "uv_min": [
+        168.1427001953125,
+        136.08572387695312
+      ],
+      "uv_max": [
+        358.92669677734375,
+        353.68572998046875
+      ],
+      "video_uv_min": [
+        273.23187255859375,
+        45.13929748535156
+      ],
+      "video_uv_max": [
+        583.255859375,
+        398.73931884765625
+      ],
+      "latent_grid": [
+        60,
+        104
+      ],
+      "occupied_latent_cells": 1257,
+      "latent_occupancy_ratio": 0.2014423076923077,
+      "mean_points_per_occupied_cell": 22.48528241845664,
+      "max_points_in_one_cell": 29
+    }
+  ],
+  "projection_overlay": "E:\\DeformTransport\\artifacts\\stage1_newpc\\santa_cloth_projection.png"
+}

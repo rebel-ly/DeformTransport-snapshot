@@ -1,0 +1,20 @@
+{
+  "container_name": "deformtransport-dev",
+  "container_execution_context": "PASS",
+  "hostname": "gpu3",
+  "user": "uid=10001 (username not resolvable in container)",
+  "pwd": "/workspace",
+  "container_detected": true,
+  "workspace_mounts": {
+    "/workspace/DeformTransport": true,
+    "/workspace/Wan-Move": true,
+    "/workspace/DeformTransport_EvidenceV4_1": true
+  },
+  "python": {
+    "which": "/usr/bin/python",
+    "version": "Python 3.8.10",
+    "executable": "/usr/bin/python",
+    "prefix": "/usr"
+  },
+  "environment_record": "container_context_raw.txt"
+}

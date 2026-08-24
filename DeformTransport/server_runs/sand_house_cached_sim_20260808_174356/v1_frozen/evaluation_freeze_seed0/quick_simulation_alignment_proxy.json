@@ -1,0 +1,32 @@
+{
+  "REALWONDER": {
+    "global_MAE": 12.088175773620605,
+    "global_MSE": 815.610107421875,
+    "global_PSNR": 19.0159776174814,
+    "temporal_activity": 3.5243418216705322,
+    "target_temporal_activity": 2.9277100563049316,
+    "temporal_activity_error": 0.5966317653656006
+  },
+  "CORRECT": {
+    "global_MAE": 12.121809959411621,
+    "global_MSE": 815.603271484375,
+    "global_PSNR": 19.016014017500837,
+    "temporal_activity": 3.455364465713501,
+    "target_temporal_activity": 2.9277100563049316,
+    "temporal_activity_error": 0.5276544094085693
+  },
+  "SHUFFLED": {
+    "global_MAE": 12.279459953308105,
+    "global_MSE": 836.7311401367188,
+    "global_PSNR": 18.904944286960117,
+    "temporal_activity": 3.4353058338165283,
+    "target_temporal_activity": 2.9277100563049316,
+    "temporal_activity_error": 0.5075957775115967
+  },
+  "comparisons": {
+    "correct_minus_realwonder_MAE": 0.033634185791015625,
+    "correct_minus_shuffled_MAE": -0.15764999389648438,
+    "correct_minus_realwonder_MSE": -0.0068359375,
+    "correct_minus_shuffled_MSE": -21.12786865234375
+  }
+}

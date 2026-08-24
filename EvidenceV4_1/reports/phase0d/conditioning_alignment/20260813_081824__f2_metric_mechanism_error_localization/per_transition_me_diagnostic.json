@@ -1,0 +1,41 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "formal_per_sample_unit": "per transition mean of per-carrier EPE; 80 transitions",
+  "diagnostic_expansion": "per-transition/per-carrier EPE on the identical formal support",
+  "summaries": {
+    "rw": {
+      "mean": 0.5869890665947547,
+      "median": 0.5070961964161795,
+      "p95": 1.153139444856402
+    },
+    "dt_full": {
+      "mean": 0.7265499674289193,
+      "median": 0.6906036221851227,
+      "p95": 1.3080249503965733
+    }
+  },
+  "formal_abs_diff": {
+    "rw": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0
+    },
+    "dt_full": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0
+    }
+  },
+  "delta_epe": {
+    "N_instances": 33498,
+    "mean": 0.16446958306459167,
+    "median": 0.0137805881494622,
+    "p05": -0.7116380600384625,
+    "p95": 1.474677181013723,
+    "fraction_dt_better": 0.4479371902800167
+  },
+  "temporal_halves_fixed_not_tuned": {
+    "early_0_39": 0.2375308853210187,
+    "late_40_79": 0.04886240682997701
+  }
+}

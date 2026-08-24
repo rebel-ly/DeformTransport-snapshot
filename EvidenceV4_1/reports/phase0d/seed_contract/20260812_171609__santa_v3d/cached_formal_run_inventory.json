@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "REUSABLE": false,
+      "file_size": 7475185,
+      "generation_config_lineage": "seed0 V3D; not corrected-v2",
+      "input_lineage": "20260811 corrected_physical_visibility bridge, N=1277",
+      "mtime": 1786421596.0,
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_formal/20260811_025834__santa_v3d_corrected_visibility_correct_vs_shuffled_seed0/correct/santa_v3d_corrected_visibility_correct_seed0.mp4",
+      "reason": "Tracks are not corrected-v2 N=1257.",
+      "seed": 0,
+      "source_code_lineage": "historical pre-corrected-v2 run"
+    },
+    {
+      "REUSABLE": false,
+      "file_size": 6803977,
+      "generation_config_lineage": "seed0 V3D; not corrected-v2",
+      "input_lineage": "20260811 corrected_physical_visibility bridge, N=1277",
+      "mtime": 1786425383.0,
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_formal/20260811_025834__santa_v3d_corrected_visibility_correct_vs_shuffled_seed0/shuffled/santa_v3d_corrected_visibility_shuffled_seed0.mp4",
+      "reason": "Wrong input lineage and arm; formal Phase0D uses Correct corrected-v2 only.",
+      "seed": 0,
+      "source_code_lineage": "historical pre-corrected-v2 run"
+    }
+  ],
+  "reusable_count": 0,
+  "search_scope": [
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs",
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1"
+  ]
+}

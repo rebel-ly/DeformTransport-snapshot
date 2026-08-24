@@ -1,0 +1,12 @@
+{
+  "FVD_SINGLE_CLIP_SEED_FLOOR": "NOT_APPLICABLE",
+  "formal_reference": "UNRESOLVED_NO_FORMAL_FUTURE_VIDEO_REFERENCE_LINEAGE",
+  "frame_alignment": "anchors 4,8,...,80 in historical proxy; not frozen for corrected-v2 formal reference.",
+  "generation_block": "Formal reference/evaluator lineage unresolved; no GPU multi-seed generation authorized.",
+  "located_historical_evaluator": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/diagnostics/20260811_151359__corrected_santa_v3d_correct_vs_shuffled/corrected_santa_texture_eval.py",
+  "mask_provenance": "historical valid-all visibility/finite/in-bounds track support; not corrected-v2 formal evaluation contract.",
+  "metrics": "TC-MAR, TC-Patch-Lab, TC-Grad; LPIPS/SSIM/PSNR formal contract not located.",
+  "reference_behavior": "Samples source-image patches and evaluates TC-MAR / Lab patch / gradient texture measures against generated frames; it uses old corrected-physical-visibility N=1277 bridge. It is not a formal future-video RGB ground truth reference.",
+  "script_sha256": "f8d68d526da154201d5a67b1cbc343b1bdec68bd884995b7efc730cdd2a1b4cd",
+  "status": "UNRESOLVED"
+}

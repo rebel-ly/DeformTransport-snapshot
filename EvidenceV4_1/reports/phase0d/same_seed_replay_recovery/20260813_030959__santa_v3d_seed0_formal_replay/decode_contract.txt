@@ -1,0 +1,16 @@
+bash: ffmpeg: command not found
+bash: ffprobe: command not found
+08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935  /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4
+08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935  /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayB_2re/santa_correct_v3d_seed000.mp4
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4 7729377
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayB_2re/santa_correct_v3d_seed000.mp4 7729377
+bash: ffmpeg: command not found
+bash: ffmpeg: command not found
+stat: cannot stat '/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/same_seed_replay_recovery/20260813_030959__santa_v3d_seed0_formal_replay/decoded_A.rgb': No such file or directory
+stat: cannot stat '/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/same_seed_replay_recovery/20260813_030959__santa_v3d_seed0_formal_replay/decoded_B.rgb': No such file or directory
+sha256sum: /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/same_seed_replay_recovery/20260813_030959__santa_v3d_seed0_formal_replay/decoded_A.rgb: No such file or directory
+sha256sum: /workspace/DeformTransport_EvidenceV4_1/reports/phase0d/same_seed_replay_recovery/20260813_030959__santa_v3d_seed0_formal_replay/decoded_B.rgb: No such file or directory
+A_PROBE
+bash: ffprobe: command not found
+B_PROBE
+bash: ffprobe: command not found

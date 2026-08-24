@@ -1,0 +1,10 @@
+{
+  "arm": "C2",
+  "formal_diffusion_seed": 1,
+  "gpu_assignment": "GPU0",
+  "cuda_visible_devices": "0",
+  "source_manifest": "SEED1_C2_PLANNED_MANIFEST.json",
+  "c1_engineering_closure": "PASS_NORMAL_COMPLETION",
+  "c2_provenance_gate": "PASS",
+  "science_result_seal": "CLOSED"
+}

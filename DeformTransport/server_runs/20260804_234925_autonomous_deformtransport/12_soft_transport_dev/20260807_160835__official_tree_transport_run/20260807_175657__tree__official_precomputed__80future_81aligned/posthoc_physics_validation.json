@@ -1,0 +1,114 @@
+{
+  "case": "tree",
+  "status": "PHYSICS_SIMULATION_COMPLETE",
+  "runner_exit_code": 1,
+  "runner_exit_interpretation": "Simulation and artifact export completed. Runner failed only in a post-export torch.equal validation because expected tensor creation used a CUDA default device while exported frame_ids were on CPU.",
+  "experiment_definition": "Official precomputed Tree geometry + official Tree dynamics",
+  "time_contract": {
+    "source": "S0",
+    "future": "S2,S4,...,S160",
+    "aligned_pixel_states": 81,
+    "future_states": 80,
+    "frame_ids": [
+      0,
+      79
+    ],
+    "simulation_steps": [
+      2,
+      160
+    ],
+    "latent_pixel_indices": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      44,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68,
+      72,
+      76,
+      80
+    ],
+    "latent_physical_states": [
+      0,
+      8,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64,
+      72,
+      80,
+      88,
+      96,
+      104,
+      112,
+      120,
+      128,
+      136,
+      144,
+      152,
+      160
+    ]
+  },
+  "artifacts": {
+    "future_rgb_frames": 80,
+    "trajectory_shape": [
+      80,
+      15774,
+      3
+    ],
+    "uv_shape": [
+      80,
+      15774,
+      2
+    ],
+    "binding_shape": [
+      15774,
+      5
+    ],
+    "flow_shape": [
+      80,
+      2,
+      512,
+      512
+    ]
+  },
+  "motion": {
+    "final_mean_motion_3d": 0.2626708447933197,
+    "final_max_motion_3d": 0.5062524080276489,
+    "final_mean_motion_uv": 62.35877227783203,
+    "final_max_motion_uv": 104.03996276855469
+  },
+  "checks": {
+    "future_frame_count_80": true,
+    "source_frame_exists": true,
+    "trajectory_shape": true,
+    "uv_shape": true,
+    "binding_shape": true,
+    "trajectory_finite": true,
+    "uv_finite": true,
+    "frame_ids_exact": true,
+    "simulation_steps_exact": true,
+    "flow_shape": true,
+    "flow_source_indices_exists": true
+  },
+  "sha256": {
+    "point_trajectories.pt": "d4abddbe276f4c9f44d37b2bcd37d2a9887c0e3a0e9cb5c33ba793ad494c24de",
+    "flows.npy": "b5c5b4cf8aa28631a21566bdb1ad723c6853a0b5c3bb1f24fed742775977ba25",
+    "flow_source_point_indices.npy": "4cf1a177f322562002b24e682fb34ae8f76a7a0347b59dbf2d1731d08b13c00e"
+  }
+}

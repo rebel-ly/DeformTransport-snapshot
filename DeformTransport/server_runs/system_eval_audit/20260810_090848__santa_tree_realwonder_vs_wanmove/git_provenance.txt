@@ -1,0 +1,29 @@
+AUDIT_CREATED_AT=2026-08-10T09:08:48+08:00
+DT_ROOT=/mnt/sdbd/home/liuyu_qyh/DeformTransport
+DT_HEAD=b49252d08a745d621d40ec9aab66605d27edc554
+DT_BRANCH=feature/trajectory-probe
+DT_STATUS_AT_AUDIT:
+## feature/trajectory-probe
+?? case_source_census.json
+?? docs/audits/20260805__candidate_case_inventory.txt
+?? docs/code_review/
+?? docs/code_snapshots/
+?? scripts/build_counterfactual_transport_debiasing.py
+?? scripts/build_identity_shuffled_tracks.py
+?? scripts/build_sand_house_v2_ab_artifacts.py
+?? scripts/export_material_tracks_to_wan_move.py
+?? scripts/export_santa_material_tracks_to_wan_move.py
+?? scripts/train_transport_utility_selector.py
+
+WAN_ROOT=/mnt/sdbd/home/liuyu_qyh/Wan-Move
+WAN_HEAD=80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+WAN_BRANCH=main
+WAN_STATUS_AT_AUDIT:
+## main
+ M wan/wan_move.py
+?? Wan-Move/
+?? nohup.out
+
+FORMAL_WAN_PATCH=wan/wan_move.py adds torch.manual_seed(seed) immediately before create_pos_feature_map; formal run directories retain the exact diff.
+TREE_REALWONDER_GENERATION_HEAD=c98b2724563a64d96186d1bf4e6f9b8952ed9f48
+

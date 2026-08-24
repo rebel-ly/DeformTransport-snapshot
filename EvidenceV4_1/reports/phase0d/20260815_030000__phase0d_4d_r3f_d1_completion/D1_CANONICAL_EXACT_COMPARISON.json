@@ -1,0 +1,12 @@
+{
+  "d1_mp4_sha256": "43fd525c47b004f9b5af0f300c8b7e494221dcfbe7175b8cdd6e83cdab628a9f",
+  "canonical_mp4_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+  "d1_decoded_rgb_sha256": "5173773c15fff9d4c86bc85e7e82b98dea2a1e16ba068543f00520082218ccba",
+  "canonical_decoded_rgb_sha256": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+  "mp4_exact": false,
+  "rgb_exact": false,
+  "different_channel_values": 58606024,
+  "max_abs_diff": 254,
+  "mean_abs_diff": 5.840064121751891,
+  "canonical_bridge_status": "FAIL_RGB_NOT_EXACT"
+}

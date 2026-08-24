@@ -1,0 +1,55 @@
+{
+  "生成时间": "2026-08-05T03:50:44.233316+08:00",
+  "任务": "dense-flow latent公平对照artifact",
+  "输入artifact": "artifacts/transport_validation/santa_cloth_21f/wan_vae/vae_latent_outputs.pt",
+  "输入artifact_SHA256": "f2ad921d3548d1d22acbee4d36896e0c16f9ff576f165dbef3d27b387613345c",
+  "帧目录": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/frames",
+  "latent时刻": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20
+  ],
+  "flow_shape": [
+    6,
+    2,
+    240,
+    416
+  ],
+  "flow_transported_shape": [
+    1,
+    6,
+    16,
+    60,
+    104
+  ],
+  "flow_fused_shape": [
+    1,
+    6,
+    16,
+    60,
+    104
+  ],
+  "finite": true,
+  "mask支持cell数": [
+    1276,
+    1285,
+    1247,
+    1194,
+    1149,
+    1121
+  ],
+  "masked_L1_vs_coarse_target": {
+    "flow": 0.3593708276748657,
+    "correct": 0.3540443480014801,
+    "shuffled": 0.5207103490829468
+  },
+  "耗时秒": 4.490844826010289,
+  "torch峰值allocated_MiB": 115.267578125,
+  "torch峰值reserved_MiB": 148.0,
+  "输出": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/FLOW_TRANSPORT_ARTIFACT_20260805_035026/outputs/flow_transport_artifact_v1.pt",
+  "输出SHA256": "a1bfd17678cc4ffaef192d958177ea9d18dc02a7f2f0c6162b8dc8c640aa89dc",
+  "结论边界": "光流对照使用有损coarse proxy，不是future GT"
+}

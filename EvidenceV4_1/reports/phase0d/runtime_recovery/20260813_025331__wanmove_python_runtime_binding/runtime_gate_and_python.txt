@@ -1,0 +1,7 @@
+edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3  /workspace/tools/miniforge3/envs/wan-move/bin/python
+Python 3.11.0
+/workspace/tools/miniforge3/envs/wan-move
+80c58a7d2ad175fa82a4d57f79f2a1415317dcfa
+0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae  wan/modules/trajectory.py
+aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857  wan/wan_move.py
+61aabd0d8a96e928e57db628f9af31714806884f5579f6c3b529647d4690bf19  wan/utils/prompt_extend.py

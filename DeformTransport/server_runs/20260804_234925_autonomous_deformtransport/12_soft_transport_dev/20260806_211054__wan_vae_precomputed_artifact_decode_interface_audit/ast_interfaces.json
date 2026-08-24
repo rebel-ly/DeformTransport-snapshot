@@ -1,0 +1,209 @@
+{
+  "scripts/run_wan_vae_transport_probe.py": [
+    {
+      "type": "FunctionDef",
+      "name": "_sha256",
+      "line": 59,
+      "arguments": [
+        "path"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_gpu_used_memory_mib",
+      "line": 67,
+      "arguments": [],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_timed_cuda",
+      "line": 92,
+      "arguments": [
+        "function"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_pixel_video_from_paths",
+      "line": 100,
+      "arguments": [
+        "paths"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_pixels_01",
+      "line": 105,
+      "arguments": [
+        "decoded"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_uint8_frames",
+      "line": 109,
+      "arguments": [
+        "frames"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_write_video",
+      "line": 122,
+      "arguments": [
+        "path",
+        "frames",
+        "fps"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_source_comparison",
+      "line": 131,
+      "arguments": [
+        "source",
+        "reconstruction"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_labeled_four_panel",
+      "line": 145,
+      "arguments": [
+        "frames_by_label"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_expand_latent_mask_to_pixel_frames",
+      "line": 162,
+      "arguments": [
+        "mask",
+        "pixel_frames"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_latent_frame_metrics",
+      "line": 170,
+      "arguments": [
+        "prediction",
+        "target",
+        "mask"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_tensor_statistics",
+      "line": 187,
+      "arguments": [
+        "tensor"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "main",
+      "line": 201,
+      "arguments": [],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "run_transport",
+      "line": 310,
+      "arguments": [
+        "mode"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "decode_cpu",
+      "line": 340,
+      "arguments": [
+        "latent"
+      ],
+      "keyword_only": []
+    }
+  ],
+  "deform_transport/wan_vae_codec.py": [
+    {
+      "type": "FunctionDef",
+      "name": "causal_latent_frame_end_indices",
+      "line": 67,
+      "arguments": [
+        "pixel_frame_count"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "ClassDef",
+      "name": "RealWonderWanVAECodec",
+      "line": 81
+    },
+    {
+      "type": "FunctionDef",
+      "name": "__init__",
+      "line": 84,
+      "arguments": [
+        "self",
+        "checkpoint_path"
+      ],
+      "keyword_only": [
+        "device",
+        "dtype"
+      ]
+    },
+    {
+      "type": "FunctionDef",
+      "name": "_scale",
+      "line": 109,
+      "arguments": [
+        "self",
+        "dtype"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "encode_pixels",
+      "line": 116,
+      "arguments": [
+        "self",
+        "pixels"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "decode_latents",
+      "line": 138,
+      "arguments": [
+        "self",
+        "latent"
+      ],
+      "keyword_only": []
+    },
+    {
+      "type": "FunctionDef",
+      "name": "clear_cache",
+      "line": 156,
+      "arguments": [
+        "self"
+      ],
+      "keyword_only": []
+    }
+  ]
+}

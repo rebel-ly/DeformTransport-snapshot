@@ -1,0 +1,27 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "questions": {
+    "F2_Q1": "RW beats typical MAR because DT shows broad moderate carrier degradation: paired Lab delta median +4.7788 and DT is better for only 29.28%. Condition-level Lab means are nearly tied at ~65.7, while the final gap is +3.5044, associating typical appearance gap formation with final generator response.",
+    "F2_Q2": "RW beats TC-ME because an RW advantage is already present in conditioning-level RGB (0.8947 vs DT decoded edited_y 1.5050), with final-video losses concentrated in early transitions and higher 3D-motion regimes.",
+    "F2_Q3": "DT wins marginal Lab p95 by repairing a different extreme tail: top-5% sets overlap only 9/56; on RW's top tail DT is better for 92.86% with mean delta -29.73, while non-RW-tail carriers have mean delta +5.27.",
+    "F2_Q4": "Excess errors are associated most clearly with visibility fragmentation and motion/deformation regime. Density/write exposure is non-monotonic and collision evidence is too small/inconsistent. This motivates a future sparse intervention focused on motion/deformation and visibility robustness, but F2 selects no carriers."
+  },
+  "classifications": {
+    "TRANSPORT_ERROR_ASSOCIATED_WITH_DENSITY_OR_EXPOSURE": "WEAK_NOT_MONOTONIC",
+    "TRANSPORT_ERROR_ASSOCIATED_WITH_VISIBILITY_FRAGMENTATION": "SUPPORTED_ASSOCIATION_DIAGNOSTIC_ONLY",
+    "TRANSPORT_ERROR_ASSOCIATED_WITH_COLLISION_WINNER_STRUCTURE": "NOT_SUPPORTED_CLEARLY",
+    "TRANSPORT_ERROR_ASSOCIATED_WITH_MOTION_DEFORMATION_REGIME": "SUPPORTED_ASSOCIATION_DIAGNOSTIC_ONLY",
+    "RW_METRIC_ADVANTAGE_ALREADY_PRESENT_IN_CONDITIONING": {
+      "appearance": false,
+      "motion": true
+    },
+    "FINAL_GENERATOR_RESPONSE_DOMINATES_GAP": {
+      "appearance": "SUPPORTED_DIAGNOSTIC_ONLY",
+      "motion": "NOT_SUPPORTED; conditioning motion gap is larger than final gap"
+    }
+  },
+  "OVER_CONDITIONING_HYPOTHESIS_STATUS": "WEAKLY_SUPPORTED",
+  "rationale": "High visibility fragmentation and high 3D-motion carriers have larger gaps, so reducing conditioning burden is testable. However winning-write density and collision structure do not show a clear monotonic mechanism, correlations were unavailable without scipy, and only a future controlled sparse-generation intervention can establish causality.",
+  "future_screening_target": "appearance-gap reduction AND motion-gap reduction",
+  "grid100_selected": false
+}

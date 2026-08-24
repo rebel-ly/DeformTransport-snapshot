@@ -1,0 +1,74 @@
+{
+  "目录": "server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1",
+  "通过": true,
+  "错误": [],
+  "警告": [
+    "未提供可选文件：points_masks_downsampled.pt",
+    "未提供可选文件：mesh_masks_downsampled.pt"
+  ],
+  "检查": {
+    "config.yaml": {
+      "存在": true,
+      "大小字节": 1652
+    },
+    "noises.npy": {
+      "存在": true,
+      "大小字节": 8386688
+    },
+    "resized_input_image.png": {
+      "存在": true,
+      "大小字节": 467525
+    },
+    "prompt.txt": {
+      "存在": true,
+      "大小字节": 172
+    },
+    "frames": {
+      "数量": 21,
+      "目录存在": true
+    },
+    "时序": {
+      "配置latent帧数": 6,
+      "期望pixel帧数": 21,
+      "实际coarse帧数": 21,
+      "每块latent帧数": 3
+    },
+    "noise": {
+      "形状": [
+        21,
+        60,
+        104,
+        32
+      ],
+      "类型": "float16"
+    },
+    "初始图像": {
+      "尺寸": [
+        832,
+        480
+      ],
+      "模式": "RGB"
+    },
+    "prompt": {
+      "非空": true,
+      "字符数": 171
+    },
+    "transport": {
+      "Correct形状": [
+        1,
+        6,
+        16,
+        60,
+        104
+      ],
+      "Shuffled形状": [
+        1,
+        6,
+        16,
+        60,
+        104
+      ],
+      "二者不同": true
+    }
+  }
+}

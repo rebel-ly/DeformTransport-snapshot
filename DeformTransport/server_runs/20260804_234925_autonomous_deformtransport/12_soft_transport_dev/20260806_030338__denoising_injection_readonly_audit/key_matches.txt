@@ -1,0 +1,194 @@
+infer_sim.py:1:"""I2V Flow inference with SDEdit from simulation results.
+infer_sim.py:3:Based on infer_flow.py with SDEdit support added. Loads simulation data
+infer_sim.py:5:uses CausalInferencePipelineSDEdit for simulation-guided video generation.
+infer_sim.py:38:    CausalInferencePipelineSDEdit
+infer_sim.py:83:    parser = argparse.ArgumentParser(description="I2V Flow Inference with SDEdit from Simulation")
+infer_sim.py:122:    # Load simulation config for SDEdit parameters
+infer_sim.py:126:    denoising_step_list = list(sim_config.denoising_step_list)
+infer_sim.py:127:    mask_dropin_step = int(sim_config.mask_dropin_step)
+infer_sim.py:129:    print(f"Loaded from config.yaml: denoising_step_list={denoising_step_list}, mask_dropin_step={mask_dropin_step}, num_output_frames={num_output_frames}")
+infer_sim.py:144:        "denoising_step_list": denoising_step_list,
+infer_sim.py:145:        "mask_dropin_step": mask_dropin_step,
+infer_sim.py:161:    # Initialize pipeline (SDEdit version)
+infer_sim.py:163:    pipeline = CausalInferencePipelineSDEdit(config, device=device)
+infer_sim.py:230:    # 4. Load simulation frames for SDEdit
+infer_sim.py:237:    if mask_dropin_step > 0:
+infer_sim.py:245:            print(f"Warning: mask_dropin_step={mask_dropin_step} but mask file not found: {mask_file}")
+infer_sim.py:248:    # 6. Load franka/mesh masks (for weak sdedit on manipulator region)
+infer_sim.py:258:            print(f"Franka masks are all False, skipping franka mask sdedit.")
+infer_sim.py:268:    # Encode simulation frames to latent space for SDEdit
+infer_sim.py:269:    sim_latent = None
+infer_sim.py:270:    if pipeline.sdedit:
+infer_sim.py:273:        sim_latent = pipeline.vae.encode_to_latent(sim_frames_device)  # [1, T_latent, C, H, W]
+infer_sim.py:274:        sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+infer_sim.py:275:        print(f"  sim_latent shape: {sim_latent.shape}")
+infer_sim.py:279:                f"Loading {args.transport_mode} transported sim_latent from: "
+infer_sim.py:282:            sim_latent = load_precomputed_transport_latent(
+infer_sim.py:285:                reference_latent=sim_latent,
+infer_sim.py:287:            print(f"  transported sim_latent shape: {sim_latent.shape}")
+infer_sim.py:289:        # Trim or pad sim_latent to match noise frames
+infer_sim.py:290:        if sim_latent.shape[1] > num_output_frames:
+infer_sim.py:291:            sim_latent = sim_latent[:, :num_output_frames]
+infer_sim.py:292:        elif sim_latent.shape[1] < num_output_frames:
+infer_sim.py:294:            pad_size = num_output_frames - sim_latent.shape[1]
+infer_sim.py:295:            sim_latent = torch.cat([
+infer_sim.py:296:                sim_latent,
+infer_sim.py:297:                sim_latent[:, -1:].repeat(1, pad_size, 1, 1, 1)
+infer_sim.py:299:        print(f"  sim_latent shape (after align): {sim_latent.shape}")
+infer_sim.py:318:        return_latents=True,
+infer_sim.py:320:        sim_latent=sim_latent,
+vidgen/__init__.py:4:from vidgen.pipeline_sdedit import CausalInferencePipelineSDEdit
+vidgen/__init__.py:35:    "CausalInferencePipelineSDEdit",
+vidgen/pipeline.py:32:        self.denoising_step_list = torch.tensor(args.denoising_step_list, dtype=torch.long)
+vidgen/pipeline.py:35:            self.denoising_step_list = timesteps[1000 - self.denoising_step_list]
+vidgen/pipeline.py:52:                  return_latents: bool = False, batch_sample=None,
+vidgen/pipeline.py:142:                current_ref_latents = initial_latent[:, current_start_frame:current_start_frame + self.num_frame_per_block]
+vidgen/pipeline.py:143:                output[:, current_start_frame:current_start_frame + self.num_frame_per_block] = current_ref_latents
+vidgen/pipeline.py:145:                    noisy_image_or_video=current_ref_latents,
+vidgen/pipeline.py:176:            for index, current_timestep in enumerate(self.denoising_step_list):
+vidgen/pipeline.py:177:                print(f"current_timestep: {current_timestep}")
+vidgen/pipeline.py:178:                timestep = torch.ones([batch_size, current_num_frames], device=noise.device, dtype=torch.int64) * current_timestep
+vidgen/pipeline.py:180:                if index < len(self.denoising_step_list) - 1:
+vidgen/pipeline.py:190:                    next_timestep = self.denoising_step_list[index + 1]
+vidgen/pipeline.py:196:                    noisy_input = self.scheduler.add_noise(
+vidgen/pipeline.py:262:        return (video, output) if return_latents else video
+vidgen/utils.py:408:    def add_noise(self, clean_latent: torch.Tensor, noise: torch.Tensor, timestep: torch.Tensor):
+vidgen/utils.py:416:        noise_pred = (xt - alpha_prod_t ** 0.5 * x0) / beta_prod_t ** 0.5
+vidgen/utils.py:417:        return noise_pred.to(original_dtype)
+vidgen/utils.py:469:    def step(self, model_output, timestep, sample, to_final=False):
+vidgen/utils.py:472:        self.sigmas = self.sigmas.to(model_output.device)
+vidgen/utils.py:473:        self.timesteps = self.timesteps.to(model_output.device)
+vidgen/utils.py:480:        prev_sample = sample + model_output * (sigma_ - sigma)
+vidgen/utils.py:483:    def add_noise(self, original_samples, noise, timestep):
+vidgen/pipeline_sdedit.py:1:"""Causal inference pipeline with SDEdit support for simulation-guided video generation.
+vidgen/pipeline_sdedit.py:3:Based on vidgen/pipeline.py (CausalInferencePipeline) with SDEdit logic from
+vidgen/pipeline_sdedit.py:4:causal_inference_sdedit.py. This file is kept separate to avoid modifying the
+vidgen/pipeline_sdedit.py:16:class CausalInferencePipelineSDEdit(torch.nn.Module):
+vidgen/pipeline_sdedit.py:17:    """Pipeline for causal video generation inference with SDEdit support."""
+vidgen/pipeline_sdedit.py:36:        # Separate VAE for encoding sim_latents to avoid cache conflicts
+vidgen/pipeline_sdedit.py:45:        self.denoising_step_list = torch.tensor(args.denoising_step_list, dtype=torch.long)
+vidgen/pipeline_sdedit.py:47:        # Detect SDEdit mode: if the first denoising step < total scheduler steps,
+vidgen/pipeline_sdedit.py:48:        # we start from a noised version of sim_latent instead of pure noise.
+vidgen/pipeline_sdedit.py:49:        if self.denoising_step_list[0] < len(self.scheduler.timesteps):
+vidgen/pipeline_sdedit.py:50:            self.sdedit = True
+vidgen/pipeline_sdedit.py:52:            self.sdedit = False
+vidgen/pipeline_sdedit.py:56:            self.denoising_step_list = timesteps[1000 - self.denoising_step_list]
+vidgen/pipeline_sdedit.py:58:        if self.sdedit:
+vidgen/pipeline_sdedit.py:59:            self.mask_dropin_step = getattr(args, "mask_dropin_step", -1)
+vidgen/pipeline_sdedit.py:60:            # Franka mask SDEdit: default to last denoising step (weak sdedit)
+vidgen/pipeline_sdedit.py:61:            self.franka_step = getattr(args, "franka_step", len(args.denoising_step_list) - 1)
+vidgen/pipeline_sdedit.py:63:            self.mask_dropin_step = -1
+vidgen/pipeline_sdedit.py:75:        print(f"SDEdit enabled: {self.sdedit}")
+vidgen/pipeline_sdedit.py:76:        if self.sdedit:
+vidgen/pipeline_sdedit.py:77:            print(f"  mask_dropin_step: {self.mask_dropin_step}")
+vidgen/pipeline_sdedit.py:88:        sim_latent: Optional[torch.Tensor] = None,
+vidgen/pipeline_sdedit.py:91:        return_latents: bool = False,
+vidgen/pipeline_sdedit.py:99:        """Perform causal video generation inference with optional SDEdit.
+vidgen/pipeline_sdedit.py:105:            sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+vidgen/pipeline_sdedit.py:107:            sim_franka_masks: Franka/mesh masks [B, T, H, W] (True = franka region, weak sdedit).
+vidgen/pipeline_sdedit.py:108:            return_latents: Whether to return latents alongside decoded video.
+vidgen/pipeline_sdedit.py:176:        ########################## SDEdit ##########################
+vidgen/pipeline_sdedit.py:179:        use_franka_sdedit = (
+vidgen/pipeline_sdedit.py:185:        if self.sdedit:
+vidgen/pipeline_sdedit.py:186:            assert sim_latent is not None, "sim_latent is required for SDEdit mode"
+vidgen/pipeline_sdedit.py:187:            assert noise.shape == sim_latent.shape, (
+vidgen/pipeline_sdedit.py:188:                f"noise shape {noise.shape} != sim_latent shape {sim_latent.shape}"
+vidgen/pipeline_sdedit.py:192:            sdedit_dropin_step = self.denoising_step_list[0]
+vidgen/pipeline_sdedit.py:193:            noise = self.scheduler.add_noise(
+vidgen/pipeline_sdedit.py:194:                sim_latent.flatten(0, 1),
+vidgen/pipeline_sdedit.py:196:                sdedit_dropin_step * torch.ones(
+vidgen/pipeline_sdedit.py:202:            if self.mask_dropin_step > 0:
+vidgen/pipeline_sdedit.py:203:                mask_dropin_step_diffusion = self.denoising_step_list[self.mask_dropin_step]
+vidgen/pipeline_sdedit.py:204:                bg_noise = self.scheduler.add_noise(
+vidgen/pipeline_sdedit.py:205:                    sim_latent.flatten(0, 1),
+vidgen/pipeline_sdedit.py:207:                    mask_dropin_step_diffusion * torch.ones(
+vidgen/pipeline_sdedit.py:212:            # Prepare franka mask background noise (weak sdedit at a late step)
+vidgen/pipeline_sdedit.py:213:            if use_franka_sdedit and self.franka_step < len(self.denoising_step_list):
+vidgen/pipeline_sdedit.py:214:                franka_step_diffusion = self.denoising_step_list[self.franka_step]
+vidgen/pipeline_sdedit.py:215:                bg_noise_franka = self.scheduler.add_noise(
+vidgen/pipeline_sdedit.py:216:                    sim_latent.flatten(0, 1),
+vidgen/pipeline_sdedit.py:246:                current_ref_latents = initial_latent[:, current_start_frame:current_start_frame + self.num_frame_per_block]
+vidgen/pipeline_sdedit.py:247:                output[:, current_start_frame:current_start_frame + self.num_frame_per_block] = current_ref_latents
+vidgen/pipeline_sdedit.py:249:                    noisy_image_or_video=current_ref_latents,
+vidgen/pipeline_sdedit.py:285:            if self.sdedit and self.mask_dropin_step > 0 and bg_noise is not None:
+vidgen/pipeline_sdedit.py:292:            if use_franka_sdedit and bg_noise_franka is not None:
+vidgen/pipeline_sdedit.py:299:            for index, current_timestep in enumerate(self.denoising_step_list):
+vidgen/pipeline_sdedit.py:300:                print(f"current_timestep: {current_timestep}")
+vidgen/pipeline_sdedit.py:301:                timestep = torch.ones([batch_size, current_num_frames], device=noise.device, dtype=torch.int64) * current_timestep
+vidgen/pipeline_sdedit.py:305:                    self.mask_dropin_step > 0
+vidgen/pipeline_sdedit.py:306:                    and self.mask_dropin_step == index
+vidgen/pipeline_sdedit.py:315:                # sim-noised latent (weak sdedit to keep structure close to simulation)
+vidgen/pipeline_sdedit.py:317:                    use_franka_sdedit
+vidgen/pipeline_sdedit.py:324:                if index < len(self.denoising_step_list) - 1:
+vidgen/pipeline_sdedit.py:334:                    next_timestep = self.denoising_step_list[index + 1]
+vidgen/pipeline_sdedit.py:340:                    noisy_input = self.scheduler.add_noise(
+vidgen/pipeline_sdedit.py:406:        return (video, output) if return_latents else video
+wan/utils/fm_solvers_unipc.py:120:        self.model_outputs = [None] * solver_order
+wan/utils/fm_solvers_unipc.py:215:        self.model_outputs = [
+wan/utils/fm_solvers_unipc.py:279:    def convert_model_output(
+wan/utils/fm_solvers_unipc.py:281:        model_output: torch.Tensor,
+wan/utils/fm_solvers_unipc.py:290:            model_output (`torch.Tensor`):
+wan/utils/fm_solvers_unipc.py:321:                x0_pred = sample - sigma_t * model_output
+wan/utils/fm_solvers_unipc.py:335:                epsilon = sample - (1 - sigma_t) * model_output
+wan/utils/fm_solvers_unipc.py:344:                x0_pred = sample - sigma_t * model_output
+wan/utils/fm_solvers_unipc.py:346:                epsilon = model_output + x0_pred
+wan/utils/fm_solvers_unipc.py:352:        model_output: torch.Tensor,
+wan/utils/fm_solvers_unipc.py:362:            model_output (`torch.Tensor`):
+wan/utils/fm_solvers_unipc.py:395:        model_output_list = self.model_outputs
+wan/utils/fm_solvers_unipc.py:398:        m0 = model_output_list[-1]
+wan/utils/fm_solvers_unipc.py:402:            x_t = self.solver_p.step(model_output, s0, x).prev_sample
+wan/utils/fm_solvers_unipc.py:420:            mi = model_output_list[-(i + 1)]
+wan/utils/fm_solvers_unipc.py:488:        this_model_output: torch.Tensor,
+wan/utils/fm_solvers_unipc.py:499:            this_model_output (`torch.Tensor`):
+wan/utils/fm_solvers_unipc.py:541:        model_output_list = self.model_outputs
+wan/utils/fm_solvers_unipc.py:543:        m0 = model_output_list[-1]
+wan/utils/fm_solvers_unipc.py:546:        model_t = this_model_output
+wan/utils/fm_solvers_unipc.py:563:            mi = model_output_list[-(i + 1)]
+wan/utils/fm_solvers_unipc.py:656:             model_output: torch.Tensor,
+wan/utils/fm_solvers_unipc.py:666:            model_output (`torch.Tensor`):
+wan/utils/fm_solvers_unipc.py:695:        model_output_convert = self.convert_model_output(
+wan/utils/fm_solvers_unipc.py:696:            model_output, sample=sample)
+wan/utils/fm_solvers_unipc.py:699:                this_model_output=model_output_convert,
+wan/utils/fm_solvers_unipc.py:706:            self.model_outputs[i] = self.model_outputs[i + 1]
+wan/utils/fm_solvers_unipc.py:709:        self.model_outputs[-1] = model_output_convert
+wan/utils/fm_solvers_unipc.py:725:            model_output=model_output,  # pass the original non-converted model output, in case solver-p is used
+wan/utils/fm_solvers_unipc.py:757:    # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.add_noise
+wan/utils/fm_solvers_unipc.py:758:    def add_noise(
+wan/utils/fm_solvers_unipc.py:785:            # add_noise is called after first denoising step (for inpainting)
+wan/utils/fm_solvers.py:191:        self.model_outputs = [None] * solver_order
+wan/utils/fm_solvers.py:281:        self.model_outputs = [
+wan/utils/fm_solvers.py:340:    # Copied from diffusers.schedulers.scheduling_dpmsolver_multistep.DPMSolverMultistepScheduler.convert_model_output
+wan/utils/fm_solvers.py:341:    def convert_model_output(
+wan/utils/fm_solvers.py:343:        model_output: torch.Tensor,
+wan/utils/fm_solvers.py:357:            model_output (`torch.Tensor`):
+wan/utils/fm_solvers.py:383:                x0_pred = sample - sigma_t * model_output
+wan/utils/fm_solvers.py:399:                epsilon = sample - (1 - sigma_t) * model_output
+wan/utils/fm_solvers.py:408:                x0_pred = sample - sigma_t * model_output
+wan/utils/fm_solvers.py:410:                epsilon = model_output + x0_pred
+wan/utils/fm_solvers.py:417:        model_output: torch.Tensor,
+wan/utils/fm_solvers.py:426:            model_output (`torch.Tensor`):
+wan/utils/fm_solvers.py:468:                                        (torch.exp(-h) - 1.0)) * model_output
+wan/utils/fm_solvers.py:472:                                        (torch.exp(h) - 1.0)) * model_output
+wan/utils/fm_solvers.py:476:                   (alpha_t * (1 - torch.exp(-2.0 * h))) * model_output +
+wan/utils/fm_solvers.py:481:                   (sigma_t * (torch.exp(h) - 1.0)) * model_output +
+wan/utils/fm_solvers.py:488:        model_output_list: List[torch.Tensor],
+wan/utils/fm_solvers.py:497:            model_output_list (`List[torch.Tensor]`):
+wan/utils/fm_solvers.py:543:        m0, m1 = model_output_list[-1], model_output_list[-2]
+wan/utils/fm_solvers.py:598:        model_output_list: List[torch.Tensor],
+wan/utils/fm_solvers.py:606:            model_output_list (`List[torch.Tensor]`):
+wan/utils/fm_solvers.py:656:        m0, m1, m2 = model_output_list[-1], model_output_list[
+wan/utils/fm_solvers.py:657:            -2], model_output_list[-3]
+wan/utils/fm_solvers.py:708:        model_output: torch.Tensor,
+wan/utils/fm_solvers.py:719:            model_output (`torch.Tensor`):
+wan/utils/fm_solvers.py:754:        model_output = self.convert_model_output(model_output, sample=sample)
+wan/utils/fm_solvers.py:756:            self.model_outputs[i] = self.model_outputs[i + 1]
+wan/utils/fm_solvers.py:757:        self.model_outputs[-1] = model_output
+wan/utils/fm_solvers.py:764:                model_output.shape,
+wan/utils/fm_solvers.py:766:                device=model_output.device,
+wan/utils/fm_solvers.py:770:                device=model_output.device,
+wan/utils/fm_solvers.py:777:                model_output, sample=sample, noise=noise)
+wan/utils/fm_solvers.py:780:                self.model_outputs, sample=sample, noise=noise)
+wan/utils/fm_solvers.py:783:                self.model_outputs, sample=sample)
+wan/utils/fm_solvers.py:789:        prev_sample = prev_sample.to(model_output.dtype)
+wan/utils/fm_solvers.py:815:    def add_noise(
+wan/utils/fm_solvers.py:842:            # add_noise is called after first denoising step (for inpainting)

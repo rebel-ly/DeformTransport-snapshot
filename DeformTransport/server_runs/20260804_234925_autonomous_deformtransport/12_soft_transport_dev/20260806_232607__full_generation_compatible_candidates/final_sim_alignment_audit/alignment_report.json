@@ -1,0 +1,68 @@
+{
+  "current_sim_realpath": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim",
+  "aligned_contract": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_transport_ready.pt",
+    "frame_count": 81,
+    "first_frame": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/frame_initial.png",
+    "last_frame": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/frame_0079.png",
+    "initial_rgb": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/frame_initial.png"
+  },
+  "current_sim_frames": {
+    "count": 81,
+    "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/frames/frame_0000.png",
+    "last": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/frames/frame_0080.png"
+  },
+  "checks": {
+    "aligned_contract_has_81_frames": true,
+    "current_sim_has_81_frames": true,
+    "frame_hash_sequence_exact": false,
+    "resized_input_exists": true,
+    "resized_input_matches_initial_rgb": false,
+    "config_exists": true,
+    "noises_exists": true,
+    "flows_exists": true
+  },
+  "npy_inventory": {
+    "noises": {
+      "exists": true,
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/noises.npy",
+      "bytes": 32348288,
+      "sha256": "098332f31951f88bbc9f6c49b502d419b633cd52f735d3678187a5a307b26d75",
+      "array_shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "array_dtype": "float16"
+    },
+    "flows": {
+      "exists": true,
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/flows.npy",
+      "bytes": 31948928,
+      "sha256": "8bde4789c82fb26316b005948256574dc873a081326cb26d6fa2a788b9c228c2",
+      "array_shape": [
+        80,
+        2,
+        240,
+        416
+      ],
+      "array_dtype": "float16"
+    },
+    "flows_geometry": {
+      "exists": true,
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/flows_geometry.npy",
+      "bytes": 169869440,
+      "sha256": "f32045e27ae4447d5877563306c43c647583a29e71d9ac21b8d1609a5f93f33b",
+      "array_shape": [
+        81,
+        2,
+        512,
+        512
+      ],
+      "array_dtype": "float32"
+    }
+  },
+  "config_text": "device: cuda\nseed: 0\nexample_name: santa_cloth\noutput_folder: /workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim\ndata_path: cases/santa_cloth\nsegmenter: sam2\nall_object_points:\n- - - 229\n    - 185\n    - 1\n  - - 290\n    - 310\n    - 1\nall_object_masks_idx:\n- 0\nobj_kp_matching: true\ndebug: false\nstitched_inpainting: true\nmesh_resize_factor: 0.7\noriginal_geometry_downsample: true\ntarget_faces: 1000\nfixed_area:\n- - 0\n  - 1\n  - 0\n  - 0.1\ndt: 0.01\nsubsteps: 3\nsimulated_frames_num: 81\nframe_steps: 10\nmaterial_type:\n- pbd_cloth\ninpainting_negative_prompt: cloth, object\ninpainting_prompt: background, nothing\npbd_rho: 0.5\npbd_gravity: -0.3\npbd_static_friction: 0.9\npbd_kinetic_friction: 0.2\npbd_stretch_compliance: 0.01\npbd_bending_compliance: 0.2\npbd_stretch_relaxation: 0.5\npbd_bending_relaxation: 0.05\npbd_air_resistance: 0.002\nparticle_size: 0.01\nalpha_threshold: 0.98\ncrop_start: 176\nfg_points_render_radius: 0.01\nnum_output_frames: 21\ndenoising_step_list:\n- 500\n- 250\nmask_dropin_step: -1\nvgen_prompt: Wind blows the hanging clothes. The motion is gentle, continuous, and\n  rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural\n  fabric movement.\nfov_x_input: 45.31472396850586\n",
+  "aligned_final_sim_ready": false
+}

@@ -1,0 +1,14 @@
+{
+  "final_sim": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410",
+  "mismatch_indices": [],
+  "checks": {
+    "source_count_81": true,
+    "target_count_81": true,
+    "all_exact_preprocessed_pixels": true,
+    "frame0_shape": true,
+    "resized_input_equals_frame0": true,
+    "no_noise_yet": true,
+    "no_raft_flow_yet": true
+  },
+  "all_checks_pass": true
+}

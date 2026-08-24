@@ -1,0 +1,10 @@
+{
+  "manifest": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/legacy_binding_manifest.json",
+  "manifest_sha256": "4e707f7403c79d4dc54eeafd789a2167e1735149f5bf990581e0a5390360eadc",
+  "original": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "original_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "output": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/generated/eval_v3_legacy_port_fixture.py",
+  "output_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "replacement_count": 0,
+  "replacements": []
+}

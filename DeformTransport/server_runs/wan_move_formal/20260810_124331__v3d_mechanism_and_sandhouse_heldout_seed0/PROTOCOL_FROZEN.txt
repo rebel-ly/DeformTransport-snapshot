@@ -1,0 +1,68 @@
+DeformTransport V3D formal mechanism/generalization validation.
+
+FROZEN METHOD:
+V3D =
+1. persistent material trajectory conditioning;
+2. target-cell collision arbitration by minimum positive camera depth
+   (3D z-buffer; tie by persistent material ID);
+3. continuous bilinear sampling of source t=0 VAE condition latent
+   at the persistent material source coordinate.
+
+No V3D parameter or rule may change in this validation.
+
+DEVELOPMENT CASES:
+Santa, Tree.
+
+HELD-OUT CASE:
+SandHouse.
+SandHouse was not used to choose V3D.
+
+NEW GENERATIONS:
+1. Santa V3D Identity-Shuffled
+2. Tree V3D Identity-Shuffled
+3. SandHouse V3D Correct
+4. SandHouse V3D Identity-Shuffled
+
+Santa/Tree V3D Correct are REUSED from the frozen development suite.
+They are not regenerated.
+
+IDENTITY-SHUFFLED CONTRACT:
+- deterministic NumPy default_rng(seed=0) derangement;
+- fixed points = 0;
+- ONLY source t=0 material coordinates are permuted;
+- future coordinates t>=1 are bit-identical to Correct;
+- visibility is bit-identical;
+- target material IDs are bit-identical;
+- target camera depth is bit-identical;
+- physics trajectory is therefore unchanged.
+This isolates source material identity/appearance correspondence.
+
+SANDHOUSE TEMPORAL CONTRACT:
+The authoritative SandHouse simulation contains 165 states.
+For Wan-Move 81-frame validation, freeze uniform stride-2 states:
+0,2,4,...,160.
+No result-dependent temporal-window selection.
+The final raw states 161..164 are outside this frozen 81-state evaluation.
+Later RealWonder comparison must use exactly the same physical state indices.
+
+SANDHOUSE POINT SAMPLING:
+Use the same pre-V3 development bridge rule used for the existing
+Santa/Tree Correct tracks:
+one persistent source-visible material point per occupied 8x8 cell
+in the aligned 832x480 source domain;
+nearest point to cell center;
+tie by persistent material ID.
+Do NOT apply V3S actual-464-grid de-duplication.
+V3D itself remains unchanged.
+
+GENERATION:
+seed=0
+frame_num=81
+sample_steps=40
+sample_shift=3.0
+dtype=bf16
+t5_cpu=True
+offload_model=True
+checkpoint=Wan-Move-14B-480P
+
+No result may be inspected to change this protocol.

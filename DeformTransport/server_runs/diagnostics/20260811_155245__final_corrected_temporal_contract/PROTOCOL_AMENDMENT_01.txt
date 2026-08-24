@@ -1,0 +1,36 @@
+Protocol Amendment 01
+
+1. Primary temporal support:
+   Complete-case visibility and valid 8x8 patches at anchors
+   t = 0,4,8,...,80.
+
+   Santa primary support = 83 tracks.
+   Tree primary support  = 156 tracks.
+
+2. Previous strict all-frame-visible analyses:
+   Santa = 63 tracks.
+   Tree  = 121 tracks.
+   These remain valid as stricter sensitivity analyses,
+   but are not the primary anchor-balanced endpoint.
+
+3. Historical appearance SHA/reproduction gate is not applied to the
+   corrected/new comparisons because the evaluated videos intentionally differ
+   from the historical frozen V3D suite.
+
+4. Metric implementation remains frozen:
+   phase01_final.py::appearance_errors
+   eval_v3.py::sample_patches
+   eval_v3.py::patch_mean_lab
+   eval_v3.py::bootstrap_mean_ci
+
+5. Comparison semantics:
+   Santa: rw=Identity-Shuffled, v3d=Correct.
+   Tree:  rw=RealWonder A0, v3d=Persistent-Noise A2.
+   Positive rw-v3d favors Correct/A2 respectively.
+
+6. Return-after-Occlusion:
+   Santa support=237; Tree support=180. Eligible.
+
+7. Return-after-Out-of-View:
+   Santa support=0; Tree support=0.
+   STOP: no inference will be performed.

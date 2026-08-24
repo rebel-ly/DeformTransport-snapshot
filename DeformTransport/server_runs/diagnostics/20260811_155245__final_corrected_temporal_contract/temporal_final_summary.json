@@ -1,0 +1,120 @@
+{
+  "protocol": "Final case-specific temporal diagnostics V2",
+  "cross_case_aggregation": false,
+  "cases": {
+    "santa": {
+      "appearance_tracks": 83,
+      "motion_tracks": 71,
+      "motion_retention_fraction": 0.8554216867469879,
+      "appearance_early": {
+        "rw": 45.83605140160365,
+        "v3d": 15.141383663753428,
+        "rw_minus_v3d": 30.694667737850228,
+        "ci": [
+          25.85720647374639,
+          35.60141600666724
+        ],
+        "decision": "WIN"
+      },
+      "appearance_late": {
+        "rw": 47.900308685417635,
+        "v3d": 18.319947081732465,
+        "rw_minus_v3d": 29.580361603685184,
+        "ci": [
+          24.28754350419145,
+          34.82881894949689
+        ],
+        "decision": "WIN"
+      },
+      "motion_early": {
+        "rw": 0.7535447968863563,
+        "v3d": 0.6338950926232545,
+        "rw_minus_v3d": 0.11964970426310183,
+        "ci": [
+          -0.07107260687320383,
+          0.3240173624053234
+        ],
+        "decision": "TIE"
+      },
+      "motion_late": {
+        "rw": 0.18813915364899522,
+        "v3d": 0.2643335848830094,
+        "rw_minus_v3d": -0.07619443123401412,
+        "ci": [
+          -0.1299202120443983,
+          -0.03317236849988754
+        ],
+        "decision": "LOSS"
+      },
+      "anchor_decision_counts": {
+        "appearance": {
+          "WIN": 20,
+          "TIE": 0,
+          "LOSS": 0
+        },
+        "motion": {
+          "WIN": 1,
+          "TIE": 3,
+          "LOSS": 16
+        }
+      }
+    },
+    "tree": {
+      "appearance_tracks": 156,
+      "motion_tracks": 133,
+      "motion_retention_fraction": 0.8525641025641025,
+      "appearance_early": {
+        "rw": 12.139445074934224,
+        "v3d": 14.66609015042583,
+        "rw_minus_v3d": -2.5266450754916057,
+        "ci": [
+          -3.2415140534421574,
+          -1.8651449351423441
+        ],
+        "decision": "LOSS"
+      },
+      "appearance_late": {
+        "rw": 17.315790132948987,
+        "v3d": 20.274554506116186,
+        "rw_minus_v3d": -2.958764373167203,
+        "ci": [
+          -3.525267148405218,
+          -2.3589991247013975
+        ],
+        "decision": "LOSS"
+      },
+      "motion_early": {
+        "rw": 0.8497943655514384,
+        "v3d": 0.9209720261693339,
+        "rw_minus_v3d": -0.07117766061789577,
+        "ci": [
+          -0.10705758375981334,
+          -0.03589494234168383
+        ],
+        "decision": "LOSS"
+      },
+      "motion_late": {
+        "rw": 0.7271118999639005,
+        "v3d": 0.8078999987865708,
+        "rw_minus_v3d": -0.08078809882267013,
+        "ci": [
+          -0.1210831391409409,
+          -0.04451784611885191
+        ],
+        "decision": "LOSS"
+      },
+      "anchor_decision_counts": {
+        "appearance": {
+          "WIN": 0,
+          "TIE": 0,
+          "LOSS": 20
+        },
+        "motion": {
+          "WIN": 7,
+          "TIE": 2,
+          "LOSS": 11
+        }
+      }
+    }
+  }
+}

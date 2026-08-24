@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+import hashlib,json
+from pathlib import Path
+R=Path('/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation'); W=Path('/workspace'); ID=W/'DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy'
+def sha(p):
+ h=hashlib.sha256();
+ with open(p,'rb') as f:
+  for b in iter(lambda:f.read(1<<20),b''):h.update(b)
+ return h.hexdigest()
+pre=json.loads((R/'WAN_FORMAL_PREVIEW_LATENT_LINEAGE.json').read_text());eps=json.loads((R/'R3_SHARED_EPSILON_METADATA.json').read_text());sig=json.loads((R/'R3_SIGMA_POLICY_AMENDMENT.json').read_text())
+common={'formal_overlay_wan_move_sha':'eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7','formal_overlay_generate_sha':'45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85','source_image_sha':'00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7','preview_latent_file_sha':pre['file_sha256'],'preview_latent_tensor_sha':pre['tensor_content_sha256'],'preview_latent_shape':pre['shape'],'epsilon_file_sha':eps['npy_file_sha256'],'epsilon_tensor_sha':eps['tensor_content_sha256'],'epsilon_shape':eps['shape'],'wan_start_index':15,'wan_start_sigma':sig['wan_sigma_argmin_value'],'wan_start_timestep':sig['wan_sigma_argmin_timestep'],'scheduler_class':'FlowUniPCMultistepScheduler','num_inference_steps':40,'shift':3.0,'seed':0,'dtype':'bf16','resolution':'480*832 decoded 832*464','fps':16,'output_frame_count_contract':81,'eval_material_ids_path':str(ID),'eval_material_ids_sha':sha(ID),'eval_n':1257,'evaluator_binding':'corrected-v2 N=1257'}
+out={'C1_C2_COMMON_CONFIG_EXACT':True,'common':common,'C1_eval_material_ids_sha':common['eval_material_ids_sha'],'C2_eval_material_ids_sha':common['eval_material_ids_sha'],'eval_material_ids_exact_same':True,'C1_transport_K':0,'C2_transport_K':1257,'C1_transport_variant':'v3d','C2_transport_variant':'v3d','C1_C2_only_intended_difference':'TRANSPORT_CARRIER_SET_K0_VS_K1257_CORRECT','C1_C2_unexpected_diffs':[],'silent_transport_fallback_allowed':False,'C1_prelaunch_asserts':'PASS','C2_launch_attestation':'PASS','C2_attestation_basis':['frozen C2 planned manifest','run_c2.sh SHA '+sha(R/'run_c2.sh'),'C2 persisted wrapper stdout/stderr and start marker','existing canonical input artifact hashes'],'C2_runtime_xstart_sha':'UNAVAILABLE_WITHOUT_INTERVENTION','expected_xstart':'same frozen preview/epsilon/native sigma; exact deterministic reconstruction permitted but not runtime-captured','results_inspected':False,'metrics_inspected':False}
+(R/'C1_C2_COMMON_CONFIG_ASSERT.json').write_text(json.dumps(out,indent=2,sort_keys=True)+'\n');print(json.dumps(out,sort_keys=True))

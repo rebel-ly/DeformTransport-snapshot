@@ -1,0 +1,25 @@
+{
+  "status": "TREE_MOTION_CONFLICT_PROJECTION_READY",
+  "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt",
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_002016__tree__motion_conflict_projection/tree_quality_correct_motion_conflict_projection_energy_matched.pt",
+  "active_future_cells": 14747,
+  "conflict_cells": 12754,
+  "conflict_fraction": 0.8648538685834407,
+  "old_mean_abs": 0.012252077460289001,
+  "projected_mean_abs_before_matching": 0.010982058010995388,
+  "energy_scale": 1.115644940868283,
+  "matched_mean_abs": 0.012252078391611576,
+  "old_rms": 0.04646586999297142,
+  "new_rms": 0.04696428403258324,
+  "old_max_abs": 0.9596481323242188,
+  "new_max_abs": 1.0706266164779663,
+  "checks": {
+    "residual_saved_exact": true,
+    "fused_saved_exact": true,
+    "slot0_zero": true,
+    "mean_abs_matched": true,
+    "mask_count_contract": true,
+    "finite": true
+  },
+  "all_checks_pass": true
+}

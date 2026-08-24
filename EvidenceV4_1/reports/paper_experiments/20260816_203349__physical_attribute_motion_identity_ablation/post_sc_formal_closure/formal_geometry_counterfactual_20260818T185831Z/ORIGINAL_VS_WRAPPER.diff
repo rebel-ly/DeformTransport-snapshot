@@ -1,0 +1,11 @@
+--- reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/reaudit_phase0c_58.py	2026-08-15 01:57:49.000000000 +0800
++++ reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/post_sc_formal_closure/formal_geometry_counterfactual_20260818T185831Z/append_only_replay_wrapper.py	2026-08-19 02:58:31.000000000 +0800
+@@ -3,7 +3,7 @@
+ import json,os,sys,importlib.util
+ from pathlib import Path
+ import numpy as np,torch
+-R=Path('/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation'); ROOT=Path('/workspace/DeformTransport_EvidenceV4_1'); OVER=ROOT/'experimental/20260814__wanmove_preview_sdedit_overlay'
++R=Path('/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/post_sc_formal_closure/formal_geometry_counterfactual_20260818T185831Z'); ROOT=Path('/workspace/DeformTransport_EvidenceV4_1'); OVER=ROOT/'experimental/20260814__wanmove_preview_sdedit_overlay'
+ os.environ['DT_TRANSPORT_VARIANT']='v3d';os.environ['DT_TRACK_IDS_PATH']='/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy';os.environ['DT_TRACK_DEPTH_PATH']='/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy'
+ spec=importlib.util.spec_from_file_location('r3_frozen_trajectory',OVER/'wan/modules/trajectory.py');tr=importlib.util.module_from_spec(spec);spec.loader.exec_module(tr)
+ track=torch.from_numpy(np.load('/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy'))

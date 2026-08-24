@@ -1,0 +1,13 @@
+{
+  "transport_input_variable":"vae_feature argument of replace_feature; caller variable y.unsqueeze(0)",
+  "source_file":"/workspace/Wan-Move/wan/wan_move.py", "function":"WanMove.generate", "line_range":"266-284",
+  "lineage":[
+    {"step":"source image normalization","expression":"img = TF.to_tensor(img).sub_(0.5).div_(0.5)","shape":"[3,480,832]"},
+    {"step":"formal target computation","expression":"lat_h=60; lat_w=104; h=480; w=832","shape":"[H,W]=[480,832]"},
+    {"step":"VAE input","expression":"concat(interpolate(img[None],size=(h,w)).transpose(0,1), zeros(3,F-1,h,w))","shape":"[3,81,480,832]"},
+    {"step":"raw VAE output","expression":"y=self.vae.encode([...])[0]","shape":"[16,21,60,104] by exact formal code proof"},
+    {"step":"transport input","expression":"replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]","shape":"input [1,16,21,60,104]"},
+    {"step":"post-operator conditioning concat","expression":"y_cond=torch.concat([msk, edited_y],dim=0)","shape":"[20,21,60,104]"}
+  ],
+  "operator_definition":{"source_file":"/workspace/Wan-Move/wan/modules/trajectory.py","function":"replace_feature","line_range":"698-735","formal_v3d_path":"DT_TRANSPORT_VARIANT=v3d is accepted and receives vae_feature."}
+}

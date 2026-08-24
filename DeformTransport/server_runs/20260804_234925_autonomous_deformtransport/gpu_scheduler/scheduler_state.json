@@ -1,0 +1,17 @@
+{
+  "RUN_ID": "20260804_234925_autonomous_deformtransport",
+  "MAX_DEFORMTRANSPORT_GPUS": 4,
+  "watcher_PID": 402642,
+  "watcher状态": "运行中_每5秒采样",
+  "当前项目GPU任务数": 0,
+  "完整RealWonder并发数": 0,
+  "完整RealWonder并发说明": "当前FULL_FREE卡为0且单进程CPU峰值尚未测量",
+  "GPU状态": {
+    "0": "BUSY_平均与峰值利用率及温度超限",
+    "1": "BUSY_利用率温度超限且空闲显存不足30GiB",
+    "2": "BUSY_最新60秒峰值利用率38%超过35%",
+    "3": "BUSY_最新60秒峰值利用率38%且功耗末段升高"
+  },
+  "READY任务数": 4,
+  "下一任务": "DT_TRANSPORT_GPU_PARITY"
+}

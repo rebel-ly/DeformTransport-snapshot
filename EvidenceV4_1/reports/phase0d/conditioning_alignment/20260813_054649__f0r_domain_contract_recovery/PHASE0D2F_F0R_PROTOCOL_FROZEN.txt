@@ -1,0 +1,4 @@
+Frozen protocol authority:
+/mnt/sdbd/home/liuyu_qyh/.codex/attachments/7e872fce-5113-48be-8111-5b25205a995b/pasted-text.txt
+
+Phase 0D-2F/F0-R was conducted under the stated no-generation/no-14B/no-T5/no-CLIP/no-modification constraints. The previously passed F0 closure items were not redone.

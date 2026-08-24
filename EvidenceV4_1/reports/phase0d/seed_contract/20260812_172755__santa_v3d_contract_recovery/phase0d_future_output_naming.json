@@ -1,0 +1,11 @@
+{
+  "phase0d2_same_seed_replayA": "reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA",
+  "phase0d2_same_seed_replayB": "reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayB",
+  "phase0d3_other_seeds": [
+    "reports/phase0d/formal_runs/santa_correct_v3d_seed001",
+    "reports/phase0d/formal_runs/santa_correct_v3d_seed002",
+    "reports/phase0d/formal_runs/santa_correct_v3d_seed003",
+    "reports/phase0d/formal_runs/santa_correct_v3d_seed004"
+  ],
+  "phase0d3_seed0": "reuse Phase0D-2 replayA; no third seed0 generation"
+}

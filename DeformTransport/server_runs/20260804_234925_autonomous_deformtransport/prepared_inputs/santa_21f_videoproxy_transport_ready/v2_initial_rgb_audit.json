@@ -1,0 +1,23 @@
+{
+  "生成时间": "2026-08-05T02:22:07.354288+08:00",
+  "源路径": "/workspace/DeformTransport/artifacts/stage1_dynamic/santa_cloth_2f_wsl_20260802_retry3/frame_initial.png",
+  "处理步骤": "复制已验证的原生512x512 frame_initial；运行时由RealWonder加载器执行512→832双线性resize并中心裁剪y=176:656得到832x480",
+  "initial_rgb_shape": [
+    512,
+    512,
+    3
+  ],
+  "initial_rgb_dtype": "uint8",
+  "initial_rgb_SHA256": "dd5d8410fde94cc8fb303f425648838b2dce0d16f5774bdfd8987a0d1e57dc04",
+  "v1_SHA256": "45d25b1901e621e575a83ffb1a351306c2ed4980b8a5988f70e6caef56cc123b",
+  "v2_SHA256": "294f3381965c255af40bb810b009441e73cfc986571d7ced6370ee2f877145a6",
+  "v2_initial_rgb": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/initial_rgb_512.png",
+  "除initial_rgb外所有transport字段完全不变": true,
+  "差异字段": [],
+  "coarse帧数量": 21,
+  "coarse帧尺寸": [
+    832,
+    480
+  ],
+  "v2完整闭环可执行性": "否：探针对coarse_rgb_frames同样要求512x512；因此另建v3，不覆盖v1/v2"
+}

@@ -1,0 +1,259 @@
+PHASE-01 / PHASE-02 PRE-REGISTERED PROTOCOL
+Frozen before inspecting new diagnostic results.
+
+============================================================
+A. HISTORICAL REPRODUCTION GATE
+============================================================
+
+Inputs:
+Existing frozen RW and V3D videos only.
+No RealWonder regeneration.
+
+Gate 0:
+SHA256 of RW and V3D videos must exactly equal
+the hashes stored in frozen appearance_report.json.
+
+Gate 1:
+Recomputed aggregate frozen TC-MAR Lab:
+absolute error from frozen mean <= 0.002.
+
+Gate 2:
+RW - V3D paired bootstrap conclusion must reproduce
+the frozen RealWonder comparison decision.
+CI numerical tolerance for reproduction = 0.01.
+
+If any gate fails:
+Do not interpret downstream temporal appearance results.
+
+============================================================
+B. PRIMARY TEMPORAL ENDPOINT
+============================================================
+
+PRIMARY:
+
+Persistent-visible complete-case balanced panel.
+
+A material track must:
+- be valid at source;
+- be source-visible;
+- be visible at every anchor 4,8,...,80;
+- have a valid full 8x8 TC-MAR patch at every anchor.
+
+Endpoint:
+Late TC-MAR Lab averaged within each material track over:
+
+44,48,52,56,60,64,68,72,76,80
+
+Santa and Tree receive equal case weight 0.5 / 0.5.
+
+Bootstrap:
+whole material track trajectory is resampled.
+Time anchors are never treated as independent observations.
+N = 10000.
+Seed = 0.
+
+Positive RW - V3D means V3D is better.
+
+Also report:
+- balanced / all track fraction
+- balanced / source-valid-visible track fraction
+
+============================================================
+C. MECHANISM-DRIVEN SECONDARY SUBGROUP
+============================================================
+
+Return-after-Occlusion subgroup:
+
+Track must:
+- be source-visible;
+- be visible and patch-valid at t=80;
+- be invisible at >=1 intermediate anchor in 4,...,76;
+- at that invisible anchor, its projected point must remain
+  finite and inside the image.
+
+This distinguishes z-buffer/visibility loss from simply
+leaving the image.
+
+Endpoint:
+TC-MAR Lab at t=80.
+
+Support rule:
+>=30 tracks in a case is sufficient for case-level inference.
+If fewer than 30, mark INSUFFICIENT_SUPPORT.
+
+A cross-case inferential result is allowed only if both
+Santa and Tree independently have >=30 subgroup tracks.
+Otherwise subgroup evidence is descriptive/mechanistic only.
+
+Return-after-out-of-view is exploratory only.
+
+============================================================
+D. EXPLORATORY TEMPORAL OUTPUTS
+============================================================
+
+- balanced per-anchor TC-MAR
+- unbalanced per-anchor TC-MAR
+- survival fraction
+- Early window 4,...,40
+- per-horizon difference
+- slopes if later plotted
+
+No time anchor is treated as an independent statistical unit.
+
+============================================================
+E. MOTION COMPANION
+============================================================
+
+Temporal TC-ME is exploratory companion evidence.
+
+Use:
+- same persistent material identities;
+- RAFT-Large frozen evaluator contract;
+- direct physics material displacement reference;
+- whole material track bootstrap.
+
+Purpose:
+rule out apparent TC-MAR gains caused by motion collapse.
+
+============================================================
+F. REGION PROTOCOL
+============================================================
+
+Region masks must come from shared upstream
+geometry / z-buffer / simulation state.
+
+Never derive evaluation masks independently from generated videos.
+
+Primary erosion guard band:
+8 pixels.
+
+Sensitivity:
+16 pixels.
+
+Full TC-MAR patch must lie inside the valid region.
+
+Always report:
+- pixel count
+- area fraction
+- track count
+- valid observation count
+
+Disocclusion:
+No primary source-TC-MAR because source appearance is undefined.
+Quantitative no-reference metrics, if later used, are exploratory.
+
+Static background:
+lowest priority / exploratory.
+
+============================================================
+G. PERSISTENT-NOISE ARMS
+============================================================
+
+A0:
+Original RealWonder structured-noise construction.
+
+A1:
+Full persistent material 0 -> t noise correspondence.
+
+A2:
+Block-reanchored persistent correspondence.
+N = 3 latent frames.
+N is frozen from RealWonder causal block size.
+No N sweep.
+
+No video generation until Phase-02 feasibility gates pass.
+
+============================================================
+H. RNG CONTRACT
+============================================================
+
+Formal A/B must record/replay stochastic inputs.
+
+At minimum:
+- q0
+- auxiliary Gaussian draws
+- fresh Gaussian for unsupported/disoccluded targets
+- eval_degradation Gaussian
+- stochastic channel permutations / randperm
+
+Same stochastic inputs across A0/A1/A2 wherever logically shared.
+
+============================================================
+I. RHO GATES
+============================================================
+
+rho0(0):
+1 - rho0(0) < 1e-6
+otherwise STOP as indexing/RNG bug.
+
+Use 32 independent q0 seeds for empirical validation.
+
+Report:
+
+rho0(t):
+source material identity retention.
+
+rho1(t):
+local adjacent-frame temporal correlation.
+
+A1 rho1 compatibility guardrail relative to A0:
+
+P95_t |rho1_A1(t) - rho1_A0(t)| <= 0.10
+
+AND
+
+max_t |rho1_A1(t) - rho1_A0(t)| <= 0.15
+
+Otherwise route to A2.
+
+These are pre-registered engineering equivalence margins,
+not theoretical OOD boundaries.
+
+============================================================
+J. NOISE LEGALITY
+============================================================
+
+Compare final generator-input structured noise A1 vs A0.
+
+For each statistic use:
+P95 absolute difference <= tolerance
+AND
+maximum absolute difference <= 2 * tolerance.
+
+Tolerances:
+
+mean                                  0.02
+variance                              0.05
+skewness                              0.10
+excess kurtosis                       0.20
+spatial lag-1 correlation             0.02
+mean abs off-diagonal channel corr    0.02
+
+Unsupported target:
+must receive fresh standard Gaussian.
+Never zero-fill.
+
+============================================================
+K. GEOMETRY MECHANISM AUDIT
+============================================================
+
+Before empirical rho generation:
+
+1. report consecutive discrete out-degree descriptors;
+2. report direct 0->t degree descriptors;
+3. report expansion/contraction/visibility churn;
+4. then implement exact ancestry/covariance propagation
+   matching the audited RealWonder/GWF noise construction.
+
+Product of degrees alone is descriptive only.
+It is NOT used as a pass/fail mechanism predictor.
+
+============================================================
+L. INTERPRETATION BOUNDARY
+============================================================
+
+TC-MAR measures source-conditioned material appearance retention.
+It is not a GT future-video correctness metric.
+
+Current track-bootstrap inference is conditional on the
+fixed Santa / Tree scenes, not population-level scene inference.

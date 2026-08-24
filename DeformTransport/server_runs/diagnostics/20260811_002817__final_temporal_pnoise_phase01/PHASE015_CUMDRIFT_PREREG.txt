@@ -1,0 +1,44 @@
+Tree cumulative-motion validation.
+
+Metric:
+TC-CDE = Track-Conditioned Cumulative Drift Error.
+
+For each material track i:
+
+generated position:
+xhat_i(0) = x_i(0)
+
+xhat_i(t) =
+xhat_i(t-1) +
+RAFT(I_{t-1}, I_t) sampled at xhat_i(t-1)
+
+physics position:
+x_i(t)
+
+error:
+TC-CDE_i(t) = ||xhat_i(t) - x_i(t)||_2
+
+Evaluation domain:
+416x240 RAFT grid.
+
+Support:
+same geometry-defined material tracks for RW and V3D;
+track must be visible, finite, and valid in RAFT domain
+for every frame 0..80.
+
+Inference:
+paired bootstrap over whole material tracks;
+N=10000, seed=0.
+
+Report:
+- RW cumulative drift
+- V3D cumulative drift
+- RW-V3D difference
+- 95% bootstrap CI
+- physics net displacement |x_t-x_0|
+- drift / physics net displacement
+
+Interpretation:
+This is a Phase-01.5 validation diagnostic.
+It tests whether lower one-step TC-ME actually produces
+better long-horizon trajectory alignment.

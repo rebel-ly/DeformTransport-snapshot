@@ -1,0 +1,8 @@
+{
+  "attempt": 1,
+  "stage": "JSON_SERIALIZATION_AFTER_ASSET_CHECKS",
+  "exit_code": 1,
+  "error": "TypeError: Object of type bool_ is not JSON serializable",
+  "interpretation": "Evidence-writer engineering error; no predicate result was serialized. Empty stdout target preserved as corrected_v2_preflight_attempt1_empty.txt.",
+  "evaluator_or_protocol_changed": false
+}

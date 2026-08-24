@@ -1,0 +1,26 @@
+{
+  "case": "tree",
+  "old_correct_tcme_mean": 0.3678485654760152,
+  "v3a_tcme_mean": 0.37608861229382456,
+  "realwonder_tcme_mean": 0.7541267983615398,
+  "v3a_minus_old_correct": {
+    "definition": "positive means V3A motion is worse",
+    "paired_mean_difference": 0.008240046817809344,
+    "paired_median_difference": -0.0005731582641601562,
+    "fraction_v3a_worse": 0.5,
+    "bootstrap_95_ci": [
+      -0.0021360134868882597,
+      0.019106480965856456
+    ]
+  },
+  "realwonder_minus_v3a": {
+    "definition": "positive means V3A better than RealWonder",
+    "paired_mean_difference": 0.3780381860677153,
+    "bootstrap_95_ci": [
+      0.2825373582239263,
+      0.4835462840308901
+    ],
+    "decision": "WIN"
+  },
+  "motion_safety": "PASS"
+}

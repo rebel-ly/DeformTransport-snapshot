@@ -1,0 +1,5 @@
+{
+  "source": "/workspace/DeformTransport/server_runs/wan_move_method_eval/20260810_121513__v3s_v3b_v3c_v3d_v3e_joint_eval/eval_v3.py",
+  "reproduction_guards_removed": 2,
+  "metric_code": "frozen eval_v3.py"
+}

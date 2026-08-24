@@ -1,0 +1,14 @@
+{
+  "automatic_rerun_performed": false,
+  "cuda_visible_devices": "1",
+  "expected_video_exists": false,
+  "failure_stage": "denoise step 1 of 25",
+  "failure_type": "torch.OutOfMemoryError",
+  "fatal_error_detected": true,
+  "formal_evaluator_run": false,
+  "generation_pid": 299586,
+  "nodepth_generation_completed": false,
+  "nodepth_generation_validation": "FAIL",
+  "stderr_sha256": "69b0b01e12f3169a6f779ae80af6076d808089f4be0349d865d8b7d26eb000e6",
+  "stdout_sha256": "51293dfe54f71b86cbd95f224c5610640245b03b09c0e1247bfcf934c51a8e36"
+}

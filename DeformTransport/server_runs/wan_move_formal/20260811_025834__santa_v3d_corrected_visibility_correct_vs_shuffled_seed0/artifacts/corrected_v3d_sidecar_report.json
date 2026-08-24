@@ -1,0 +1,12 @@
+{
+  "n_tracks": 1277,
+  "ids_unique": true,
+  "depth_shape": [
+    1,
+    81,
+    1277
+  ],
+  "visible_depth_count": 41885,
+  "visible_depth_positive_fraction": 1.0,
+  "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim/point_trajectories.pt"
+}

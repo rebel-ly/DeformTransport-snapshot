@@ -1,0 +1,211 @@
+{
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_205857__aligned_projection_vs_future_visible_soft_parallel/projection_only/vae_latent_outputs_soft_projection.pt",
+  "output_sha256": "11725ccb14b84632e4fd95f0bc9cc230488cac3e3efaa5b7d1415c96379fc5d8",
+  "transport_method": "continuous_bilinear_forward_splat_gate",
+  "threshold": 0.25,
+  "latent_frame_indices": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60,
+    64,
+    68,
+    72,
+    76,
+    80
+  ],
+  "validity": {
+    "mode": "projection_only",
+    "visibility_contract": null,
+    "projection_effective_points_per_slot": [
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126
+    ],
+    "selected_effective_points_per_slot": [
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126
+    ],
+    "removed_effective_points_per_slot": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "selected_subset_projection": true,
+    "frame0_effective_contract_equal": true
+  },
+  "support": {
+    "hard_cells": 20909,
+    "raw_soft_cells": 23333,
+    "gated_cells": 22580,
+    "raw_soft_over_hard": 1.1159309388301688,
+    "gated_over_hard": 1.0799177387727772,
+    "soft_only_cells": 2424,
+    "retained_soft_only_cells": 1671
+  },
+  "fairness": {
+    "masks_equal": true,
+    "counts_equal": true,
+    "weights_allclose": true,
+    "weight_allclose_atol": 0.0002,
+    "weight_allclose_rtol": 0.0002,
+    "weight_max_abs_difference": 2.288818359375e-05,
+    "weight_mean_abs_difference": 1.0234042235879315e-07,
+    "independent_gated_mask_equal": true,
+    "independent_gated_mask_difference_cells": 0,
+    "shared_canonical_gated_mask": true,
+    "valid_point_masks_equal": true,
+    "permutations_differ": true
+  },
+  "compatibility": {
+    "base_hard_mask_exact": true,
+    "base_hard_count_exact": true,
+    "base_projection_hard_mask_exact": true,
+    "base_projection_hard_count_exact": true,
+    "selected_hard_subset_projection_hard": true,
+    "transport_mask_equals_count_positive": true,
+    "selected_key_shapes_match_target": true
+  },
+  "latent_differences": {
+    "correct_vs_shuffled_mean_abs": 0.05083445459604263,
+    "soft_correct_vs_target_mean_abs": 0.07765761017799377,
+    "soft_correct_vs_target_gated_mean_abs": 0.45067545771598816,
+    "soft_correct_vs_hard_correct_mean_abs": 0.023171208798885345
+  },
+  "statistics": {
+    "target_latent": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 0.11687097698450089,
+      "std": 1.052530288696289,
+      "min": -3.625,
+      "max": 4.8125,
+      "finite": true
+    },
+    "soft_correct_fused": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 0.09613240510225296,
+      "std": 1.0175169706344604,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "soft_shuffled_fused": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 0.09424751251935959,
+      "std": 1.0096852779388428,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "transport_weight": {
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 3.0650641918182373,
+      "std": 8.684629440307617,
+      "min": 0.0,
+      "max": 92.9126968383789,
+      "finite": true
+    }
+  },
+  "runtime_seconds": {
+    "transport": 1.0818520070170052,
+    "total": 3.624659874010831
+  },
+  "gpu_peak_memory_mib": {
+    "allocated": 128.38134765625,
+    "reserved": 162.0
+  }
+}

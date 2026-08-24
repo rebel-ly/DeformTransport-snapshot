@@ -1,0 +1,22 @@
+{
+  "late_step1": {
+    "EPE_global": 0.13038918375968933,
+    "magnitude_error_global": 0.10976248979568481,
+    "angle_error_deg_global": 25.42988395690918,
+    "EPE_transport_region": 0.773126482963562,
+    "magnitude_error_transport_region": 0.669023871421814,
+    "angle_error_deg_transport_region": 24.341796875,
+    "pred_flow_magnitude_mean": 0.1894305944442749,
+    "reference_flow_magnitude_mean": 0.10720079392194748
+  },
+  "baseline": {
+    "EPE_global": 0.12279396504163742,
+    "EPE_transport_region": 0.7168875932693481,
+    "angle_error_deg_transport_region": 22.002452850341797
+  },
+  "step0": {
+    "EPE_global": 0.12554922699928284,
+    "EPE_transport_region": 0.7432404160499573,
+    "angle_error_deg_transport_region": 24.391048431396484
+  }
+}

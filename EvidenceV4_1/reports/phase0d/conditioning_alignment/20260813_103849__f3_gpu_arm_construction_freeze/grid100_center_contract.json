@@ -1,0 +1,14 @@
+{
+  "rule": "one carrier nearest selected bin center; tie minimum material ID",
+  "selection_variables": [
+    "source coordinate",
+    "material ID tie-break"
+  ],
+  "not_used": [
+    "visibility",
+    "motion",
+    "depth",
+    "error",
+    "collision"
+  ]
+}

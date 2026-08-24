@@ -1,0 +1,31 @@
+{
+  "frozen_functions_reused": true,
+  "posthoc_maskless_diagnostic": true,
+  "track_supported_diagnostic": "UNRESOLVED_NO_AUTHORITATIVE_MASK",
+  "results": {
+    "C1": {
+      "fullframe_l1": 0.03665485605597496,
+      "fullframe_psnr": 21.318619389514332,
+      "sharpness": 0.009171895682811737,
+      "domain": "frozen common() 480->464 mapping; native 464 unchanged"
+    },
+    "C2": {
+      "fullframe_l1": 0.03634707257151604,
+      "fullframe_psnr": 21.47772007904105,
+      "sharpness": 0.009110720828175545,
+      "domain": "frozen common() 480->464 mapping; native 464 unchanged"
+    },
+    "RW": {
+      "fullframe_l1": 0.05469916760921478,
+      "fullframe_psnr": 18.258327744659354,
+      "sharpness": 0.007228112779557705,
+      "domain": "frozen common() 480->464 mapping; native 464 unchanged"
+    },
+    "DTFULL": {
+      "fullframe_l1": 0.0969991609454155,
+      "fullframe_psnr": 15.136643460558725,
+      "sharpness": 0.015074437484145164,
+      "domain": "frozen common() 480->464 mapping; native 464 unchanged"
+    }
+  }
+}

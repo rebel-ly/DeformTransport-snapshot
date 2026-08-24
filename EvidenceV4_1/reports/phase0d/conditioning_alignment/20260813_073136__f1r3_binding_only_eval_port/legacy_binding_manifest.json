@@ -1,0 +1,9 @@
+{
+  "schema": "f1r3-binding-manifest-v1",
+  "name": "legacy_n1277_semantic_equivalence_fixture",
+  "original_evaluator": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "original_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "mode": "identity",
+  "binding_changes": [],
+  "policy": "SEMANTIC_EQUIVALENCE_TEST_FIXTURE_ONLY"
+}

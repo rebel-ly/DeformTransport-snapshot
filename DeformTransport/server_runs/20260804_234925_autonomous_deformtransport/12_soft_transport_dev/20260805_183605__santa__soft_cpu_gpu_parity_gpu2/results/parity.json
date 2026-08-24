@@ -1,0 +1,87 @@
+{
+  "transport_ready": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt",
+  "cuda_device_name": "NVIDIA L40",
+  "selected_frames": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60,
+    64,
+    68,
+    72,
+    76,
+    80
+  ],
+  "threshold": 0.25,
+  "modes": {
+    "correct": {
+      "hard_grid": {
+        "exact_equal": false,
+        "allclose_atol_2e_4_rtol_2e_4": true,
+        "max_abs_difference": 1.0728836059570312e-06,
+        "mean_abs_difference": 5.3261262067394455e-09
+      },
+      "soft_grid": {
+        "exact_equal": false,
+        "allclose_atol_2e_4_rtol_2e_4": true,
+        "max_abs_difference": 8.344650268554688e-07,
+        "mean_abs_difference": 7.024559600665725e-09
+      },
+      "soft_weight": {
+        "exact_equal": false,
+        "allclose_atol_2e_4_rtol_2e_4": true,
+        "max_abs_difference": 4.57763671875e-05,
+        "mean_abs_difference": 2.6941543751490826e-07
+      },
+      "hard_mask_exact": true,
+      "soft_mask_exact": true,
+      "gated_mask_exact": true,
+      "contribution_count_exact": true,
+      "valid_point_mask_exact": true,
+      "permutation_exact": true,
+      "cells_within_2e_4_of_threshold": 1,
+      "all_checks_pass": true
+    },
+    "shuffled": {
+      "hard_grid": {
+        "exact_equal": false,
+        "allclose_atol_2e_4_rtol_2e_4": true,
+        "max_abs_difference": 2.384185791015625e-07,
+        "mean_abs_difference": 2.33361219237338e-09
+      },
+      "soft_grid": {
+        "exact_equal": false,
+        "allclose_atol_2e_4_rtol_2e_4": true,
+        "max_abs_difference": 2.086162567138672e-07,
+        "mean_abs_difference": 2.419294986566456e-09
+      },
+      "soft_weight": {
+        "exact_equal": false,
+        "allclose_atol_2e_4_rtol_2e_4": true,
+        "max_abs_difference": 5.340576171875e-05,
+        "mean_abs_difference": 2.696430101423175e-07
+      },
+      "hard_mask_exact": true,
+      "soft_mask_exact": true,
+      "gated_mask_exact": true,
+      "contribution_count_exact": true,
+      "valid_point_mask_exact": true,
+      "permutation_exact": true,
+      "cells_within_2e_4_of_threshold": 1,
+      "all_checks_pass": true
+    }
+  },
+  "all_checks_pass": true
+}

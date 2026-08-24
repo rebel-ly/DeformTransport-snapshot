@@ -1,0 +1,156 @@
+{
+  "method": "V3A Collision-Aware Material Aggregation",
+  "hard_development_gate": "appearance GO iff 95% CI lower bound of (OldCorrect TC-MAR Lab - V3A TC-MAR Lab) > 0",
+  "cases": {
+    "santa": {
+      "case": "santa",
+      "valid_tracks": 1277,
+      "tc_mar_lab": {
+        "realwonder": {
+          "n": 1277,
+          "mean": 17.39061386046396,
+          "median": 12.518139839172363,
+          "p95": 48.462923936843886
+        },
+        "old_correct": {
+          "n": 1277,
+          "mean": 21.271405488892093,
+          "median": 19.74652338027954,
+          "p95": 43.80792405128479
+        },
+        "v3a_correct": {
+          "n": 1277,
+          "mean": 21.147962715675703,
+          "median": 19.104084038734435,
+          "p95": 43.62202610015869
+        },
+        "old_correct_minus_v3a": {
+          "paired_mean_difference": 0.12344277321638875,
+          "paired_median_difference": 0.20436210632324325,
+          "fraction_v3a_better": 0.5732184808144087,
+          "bootstrap_95_ci": [
+            -0.05407344451274778,
+            0.29508027634114475
+          ]
+        },
+        "realwonder_minus_v3a": {
+          "paired_mean_difference": -3.757348855211748,
+          "bootstrap_95_ci": [
+            -4.457421904544732,
+            -3.057551347427611
+          ]
+        }
+      },
+      "tc_mar_rgb": {
+        "realwonder": {
+          "n": 1277,
+          "mean": 0.12065161856575252,
+          "median": 0.06843661712482571,
+          "p95": 0.38250184584409014
+        },
+        "old_correct": {
+          "n": 1277,
+          "mean": 0.14561786886907022,
+          "median": 0.10633672624826432,
+          "p95": 0.3653172354400158
+        },
+        "v3a_correct": {
+          "n": 1277,
+          "mean": 0.14524558126757223,
+          "median": 0.10457121599465609,
+          "p95": 0.36257772222161294
+        },
+        "old_correct_minus_v3a": {
+          "paired_mean_difference": 0.00037228760149799573,
+          "bootstrap_95_ci": [
+            -0.0006908684595598868,
+            0.00139654039895197
+          ]
+        },
+        "realwonder_minus_v3a": {
+          "paired_mean_difference": -0.024593962701819704,
+          "bootstrap_95_ci": [
+            -0.028737078660247113,
+            -0.020347627873174023
+          ]
+        }
+      },
+      "appearance_development_decision": "STOP"
+    },
+    "tree": {
+      "case": "tree",
+      "valid_tracks": 709,
+      "tc_mar_lab": {
+        "realwonder": {
+          "n": 709,
+          "mean": 13.797383478062075,
+          "median": 11.098189004262288,
+          "p95": 33.605274610519416
+        },
+        "old_correct": {
+          "n": 709,
+          "mean": 18.96363288940394,
+          "median": 17.266448497772217,
+          "p95": 35.91799559194606
+        },
+        "v3a_correct": {
+          "n": 709,
+          "mean": 18.77772732095656,
+          "median": 16.827722549438477,
+          "p95": 35.81308709144593
+        },
+        "old_correct_minus_v3a": {
+          "paired_mean_difference": 0.18590556844737652,
+          "paired_median_difference": 0.019987156516627635,
+          "fraction_v3a_better": 0.5105782792665726,
+          "bootstrap_95_ci": [
+            0.04691981402917454,
+            0.32575691444610116
+          ]
+        },
+        "realwonder_minus_v3a": {
+          "paired_mean_difference": -4.980343842894489,
+          "bootstrap_95_ci": [
+            -5.612365570114844,
+            -4.35225035411528
+          ]
+        }
+      },
+      "tc_mar_rgb": {
+        "realwonder": {
+          "n": 709,
+          "mean": 0.10982067212879078,
+          "median": 0.08088299663116534,
+          "p95": 0.30226382354895287
+        },
+        "old_correct": {
+          "n": 709,
+          "mean": 0.14480022402703113,
+          "median": 0.12839838461234018,
+          "p95": 0.28348231599444434
+        },
+        "v3a_correct": {
+          "n": 709,
+          "mean": 0.14371656202668448,
+          "median": 0.12916934937238694,
+          "p95": 0.278168580532074
+        },
+        "old_correct_minus_v3a": {
+          "paired_mean_difference": 0.001083662000346635,
+          "bootstrap_95_ci": [
+            0.0002840655246521975,
+            0.001963480107540856
+          ]
+        },
+        "realwonder_minus_v3a": {
+          "paired_mean_difference": -0.0338958898978937,
+          "bootstrap_95_ci": [
+            -0.03824322802108984,
+            -0.029322818683475572
+          ]
+        }
+      },
+      "appearance_development_decision": "GO"
+    }
+  }
+}

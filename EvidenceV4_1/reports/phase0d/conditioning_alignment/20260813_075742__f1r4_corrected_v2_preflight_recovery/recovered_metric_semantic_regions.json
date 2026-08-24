@@ -1,0 +1,208 @@
+{
+  "semantic_regions": [
+    {
+      "name": "BOOT_SEED",
+      "kind": "constant",
+      "original_lines": [
+        13,
+        13
+      ],
+      "original_sha256": "654e60b14ed1f11915dab63698ec9e021b24d328bae0250cb5b1eeca1ddfb870",
+      "port_sha256": "654e60b14ed1f11915dab63698ec9e021b24d328bae0250cb5b1eeca1ddfb870",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "BOOT_N",
+      "kind": "constant",
+      "original_lines": [
+        14,
+        14
+      ],
+      "original_sha256": "c1d437310fa764c75e3a55f8f5896383756dcf83d33a720abe299465df3f0e0c",
+      "port_sha256": "c1d437310fa764c75e3a55f8f5896383756dcf83d33a720abe299465df3f0e0c",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "ANCHORS",
+      "kind": "constant",
+      "original_lines": [
+        16,
+        22
+      ],
+      "original_sha256": "13d99c8a5f52be6a142518c8dfe8a45fba5ff5d5a2b7f28f6145058a35755826",
+      "port_sha256": "13d99c8a5f52be6a142518c8dfe8a45fba5ff5d5a2b7f28f6145058a35755826",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "OFF",
+      "kind": "constant",
+      "original_lines": [
+        24,
+        30
+      ],
+      "original_sha256": "653490d9c39b249cf84664012655dfa327439fb2449001d19c2f68a76fbb27d8",
+      "port_sha256": "653490d9c39b249cf84664012655dfa327439fb2449001d19c2f68a76fbb27d8",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "sha256",
+      "kind": "function",
+      "original_lines": [
+        133,
+        152
+      ],
+      "original_sha256": "cd4eff213bd8e815ed84552bbc5027edb391d3a662585e3077ab258b2e9c7d0d",
+      "port_sha256": "cd4eff213bd8e815ed84552bbc5027edb391d3a662585e3077ab258b2e9c7d0d",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "read_rgb_image",
+      "kind": "function",
+      "original_lines": [
+        202,
+        228
+      ],
+      "original_sha256": "d7c1cb44a4f3a702d65e389c51afec022e929dd3155ecaa83d9fc3d8c9aabf43",
+      "port_sha256": "d7c1cb44a4f3a702d65e389c51afec022e929dd3155ecaa83d9fc3d8c9aabf43",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "to_common",
+      "kind": "function",
+      "original_lines": [
+        231,
+        306
+      ],
+      "original_sha256": "224020867ecea4c0a86b0144ab6ec8ef9dbe9fe18e4329697b1055af16a08f87",
+      "port_sha256": "224020867ecea4c0a86b0144ab6ec8ef9dbe9fe18e4329697b1055af16a08f87",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "read_video_common",
+      "kind": "function",
+      "original_lines": [
+        309,
+        353
+      ],
+      "original_sha256": "6d935cc001beb7c0f76846c1a52506425b07ecec05c0f7909c09f131a4c2144f",
+      "port_sha256": "6d935cc001beb7c0f76846c1a52506425b07ecec05c0f7909c09f131a4c2144f",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "sample_patches",
+      "kind": "function",
+      "original_lines": [
+        356,
+        567
+      ],
+      "original_sha256": "97e591b77de24e14814d9b23a8f7710649640c124611205d9f580d587f41bee2",
+      "port_sha256": "97e591b77de24e14814d9b23a8f7710649640c124611205d9f580d587f41bee2",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "patch_mean_lab",
+      "kind": "function",
+      "original_lines": [
+        570,
+        609
+      ],
+      "original_sha256": "d5682dc4b860554c52d84ee76530c05f6c8af24bc886d56385031265ace5633d",
+      "port_sha256": "d5682dc4b860554c52d84ee76530c05f6c8af24bc886d56385031265ace5633d",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "stats",
+      "kind": "function",
+      "original_lines": [
+        612,
+        648
+      ],
+      "original_sha256": "57b0f88b866940a6732481150caa0bce514ba673bb1fe02c4e5ba01ebf374c87",
+      "port_sha256": "57b0f88b866940a6732481150caa0bce514ba673bb1fe02c4e5ba01ebf374c87",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "bootstrap_mean_ci",
+      "kind": "function",
+      "original_lines": [
+        651,
+        715
+      ],
+      "original_sha256": "50ad71767e2dd6539e2e3dd21a649b3c705e086bd9fdd13d090214c662113002",
+      "port_sha256": "50ad71767e2dd6539e2e3dd21a649b3c705e086bd9fdd13d090214c662113002",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "aggregate",
+      "kind": "function",
+      "original_lines": [
+        718,
+        773
+      ],
+      "original_sha256": "3b9e14be1c6ae401e1e15561531d493de9c35abe9ab9ca7ba63c3eec6a2bde38",
+      "port_sha256": "3b9e14be1c6ae401e1e15561531d493de9c35abe9ab9ca7ba63c3eec6a2bde38",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "appearance_case",
+      "kind": "function",
+      "original_lines": [
+        780,
+        1404
+      ],
+      "original_sha256": "ab6216bbb352226bf88a45a41a4bb16bd338a4f3a99c937d4615b1897a4a543b",
+      "port_sha256": "ab6216bbb352226bf88a45a41a4bb16bd338a4f3a99c937d4615b1897a4a543b",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "bilinear_flow",
+      "kind": "function",
+      "original_lines": [
+        1411,
+        1576
+      ],
+      "original_sha256": "9d4bc09424ecdf296f980ad606031bec176f08285ae82e6e931535e84ee69d3a",
+      "port_sha256": "9d4bc09424ecdf296f980ad606031bec176f08285ae82e6e931535e84ee69d3a",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "load_raft_cached",
+      "kind": "function",
+      "original_lines": [
+        1579,
+        1630
+      ],
+      "original_sha256": "41902b7e227eb2626c673fc95341ae0dadc57253ba6145da4a6647a71177fae0",
+      "port_sha256": "41902b7e227eb2626c673fc95341ae0dadc57253ba6145da4a6647a71177fae0",
+      "source_sha_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "motion_case",
+      "kind": "function",
+      "original_lines": [
+        1633,
+        2141
+      ],
+      "original_sha256": "be3d9c83f5bea8dd5a1d1336d13e6cfbb32307c94df105f20c783416fd66b401",
+      "port_sha256": "be3d9c83f5bea8dd5a1d1336d13e6cfbb32307c94df105f20c783416fd66b401",
+      "source_sha_equal": true,
+      "ast_equal": true
+    }
+  ]
+}

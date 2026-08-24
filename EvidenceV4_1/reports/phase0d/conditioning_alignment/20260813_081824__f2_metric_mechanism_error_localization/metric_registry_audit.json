@@ -1,0 +1,31 @@
+{
+  "TC_MAR_AVAILABLE": true,
+  "TC_ME_AVAILABLE": true,
+  "TC_CDE_AVAILABLE": false,
+  "registry": [
+    {
+      "name": "TC-MAR",
+      "entry_function": "appearance_case",
+      "source_region": "lines 768-1393",
+      "formal_outputs": [
+        "tc_mar_lab n/mean/median/p95",
+        "tc_mar_rgb_l1 n/mean/median/p95"
+      ]
+    },
+    {
+      "name": "TC-ME",
+      "entry_function": "motion_case",
+      "source_region": "lines 1621-2129",
+      "formal_outputs": [
+        "transition_mean_epe_mean",
+        "transition_mean_epe_median",
+        "transition_mean_epe_p95"
+      ]
+    }
+  ],
+  "absent": [
+    "TC-CDE",
+    "Early/Late formal buckets"
+  ],
+  "note": "Early/late quantities in F2 are DIAGNOSTIC_ONLY fixed timeline halves, not added formal metrics."
+}

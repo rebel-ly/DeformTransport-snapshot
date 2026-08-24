@@ -1,0 +1,30 @@
+{
+  "时间": "2026-08-05T03:10:03.976769+08:00",
+  "任务": "原生RealWonder生成端generator与checkpoint GPU加载探针",
+  "结论边界": "仅验证原生pipeline构造、checkpoint generator键、state_dict与GPU加载；未调用inference，不是Baseline视频结果",
+  "checkpoint": "/workspace/DeformTransport/ckpts/Realwonder-Distilled-AR-I2V-Flow/sink_size=1-attn_size=21-frame_per_block=3-denoising_steps=4/step=000800.pt",
+  "checkpoint字节": 18774247788,
+  "generator与generator_ema均存在": true,
+  "FSDP键归一化": false,
+  "generator参数量": 1564428608,
+  "首参数device": "cuda:0",
+  "首参数dtype": "torch.bfloat16",
+  "sdedit": true,
+  "num_frame_per_block": 3,
+  "local_attn_size": 21,
+  "耗时秒": {
+    "pipeline构造": 111.06690434100165,
+    "checkpoint_CPU加载": 14.802100020009675,
+    "state_dict加载": 1.3960290369868744,
+    "generator搬入GPU": 1.4818800189968897,
+    "总计": 131.28212341599283
+  },
+  "资源": {
+    "torch峰值allocated_MiB": 2984.9111328125,
+    "torch峰值reserved_MiB": 3246.0,
+    "CPU_maxRSS_GiB": 45.597869873046875,
+    "MemAvailable_before_GiB": 98.86801147460938,
+    "MemAvailable_after_GiB": 83.49988555908203
+  },
+  "通过": true
+}

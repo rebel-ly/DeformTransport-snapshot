@@ -1,0 +1,11 @@
+{
+  "d1_engineering_completion_status": "PASS_NORMAL_COMPLETION",
+  "d1_canonical_bridge_status": "FAIL_RGB_NOT_EXACT",
+  "final_shared_epsilon_frozen": false,
+  "c1_engineering_status": "RUNNING",
+  "c2_engineering_status": "PASS_NORMAL_COMPLETION",
+  "result_seal": "CLOSED",
+  "next_action": "DIAGNOSE_D1",
+  "gpu3_used": false,
+  "local_codex_only_policy": "PRESERVED"
+}

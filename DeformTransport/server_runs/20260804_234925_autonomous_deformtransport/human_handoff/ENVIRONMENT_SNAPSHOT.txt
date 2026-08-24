@@ -1,0 +1,62 @@
+2026-08-05T05:11:39+0800
+Linux gpu3 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+NAME="CentOS Linux"
+VERSION="7 (Core)"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="7"
+PRETTY_NAME="CentOS Linux 7 (Core)"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:centos:centos:7"
+HOME_URL="https://www.centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+
+CENTOS_MANTISBT_PROJECT="CentOS-7"
+CENTOS_MANTISBT_PROJECT_VERSION="7"
+REDHAT_SUPPORT_PRODUCT="centos"
+REDHAT_SUPPORT_PRODUCT_VERSION="7"
+
+
+DISK
+Filesystem      Size  Used Avail Use% Mounted on
+parastor_sdbd   1.6P  171T  1.4P  11% /mnt/sdbd
+/dev/sda5       3.6T  184G  3.4T   6% /
+
+DOCKER
+ID=1638d03f7992bc2b7979786e35d7e7deb1a159a692872fc710d53c7f2fcc6a14 Image=image.ac.com:5000/gpu/admin/codeserver/vscode-pytorch:pytorch1.14-py3.8-cuda11.8 Status=running Started=2026-08-03T22:46:10.611847405Z
+
+CONDA_ENVS
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+                         /workspace/tools/conda-libs/deformtransport-gl
+base                     /workspace/tools/miniforge3
+realwonder               /workspace/tools/miniforge3/envs/realwonder
+realwonder-full          /workspace/tools/miniforge3/envs/realwonder-full
+realwonder-gen           /workspace/tools/miniforge3/envs/realwonder-gen
+
+
+REALWONDER_GEN_PYTHON_AND_TORCH
+/workspace/tools/miniforge3/envs/realwonder-gen/bin/python
+2.5.1+cu121 12.1 True
+
+REALWONDER_GEN_PIP_CHECK
+No broken requirements found.
+
+SIM_OVERLAY_IMPORT_AND_PIP_CHECK
+/workspace/tools/venvs/deformtransport-sim/bin/python
+2.5.1+cu121 12.1 4.9.0 4.11.1
+No broken requirements found.
+
+PATHS_AND_LINKS
+-rw-r--r-- 1 liuyu_qyh 1000 34229269 Aug  2 17:20 artifacts/transport_validation/santa_cloth_21f/transport_ready.pt
+lrwxr-xr-x 1 liuyu_qyh 1000       30 Aug  4 10:34 ckpts -> /workspace/model_staging/ckpts
+drwxr-xr-x 6 liuyu_qyh 1000     4096 Aug  5 04:52 /mnt/sdbd/home/liuyu_qyh/tools/conda-libs/deformtransport-gl
+drwxr-xr-x 7 liuyu_qyh 1000     4096 Aug  5 04:46 /mnt/sdbd/home/liuyu_qyh/tools/venvs/deformtransport-sim
+lrwxr-xr-x 1 liuyu_qyh 1000       35 Aug  4 10:34 wan_models -> /workspace/model_staging/wan_models
+ckpts -> /workspace/model_staging/ckpts
+wan_models -> /workspace/model_staging/wan_models
+
+CHECKPOINTS

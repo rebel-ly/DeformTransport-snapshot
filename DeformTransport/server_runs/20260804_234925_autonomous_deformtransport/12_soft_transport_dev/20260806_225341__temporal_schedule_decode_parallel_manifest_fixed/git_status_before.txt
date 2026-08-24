@@ -1,0 +1,21 @@
+ M .gitignore
+ M case_simulation.py
+ M demo_web/simulation/utils.py
+ M demo_web/simulation_engine.py
+ M infer_sim.py
+ M simulation/case_simulation/__init__.py
+ M simulation/genesis_simulator.py
+ M simulation/utils.py
+ M vidgen/pipeline_sdedit.py
+ M wan/modules/attention.py
+?? PROJECT_MAP.md
+?? UPSTREAM.md
+?? deform_transport/
+?? docs/
+?? requirements-stage1-wsl-blackwell.txt
+?? requirements-stage1-wsl.txt
+?? requirements-vae-only-wsl.txt
+?? scripts/
+?? server_env/
+?? server_runs/
+?? tests/

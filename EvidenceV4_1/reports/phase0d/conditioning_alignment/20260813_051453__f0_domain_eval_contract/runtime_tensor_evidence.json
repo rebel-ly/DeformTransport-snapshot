@@ -1,0 +1,6 @@
+{
+  "formal_runtime": {"container":"deformtransport-dev", "python":"/workspace/tools/miniforge3/envs/wan-move/bin/python", "python_sha256":"edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3"},
+  "source_image": {"path":"/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png", "sha256":"00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7", "decoded_wh":[832,480], "mode":"RGB", "dtype":"uint8"},
+  "formal_input": {"video_tensor_cthw":[3,81,480,832], "preprocessing":"PIL convert RGB; TF.to_tensor; subtract 0.5/divide 0.5; source frame followed by 80 zero frames (wan_move.py:192,266-274)"},
+  "probe": {"kind":"single permitted VAE-only attempt", "result":"NO_TENSOR_RESULT", "latent_shape":"UNRESOLVED", "note":"No second probe was run; no model generation occurred."}
+}

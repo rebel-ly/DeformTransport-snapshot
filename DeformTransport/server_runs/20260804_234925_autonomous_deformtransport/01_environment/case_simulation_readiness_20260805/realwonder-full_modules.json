@@ -1,0 +1,13 @@
+{
+  "cv2": false,
+  "genesis": false,
+  "pytorch3d": false,
+  "kaolin": false,
+  "trimesh": false,
+  "gsplat": false,
+  "diff_gaussian_rasterization": false,
+  "fire": false,
+  "rp": false,
+  "torchvision": true,
+  "omegaconf": false
+}

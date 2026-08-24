@@ -1,0 +1,27 @@
+{
+  "时间": "2026-08-05T03:36:46.467299+08:00",
+  "任务": "Santa真实首帧原生WanVideoUnit_ImageEmbedderVAE条件编码回归",
+  "输入SHA256": "895099a95d73f13e449cd87816086e79b9cab1dbc8f1f5de6fc94356e1627004",
+  "输入shape": [
+    1,
+    3,
+    480,
+    832
+  ],
+  "输出y_shape": [
+    1,
+    20,
+    6,
+    60,
+    104
+  ],
+  "输出dtype": "torch.float32",
+  "输出finite": true,
+  "输出SHA256": "3649af40268f9b1a2c20d1764703ed7e90ede1335eb4acf740ec6cfe5e110ddb",
+  "编码耗时秒": 4.331033644004492,
+  "总耗时秒": 5.567889154001023,
+  "torch峰值allocated_MiB": 2155.8017578125,
+  "torch峰值reserved_MiB": 2922.0,
+  "CPU_maxRSS_GiB": 0.9873161315917969,
+  "通过": true
+}

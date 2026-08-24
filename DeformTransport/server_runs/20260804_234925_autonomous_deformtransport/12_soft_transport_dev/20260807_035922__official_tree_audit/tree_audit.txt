@@ -1,0 +1,689 @@
+========== TIME ==========
+2026-08-07T03:59:29+00:00
+
+========== TREE FILES ==========
+config.yaml 1204 bytes
+inpainted.png 297204 bytes
+input.png 332578 bytes
+
+========== TREE FILE HASHES ==========
+2668ee506c3bc100dbee487cfa2f03a0be12bc909dad1ee7a6eaa1d8f2345a64  cases/tree/config.yaml
+7ed15dbc00f9d2f31ee704330fff209e4ea1c342e09c3f4a4076670e6f6783e1  cases/tree/inpainted.png
+25f17b2ed33c9146e9e946df2030e92fc3b0a82a3f4714dd7ac6c83948ca91bc  cases/tree/input.png
+
+========== TREE GIT STATUS ==========
+
+========== TREE GIT DIFF ==========
+
+========== TREE CONFIG ==========
+device: "cuda"
+seed: 0
+example_name: "tree"
+output_folder: "result/tree"
+data_path: "cases/tree/"
+
+segmenter: "sam2"
+all_object_points: [[[260, 190, 1], [260, 278, 1]]]
+
+all_object_masks_idx: [0]
+
+obj_kp_matching: true
+
+debug: false
+stitched_inpainting: false
+
+mesh_resize_factor: 1.0
+
+original_geometry_downsample: true
+target_faces: 1000
+
+dt: 0.01
+substeps: 20
+simulated_frames_num: 81
+frame_steps: 2
+MPM_grid_density: 32
+
+material_type: ["mpm_elastic"]
+
+remap_depth: [1.0, 2.0]
+
+particle_size: 0.02
+
+fixed_area:
+- [0, 1, 0.8, 1.0]
+
+gravity: -1
+
+alpha_threshold: 0.98
+
+crop_start: 176
+
+fg_points_render_radius: 0.01
+
+use_rgb_frontside: false
+
+original_geometry_downsample: true
+target_faces: 5000
+use_rgb_frontside: false
+
+num_output_frames: 21
+denoising_step_list: [750, 500, 250]
+mask_dropin_step: -1
+vgen_prompt: A strong gust of wind blows from the side
+  snapping the tree trunk. The upper half of the tree breaks off and falls to the side.
+  The remaining trunk stays rooted in place.
+  Wide outdoor landscape, static camera, eye-level frontal view.
+  Natural daylight, soft atmospheric haze, realistic lighting and shadows.
+  Cinematic composition, high resolution, sharp focus, natural colors.
+
+========== CONFIG CONTRACT ==========
+Traceback (most recent call last):
+  File "<stdin>", line 14, in <module>
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/site-packages/omegaconf/omegaconf.py", line 190, in load
+    obj = yaml.load(f, Loader=get_yaml_loader())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/site-packages/yaml/constructor.py", line 51, in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/site-packages/yaml/constructor.py", line 60, in construct_document
+    for dummy in generator:
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/site-packages/yaml/constructor.py", line 413, in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/site-packages/omegaconf/_utils.py", line 144, in construct_mapping
+    raise yaml.constructor.ConstructorError(
+yaml.constructor.ConstructorError: while constructing a mapping
+  in "/workspace/DeformTransport/cases/tree/config.yaml", line 1, column 1
+found duplicate key original_geometry_downsample
+  in "/workspace/DeformTransport/cases/tree/config.yaml", line 47, column 1
+
+========== TREE HANDLER LOCATIONS ==========
+simulation/case_simulation/tree.py-1-from simulation.case_simulation.case_handler import CaseHandler, register_case
+simulation/case_simulation/tree.py-2-import numpy as np
+simulation/case_simulation/tree.py-3-import torch
+simulation/case_simulation/tree.py-4-import gstaichi as ti
+simulation/case_simulation/tree.py-5-import genesis as gs
+simulation/case_simulation/tree.py-6-import math
+simulation/case_simulation/tree.py-7-from simulation.utils import gs_to_pt3d
+simulation/case_simulation/tree.py-8-
+simulation/case_simulation/tree.py:9:@register_case("tree")
+simulation/case_simulation/tree.py:10:class Tree(CaseHandler):
+simulation/case_simulation/tree.py-11-    def __init__(self, config, all_obj_info, device):
+simulation/case_simulation/tree.py-12-        super().__init__(config, all_obj_info, device)
+simulation/case_simulation/tree.py-13-    
+simulation/case_simulation/tree.py-14-
+simulation/case_simulation/tree.py-15-    def fix_particles(self):
+simulation/case_simulation/tree.py-16-        ############################ Fix Particles ###############################
+simulation/case_simulation/tree.py-17-        # fix part of the object - only applied to particle cases
+simulation/case_simulation/tree.py-18-       
+simulation/case_simulation/tree.py-19-        fixed_area_list = list(self.config['fixed_area'])[0]
+simulation/case_simulation/tree.py-20-        sim_particles = torch.tensor(self.all_objs[0].init_particles).to(self.device)
+simulation/case_simulation/tree.py-21-        x_left = self.all_obj_info[0]['min'][0] + self.all_obj_info[0]['size'][0] * fixed_area_list[0]
+simulation/case_simulation/tree.py-22-        x_right = self.all_obj_info[0]['min'][0] + self.all_obj_info[0]['size'][0] * fixed_area_list[1]
+simulation/case_simulation/tree.py-23-        z_top = self.all_obj_info[0]['max'][2] - self.all_obj_info[0]['size'][2] * fixed_area_list[2]
+simulation/case_simulation/tree.py-24-        z_bottom = self.all_obj_info[0]['max'][2] - self.all_obj_info[0]['size'][2] * fixed_area_list[3]
+simulation/case_simulation/tree.py-25-
+simulation/case_simulation/tree.py-26-        fixed_area_idx = torch.where(
+simulation/case_simulation/tree.py-27-            (sim_particles[:, 0] > x_left) & (sim_particles[:, 0] < x_right) &
+simulation/case_simulation/tree.py-28-            (sim_particles[:, 2] > z_bottom) & (sim_particles[:, 2] < z_top)
+simulation/case_simulation/tree.py-29-        )
+simulation/case_simulation/tree.py-30-
+simulation/case_simulation/tree.py-31-        is_free = torch.ones(sim_particles.shape[0], dtype=torch.bool).to(self.device)
+simulation/case_simulation/tree.py-32-        is_free[fixed_area_idx] = False
+simulation/case_simulation/tree.py-33-        self.all_objs[0].set_free(is_free)
+simulation/case_simulation/tree.py-34-    
+simulation/case_simulation/tree.py-35-    
+simulation/case_simulation/tree.py-36-    def create_force_fields(self):
+simulation/case_simulation/tree.py-37-
+simulation/case_simulation/tree.py-38-        wind_force_center = (
+simulation/case_simulation/tree.py-39-            self.all_obj_info[0]['min'][0].item(),
+simulation/case_simulation/tree.py-40-            self.all_obj_info[0]['min'][1].item(),
+simulation/case_simulation/tree.py-41-            self.all_obj_info[0]['min'][2].item()
+simulation/case_simulation/tree.py-42-        )
+simulation/case_simulation/tree.py-43-        wind_force_radius = ((self.all_obj_info[0]['max'][0] - self.all_obj_info[0]['min'][0]) * 1.5).item()
+simulation/case_simulation/tree.py-44-        wind_force_direction = (
+simulation/case_simulation/tree.py-45-            ((self.all_obj_info[0]['max'][0] - self.all_obj_info[0]['min'][0]) * 0.3).item(),
+simulation/case_simulation/tree.py-46-            ((self.all_obj_info[0]['min'][1] - self.all_obj_info[0]['max'][1]) * 0.).item(),
+simulation/case_simulation/tree.py-47-            ((self.all_obj_info[0]['min'][2] - self.all_obj_info[0]['max'][2]) * 0.0).item()
+simulation/case_simulation/tree.py-48-        )
+simulation/case_simulation/tree.py-49-        force_field = gs.force_fields.Wind(
+simulation/case_simulation/tree.py-50-            direction = wind_force_direction,
+simulation/case_simulation/tree.py-51-            strength = 1,
+simulation/case_simulation/tree.py-52-            radius = wind_force_radius,
+simulation/case_simulation/tree.py-53-            center = wind_force_center,
+simulation/case_simulation/tree.py-54-        )
+simulation/case_simulation/tree.py-55-        force_field.activate()
+simulation/case_simulation/tree.py-56-        self.scene.add_force_field(
+simulation/case_simulation/tree.py-57-            force_field = force_field
+simulation/case_simulation/tree.py-58-        )
+--
+simulation/image23D/mesh_generator.py-103-        #     rotation=combined_rotation,
+simulation/image23D/mesh_generator.py-104-        #     translation=result["translation"],
+simulation/image23D/mesh_generator.py-105-        # )
+simulation/image23D/mesh_generator.py-106-        # vertices = l2c_transform.transform_points(vertices_tensor.unsqueeze(0))
+simulation/image23D/mesh_generator.py-107-        # mesh.vertices = vertices.squeeze(0).cpu().numpy()
+simulation/image23D/mesh_generator.py-108-
+simulation/image23D/mesh_generator.py-109-
+simulation/image23D/mesh_generator.py-110-        mesh_trimesh = trimesh.Trimesh(
+simulation/image23D/mesh_generator.py-111-            vertices=mesh.vertices,
+simulation/image23D/mesh_generator.py-112-            faces=mesh.faces[:, [0, 2, 1]],
+simulation/image23D/mesh_generator.py-113-            # faces=mesh.faces,
+simulation/image23D/mesh_generator.py-114-            vertex_colors=mesh.visual.vertex_colors[:, :3],
+simulation/image23D/mesh_generator.py-115-        )
+simulation/image23D/mesh_generator.py-116-
+simulation/image23D/mesh_generator.py-117-        def simplify_mesh_with_smooth_colors(mesh, target_faces=20000, k_neighbors=3):
+simulation/image23D/mesh_generator.py-118-            
+simulation/image23D/mesh_generator.py-119-            original_vertices = mesh.vertices.copy()
+simulation/image23D/mesh_generator.py-120-            original_colors = mesh.visual.vertex_colors.copy().astype(np.float32)
+simulation/image23D/mesh_generator.py-121-            
+simulation/image23D/mesh_generator.py-122-            simplified_mesh = mesh.simplify_quadric_decimation(face_count=target_faces)
+simulation/image23D/mesh_generator.py:123:            tree = cKDTree(original_vertices)
+simulation/image23D/mesh_generator.py-124-            distances, indices = tree.query(simplified_mesh.vertices, k=k_neighbors)
+simulation/image23D/mesh_generator.py-125-            
+simulation/image23D/mesh_generator.py-126-            weights = 1.0 / (distances + 1e-8)
+simulation/image23D/mesh_generator.py-127-            weights = weights / weights.sum(axis=1, keepdims=True)
+simulation/image23D/mesh_generator.py-128-            
+simulation/image23D/mesh_generator.py-129-            interpolated_colors = np.zeros((len(simplified_mesh.vertices), 4), dtype=np.float32)
+simulation/image23D/mesh_generator.py-130-            for i in range(len(simplified_mesh.vertices)):
+simulation/image23D/mesh_generator.py-131-                interpolated_colors[i] = np.average(original_colors[indices[i]], weights=weights[i], axis=0)
+simulation/image23D/mesh_generator.py-132-            
+simulation/image23D/mesh_generator.py-133-            simplified_mesh.visual.vertex_colors = interpolated_colors.astype(np.uint8)
+simulation/image23D/mesh_generator.py-134-            
+simulation/image23D/mesh_generator.py-135-            return simplified_mesh
+simulation/image23D/mesh_generator.py-136-
+simulation/image23D/mesh_generator.py-137-        simplified_mesh = simplify_mesh_with_smooth_colors(mesh_trimesh, target_faces=5000)
+simulation/image23D/mesh_generator.py-138-
+simulation/image23D/mesh_generator.py-139-        if self.config.get("original_geometry_downsample", True):
+simulation/image23D/mesh_generator.py-140-            mesh_trimesh = simplify_mesh_with_smooth_colors(mesh_trimesh, target_faces=self.config.get("target_faces", 5000))
+simulation/image23D/mesh_generator.py-141-
+simulation/image23D/mesh_generator.py-142-        # if not simplified_mesh.is_watertight:
+simulation/image23D/mesh_generator.py-143-        print("mesh is not watertight, filling holes...")
+simulation/image23D/mesh_generator.py-144-        vox = simplified_mesh.voxelized(pitch=0.01)
+simulation/image23D/mesh_generator.py-145-        volume = vox.fill()
+simulation/image23D/mesh_generator.py-146-        new_mesh = volume.marching_cubes
+simulation/image23D/mesh_generator.py-147-        
+simulation/image23D/mesh_generator.py-148-        new_mesh.apply_transform(vox.transform)
+simulation/image23D/mesh_generator.py-149-        simplified_mesh = new_mesh
+simulation/image23D/mesh_generator.py-150-        print(simplified_mesh.vertices.min(), simplified_mesh.vertices.max())
+simulation/image23D/mesh_generator.py-151-
+simulation/image23D/mesh_generator.py-152-        return mesh_trimesh, simplified_mesh, fx_pixels, fov_x_deg, fov_x_rad
+--
+demo_web/simulation/case_simulation/tree.py-1-from simulation.case_simulation.case_handler import CaseHandler, register_case
+demo_web/simulation/case_simulation/tree.py-2-import numpy as np
+demo_web/simulation/case_simulation/tree.py-3-import torch
+demo_web/simulation/case_simulation/tree.py-4-import gstaichi as ti
+demo_web/simulation/case_simulation/tree.py-5-import genesis as gs
+demo_web/simulation/case_simulation/tree.py-6-import math
+demo_web/simulation/case_simulation/tree.py-7-from simulation.utils import gs_to_pt3d
+demo_web/simulation/case_simulation/tree.py-8-
+demo_web/simulation/case_simulation/tree.py:9:@register_case("tree")
+demo_web/simulation/case_simulation/tree.py:10:class Tree(CaseHandler):
+demo_web/simulation/case_simulation/tree.py-11-    def __init__(self, config, all_obj_info, device):
+demo_web/simulation/case_simulation/tree.py-12-        super().__init__(config, all_obj_info, device)
+demo_web/simulation/case_simulation/tree.py-13-    
+demo_web/simulation/case_simulation/tree.py-14-
+demo_web/simulation/case_simulation/tree.py-15-    def fix_particles(self):
+demo_web/simulation/case_simulation/tree.py-16-        ############################ Fix Particles ###############################
+demo_web/simulation/case_simulation/tree.py-17-        # fix part of the object - only applied to particle cases
+demo_web/simulation/case_simulation/tree.py-18-       
+demo_web/simulation/case_simulation/tree.py-19-        fixed_area_list = list(self.config['fixed_area'])[0]
+demo_web/simulation/case_simulation/tree.py-20-        sim_particles = torch.tensor(self.all_objs[0].init_particles).to(self.device)
+demo_web/simulation/case_simulation/tree.py-21-        x_left = self.all_obj_info[0]['min'][0] + self.all_obj_info[0]['size'][0] * fixed_area_list[0]
+demo_web/simulation/case_simulation/tree.py-22-        x_right = self.all_obj_info[0]['min'][0] + self.all_obj_info[0]['size'][0] * fixed_area_list[1]
+demo_web/simulation/case_simulation/tree.py-23-        z_top = self.all_obj_info[0]['max'][2] - self.all_obj_info[0]['size'][2] * fixed_area_list[2]
+demo_web/simulation/case_simulation/tree.py-24-        z_bottom = self.all_obj_info[0]['max'][2] - self.all_obj_info[0]['size'][2] * fixed_area_list[3]
+demo_web/simulation/case_simulation/tree.py-25-
+demo_web/simulation/case_simulation/tree.py-26-        fixed_area_idx = torch.where(
+demo_web/simulation/case_simulation/tree.py-27-            (sim_particles[:, 0] > x_left) & (sim_particles[:, 0] < x_right) &
+demo_web/simulation/case_simulation/tree.py-28-            (sim_particles[:, 2] > z_bottom) & (sim_particles[:, 2] < z_top)
+demo_web/simulation/case_simulation/tree.py-29-        )
+demo_web/simulation/case_simulation/tree.py-30-
+demo_web/simulation/case_simulation/tree.py-31-        is_free = torch.ones(sim_particles.shape[0], dtype=torch.bool).to(self.device)
+demo_web/simulation/case_simulation/tree.py-32-        is_free[fixed_area_idx] = False
+demo_web/simulation/case_simulation/tree.py-33-        self.all_objs[0].set_free(is_free)
+demo_web/simulation/case_simulation/tree.py-34-    
+demo_web/simulation/case_simulation/tree.py-35-    
+demo_web/simulation/case_simulation/tree.py-36-    def create_force_fields(self):
+demo_web/simulation/case_simulation/tree.py-37-
+demo_web/simulation/case_simulation/tree.py-38-        wind_force_center = (
+demo_web/simulation/case_simulation/tree.py-39-            self.all_obj_info[0]['min'][0].item(),
+demo_web/simulation/case_simulation/tree.py-40-            self.all_obj_info[0]['min'][1].item(),
+demo_web/simulation/case_simulation/tree.py-41-            self.all_obj_info[0]['min'][2].item()
+demo_web/simulation/case_simulation/tree.py-42-        )
+demo_web/simulation/case_simulation/tree.py-43-        wind_force_radius = ((self.all_obj_info[0]['max'][0] - self.all_obj_info[0]['min'][0]) * 1.5).item()
+demo_web/simulation/case_simulation/tree.py-44-        wind_force_direction = (
+demo_web/simulation/case_simulation/tree.py-45-            ((self.all_obj_info[0]['max'][0] - self.all_obj_info[0]['min'][0]) * 0.3).item(),
+demo_web/simulation/case_simulation/tree.py-46-            ((self.all_obj_info[0]['min'][1] - self.all_obj_info[0]['max'][1]) * 0.).item(),
+demo_web/simulation/case_simulation/tree.py-47-            ((self.all_obj_info[0]['min'][2] - self.all_obj_info[0]['max'][2]) * 0.0).item()
+demo_web/simulation/case_simulation/tree.py-48-        )
+demo_web/simulation/case_simulation/tree.py-49-        force_field = gs.force_fields.Wind(
+demo_web/simulation/case_simulation/tree.py-50-            direction = wind_force_direction,
+demo_web/simulation/case_simulation/tree.py-51-            strength = 1,
+demo_web/simulation/case_simulation/tree.py-52-            radius = wind_force_radius,
+demo_web/simulation/case_simulation/tree.py-53-            center = wind_force_center,
+demo_web/simulation/case_simulation/tree.py-54-        )
+demo_web/simulation/case_simulation/tree.py-55-        force_field.activate()
+demo_web/simulation/case_simulation/tree.py-56-        self.scene.add_force_field(
+demo_web/simulation/case_simulation/tree.py-57-            force_field = force_field
+demo_web/simulation/case_simulation/tree.py-58-        )
+--
+demo_web/case_handlers/tree.py-1-"""Tree demo case handler — MPM elastic with controllable wind."""
+demo_web/case_handlers/tree.py-2-
+demo_web/case_handlers/tree.py-3-import numpy as np
+demo_web/case_handlers/tree.py-4-import torch
+demo_web/case_handlers/tree.py-5-
+demo_web/case_handlers/tree.py-6-from case_handlers.base import DemoCaseHandler, register_demo_case
+demo_web/case_handlers/tree.py-7-
+demo_web/case_handlers/tree.py-8-
+demo_web/case_handlers/tree.py:9:@register_demo_case("tree")
+demo_web/case_handlers/tree.py:10:class TreeDemoHandler(DemoCaseHandler):
+demo_web/case_handlers/tree.py-11-
+demo_web/case_handlers/tree.py-12-    force_scale = 1.0
+demo_web/case_handlers/tree.py-13-
+demo_web/case_handlers/tree.py-14-    def __init__(self, config):
+demo_web/case_handlers/tree.py-15-        super().__init__(config)
+demo_web/case_handlers/tree.py-16-        self._wind_direction = np.zeros(3, dtype=np.float32)
+demo_web/case_handlers/tree.py-17-        self._wind_strength = 0.0
+demo_web/case_handlers/tree.py-18-        self._wind_bounds = None  # (z_low, z_high)
+demo_web/case_handlers/tree.py-19-
+demo_web/case_handlers/tree.py-20-    def get_ui_config(self):
+demo_web/case_handlers/tree.py-21-        objects = [
+demo_web/case_handlers/tree.py-22-            {
+demo_web/case_handlers/tree.py-23-                "idx": 0,
+demo_web/case_handlers/tree.py-24-                "label": "Tree",
+demo_web/case_handlers/tree.py-25-                "directions": ["left", "none", "right"],
+demo_web/case_handlers/tree.py-26-                "default_direction": "none",
+demo_web/case_handlers/tree.py-27-                "default_strength": 1.0,
+demo_web/case_handlers/tree.py-28-                "max_strength": 2.0,
+demo_web/case_handlers/tree.py-29-            },
+demo_web/case_handlers/tree.py-30-        ]
+demo_web/case_handlers/tree.py-31-        for obj in objects:
+demo_web/case_handlers/tree.py-32-            if obj["idx"] < len(self._object_masks_b64):
+demo_web/case_handlers/tree.py-33-                obj["mask_b64"] = self._object_masks_b64[obj["idx"]]
+demo_web/case_handlers/tree.py-34-        return {"num_objects": len(objects), "objects": objects}
+demo_web/case_handlers/tree.py-35-
+demo_web/case_handlers/tree.py-36-    def configure_simulation(self, simulator):
+demo_web/case_handlers/tree.py-37-        """Pre-compute wind parameters from stored forces (any thread)."""
+demo_web/case_handlers/tree.py-38-        for f in self._forces:
+demo_web/case_handlers/tree.py-39-            direction = np.array(f["direction"], dtype=np.float32)
+demo_web/case_handlers/tree.py-40-            strength = f["strength"]
+demo_web/case_handlers/tree.py-41-            norm = np.linalg.norm(direction)
+demo_web/case_handlers/tree.py-42-            if norm < 1e-6:
+demo_web/case_handlers/tree.py-43-                self._wind_direction = np.zeros(3, dtype=np.float32)
+demo_web/case_handlers/tree.py-44-                self._wind_strength = 0.0
+demo_web/case_handlers/tree.py-45-                continue
+demo_web/case_handlers/tree.py-46-            self._wind_direction = direction / norm
+demo_web/case_handlers/tree.py-47-            self._wind_strength = strength * self.force_scale
+demo_web/case_handlers/tree.py-48-
+demo_web/case_handlers/tree.py-49-        if self._wind_bounds is None and len(simulator.all_obj_info) > 0:
+demo_web/case_handlers/tree.py-50-            info = simulator.all_obj_info[0]
+demo_web/case_handlers/tree.py-51-            z_min = float(info["min"][2])
+demo_web/case_handlers/tree.py-52-            z_max = float(info["max"][2])
+demo_web/case_handlers/tree.py-53-            z_range = z_max - z_min
+demo_web/case_handlers/tree.py-54-            self._wind_bounds = (
+demo_web/case_handlers/tree.py-55-                z_min + z_range * 0.05,
+demo_web/case_handlers/tree.py-56-                z_min + z_range * 0.8,
+demo_web/case_handlers/tree.py-57-            )
+demo_web/case_handlers/tree.py-58-
+demo_web/case_handlers/tree.py-59-    def apply_forces(self, simulator, step_count):
+demo_web/case_handlers/tree.py-60-        """Apply wind to MPM particles by modifying particle velocities."""
+demo_web/case_handlers/tree.py-61-        if self._wind_strength < 1e-6:
+demo_web/case_handlers/tree.py-62-            return
+demo_web/case_handlers/tree.py-63-        if self._wind_bounds is None:
+demo_web/case_handlers/tree.py-64-            return
+demo_web/case_handlers/tree.py-65-
+demo_web/case_handlers/tree.py-66-        wind_lowest, wind_highest = self._wind_bounds
+demo_web/case_handlers/tree.py-67-        dt = simulator.dt
+demo_web/case_handlers/tree.py-68-
+demo_web/case_handlers/tree.py-69-        for obj_idx, obj in enumerate(simulator.objs):
+demo_web/case_handlers/tree.py-70-            mt = simulator.material_type[obj_idx] if obj_idx < len(simulator.material_type) else "rigid"
+demo_web/case_handlers/tree.py-71-            if not mt.startswith("mpm_"):
+demo_web/case_handlers/tree.py-72-                continue
+demo_web/case_handlers/tree.py-73-
+demo_web/case_handlers/tree.py-74-            solver = obj.solver
+demo_web/case_handlers/tree.py-75-            state = solver.get_state(0)
+demo_web/case_handlers/tree.py-76-            if state is None:
+demo_web/case_handlers/tree.py-77-                continue
+demo_web/case_handlers/tree.py-78-
+demo_web/case_handlers/tree.py-79-            p_start = obj.particle_start
+demo_web/case_handlers/tree.py-80-            n_p = obj.n_particles
+demo_web/case_handlers/tree.py-81-
+demo_web/case_handlers/tree.py-82-            z = state.pos[0, p_start:p_start + n_p, 2]
+demo_web/case_handlers/tree.py-83-
+demo_web/case_handlers/tree.py-84-            in_zone = (z > wind_lowest) & (z < wind_highest)
+demo_web/case_handlers/tree.py-85-            if hasattr(state, 'free'):
+demo_web/case_handlers/tree.py-86-                mask = state.free[0, p_start:p_start + n_p].bool() & in_zone
+demo_web/case_handlers/tree.py-87-            else:
+demo_web/case_handlers/tree.py-88-                mask = in_zone
+demo_web/case_handlers/tree.py-89-            if not mask.any():
+demo_web/case_handlers/tree.py-90-                continue
+
+========== TRAJECTORY EXPORT REFERENCES ==========
+simulation/image23D/single_view_reconstructor.py:303:        unprojected_points = kf_camera.unproject(points_cloud, point_depth)
+simulation/image23D/single_view_reconstructor.py:308:            unprojected_points = unprojected_points[mask]
+simulation/image23D/single_view_reconstructor.py:311:        return unprojected_points, points_colors
+simulation/image23D/single_view_reconstructor.py:814:        input_unprojected_points = rearrange(
+simulation/image23D/single_view_reconstructor.py:818:        gt_kps = input_unprojected_points[:, gt_kp_h, gt_kp_w].permute(1, 0)
+deform_transport/transport_ready.py:139:def build_transport_ready(
+deform_transport/transport_ready.py:255:    validate_transport_ready(state)
+deform_transport/transport_ready.py:279:def validate_transport_ready(state: Mapping[str, Any]) -> None:
+deform_transport/transport_ready.py:459:def save_transport_ready(state: Mapping[str, Any], path: str | Path) -> Path:
+deform_transport/transport_ready.py:462:    validate_transport_ready(state)
+deform_transport/transport_ready.py:467:    validate_transport_ready(loaded)
+deform_transport/visibility_contract.py:3:This module keeps projection validity and raster visibility as separate
+deform_transport/visibility_contract.py:12:Source visibility remains the responsibility of soft_point_transport().
+deform_transport/visibility_contract.py:32:    visibility_state: dict[str, Any] | None,
+deform_transport/visibility_contract.py:124:    if visibility_state is None:
+deform_transport/visibility_contract.py:126:            "source_and_future_visible mode requires a visibility artifact"
+deform_transport/visibility_contract.py:129:    if "aligned_visible" not in visibility_state:
+deform_transport/visibility_contract.py:131:            "visibility artifact is missing aligned_visible"
+deform_transport/visibility_contract.py:135:        visibility_state["aligned_visible"],
+deform_transport/visibility_contract.py:165:    if "point_id" in visibility_state:
+deform_transport/visibility_contract.py:166:        visibility_point_id = torch.as_tensor(
+deform_transport/visibility_contract.py:167:            visibility_state["point_id"],
+deform_transport/visibility_contract.py:173:            visibility_point_id,
+deform_transport/visibility_contract.py:177:                "visibility point_id does not match transport point_id"
+deform_transport/visibility_contract.py:186:            and temporal_key in visibility_state
+deform_transport/visibility_contract.py:192:            visibility_value = torch.as_tensor(
+deform_transport/visibility_contract.py:193:                visibility_state[temporal_key],
+deform_transport/visibility_contract.py:199:                visibility_value,
+deform_transport/visibility_contract.py:202:                    f"visibility {temporal_key} does not match "
+scripts/run_realwonder_trajectory_probe.py:118:        visibility_filter_applied = flow_source_point_indices is not None
+scripts/run_realwonder_trajectory_probe.py:119:        if visibility_filter_applied:
+scripts/run_realwonder_trajectory_probe.py:137:                    "visibility_filter_applied": visibility_filter_applied,
+scripts/run_realwonder_trajectory_probe.py:151:                    "visibility_filter_applied": visibility_filter_applied,
+scripts/build_continuous_transport_ready_probe.py:20:from deform_transport.transport_ready import validate_transport_ready
+scripts/build_continuous_transport_ready_probe.py:58:    validate_transport_ready(state)
+scripts/build_continuous_transport_ready_probe.py:250:    validate_transport_ready(state)
+scripts/audit_soft_weight_thresholds.py:18:from deform_transport.transport_ready import validate_transport_ready
+scripts/audit_soft_weight_thresholds.py:72:        args.transport_ready,
+scripts/audit_soft_weight_thresholds.py:76:    validate_transport_ready(state)
+scripts/audit_soft_weight_thresholds.py:203:        "transport_ready": str(args.transport_ready.resolve()),
+scripts/validate_soft_transport_cpu_gpu.py:14:from deform_transport.transport_ready import validate_transport_ready
+scripts/validate_soft_transport_cpu_gpu.py:138:        args.transport_ready,
+scripts/validate_soft_transport_cpu_gpu.py:143:    validate_transport_ready(state)
+scripts/validate_soft_transport_cpu_gpu.py:196:        "transport_ready": str(
+scripts/validate_soft_transport_cpu_gpu.py:197:            args.transport_ready.resolve()
+scripts/audit_soft_transport_confidence.py:33:    "visibility",
+scripts/diagnose_aligned_visibility_transport_geometry.py:51:        "--visibility-contract",
+scripts/diagnose_aligned_visibility_transport_geometry.py:805:    visibility_path = (
+scripts/diagnose_aligned_visibility_transport_geometry.py:806:        args.visibility_contract.resolve()
+scripts/diagnose_aligned_visibility_transport_geometry.py:814:        visibility_path,
+scripts/diagnose_aligned_visibility_transport_geometry.py:840:    visibility = torch.load(
+scripts/diagnose_aligned_visibility_transport_geometry.py:841:        visibility_path,
+scripts/diagnose_aligned_visibility_transport_geometry.py:889:    aligned_visible = visibility[
+scripts/diagnose_aligned_visibility_transport_geometry.py:938:        "aligned_visibility_shape":
+scripts/diagnose_aligned_visibility_transport_geometry.py:940:                visibility[
+scripts/diagnose_aligned_visibility_transport_geometry.py:1334:            "aligned_visibility_transport_geometry_diagnostic",
+scripts/diagnose_aligned_visibility_transport_geometry.py:1381:            "visibility_contract": str(
+scripts/diagnose_aligned_visibility_transport_geometry.py:1382:                visibility_path
+scripts/diagnose_aligned_visibility_transport_geometry.py:1384:            "visibility_contract_sha256":
+scripts/diagnose_aligned_visibility_transport_geometry.py:1386:                    visibility_path
+scripts/diagnose_aligned_visibility_transport_geometry.py:1436:            "visibility_contract": {
+scripts/diagnose_aligned_visibility_transport_geometry.py:1438:                    visibility_path
+scripts/diagnose_aligned_visibility_transport_geometry.py:1441:                    visibility_path
+scripts/diagnose_aligned_visibility_transport_geometry.py:1536:            "aligned visibility geometry "
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:51:        "--visibility-contract",
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:805:    visibility_path = (
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:806:        args.visibility_contract.resolve()
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:814:        visibility_path,
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:840:    visibility = torch.load(
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:841:        visibility_path,
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:889:    aligned_visible = visibility[
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:938:        "aligned_visibility_shape":
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:940:                visibility[
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1341:            "aligned_future_visibility_transport_geometry_diagnostic",
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1388:            "visibility_contract": str(
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1389:                visibility_path
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1391:            "visibility_contract_sha256":
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1393:                    visibility_path
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1443:            "visibility_contract": {
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1445:                    visibility_path
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1448:                    visibility_path
+scripts/diagnose_aligned_future_visibility_transport_geometry.py:1543:            "aligned visibility geometry "
+scripts/run_checkpoint_free_transport_probe.py:37:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+scripts/run_checkpoint_free_transport_probe.py:45:    / "transport_ready.pt"
+scripts/run_checkpoint_free_transport_probe.py:237:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+scripts/run_checkpoint_free_transport_probe.py:239:    validate_transport_ready(state)
+scripts/run_checkpoint_free_transport_probe.py:519:            "transport_ready": str(args.transport_ready.resolve()),
+scripts/run_checkpoint_free_transport_probe.py:530:            "export_transport_ready": "python scripts/export_transport_ready.py",
+scripts/run_wan_vae_transport_probe.py:35:from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+scripts/run_wan_vae_transport_probe.py:47:    / "transport_ready.pt"
+scripts/run_wan_vae_transport_probe.py:222:        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+scripts/run_wan_vae_transport_probe.py:224:    validate_transport_ready(state)
+scripts/export_transport_ready.py:18:from deform_transport.transport_ready import (  # noqa: E402
+scripts/export_transport_ready.py:19:    build_transport_ready,
+scripts/export_transport_ready.py:20:    save_transport_ready,
+scripts/export_transport_ready.py:36:    / "transport_ready.pt"
+scripts/export_transport_ready.py:67:    state = build_transport_ready(
+scripts/export_transport_ready.py:77:    output_path = save_transport_ready(state, args.output.resolve())
+scripts/compare_hard_soft_support.py:14:from deform_transport.transport_ready import validate_transport_ready
+scripts/compare_hard_soft_support.py:42:        args.transport_ready,
+scripts/compare_hard_soft_support.py:46:    validate_transport_ready(state)
+scripts/compare_hard_soft_support.py:189:        "transport_ready": str(args.transport_ready.resolve()),
+scripts/compare_hard_soft_continuous.py:13:from deform_transport.transport_ready import validate_transport_ready
+scripts/compare_hard_soft_continuous.py:40:        args.transport_ready,
+scripts/compare_hard_soft_continuous.py:45:    validate_transport_ready(state)
+scripts/compare_hard_soft_continuous.py:303:            args.transport_ready.resolve()
+scripts/build_soft_wan_latent_artifact.py:22:from deform_transport.transport_ready import validate_transport_ready
+scripts/build_soft_wan_latent_artifact.py:23:from deform_transport.visibility_contract import select_target_validity
+scripts/build_soft_wan_latent_artifact.py:54:        "--visibility-contract",
+scripts/build_soft_wan_latent_artifact.py:114:    transport_path = args.transport_ready.resolve()
+scripts/build_soft_wan_latent_artifact.py:117:    visibility_path = (
+scripts/build_soft_wan_latent_artifact.py:118:        args.visibility_contract.resolve()
+scripts/build_soft_wan_latent_artifact.py:119:        if args.visibility_contract is not None
+scripts/build_soft_wan_latent_artifact.py:135:        and visibility_path is None
+scripts/build_soft_wan_latent_artifact.py:139:            "--visibility-contract"
+scripts/build_soft_wan_latent_artifact.py:143:        visibility_path is not None
+scripts/build_soft_wan_latent_artifact.py:144:        and not visibility_path.is_file()
+scripts/build_soft_wan_latent_artifact.py:146:        raise FileNotFoundError(visibility_path)
+scripts/build_soft_wan_latent_artifact.py:163:    validate_transport_ready(state)
+scripts/build_soft_wan_latent_artifact.py:186:    visibility_state = None
+scripts/build_soft_wan_latent_artifact.py:188:    if visibility_path is not None:
+scripts/build_soft_wan_latent_artifact.py:189:        visibility_state = torch.load(
+scripts/build_soft_wan_latent_artifact.py:190:            visibility_path,
+scripts/build_soft_wan_latent_artifact.py:196:            visibility_state,
+scripts/build_soft_wan_latent_artifact.py:200:                "visibility artifact must be a dictionary"
+scripts/build_soft_wan_latent_artifact.py:267:        visibility_state=visibility_state,
+scripts/build_soft_wan_latent_artifact.py:692:            "transport_ready": str(transport_path),
+scripts/build_soft_wan_latent_artifact.py:693:            "transport_ready_sha256": sha256(
+scripts/build_soft_wan_latent_artifact.py:700:            "visibility_contract": (
+scripts/build_soft_wan_latent_artifact.py:701:                str(visibility_path)
+scripts/build_soft_wan_latent_artifact.py:702:                if visibility_path is not None
+scripts/build_soft_wan_latent_artifact.py:705:            "visibility_contract_sha256": (
+scripts/build_soft_wan_latent_artifact.py:706:                sha256(visibility_path)
+scripts/build_soft_wan_latent_artifact.py:707:                if visibility_path is not None
+scripts/build_soft_wan_latent_artifact.py:758:            "visibility_contract": (
+scripts/build_soft_wan_latent_artifact.py:759:                str(visibility_path)
+scripts/build_soft_wan_latent_artifact.py:760:                if visibility_path is not None
+scripts/decode_compare_hard_soft_wan_artifacts.py:25:from deform_transport.transport_ready import (
+scripts/decode_compare_hard_soft_wan_artifacts.py:26:    validate_transport_ready,
+scripts/decode_compare_hard_soft_wan_artifacts.py:362:    transport_path = args.transport_ready.resolve()
+scripts/decode_compare_hard_soft_wan_artifacts.py:400:    validate_transport_ready(state)
+scripts/decode_compare_hard_soft_wan_artifacts.py:810:            "transport_ready": {
+scripts/audit_material_metric_contract.py:193:    transport_path = args.transport_ready.resolve()
+scripts/audit_material_metric_contract.py:253:                "visibility",
+scripts/audit_material_metric_contract.py:338:            "transport_ready": str(
+scripts/audit_material_metric_contract.py:503:            "has_any_visibility_or_validity_field":
+scripts/audit_time_and_future_visibility_contract.py:1:"""Read-only audit of temporal alignment and future visibility contracts.
+scripts/audit_time_and_future_visibility_contract.py:7:4. tests whether source visibility can be reproduced by a calibrated
+scripts/audit_time_and_future_visibility_contract.py:12:It does not create a formal future-visibility contract.
+scripts/audit_time_and_future_visibility_contract.py:682:        args.transport_ready.resolve()
+scripts/audit_time_and_future_visibility_contract.py:945:                                "valid_projected_points":
+scripts/audit_time_and_future_visibility_contract.py:965:    future_visibility_summary: dict[
+scripts/audit_time_and_future_visibility_contract.py:1090:        future_visibility_summary = {
+scripts/audit_time_and_future_visibility_contract.py:1143:            / "future_visibility_diagnostic.csv"
+scripts/audit_time_and_future_visibility_contract.py:1225:            "transport_ready": str(
+scripts/audit_time_and_future_visibility_contract.py:1371:        "source_visibility": {
+scripts/audit_time_and_future_visibility_contract.py:1409:            "future_visibility_diagnostic":
+scripts/audit_time_and_future_visibility_contract.py:1410:                future_visibility_summary,
+scripts/audit_time_and_future_visibility_contract.py:1418:            "visibility": (
+scripts/audit_time_and_future_visibility_contract.py:1420:                "candidate future-visibility contract. "
+scripts/audit_time_and_future_visibility_contract.py:1453:        "future_visibility_diagnostic":
+scripts/audit_time_and_future_visibility_contract.py:1454:            future_visibility_summary,
+scripts/audit_raster_timeline_contract.py:13:No formal aligned artifact or visibility contract is written by this script.
+scripts/audit_raster_timeline_contract.py:194:def visibility_from_raster(
+scripts/audit_raster_timeline_contract.py:225:        args.transport_ready.resolve()
+scripts/audit_raster_timeline_contract.py:353:        visibility_from_raster(
+scripts/audit_raster_timeline_contract.py:407:        visible = visibility_from_raster(
+scripts/audit_raster_timeline_contract.py:459:    aligned_visibility = torch.stack(
+scripts/audit_raster_timeline_contract.py:464:    counts = aligned_visibility.sum(
+scripts/audit_raster_timeline_contract.py:540:        "source_visibility_exactly_reconstructed":
+scripts/audit_raster_timeline_contract.py:596:        "aligned_visibility_shape":
+scripts/audit_raster_timeline_contract.py:598:                aligned_visibility.shape
+scripts/audit_raster_timeline_contract.py:617:        / "aligned_visibility_counts.csv"
+scripts/audit_raster_timeline_contract.py:636:            "transport_ready": {
+scripts/audit_raster_timeline_contract.py:710:            "visibility_exact_match":
+scripts/audit_raster_timeline_contract.py:712:                    "source_visibility_exactly_reconstructed"
+scripts/audit_raster_timeline_contract.py:776:            "visibility_count": {
+scripts/audit_raster_timeline_contract.py:807:            "raster_visibility": (
+scripts/audit_raster_timeline_contract.py:816:                "future visibility artifact was "
+scripts/build_aligned_transport_visibility_contract.py:1:"""Build a temporally aligned Santa transport and raster-visibility contract.
+scripts/build_aligned_transport_visibility_contract.py:36:from deform_transport.transport_ready import validate_transport_ready
+scripts/build_aligned_transport_visibility_contract.py:107:def visibility_from_raster(
+scripts/build_aligned_transport_visibility_contract.py:180:        args.transport_ready.resolve()
+scripts/build_aligned_transport_visibility_contract.py:194:        / "aligned_transport_ready.pt"
+scripts/build_aligned_transport_visibility_contract.py:196:    visibility_path = (
+scripts/build_aligned_transport_visibility_contract.py:198:        / "aligned_visibility_contract.pt"
+scripts/build_aligned_transport_visibility_contract.py:235:    validate_transport_ready(old)
+scripts/build_aligned_transport_visibility_contract.py:461:        "source_transport_ready": str(
+scripts/build_aligned_transport_visibility_contract.py:464:        "source_transport_ready_sha256":
+scripts/build_aligned_transport_visibility_contract.py:474:    validate_transport_ready(aligned)
+scripts/build_aligned_transport_visibility_contract.py:484:            visibility_from_raster(
+scripts/build_aligned_transport_visibility_contract.py:515:    visibility_contract = {
+scripts/build_aligned_transport_visibility_contract.py:518:            "aligned_raster_visibility_contract",
+scripts/build_aligned_transport_visibility_contract.py:555:        "visibility_definition": {
+scripts/build_aligned_transport_visibility_contract.py:567:            "transport_ready": str(
+scripts/build_aligned_transport_visibility_contract.py:570:            "transport_ready_sha256":
+scripts/build_aligned_transport_visibility_contract.py:622:        "visibility_frame0_equals_source_visible"
+scripts/build_aligned_transport_visibility_contract.py:629:        "visibility_is_subset_of_projection_valid"
+scripts/build_aligned_transport_visibility_contract.py:640:        "source_and_visibility_is_subset_of_source_visible"
+scripts/build_aligned_transport_visibility_contract.py:718:            "old_transport_ready": {
+scripts/build_aligned_transport_visibility_contract.py:762:        "visibility": {
+scripts/build_aligned_transport_visibility_contract.py:825:        visibility_contract,
+scripts/build_aligned_transport_visibility_contract.py:826:        visibility_path,
+scripts/build_aligned_transport_visibility_contract.py:830:        "aligned_transport_ready": {
+scripts/build_aligned_transport_visibility_contract.py:841:        "aligned_visibility_contract": {
+scripts/build_aligned_transport_visibility_contract.py:843:                visibility_path
+scripts/build_aligned_transport_visibility_contract.py:846:                visibility_path
+scripts/build_aligned_transport_visibility_contract.py:849:                visibility_path.stat().st_size
+scripts/build_aligned_transport_visibility_contract.py:874:                "visibility":
+scripts/build_aligned_transport_visibility_contract.py:875:                    report["visibility"],
+scripts/audit_aligned_conditioning_and_vae_contract.py:8:- aligned transport and visibility timelines;
+scripts/audit_aligned_conditioning_and_vae_contract.py:48:        "--aligned-visibility",
+scripts/audit_aligned_conditioning_and_vae_contract.py:217:    aligned_visibility_path = (
+scripts/audit_aligned_conditioning_and_vae_contract.py:218:        args.aligned_visibility.resolve()
+scripts/audit_aligned_conditioning_and_vae_contract.py:238:        aligned_visibility_path,
+scripts/audit_aligned_conditioning_and_vae_contract.py:263:    visibility = torch.load(
+scripts/audit_aligned_conditioning_and_vae_contract.py:264:        aligned_visibility_path,
+scripts/audit_aligned_conditioning_and_vae_contract.py:281:    if not isinstance(visibility, dict):
+scripts/audit_aligned_conditioning_and_vae_contract.py:283:            "visibility artifact is not "
+scripts/audit_aligned_conditioning_and_vae_contract.py:385:            "aligned_visibility": {
+scripts/audit_aligned_conditioning_and_vae_contract.py:387:                    aligned_visibility_path
+scripts/audit_aligned_conditioning_and_vae_contract.py:390:                    aligned_visibility_path
+scripts/audit_aligned_conditioning_and_vae_contract.py:516:            "visibility_shape":
+scripts/audit_aligned_conditioning_and_vae_contract.py:518:                    visibility.get(
+
+========== SIMULATION CLI ==========
+Traceback (most recent call last):
+  File "/workspace/DeformTransport/case_simulation.py", line 17, in <module>
+    from simulation.genesis_simulator import DiffSim
+  File "/workspace/DeformTransport/simulation/genesis_simulator.py", line 8, in <module>
+    import genesis as gs
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/__init__.py", line 415, in <module>
+    from .engine.scene import Scene
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/engine/scene.py", line 43, in <module>
+    from genesis.vis import Visualizer
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/vis/__init__.py", line 1, in <module>
+    from .visualizer import Visualizer
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/vis/visualizer.py", line 11, in <module>
+    from .rasterizer import Rasterizer
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/vis/rasterizer.py", line 11, in <module>
+    from genesis.ext import pyrender
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/ext/pyrender/__init__.py", line 2, in <module>
+    from .light import Light, PointLight, DirectionalLight, SpotLight
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/ext/pyrender/light.py", line 12, in <module>
+    from OpenGL.GL import *
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/GL/__init__.py", line 4, in <module>
+    from OpenGL.GL.VERSION.GL_1_1 import *
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/GL/VERSION/GL_1_1.py", line 14, in <module>
+    from OpenGL.raw.GL.VERSION.GL_1_1 import *
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/raw/GL/VERSION/GL_1_1.py", line 7, in <module>
+    from OpenGL.raw.GL import _errors
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/raw/GL/_errors.py", line 4, in <module>
+    _error_checker = _ErrorChecker( _p, _p.GL.glGetError )
+                                        ^^^^^
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/platform/baseplatform.py", line 19, in __get__
+    value = self.fget(obj)
+            ^^^^^^^^^^^^^^
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/platform/glx.py", line 24, in GL
+    raise ImportError("Unable to load OpenGL or GL library")
+ImportError: Unable to load OpenGL or GL library
+
+
+========== IMPORT CHECK ==========
+[GsTaichi] version 2.1.1, llvm 15.0.4, commit a00b3aa5, linux, python 3.11.0
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+  File "/workspace/tools/miniforge3/envs/realwonder-gen/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/DeformTransport/simulation/case_simulation/__init__.py", line 1, in <module>
+    from .santa_cloth import SantaCloth
+  File "/workspace/DeformTransport/simulation/case_simulation/santa_cloth.py", line 1, in <module>
+    from simulation.case_simulation.case_handler import CaseHandler, register_case
+  File "/workspace/DeformTransport/simulation/case_simulation/case_handler.py", line 10, in <module>
+    import genesis as gs
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/__init__.py", line 415, in <module>
+    from .engine.scene import Scene
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/engine/scene.py", line 43, in <module>
+    from genesis.vis import Visualizer
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/vis/__init__.py", line 1, in <module>
+    from .visualizer import Visualizer
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/vis/visualizer.py", line 11, in <module>
+    from .rasterizer import Rasterizer
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/vis/rasterizer.py", line 11, in <module>
+    from genesis.ext import pyrender
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/ext/pyrender/__init__.py", line 2, in <module>
+    from .light import Light, PointLight, DirectionalLight, SpotLight
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/genesis/ext/pyrender/light.py", line 12, in <module>
+    from OpenGL.GL import *
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/GL/__init__.py", line 4, in <module>
+    from OpenGL.GL.VERSION.GL_1_1 import *
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/GL/VERSION/GL_1_1.py", line 14, in <module>
+    from OpenGL.raw.GL.VERSION.GL_1_1 import *
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/raw/GL/VERSION/GL_1_1.py", line 7, in <module>
+    from OpenGL.raw.GL import _errors
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/raw/GL/_errors.py", line 4, in <module>
+    _error_checker = _ErrorChecker( _p, _p.GL.glGetError )
+                                        ^^^^^
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/platform/baseplatform.py", line 19, in __get__
+    value = self.fget(obj)
+            ^^^^^^^^^^^^^^
+  File "/workspace/tools/venvs/deformtransport-sim/lib/python3.11/site-packages/OpenGL/platform/glx.py", line 24, in GL
+    raise ImportError("Unable to load OpenGL or GL library")
+ImportError: Unable to load OpenGL or GL library
+
+
+========== EXISTING TREE OUTPUTS ==========
+server_runs/20260804_234925_autonomous_deformtransport/00_audit/official_hf_tree.json
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_035922__official_tree_audit
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_035922__official_tree_audit/tree_audit.txt
+
+========== DISK ==========
+Filesystem      Size  Used Avail Use% Mounted on
+parastor_sdbd   1.6P  171T  1.4P  11% /workspace
+
+========== MEMORY ==========
+              total        used        free      shared  buff/cache   available
+Mem:          125Gi        32Gi        91Gi       211Mi       1.0Gi        91Gi
+Swap:          63Gi       1.8Gi        62Gi

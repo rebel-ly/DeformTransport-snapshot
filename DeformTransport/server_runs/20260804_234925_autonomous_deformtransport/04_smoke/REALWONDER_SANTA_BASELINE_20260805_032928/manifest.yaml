@@ -1,0 +1,12 @@
+RUN_ID: 20260804_234925_autonomous_deformtransport
+job_id: REALWONDER_SANTA_BASELINE_20260805_032928
+任务: 原生RealWonder_Santa_baseline_首次完整smoke
+GPU编号: 2
+GPU_UUID: GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf
+seed: 0
+eval_degradation: 0.5
+checkpoint: /mnt/sdbd/home/liuyu_qyh/DeformTransport/ckpts/Realwonder-Distilled-AR-I2V-Flow/sink_size=1-attn_size=21-frame_per_block=3-denoising_steps=4/step=000800.pt
+输入目录: /mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1
+transport模式: baseline
+timeout秒: 2400
+结论边界: Santa输入为有损工程proxy_不是原始simulation_future_GT

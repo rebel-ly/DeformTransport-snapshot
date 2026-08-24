@@ -1,0 +1,11 @@
+--- server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/flow_mode_integration_20260805_0350/infer_sim.py	2026-08-05 03:49:23.000000000 +0800
++++ server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/flow_mode_integration_20260805_0350/infer_sim.py.after	2026-08-05 03:49:23.000000000 +0800
+@@ -101,7 +101,7 @@
+     )
+     parser.add_argument(
+         "--transport_mode",
+-        choices=("correct", "shuffled"),
++        choices=("correct", "shuffled", "flow"),
+         default="correct",
+         help="Which precomputed fused latent to inject when --transport_latent_path is set",
+     )

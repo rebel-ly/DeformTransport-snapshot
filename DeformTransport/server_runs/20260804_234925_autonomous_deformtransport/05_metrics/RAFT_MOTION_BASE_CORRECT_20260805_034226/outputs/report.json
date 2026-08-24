@@ -1,0 +1,42 @@
+{
+  "时间": "2026-08-05T03:42:54.527779+08:00",
+  "任务": "官方RAFT_Large生成视频相对coarse_proxy光流一致性",
+  "说明": "参考是有损coarse proxy的RAFT flow，不是future_GT；只衡量运动引导一致性",
+  "结果": {
+    "REALWONDER_SANTA_BASELINE_20260805_032928": {
+      "视频": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_032928/santa_baseline_seed0.mp4",
+      "flow_shape": [
+        20,
+        2,
+        240,
+        416
+      ],
+      "EPE_mean_px": 0.2800533175468445,
+      "EPE_median_px": 0.053672906011343,
+      "EPE_p95_px": 1.6163074970245361,
+      "cosine_mean": 0.33868253231048584,
+      "预测flow幅值mean_px": 0.5962322950363159,
+      "参考flow幅值mean_px": 0.4658375680446625,
+      "finite": true
+    },
+    "REALWONDER_SANTA_CORRECT_20260805_033343": {
+      "视频": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_CORRECT_20260805_033343/santa_correct_seed0.mp4",
+      "flow_shape": [
+        20,
+        2,
+        240,
+        416
+      ],
+      "EPE_mean_px": 0.28278541564941406,
+      "EPE_median_px": 0.0421389564871788,
+      "EPE_p95_px": 1.76987624168396,
+      "cosine_mean": 0.4109262228012085,
+      "预测flow幅值mean_px": 0.6008745431900024,
+      "参考flow幅值mean_px": 0.4658375680446625,
+      "finite": true
+    }
+  },
+  "总耗时秒": 7.939060193995829,
+  "torch峰值allocated_MiB": 176.31103515625,
+  "torch峰值reserved_MiB": 264.0
+}

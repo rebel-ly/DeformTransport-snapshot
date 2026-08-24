@@ -1,0 +1,65 @@
+{
+  "count": 4,
+  "assets": [
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/noises.npy",
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "bytes": 32348288,
+      "sha256": "098332f31951f88bbc9f6c49b502d419b633cd52f735d3678187a5a307b26d75",
+      "sample_mean": -0.0025790310330658294,
+      "sample_var": 1.0101241599634312,
+      "finite_fraction": 1.0
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/noises.npy",
+      "shape": [
+        21,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "bytes": 8386688,
+      "sha256": "75be54392fae1695bd072fe26c6b417a614b87f4dd4c1768719856d5105c8779",
+      "sample_mean": -0.010578317025571752,
+      "sample_var": 1.0070254789339734,
+      "finite_fraction": 1.0
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/noises.npy",
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "bytes": 32348288,
+      "sha256": "922da8eda664919b659604a8a590e558ab98b63272e5aba5639f0bb19558977b",
+      "sample_mean": 0.0035932360469927024,
+      "sample_var": 1.021233963438664,
+      "finite_fraction": 1.0
+    },
+    {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/noises.npy",
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "bytes": 32348288,
+      "sha256": "9b78c32bfe554dd2d0aeebab314402b1411d49d3a4c0af39f68525ee39e71705",
+      "sample_mean": -0.007108009994341324,
+      "sample_var": 1.0058043275302997,
+      "finite_fraction": 1.0
+    }
+  ]
+}

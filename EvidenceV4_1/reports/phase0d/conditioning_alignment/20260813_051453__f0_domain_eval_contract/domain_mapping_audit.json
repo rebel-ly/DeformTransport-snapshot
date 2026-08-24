@@ -1,0 +1,7 @@
+{
+  "domains": [
+    {"domain":"RAW_SOURCE_RGB","h":480,"w":832,"status":"PASS"}, {"domain":"GENERATOR_INPUT_RGB","h":480,"w":832,"status":"PASS"}, {"domain":"TRACK_COORD_DOMAIN","h":480,"w":832,"status":"PASS"}, {"domain":"REQUESTED_OUTPUT_RGB","h":480,"w":832,"status":"PASS"}, {"domain":"REAL_VAE_LATENT","h":"UNRESOLVED","w":"UNRESOLVED","status":"UNRESOLVED"}, {"domain":"TRANSPORT_LATENT","h":"UNRESOLVED","w":"UNRESOLVED","status":"UNRESOLVED"}, {"domain":"FINAL_DECODED_RGB","h":464,"w":832,"status":"PASS"}, {"domain":"EVALUATOR_RGB","h":464,"w":832,"status":"CODE_CONTRACT_ONLY; N1257_INCOMPATIBLE"}
+  ],
+  "mappings": {"RAW_SOURCE_TO_GENERATOR_INPUT":"IDENTITY", "TRACK_TO_GENERATOR":"IDENTITY for formal 480x832; general formula x'=x*w/img_w,y'=y*h/img_h", "GENERATOR_TO_LATENT":"UNRESOLVED_RUNTIME", "LATENT_TO_FINAL_RGB":"UNRESOLVED", "TRACK_TO_EVALUATOR":"SCALE y by 464/480; x identity", "FINAL_RGB_TO_EVALUATOR":"IDENTITY if evaluator compatibility is repaired"},
+  "phase0c_synthetic_hw":"60x104", "phase0c_7p24_real_domain_valid":"Unresolved", "interpretation":"The Phase0C synthetic structural/causal mechanism artifacts remain intact. The 9031/(20*60*104)=7.236378% absolute intervention fraction is not validated as a real-generator-domain fraction until real latent HxW is captured."
+}

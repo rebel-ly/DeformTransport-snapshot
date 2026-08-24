@@ -1,0 +1,66 @@
+{
+  "EVAL_N": 1257,
+  "EVAL_IDS_SHA": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "EVAL_TRACKS_SHA": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+  "EVAL_VISIBILITY_SHA": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+  "track_coordinate_domain": [
+    480,
+    832
+  ],
+  "evaluation_video_domain": [
+    464,
+    832
+  ],
+  "track_to_eval_mapping": "x_eval=x_track; y_eval=y_track*464/480",
+  "valid_tracks": 1110,
+  "valid_anchor_observations": 9766,
+  "checks": {
+    "eval_n": true,
+    "ids_sha": true,
+    "tracks_sha": false,
+    "visibility_sha": true,
+    "timeline_81": true,
+    "track_mapping_valid": true,
+    "patch_bounds_valid": true,
+    "method_labels": true,
+    "rw_video": true,
+    "dt_full_video": true
+  },
+  "videos": {
+    "rw": {
+      "bound_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "resolved_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "expected_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+      "expected_sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+      "decoded_shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "path_binding_correct": true,
+      "sha_correct": true,
+      "decode_correct": true
+    },
+    "dt_full": {
+      "bound_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/formal_suite/santa/dt_full/santa_dt_full_correct_seed0.mp4",
+      "resolved_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4",
+      "expected_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4",
+      "sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "expected_sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "decoded_shape": [
+        81,
+        464,
+        832,
+        3
+      ],
+      "path_binding_correct": true,
+      "sha_correct": true,
+      "decode_correct": true
+    }
+  },
+  "RW_CORRECTED_V2_PREFLIGHT": "FAIL",
+  "DTFULL_CORRECTED_V2_PREFLIGHT": "FAIL",
+  "status": "FAIL"
+}

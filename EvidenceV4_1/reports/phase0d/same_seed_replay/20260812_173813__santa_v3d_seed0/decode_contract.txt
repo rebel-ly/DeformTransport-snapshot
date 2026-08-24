@@ -1,0 +1,1 @@
+Frozen decode contract not executed: ffmpeg -v error -i <video> -map 0:v:0 -vsync 0 -pix_fmt rgb24 -f rawvideo <decoded.rgb>. No MP4 was produced by either run.

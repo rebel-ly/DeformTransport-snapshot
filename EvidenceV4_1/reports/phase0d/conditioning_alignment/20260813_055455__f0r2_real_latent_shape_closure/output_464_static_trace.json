@@ -1,0 +1,8 @@
+{
+  "requested_rgb":"480x832", "formal_target_formula":"WanMove.generate:207-214 yields h=480,w=832 for max_area=480*832 and source aspect 480/832.",
+  "decode_trace":"wan_move.py:374-389 calls self.vae.decode(x0) and returns videos[0]. wan/modules/vae.py:657-662 calls model.decode then clamp/squeeze; no spatial crop/resize expression.",
+  "save_trace":"generate.py:535-542 -> wan/utils/utils.py:23-55 cache_video; make_grid/uint8/imageio write, no spatial transform.",
+  "static_search_result":"No explicit 480,464,crop,trim,resize,interpolate,or target-shape operation producing 464 on the frozen formal output path.",
+  "final_rgb_observed":"[81,464,832,3] from frozen Phase0D-2R-E decoded comparison.",
+  "cause":"UNRESOLVED_NONBLOCKING_FOR_EVALUATION", "cause_status":"Not exactly identified; no diffusion rerun permitted."
+}

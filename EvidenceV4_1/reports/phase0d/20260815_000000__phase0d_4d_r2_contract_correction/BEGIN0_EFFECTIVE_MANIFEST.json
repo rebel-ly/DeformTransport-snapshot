@@ -1,0 +1,123 @@
+{
+  "checkpoint_dir": "/workspace/Wan-Move/Wan-Move-14B-480P",
+  "checkpoint_files": {
+    "vae": {
+      "path": "/workspace/Wan-Move/Wan-Move-14B-480P/Wan2.1_VAE.pth",
+      "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+    }
+  },
+  "cli": {
+    "dtype": "bf16",
+    "eval_bench": false,
+    "frame_num": 81,
+    "offload_model": true,
+    "sample_guide_scale": 5.0,
+    "sample_shift": 3.0,
+    "sample_solver": "unipc",
+    "sample_steps": 40,
+    "seed": 0,
+    "size": "480*832",
+    "t5_cpu": true,
+    "task": "wan-move-i2v"
+  },
+  "cuda_visible_devices": "0",
+  "cwd": "/workspace/Wan-Move",
+  "decoded_output_domain": "832x464",
+  "depth": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "sha256": "032d738bb2d01bbff88b78f63a2b56fa76c52d985caf3542c22f9dc573879ce1"
+  },
+  "determinism": {
+    "cuda_deterministic_env": "not_set_in_authoritative_runner",
+    "numpy_seed": "not_called",
+    "private_torch_generator_seed": 0,
+    "python_random_seed": "not_called_seed0_path",
+    "torch_manual_seed_before_trajectory": 0
+  },
+  "enabled_path": {
+    "begin0_formula": "(1-1.0)*preview + 1.0*epsilon = epsilon",
+    "begin15_formula": "(1-5/6)*preview + (5/6)*epsilon",
+    "epsilon_content_sha256": "b6f3bbbd7bbc3412b70dd57c39e1709e70ba7d38b9e0cb60bac7820776208b51",
+    "epsilon_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/FINAL_C_SHARED_EPSILON.npy",
+    "epsilon_shape": [
+      16,
+      21,
+      60,
+      104
+    ],
+    "preview_file_sha256": "9d71791f70fa519001708d0986c4b1cee297941b8f66a3d1a15e03ef8ce8bb8f",
+    "preview_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_wan_vae_latent_e1_832x480.npy",
+    "preview_shape": [
+      16,
+      21,
+      60,
+      104
+    ],
+    "scheduler": "FlowUniPCMultistepScheduler",
+    "shift": 3.0,
+    "steps": 40
+  },
+  "env": {
+    "DT_TRACK_DEPTH_PATH": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "DT_TRACK_IDS_PATH": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "DT_TRANSPORT_VARIANT": "v3d",
+    "PYTHONHASHSEED": "0"
+  },
+  "generation_domain": "832x480",
+  "gpu_uuid": "GPU-14bb1875-6456-dba9-fde5-e1383c8d480b",
+  "ids": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8"
+  },
+  "launcher": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/corrected_parity_20260814/run_single_launcher.sh",
+    "sha256": "68760b3984bf9cbc7a6a77e2d22f8271c37ba857c1d14e0136fd0c7bf9eb2dde"
+  },
+  "prompt": "Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement.",
+  "prompt_sha256": "af733a4009132dcb0007116d5108be74d136fdf29a63e8a558567ee4462651e3",
+  "python": {
+    "path": "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+    "sha256": "edb14da697c7a385d588f0eaa33f70be531afdd9e272edfdf7272b770aed49c3"
+  },
+  "scheduler": {
+    "class": "FlowUniPCMultistepScheduler",
+    "dynamic_shifting": false,
+    "num_train_timesteps": 1000,
+    "shift": 3.0
+  },
+  "schema": "phase0d-4c-corrected-single-launcher-v1",
+  "source": {
+    "generate_sha256": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+    "mode": "overlay",
+    "root": "/workspace/DeformTransport_EvidenceV4_1/experimental/20260814__wanmove_preview_sdedit_overlay",
+    "wan_move_sha256": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7"
+  },
+  "source_image": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+    "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7"
+  },
+  "tracks": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+    "sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929"
+  },
+  "transport_guard": {
+    "required_c1_k0": {
+      "depth": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_depth.npy",
+      "ids": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_ids.npy",
+      "tracks": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_tracks.npy",
+      "visibility": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_visibility.npy"
+    },
+    "required_c2": {
+      "depth": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+      "ids": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+      "tracks": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+      "visibility": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy"
+    },
+    "silent_fallback_allowed": false,
+    "variant": "v3d"
+  },
+  "visibility": {
+    "path": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+    "sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff"
+  }
+}

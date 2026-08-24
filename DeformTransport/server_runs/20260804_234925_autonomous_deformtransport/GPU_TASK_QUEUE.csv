@@ -1,0 +1,6 @@
+序号,任务,案例,变体,前置条件,GPU规则,状态,脚本
+1,首次完整生成smoke,Santa21f,Baseline,完整final_sim通过校验且任一卡无他人计算进程,选择剩余显存最多且负载最低卡；允许资源安全共享,阻塞于完整final_sim缺失,04_smoke/baseline_smoke_queued/command.sh
+2,真实VAE端到端smoke,Santa21f,Target/Correct/Shuffled解码,v3代理资产通过CPU契约；GPU2满足SHORT共享阈值,GPU2机会式共享,已完成_20260805_022223,04_smoke/wan_vae_transport_gpu_smoke_queued/launch_shareable_vae_e2e.sh
+3,Santa公平对照,Santa21f,Correct,Baseline成功且同卡可继续,与Baseline同卡串行,排队,06_santa_comparison/run_correct.sh
+4,Santa公平对照,Santa21f,Shuffled,Correct完成且同卡可继续,与Baseline同卡串行,排队,06_santa_comparison/run_shuffled.sh
+5,指标与可视化,Santa21f,三组,三组视频与GT存在,CPU,阻塞于GT,12_scaled_evaluation/evaluate_video_comparison.py

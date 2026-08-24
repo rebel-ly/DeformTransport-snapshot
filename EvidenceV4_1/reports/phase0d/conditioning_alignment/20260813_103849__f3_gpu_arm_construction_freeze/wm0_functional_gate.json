@@ -1,0 +1,51 @@
+{
+  "WM0_FUNCTIONAL_GATE": "PASS",
+  "trajectory_count": 0,
+  "WM0_TRAJECTORY_WRITE_COUNT": 0,
+  "depth_winner_write_count": 0,
+  "WM0_EDITED_Y_EQUALS_Y_EXACT": true,
+  "proof": "with N=0 create_pos_feature_map has no tracks and replace_feature V3D loops have zero candidate indices for every tau; no assignment executes",
+  "no_condition_tensor_mutation_from_trajectory_path": true,
+  "WM0_GENERATOR_CONSUMED_RANDOMNESS_CHANGE": false,
+  "randomness_basis": "N=0 randperm(0) operations contain no permutation elements; no trajectory-side random value reaches generator conditioning",
+  "artifact": {
+    "ids": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_ids.npy",
+      "shape": [
+        0
+      ],
+      "dtype": "int64",
+      "sha256": "e734dac55ea9fbbe782af2d8c02c3c5992131906228afb2aaaf137d6f3ed74db"
+    },
+    "tracks": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_tracks.npy",
+      "shape": [
+        1,
+        81,
+        0,
+        2
+      ],
+      "dtype": "float32",
+      "sha256": "5f2a3ff02a8af40138f3fc376752211310548c1cb558423c0db37e6ce41a1112"
+    },
+    "visibility": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_visibility.npy",
+      "shape": [
+        1,
+        81,
+        0
+      ],
+      "dtype": "bool",
+      "sha256": "76555ccc7ef6819c24a52de5b949aace3024d87c22c620315f0c8e0191e5789a"
+    },
+    "depth": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_103849__f3_gpu_arm_construction_freeze/artifacts/wm0_depth.npy",
+      "shape": [
+        81,
+        0
+      ],
+      "dtype": "float32",
+      "sha256": "c7d5e350e0f7f644fc66e18d95f688d9689881ea618bc968eea17b26f643e979"
+    }
+  }
+}

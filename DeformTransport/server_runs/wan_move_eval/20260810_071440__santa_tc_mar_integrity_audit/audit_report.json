@@ -1,0 +1,144 @@
+{
+  "status": "SANTA_TC_MAR_AUDIT_OK",
+  "frozen_artifact": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_eval/20260810_070100__santa_tc_mar_formal_seed0",
+  "frozen_evaluator_sha256": "a8f83dc1828fe31b0ba41c5e1a3b897a0ab6e2cf604386ec01779acc2f9ee54f",
+  "fixed_contract_checks": {
+    "track_count_report": true,
+    "track_count_csv": true,
+    "valid_track_count": true,
+    "anchors_report": true,
+    "anchors_csv": true,
+    "bootstrap_seed_lab": true,
+    "bootstrap_count_lab": true,
+    "bootstrap_seed_rgb": true,
+    "bootstrap_count_rgb": true
+  },
+  "evaluation_reference_checks": {
+    "true_source_points": true,
+    "true_future_points": true,
+    "single_true_source_patch_reference": true,
+    "shared_true_future_points": true,
+    "correct_uses_shared_points": true,
+    "shuffled_uses_shared_points": true,
+    "no_permuted_evaluation_reference": true
+  },
+  "input_sha256_checks": [
+    {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+      "expected": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+      "actual": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+      "ok": true
+    },
+    {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_tracks_correct.npy",
+      "expected": "b8b34ee8265fac9d79ddbf567883906c981865c14c48eee80f505d812eaa4148",
+      "actual": "b8b34ee8265fac9d79ddbf567883906c981865c14c48eee80f505d812eaa4148",
+      "ok": true
+    },
+    {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_visibility_correct.npy",
+      "expected": "c1c3c2801891e5acc720dae9f7949bf1505848ca3848b5446e034220867bfd4d",
+      "actual": "c1c3c2801891e5acc720dae9f7949bf1505848ca3848b5446e034220867bfd4d",
+      "ok": true
+    },
+    {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/correct/santa_formal_correct_seed0.mp4",
+      "expected": "1c20d32c82049e0cb5fd8f19b08957b4e5b0b70020267c357293cc568d43cf14",
+      "actual": "1c20d32c82049e0cb5fd8f19b08957b4e5b0b70020267c357293cc568d43cf14",
+      "ok": true
+    },
+    {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_formal/20260809_195255__santa_correct_vs_identity_shuffled_seed0/shuffled/santa_formal_identity_shuffled_seed0.mp4",
+      "expected": "489e1c7570827e748609cf25914aa4fea8060f84047e7f7342c015325f07d638",
+      "actual": "489e1c7570827e748609cf25914aa4fea8060f84047e7f7342c015325f07d638",
+      "ok": true
+    }
+  ],
+  "git_provenance_checks": {
+    "deformtransport_head_matches": true,
+    "wanmove_head_matches": true,
+    "deformtransport_status_recorded": true,
+    "wanmove_status_recorded": true,
+    "wanmove_rng_patch_recorded": true
+  },
+  "lab_recomputation": {
+    "calculated": {
+      "correct": {
+        "mean": 21.27140516336273,
+        "median": 19.746523363613925,
+        "p95": 43.807923837226035
+      },
+      "shuffled": {
+        "mean": 31.804366713478046,
+        "median": 27.22692599642931,
+        "p95": 69.19539130230372
+      },
+      "paired": {
+        "mean_difference_shuffled_minus_correct": 10.532961550115314,
+        "median_difference_shuffled_minus_correct": 5.380583999837079,
+        "fraction_shuffled_gt_correct": 0.7032106499608457,
+        "relative_mean_improvement": 0.3311797290292109,
+        "bootstrap_95_ci_mean_difference": [
+          9.524791012522343,
+          11.529488543386975
+        ]
+      }
+    },
+    "checks": {
+      "stored_per_track_difference_exact": true,
+      "label_swap_sign_exact": true,
+      "correct_mean_matches": true,
+      "correct_median_matches": true,
+      "correct_p95_matches": true,
+      "shuffled_mean_matches": true,
+      "shuffled_median_matches": true,
+      "shuffled_p95_matches": true,
+      "paired_mean_difference_shuffled_minus_correct_matches": true,
+      "paired_median_difference_shuffled_minus_correct_matches": true,
+      "paired_fraction_shuffled_gt_correct_matches": true,
+      "paired_relative_mean_improvement_matches": true,
+      "bootstrap_ci_matches": true
+    },
+    "ok": true
+  },
+  "rgb_recomputation": {
+    "calculated": {
+      "correct": {
+        "mean": 0.14561786885006445,
+        "median": 0.10633672482939194,
+        "p95": 0.3653172351453032
+      },
+      "shuffled": {
+        "mean": 0.21837440502827674,
+        "median": 0.17657516894382835,
+        "p95": 0.5274578671604139
+      },
+      "paired": {
+        "mean_difference_shuffled_minus_correct": 0.07275653617821227,
+        "median_difference_shuffled_minus_correct": 0.028315417036840998,
+        "fraction_shuffled_gt_correct": 0.7196554424432263,
+        "relative_mean_improvement": 0.33317336877822845,
+        "bootstrap_95_ci_mean_difference": [
+          0.06551637821373162,
+          0.08007033771160767
+        ]
+      }
+    },
+    "checks": {
+      "stored_per_track_difference_exact": true,
+      "label_swap_sign_exact": true,
+      "correct_mean_matches": true,
+      "correct_median_matches": true,
+      "correct_p95_matches": true,
+      "shuffled_mean_matches": true,
+      "shuffled_median_matches": true,
+      "shuffled_p95_matches": true,
+      "paired_mean_difference_shuffled_minus_correct_matches": true,
+      "paired_median_difference_shuffled_minus_correct_matches": true,
+      "paired_fraction_shuffled_gt_correct_matches": true,
+      "paired_relative_mean_improvement_matches": true,
+      "bootstrap_ci_matches": true
+    },
+    "ok": true
+  }
+}

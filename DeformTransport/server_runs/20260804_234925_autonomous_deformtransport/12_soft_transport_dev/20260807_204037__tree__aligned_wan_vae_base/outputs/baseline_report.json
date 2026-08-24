@@ -1,0 +1,65 @@
+{
+  "checkpoint": {
+    "path": "/workspace/model_staging/wan_models/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth",
+    "bytes": 507609880,
+    "sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+    "source": "alibaba-pai/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth"
+  },
+  "model_parameters": 126892531,
+  "compute_dtype": "torch.bfloat16",
+  "input": {
+    "shape": [
+      1,
+      3,
+      1,
+      480,
+      832
+    ],
+    "range": [
+      -1.0,
+      0.9921568632125854
+    ],
+    "layout": "[B,C,T,H,W]"
+  },
+  "latent": {
+    "shape": [
+      1,
+      1,
+      16,
+      60,
+      104
+    ],
+    "dtype": "torch.float32",
+    "mean": 0.09358882904052734,
+    "std": 0.6873918175697327,
+    "min": -2.078125,
+    "max": 2.0625,
+    "l2_norm": 219.20120239257812,
+    "finite": true
+  },
+  "decoded": {
+    "shape": [
+      1,
+      1,
+      3,
+      480,
+      832
+    ],
+    "dtype": "torch.float32",
+    "mean": -0.7171921133995056,
+    "std": 0.3720048666000366,
+    "min": -1.0,
+    "max": 1.0,
+    "l2_norm": 884.2952270507812,
+    "finite": true
+  },
+  "decoded_layout": "[B,T,C,H,W]",
+  "source_reconstruction_mae_0_1": 0.026856688782572746,
+  "finite": true,
+  "runtime_seconds": {
+    "model_load": 3.688137735996861,
+    "source_encode": 9.361023188976105,
+    "source_decode": 0.480298533977475
+  },
+  "source_comparison": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/source_original_reconstruction.png"
+}

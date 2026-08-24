@@ -1,0 +1,15 @@
+{
+  "paper_exp_a1_status": "PAPER_EXP_A1_COMPLETE",
+  "nodepth_tc_me": 0.4230808744543751,
+  "nodepth_tc_mar": 10.292388805431345,
+  "delta_depth_tcme": -0.0014094254185792465,
+  "delta_depth_tcmar": -0.031249824825412276,
+  "nodepth_video_sha256": "42b374a07d4e87d91706b65da663cc8be875821f26d4c46d967b31dfa8e54d9e",
+  "winner_changed_cells": 328,
+  "collision_cells": 788,
+  "limitations": [
+    "single seed NODEPTH outcome",
+    "conditional intervention effects",
+    "no importance ranking"
+  ]
+}

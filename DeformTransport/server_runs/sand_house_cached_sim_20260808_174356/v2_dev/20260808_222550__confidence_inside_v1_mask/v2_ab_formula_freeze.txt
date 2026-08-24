@@ -1,0 +1,109 @@
+DeformTransport V2-A/B formula freeze
+======================================
+
+CASE:
+sand_house
+
+STATUS:
+Frozen before any V2 generated-video outcome is observed.
+
+GEOMETRY GATE:
+C(t,x,y) = confidence_prior_v0(t,x,y)
+
+C is geometry-derived only.
+No baseline/Correct/Shuffled video metric is used.
+
+SUPPORT:
+Frozen V1 quality transport_mask only.
+mask cell count = 48109.
+
+FORMAL V1 ACTUAL RESIDUALS:
+
+Delta_corr_V1 =
+0.75 * correct_transport_residual
+
+Delta_shuf_V1 =
+0.710907468820995 * shuffled_transport_residual
+
+REFERENCE ENERGY:
+
+E_ref =
+meanabs(Delta_corr_V1)
+=
+0.015910381451249123
+
+V2-A NATURAL ADAPTIVE:
+
+Delta_corr_A =
+C * Delta_corr_V1
+
+Delta_shuf_A =
+C * Delta_shuf_V1
+
+Observed outcome-blind audit energies:
+
+Correct:
+0.0028533043805509806
+
+Shuffled:
+0.0028819923754781485
+
+Energy retention:
+
+Correct:
+0.17933601336295854
+
+Shuffled:
+0.18113909128520825
+
+V2-B ENERGY-CONTROLLED ADAPTIVE:
+
+s_corr_B =
+5.576124846581137
+
+s_shuf_B =
+5.520618856116664
+
+Delta_corr_B =
+s_corr_B * C * Delta_corr_V1
+
+Delta_shuf_B =
+s_shuf_B * C * Delta_shuf_V1
+
+Both target:
+
+meanabs(Delta_B)
+=
+E_ref
+
+Equivalent composed raw-residual scales:
+
+Correct:
+4.182093634935852
+
+Shuffled:
+3.924649177327354
+
+FAIRNESS CONTRACT:
+
+1. Same geometry confidence C for Correct and Shuffled.
+2. Same frozen V1 transport_mask.
+3. Same Wan latent slots.
+4. Same frozen V1 alpha/Ramp4 residual construction.
+5. Same common V2-B reference total energy E_ref.
+6. No video outcome is used to derive C or B scales.
+7. Correct/Shuffled differ in material/source identity only.
+8. Slot 0 remains zero because frozen V1 residual slot 0 is zero.
+9. Simulation RGB is not ground-truth future video.
+10. No SandHouse outcome tuning after this freeze is allowed.
+
+SCIENTIFIC INTERPRETATION:
+
+V2-A tests natural attenuation of low-confidence transport.
+
+V2-B tests spatial-temporal redistribution at fixed total
+mean-absolute injected energy.
+
+V2-B improvement over V1 would therefore support the claim
+that where/when transport is allocated matters independently
+of total injected energy.

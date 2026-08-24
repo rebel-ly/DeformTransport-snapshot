@@ -1,0 +1,12 @@
+{
+  "previous_f1r_status": "FAIL_SCIENTIFIC_EVAL_CONTRACT",
+  "f1r2_source_audit_result": "SOURCE_MODIFICATION_REQUIRED",
+  "n_expectation_location": "SOURCE_HARDCODE",
+  "evaluator_sha_before": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "evaluator_sha_after": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "evaluator_source_modification": false,
+  "source_modification_required": true,
+  "new_wrapper_created": false,
+  "reason_wrapper_is_insufficient": "A wrapper can package only the evaluator's declared CLI. The evaluator exposes no config/data/method override; source-controlled CASES and method_paths determine the actual data and videos. Monkeypatching/import-time replacement would change executable semantics/control flow and is not a config-builder port under the frozen-SHA contract.",
+  "actions_not_performed": ["evaluator source modification", "config/wrapper creation", "legacy equivalence execution", "corrected-v2 preflight", "formal scoring", "generation", "F2", "GRID100"]
+}

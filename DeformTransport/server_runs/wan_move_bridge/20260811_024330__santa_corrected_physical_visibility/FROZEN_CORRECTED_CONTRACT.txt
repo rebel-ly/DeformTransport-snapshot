@@ -1,0 +1,22 @@
+Santa corrected physical-visibility bridge.
+
+Status: FROZEN FOR FORMAL RE-RUN.
+
+Contract:
+1. Candidate material points must be physically source-visible.
+2. One persistent material point is selected per occupied 8x8 Wan-VAE source cell.
+3. Future visibility uses authoritative source_and_aligned_visible.
+4. Tracks remain persistent material identities.
+5. Correct vs Identity-Shuffled changes source-coordinate identity only.
+6. Future trajectories and visibility are identical between the pair.
+
+Integrity:
+N=1277
+source_visible_fraction=1.0
+visibility_true_fraction=0.4049324709726694
+visibility_exact_upstream_match=true
+visibility_difference_fraction=0.0
+all_frame_visible_count=63
+unique_vae_cells=1277
+identity_shuffle_fixed_points=0
+2026-08-11T02:48:57+00:00

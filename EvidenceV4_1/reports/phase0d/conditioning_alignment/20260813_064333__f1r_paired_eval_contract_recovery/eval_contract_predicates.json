@@ -1,0 +1,14 @@
+{
+  "EVAL_N_MATCH": {"expected": 1257, "actual": 1257, "status": "PASS", "source": "corrected-v2 sidecar loader preflight"},
+  "EVAL_IDS_SHA_MATCH": {"expected": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8", "actual": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8", "status": "PASS", "source": "previous evaluation_contract_copy.json"},
+  "EVAL_TRACKS_SHA_MATCH": {"expected": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929", "actual": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929", "status": "PASS", "source": "previous evaluation_contract_copy.json"},
+  "EVAL_VISIBILITY_SHA_MATCH": {"expected": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff", "actual": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff", "status": "PASS", "source": "previous evaluation_contract_copy.json"},
+  "EVALUATOR_SHA_MATCH": {"expected": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08", "actual": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08", "status": "PASS", "source": "sha256sum of frozen eval_v3.py"},
+  "VIDEO_FRAME_COUNT_COMPATIBLE": {"expected": 81, "actual": {"RW": 81, "DT_FULL": 81}, "status": "PASS", "source": "frozen read_video_common loader preflight"},
+  "VIDEO_DOMAIN_COMPATIBLE": {"expected": "464x832 RGB evaluator domain", "actual": {"RW": "464x832 RGB after frozen loader", "DT_FULL": "464x832 RGB after frozen loader"}, "status": "PASS", "source": "frozen read_video_common loader preflight"},
+  "TRACK_MAPPING_MATCH": {"expected": "x identity; y*=464/480", "actual": "x identity; y*=464/480", "status": "PASS", "source": "eval_v3.py:956-965"},
+  "EVALUATOR_ACCEPTS_CORRECTED_V2_N": {"expected": 1257, "actual": 1277, "status": "FAIL", "source": "eval_v3.py:77-84 and reachable assertion eval_v3.py:829-832"},
+  "EVALUATOR_BINDS_CORRECTED_V2_SIDECARS": {"expected": "corrected-v2 N=1257 tracks and visibility", "actual": "20260809 bridge N=1277 tracks and visibility", "status": "FAIL", "source": "eval_v3.py:65-75 and loader eval_v3.py:790-806"},
+  "DTFULL_CANONICAL_VIDEO_BINDABLE": {"expected": "Replay A path accepted as DT_FULL", "actual": "No video-path or method-label override; fixed rw/old_correct/v3s-v3e map", "status": "FAIL", "source": "eval_v3.py:169-199, 2146-2186"},
+  "EVAL_CONTRACT_FIRST_FAIL_PREDICATE": "EVALUATOR_ACCEPTS_CORRECTED_V2_N"
+}

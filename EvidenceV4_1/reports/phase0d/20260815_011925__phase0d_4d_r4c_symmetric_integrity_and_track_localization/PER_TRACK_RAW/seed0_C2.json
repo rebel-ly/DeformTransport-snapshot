@@ -1,0 +1,10 @@
+{
+  "key": "seed0_C2",
+  "authoritative_evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "aggregate_from_retained_rows_formal_transition_mean": 0.42167144903579584,
+  "accepted_aggregate": 0.42167144903579584,
+  "exact_reproduction": true,
+  "abs_difference": 0.0,
+  "rows": 33498,
+  "csv": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_011925__phase0d_4d_r4c_symmetric_integrity_and_track_localization/PER_TRACK_RAW/seed0_C2.csv"
+}

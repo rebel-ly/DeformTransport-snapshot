@@ -1,0 +1,35 @@
+{
+  "REAL_LATENT_AMPLITUDE_STATUS": "UNRESOLVED_NO_VALID_CACHED_LATENT",
+  "REAL_LATENT_CANDIDATE_VALID": false,
+  "candidate_count": 2,
+  "candidates": [
+    {
+      "dtype": null,
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0b/causal_contract/20260812_134250__santa_corrected_v2_identity_shuffle_seed0/santa_material_source_vae_cell_ids_identity_shuffled_seed0.npy",
+      "reason": "No complete provenance demonstrated in bounded cached-asset search.",
+      "resize_crop_provenance": null,
+      "sha256": "115fb817e692e64ae71b74afca97758e5e4807558fa529c251d8496d7ac64e18",
+      "shape": null,
+      "source_image_provenance": null,
+      "valid": false,
+      "wan_vae_checkpoint_provenance": null
+    },
+    {
+      "dtype": null,
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_source_vae_cell_ids.npy",
+      "reason": "No complete provenance demonstrated in bounded cached-asset search.",
+      "resize_crop_provenance": null,
+      "sha256": "82533afc75667d7fe6ea883bcb5640a41551e2afbe7b29ada3a79f429d3684f9",
+      "shape": null,
+      "source_image_provenance": null,
+      "valid": false,
+      "wan_vae_checkpoint_provenance": null
+    }
+  ],
+  "note": "No GPU, WanVAE, or image encoding was used.",
+  "search_roots": [
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports",
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline",
+    "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "input_shape": [
+    3,
+    81,
+    480,
+    832
+  ],
+  "input_domain": "canonical preview RGB 832x480, no evaluation resize",
+  "latent_shape": [
+    16,
+    21,
+    60,
+    104
+  ],
+  "batched_wan_shape": [
+    1,
+    16,
+    21,
+    60,
+    104
+  ],
+  "axis_semantics": "C,T,H,W; batched B,C,T,H,W",
+  "dtype": "torch.float32",
+  "min": -3.6171555519104004,
+  "max": 4.851651668548584,
+  "finite_count": 2096640,
+  "nonfinite_count": 0,
+  "compatible_with_wan": true,
+  "checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P/Wan2.1_VAE.pth",
+  "checkpoint_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+}

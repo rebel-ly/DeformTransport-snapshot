@@ -1,0 +1,185 @@
+{
+  "transport_ready": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_transport_ready_continuous_probe_20260805_182205/transport_ready_continuous_probe.pt",
+    "sha256": "154a08e074abcb6aa458b08cfd37c033dbc8245ffe02d182524e9bc275252723"
+  },
+  "paths": {
+    "source_trajectory": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/point_trajectories.pt",
+      "exists": true,
+      "is_file": true,
+      "is_dir": false,
+      "bytes": 59313138,
+      "sha256": "ab2160857b63e2b1634513be218a05ff9bc4049a42c8bbed3ce7309e088f5226"
+    },
+    "initial_rgb": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/frame_initial.png",
+      "exists": true,
+      "is_file": true,
+      "is_dir": false,
+      "bytes": 182386,
+      "sha256": "25bc5fc50c1d85fd12780a34dbd55562a5ef8ff53e0ee7ba0044f62aca9a6dc1"
+    },
+    "coarse_rgb_frames": {
+      "type": "path_list",
+      "count": 81,
+      "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/frame_0000.png",
+      "last": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/frame_0080.png",
+      "all_exist": true,
+      "missing_count": 0
+    },
+    "flow": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flows.npy",
+      "exists": true,
+      "is_file": true,
+      "is_dir": false,
+      "bytes": 169869440,
+      "sha256": "f32045e27ae4447d5877563306c43c647583a29e71d9ac21b8d1609a5f93f33b"
+    },
+    "source_raster_point_indices": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flow_source_point_indices.npy",
+      "exists": true,
+      "is_file": true,
+      "is_dir": false,
+      "bytes": 84934784,
+      "sha256": "9a7b02d53099c06fe00313d39ff94330c1f794ea80f6ac76eb95e478073f62aa"
+    }
+  },
+  "visibility_equality": {
+    "source_visible_matches_visible_ids": true,
+    "source_visible_matches_raster_ids": true,
+    "visible_ids_equal_raster_ids": true
+  },
+  "source_state": {
+    "source_points_3d": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        3
+      ],
+      "dtype": "torch.float32",
+      "numel": 84792,
+      "min": -0.305266797542572,
+      "max": 1.8700114488601685
+    },
+    "source_points_2d_render": {
+      "type": "Tensor",
+      "shape": [
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 56528,
+      "min": 136.04852294921875,
+      "max": 358.9423828125
+    },
+    "source_depth": {
+      "type": "Tensor",
+      "shape": [
+        28264
+      ],
+      "dtype": "torch.float32",
+      "numel": 28264,
+      "min": 1.7109375,
+      "max": 1.8701171875
+    }
+  },
+  "future_state": {
+    "points_3d": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264,
+        3
+      ],
+      "dtype": "torch.float32",
+      "numel": 6868152,
+      "min": -0.7120300531387329,
+      "max": 1.8774703741073608
+    },
+    "points_2d_render": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264,
+        2
+      ],
+      "dtype": "torch.float32",
+      "numel": 4578768,
+      "min": 135.70919799804688,
+      "max": 505.4375305175781
+    },
+    "depth": {
+      "type": "Tensor",
+      "shape": [
+        81,
+        28264
+      ],
+      "dtype": "torch.float32",
+      "numel": 2289384,
+      "min": 1.640625,
+      "max": 1.8779296875
+    },
+    "simulation_steps": {
+      "type": "Tensor",
+      "shape": [
+        81
+      ],
+      "dtype": "torch.int64",
+      "numel": 81,
+      "min": 10.0,
+      "max": 810.0
+    }
+  },
+  "source_trajectory_payload": {
+    "type": "dict",
+    "keys": [
+      "camera",
+      "coordinate_system",
+      "format_version",
+      "frame_ids",
+      "image_size",
+      "objects",
+      "simulation_steps"
+    ],
+    "tensor_fields": {
+      "frame_ids": {
+        "type": "Tensor",
+        "shape": [
+          81
+        ],
+        "dtype": "torch.int64",
+        "numel": 81,
+        "min": 0.0,
+        "max": 80.0
+      },
+      "simulation_steps": {
+        "type": "Tensor",
+        "shape": [
+          81
+        ],
+        "dtype": "torch.int64",
+        "numel": 81,
+        "min": 10.0,
+        "max": 810.0
+      }
+    },
+    "object_count": 1,
+    "object_keys": [
+      "binding_particle_indices",
+      "depth",
+      "initial_depth",
+      "initial_points_3d",
+      "initial_points_uv",
+      "initial_projection_valid",
+      "material_type",
+      "object_id",
+      "points_3d",
+      "points_uv",
+      "projection_valid"
+    ]
+  },
+  "source_raster_point_indices_payload": {
+    "load_error": "UnpicklingError('STACK_GLOBAL requires str')"
+  }
+}

@@ -1,0 +1,533 @@
+
+============================================================
+FILE: scripts/build_continuous_transport_ready_probe.py
+============================================================
+    54	
+    55	def validate_continuous_extension(
+    56	    state: Mapping[str, Any],
+    57	) -> dict[str, Any]:
+    58	    validate_transport_ready(state)
+    59	
+    60	    source_video = _require_plain_tensor(
+    61	        state,
+    62	        "source_points_2d_video",
+    63	        dtype=torch.float32,
+    64	    )
+    65	    target_video = _require_plain_tensor(
+    66	        state,
+    67	        "points_2d_video",
+    68	        dtype=torch.float32,
+    69	    )
+    70	    source_discrete = _require_plain_tensor(
+    71	        state,
+    72	        "source_points_2d_latent",
+    73	        dtype=torch.long,
+    74	    )
+    75	    target_discrete = _require_plain_tensor(
+    76	        state,
+    77	        "points_2d_latent",
+    78	        dtype=torch.long,
+    79	    )
+    80	    source_continuous = _require_plain_tensor(
+    81	        state,
+    82	        "source_points_2d_latent_continuous",
+    83	        dtype=torch.float32,
+    84	    )
+    85	    target_continuous = _require_plain_tensor(
+    86	        state,
+    87	        "points_2d_latent_continuous",
+    88	        dtype=torch.float32,
+    89	    )
+    90	
+    91	    if source_continuous.shape != source_discrete.shape:
+    92	        raise ValueError(
+    93	            "source continuous and discrete coordinates must have "
+    94	            "identical shapes"
+    95	        )
+--
+   226	        "target_fraction_max": float(target_fraction.max()),
+   227	    }
+   228	
+   229	
+   230	def main() -> None:
+   231	    args = parse_args()
+   232	
+   233	    input_path = args.input.resolve()
+   234	    output_path = args.output.resolve()
+   235	
+   236	    if not input_path.is_file():
+   237	        raise FileNotFoundError(input_path)
+   238	
+   239	    if output_path.exists():
+   240	        raise FileExistsError(
+   241	            f"refusing to overwrite existing output: {output_path}"
+   242	        )
+   243	
+   244	    state = torch.load(
+   245	        input_path,
+   246	        map_location="cpu",
+   247	        weights_only=False,
+   248	    )
+   249	
+--
+   254	    scale = torch.tensor(
+   255	        [
+   256	            int(state["latent_width"]) / int(state["video_width"]),
+   257	            int(state["latent_height"]) / int(state["video_height"]),
+   258	        ],
+   259	        dtype=torch.float32,
+   260	    )
+   261	
+   262	    output_state["source_points_2d_latent_continuous"] = (
+   263	        state["source_points_2d_video"].to(torch.float32)
+   264	        * scale
+   265	    ).contiguous()
+   266	
+   267	    output_state["points_2d_latent_continuous"] = (
+   268	        state["points_2d_video"].to(torch.float32)
+   269	        * scale
+   270	    ).contiguous()
+   271	
+   272	    output_state["continuous_coordinate_extension_version"] = (
+   273	        EXTENSION_VERSION
+   274	    )
+   275	
+   276	    coordinate_system = dict(
+   277	        output_state.get("coordinate_system", {})
+   278	    )
+   279	
+   280	    coordinate_system["points_2d_latent"] = (
+   281	        "wan_spatial_cell_xy_floor_legacy"
+   282	    )
+   283	    coordinate_system[
+   284	        "points_2d_latent_continuous"
+   285	    ] = "wan_spatial_xy_continuous_legacy_scale"
+   286	
+   287	    output_state["coordinate_system"] = coordinate_system
+   288	
+   289	    output_state["continuous_coordinate_mapping"] = {
+   290	        "source": "source_points_2d_video * scale_xy",
+   291	        "target": "points_2d_video * scale_xy",
+   292	        "scale_xy": scale.tolist(),
+   293	        "legacy_recovery": "floor(continuous) == legacy_discrete",
+   294	        "pixel_center_offset": False,
+   295	        "align_corners": None,
+   296	    }
+   297	
+   298	    summary_before_save = validate_continuous_extension(
+   299	        output_state
+   300	    )
+   301	
+   302	    output_path.parent.mkdir(
+   303	        parents=True,
+   304	        exist_ok=False,
+   305	    )
+   306	
+   307	    torch.save(output_state, output_path)
+   308	
+   309	    loaded = torch.load(
+   310	        output_path,
+   311	        map_location="cpu",
+   312	        weights_only=False,
+   313	    )
+   314	
+   315	    summary_after_load = validate_continuous_extension(
+   316	        loaded
+   317	    )
+   318	
+   319	    summary = {
+   320	        "input": str(input_path),
+   321	        "output": str(output_path),
+   322	        "legacy_format_version_preserved": int(
+   323	            loaded["format_version"]
+   324	        ),
+   325	        "summary_before_save": summary_before_save,
+   326	        "summary_after_load": summary_after_load,
+   327	    }
+   328	
+   329	    print(json.dumps(summary, indent=2))
+
+============================================================
+FILE: scripts/build_soft_wan_latent_artifact.py
+============================================================
+    94	    )
+    95	
+    96	
+    97	def main() -> None:
+    98	    args = parse_args()
+    99	
+   100	    transport_path = args.transport_ready.resolve()
+   101	    base_path = args.base_vae_artifact.resolve()
+   102	    output_path = args.output.resolve()
+   103	
+   104	    if args.threshold < 0:
+   105	        raise ValueError("threshold must be nonnegative")
+   106	
+   107	    if not transport_path.is_file():
+   108	        raise FileNotFoundError(transport_path)
+   109	
+   110	    if not base_path.is_file():
+   111	        raise FileNotFoundError(base_path)
+   112	
+   113	    if output_path.exists():
+   114	        raise FileExistsError(
+   115	            f"refusing to overwrite existing output: {output_path}"
+   116	        )
+   117	
+   118	    if not torch.cuda.is_available():
+   119	        raise RuntimeError("CUDA is required")
+   120	
+   121	    started = time.perf_counter()
+   122	
+   123	    state = torch.load(
+   124	        transport_path,
+   125	        map_location="cpu",
+   126	        weights_only=False,
+   127	    )
+   128	    validate_transport_ready(state)
+   129	
+   130	    required_continuous = {
+   131	        "source_points_2d_latent_continuous",
+   132	        "points_2d_latent_continuous",
+   133	    }
+   134	
+   135	    missing_continuous = sorted(
+   136	        required_continuous - set(state)
+   137	    )
+   138	
+   139	    if missing_continuous:
+   140	        raise ValueError(
+--
+   144	
+   145	    base = torch.load(
+   146	        base_path,
+   147	        map_location="cpu",
+   148	        weights_only=True,
+   149	    )
+   150	
+   151	    required_base = {
+   152	        "latent_frame_indices",
+   153	        "source_latent",
+   154	        "target_latent",
+   155	        "correct_fused_latent",
+   156	        "shuffled_fused_latent",
+   157	        "transport_mask",
+   158	        "contribution_count",
+   159	    }
+   160	
+   161	    missing_base = sorted(required_base - set(base))
+   162	
+   163	    if missing_base:
+   164	        raise ValueError(
+   165	            f"base VAE artifact is missing keys: {missing_base}"
+   166	        )
+   167	
+   168	    latent_indices = base["latent_frame_indices"].to(
+   169	        dtype=torch.long,
+   170	        device="cpu",
+   171	    )
+   172	
+   173	    source_latent_cpu = base["source_latent"]
+   174	    target_latent_cpu = base["target_latent"]
+   175	
+   176	    if tuple(source_latent_cpu.shape) != (
+--
+   252	            "points_2d_latent"
+   253	        ][latent_indices].to(device),
+   254	        mode="correct",
+   255	        **common,
+   256	    )
+   257	
+   258	    soft_correct = soft_point_transport(
+   259	        source_uv=state[
+   260	            "source_points_2d_latent_continuous"
+   261	        ].to(device),
+   262	        target_uv=state[
+   263	            "points_2d_latent_continuous"
+   264	        ][latent_indices].to(device),
+   265	        mode="correct",
+   266	        **common,
+   267	    )
+   268	
+   269	    soft_shuffled = soft_point_transport(
+   270	        source_uv=state[
+   271	            "source_points_2d_latent_continuous"
+   272	        ].to(device),
+   273	        target_uv=state[
+   274	            "points_2d_latent_continuous"
+   275	        ][latent_indices].to(device),
+   276	        mode="shuffled",
+   277	        **common,
+   278	    )
+   279	
+   280	    torch.cuda.synchronize()
+   281	
+   282	    transport_seconds = (
+--
+   459	        "artifact_kind": "wan_vae_soft_transport",
+   460	        "transport_method": (
+   461	            "continuous_bilinear_forward_splat_gate"
+   462	        ),
+   463	        "soft_weight_threshold": float(
+   464	            args.threshold
+   465	        ),
+   466	        "seed": int(args.seed),
+   467	        "latent_frame_indices": (
+   468	            latent_indices.contiguous()
+   469	        ),
+   470	        "source_latent": (
+   471	            source_latent_cpu.detach().cpu().contiguous()
+   472	        ),
+   473	        "target_latent": (
+   474	            target_latent_cpu.detach().cpu().contiguous()
+   475	        ),
+   476	        # Compatibility keys used by pipeline_integration.py.
+   477	        "correct_transported_latent": (
+   478	            raw_correct.detach().cpu().contiguous()
+   479	        ),
+   480	        "shuffled_transported_latent": (
+   481	            raw_shuffled.detach().cpu().contiguous()
+   482	        ),
+   483	        "correct_fused_latent": (
+   484	            fused_correct.detach().cpu().contiguous()
+   485	        ),
+--
+   524	            ),
+   525	            "base_vae_artifact": str(base_path),
+   526	            "base_vae_artifact_sha256": sha256(
+   527	                base_path
+   528	            ),
+   529	        },
+   530	    }
+   531	
+   532	    output_path.parent.mkdir(
+   533	        parents=True,
+   534	        exist_ok=True,
+   535	    )
+   536	
+   537	    torch.save(output_state, output_path)
+   538	
+   539	    loaded = torch.load(
+   540	        output_path,
+   541	        map_location="cpu",
+   542	        weights_only=True,
+   543	    )
+   544	
+   545	    if not torch.equal(
+   546	        loaded["transport_mask"],
+   547	        loaded["contribution_count"] > 0,
+   548	    ):
+--
+   550	            "saved artifact broke the mask/count contract"
+   551	        )
+   552	
+   553	    support_hard = int(hard_mask.sum())
+   554	    support_soft = int(raw_soft_mask.sum())
+   555	    support_gated = int(gated_mask.sum())
+   556	
+   557	    report = {
+   558	        "output": str(output_path),
+   559	        "output_sha256": sha256(output_path),
+   560	        "transport_method": output_state[
+   561	            "transport_method"
+   562	        ],
+   563	        "threshold": float(args.threshold),
+   564	        "latent_frame_indices": (
+   565	            latent_indices.tolist()
+   566	        ),
+   567	        "support": {
+   568	            "hard_cells": support_hard,
+   569	            "raw_soft_cells": support_soft,
+   570	            "gated_cells": support_gated,
+   571	            "raw_soft_over_hard": (
+   572	                support_soft / support_hard
+--
+   672	            ),
+   673	            "reserved": float(
+   674	                torch.cuda.max_memory_reserved()
+   675	                / (1024**2)
+   676	            ),
+   677	        },
+   678	    }
+   679	
+   680	    report_path = output_path.with_suffix(
+   681	        ".report.json"
+   682	    )
+   683	
+   684	    report_path.write_text(
+   685	        json.dumps(report, indent=2),
+   686	        encoding="utf-8",
+   687	    )
+   688	
+
+============================================================
+FILE: deform_transport/soft_transport.py
+============================================================
+
+============================================================
+FILE: deform_transport/pipeline_integration.py
+============================================================
+    13	_LATENT_KEYS = {
+    14	    "correct": "correct_fused_latent",
+    15	    "shuffled": "shuffled_fused_latent",
+    16	    "flow": "flow_fused_latent",
+    17	    "blend": "blend_fused_latent",
+    18	}
+    19	
+    20	_RAW_TRANSPORT_KEYS = {
+    21	    "correct": "correct_transported_latent",
+    22	    "shuffled": "shuffled_transported_latent",
+    23	}
+    24	
+    25	_EXPLICIT_RESIDUAL_KEYS = {
+    26	    "correct": "correct_transport_residual",
+    27	    "shuffled": "shuffled_transport_residual",
+    28	}
+    29	
+
+============================================================
+FILE: infer_sim.py
+============================================================
+     3	Based on infer_flow.py with SDEdit support added. Loads simulation data
+     4	(structured noise, frames, masks) from a simulation output directory and
+     5	uses CausalInferencePipelineSDEdit for simulation-guided video generation.
+     6	
+     7	Example usage:
+     8	    python infer_sim.py \
+     9	        --checkpoint_path /path/to/model.pt \
+    10	        --sim_data_path result/tree/25-01_21-35-02/final_sim \
+    11	        --output_path ./output.mp4
+    12	"""
+    13	
+    14	import argparse
+    15	import os
+    16	from pathlib import Path
+    17	
+    18	import numpy as np
+    19	import torch
+--
+    82	    return masks.unsqueeze(0)  # [1, T, H, W]
+    83	
+    84	
+    85	def main():
+    86	    parser = argparse.ArgumentParser(description="I2V Flow Inference with SDEdit from Simulation")
+    87	    parser.add_argument("--checkpoint_path", type=str, required=True, help="Path to the checkpoint file")
+    88	    parser.add_argument("--sim_data_path", type=str, required=True,
+    89	                        help="Path to simulation final_sim directory (contains noises.npy, frames/, masks, etc.)")
+    90	    parser.add_argument("--output_path", type=str, default="./output_sim.mp4", help="Output video path")
+    91	    parser.add_argument("--use_ema", action="store_true", help="Whether to use EMA parameters")
+    92	    parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    93	    parser.add_argument("--eval_degradation", type=float, default=0.5,
+    94	                        help="Degradation level for noise (0.0 = pure structured noise)")
+    95	    parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
+    96	    parser.add_argument(
+    97	        "--transport_latent_path",
+    98	        type=str,
+--
+   192	            "local_attn_size": args.local_attn_size,
+   193	            "timestep_shift": 5.0,
+   194	        },
+   195	    }
+   196	    config = OmegaConf.create(DEFAULT_CONFIG)
+   197	    config = apply_config_overrides(config, additional_args)
+   198	
+   199	    # Create output directory
+   200	    output_dir = os.path.dirname(args.output_path)
+   201	    if output_dir:
+   202	        os.makedirs(output_dir, exist_ok=True)
+   203	
+   204	    # -------------------------------------------------------------------------
+   205	    # Initialize pipeline (SDEdit version)
+   206	    # -------------------------------------------------------------------------
+   207	    pipeline = CausalInferencePipelineSDEdit(config, device=device)
+   208	
+--
+   243	        WanVideoUnit_ImageEmbedderVAE(),
+   244	        WanVideoUnit_ImageEmbedderCLIP()
+   245	    ]
+   246	
+   247	    # -------------------------------------------------------------------------
+   248	    # Load simulation data
+   249	    # -------------------------------------------------------------------------
+   250	    noise_path = sim_data_path / "noises.npy"
+   251	    first_frame_path = sim_data_path / "resized_input_image.png"
+   252	    frames_dir = sim_data_path / "frames"
+   253	
+   254	    # 1. Load structured noise
+   255	    print(f"Loading noise from: {noise_path}")
+   256	    noise_data = load_noise(
+   257	        noise_path=str(noise_path),
+   258	        target_frames=num_output_frames,
+   259	        channel_dim=16,
+--
+   423	    # Process output
+   424	    video = rearrange(video, 'b t c h w -> b t h w c').cpu()
+   425	    video = (255.0 * video[0]).to(torch.uint8)
+   426	
+   427	    # Clear VAE cache
+   428	    pipeline.vae.model.clear_cache()
+   429	
+   430	    # Save the video
+   431	    print(f"Saving video to: {args.output_path}")
+   432	    imageio.mimwrite(args.output_path, video.numpy(), fps=10)
+   433	    print("Done!")
+   434	
+   435	if __name__ == "__main__":
+   436	    main()
+
+============================================================
+FILE: vidgen/pipeline_sdedit.py
+============================================================
+    63	
+    64	        # Initialize models
+    65	        self.generator = Wrapper(
+    66	            **getattr(args, "model_kwargs", {}), is_causal=True) if generator is None else generator
+    67	        self.text_encoder = WanTextEncoder() if text_encoder is None else text_encoder
+    68	        self.vae = WanVAEWrapper() if vae is None else vae
+    69	
+    70	        # Separate VAE for encoding sim_latents to avoid cache conflicts
+    71	        # with the decoder's streaming cache on self.vae
+    72	        if use_separate_encode_vae:
+    73	            self.encode_vae = WanVAEWrapper()
+    74	        else:
+    75	            self.encode_vae = self.vae
+    76	
+    77	        # Initialize causal hyperparameters
+    78	        self.scheduler = self.generator.get_scheduler()
+    79	        self.denoising_step_list = torch.tensor(args.denoising_step_list, dtype=torch.long)
+--
+   140	            text_prompts: List of text prompts.
+   141	            initial_latent: Optional initial latent for I2V.
+   142	            sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+   143	            sim_masks: Object masks [B, T, H, W] (True = object region to keep generated).
+   144	            sim_franka_masks: Franka/mesh masks [B, T, H, W] (True = franka region, weak sdedit).
+   145	            transport_residual: Artifact-local masked latent residual [B,T,C,H,W].
+   146	            transport_residual_scale: Residual strength.
+   147	            transport_residual_step: Step index after which to inject the residual.
+   148	            return_latents: Whether to return latents alongside decoded video.
+   149	            batch_sample: Batch dict for processor conditioning.
+   150	            structured_noise_sde: Deterministic SDE noise from simulation.
+   151	            device: Device to use.
+   152	        """
+   153	        batch_size, num_frames, num_channels, height, width = noise.shape
+   154	
+   155	        if not self.independent_first_frame or (self.independent_first_frame and initial_latent is not None):
+   156	            assert num_frames % self.num_frame_per_block == 0
+--
+   501	            torch.cuda.synchronize()
+   502	            diffusion_time = diffusion_start.elapsed_time(diffusion_end)
+   503	            init_time = init_start.elapsed_time(init_end)
+   504	            vae_start.record()
+   505	
+   506	        # Decode output
+   507	        video = None
+   508	        if not skip_decoding:
+   509	            video = self.vae.decode_to_pixel(output, use_cache=False)
+   510	            video = (video * 0.5 + 0.5).clamp(0, 1)
+   511	
+   512	        if profile:
+   513	            vae_end.record()
+   514	            torch.cuda.synchronize()
+   515	            vae_time = vae_start.elapsed_time(vae_end)
+   516	            total_time = init_time + diffusion_time + vae_time
+   517	            print("Profiling results:")

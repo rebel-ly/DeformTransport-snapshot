@@ -1,0 +1,30 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "representation": "81 VAE-decoded real edited_y RGB frames; frozen evaluator mapping; DIAGNOSTIC_ONLY",
+  "frame_count": 81,
+  "decoded_shape": [
+    81,
+    464,
+    832,
+    3
+  ],
+  "valid_tracks": 1110,
+  "valid_anchor_observations": 9766,
+  "tc_mar_lab": {
+    "n": 1110,
+    "mean": 65.74260475842897,
+    "median": 67.40938186645508,
+    "p95": 85.65652286529541
+  },
+  "tc_mar_rgb_l1": {
+    "n": 1110,
+    "mean": 0.3612072954332774,
+    "median": 0.2177554691831271,
+    "p95": 0.8483355805277825
+  },
+  "tc_me": {
+    "mean": 1.5050048806385061,
+    "median": 1.4905497803817287,
+    "p95": 2.80043762112663
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "pid": "UNRESOLVED_NOT_PERSISTED",
+  "process_alive": false,
+  "exit_code": 0,
+  "completion_marker_exists": true,
+  "mp4_exists": true,
+  "mp4_size_bytes": 7409966,
+  "video_width": 832,
+  "video_height": 464,
+  "video_frame_count": 81,
+  "traceback_found": false,
+  "cuda_oom_found": false,
+  "killed_found": false,
+  "runtime_error_found": false,
+  "engineering_completion_status": "PASS_NORMAL_COMPLETION"
+}

@@ -1,0 +1,48 @@
+{
+  "case": "sandhouse",
+  "metric": "Track-Conditioned Motion Error (TC-ME)",
+  "methods": {
+    "rw": {
+      "transition_mean_epe_mean": 1.8408401558230423,
+      "transition_mean_epe_median": 0.7441724383277863,
+      "transition_mean_epe_p95": 6.208937814742675,
+      "sha256": "1e54694f845eee137e967bf7aba2a4ef64ee6c4a8371dab1119d21db6891619b"
+    },
+    "old_correct": {
+      "transition_mean_epe_mean": 3.222202562654897,
+      "transition_mean_epe_median": 1.0999053264132188,
+      "transition_mean_epe_p95": 15.833424173110245,
+      "sha256": "ec8655e24b6f21ac8fca2e8aeda31bc08125fb1bab1fe0271ce6270254a217bb"
+    },
+    "v3d": {
+      "transition_mean_epe_mean": 2.847724333172537,
+      "transition_mean_epe_median": 0.9524297856633241,
+      "transition_mean_epe_p95": 13.606923439639502,
+      "sha256": "dbdc01524071b8501258f6dde855eeb3a39d938d3e016a2972de73322e7bb0b5"
+    }
+  },
+  "vs_old_correct": {
+    "v3d": {
+      "definition": "candidate TC-ME - OldCorrect TC-ME; positive means candidate worse",
+      "paired_mean_difference": -0.37447822948235987,
+      "paired_median_difference": 0.009000065408463737,
+      "fraction_candidate_worse": 0.55,
+      "bootstrap_95_ci": [
+        -1.021033264140215,
+        0.15220934394465102
+      ],
+      "motion_safety": "PASS"
+    }
+  },
+  "vs_realwonder": {
+    "v3d": {
+      "definition": "RealWonder TC-ME - candidate; positive means candidate better",
+      "paired_mean_difference": -1.0068841773494948,
+      "bootstrap_95_ci": [
+        -1.6226717605774197,
+        -0.49899082244576065
+      ],
+      "decision": "LOSS"
+    }
+  }
+}

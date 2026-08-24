@@ -1,0 +1,53 @@
+{
+  "生成时间": "2026-08-05T09:01:16.252969+08:00",
+  "seed": 0,
+  "算法": "项目simulation/image23D/noise_warp/noise_warp.py::get_noise_from_video",
+  "光流模型": "torchvision RAFT-Large C_T_SKHT_V2",
+  "权重来源": "https://download.pytorch.org/models/raft_large_C_T_SKHT_V2-ff5fadd5.pth",
+  "权重SHA256": "ff5fadd56d26b40647388883af1547351ea17868b765c05b27231e72dd16a322",
+  "输入帧": 81,
+  "原始输入shape": [
+    81,
+    480,
+    832,
+    3
+  ],
+  "RAFT输入shape": [
+    81,
+    240,
+    416,
+    3
+  ],
+  "预处理": "torch.nn.functional.interpolate(mode=area,size=(240,416))；等价替代原resize_frames=0.5并绕过未安装cv2",
+  "参数": {
+    "noise_channels": 32,
+    "resize_frames": null,
+    "等效预缩放": 0.5,
+    "resize_flow": 8,
+    "downscale_factor": 32,
+    "remove_background": false
+  },
+  "检查": {
+    "noise_shape": [
+      81,
+      60,
+      104,
+      32
+    ],
+    "noise_dtype": "float16",
+    "noise_finite": true,
+    "flow_shape": [
+      80,
+      2,
+      240,
+      416
+    ],
+    "flow_dtype": "float16",
+    "flow_finite": true
+  },
+  "耗时秒": 29.9952996840002,
+  "torch峰值allocated_MiB": 15831.35009765625,
+  "torch峰值reserved_MiB": 17816.0,
+  "noises_SHA256": "098332f31951f88bbc9f6c49b502d419b633cd52f735d3678187a5a307b26d75",
+  "flows_SHA256": "8bde4789c82fb26316b005948256574dc873a081326cb26d6fa2a788b9c228c2"
+}

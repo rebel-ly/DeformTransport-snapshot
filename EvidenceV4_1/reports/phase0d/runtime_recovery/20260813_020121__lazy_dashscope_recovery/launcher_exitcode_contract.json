@@ -1,0 +1,14 @@
+{
+  "launcher": "run_phase0d2_replay_pair.sh",
+  "generation_runner_unchanged": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/seed_contract/20260812_172755__santa_v3d_contract_recovery/formal_run_corrected_v2_v3d.sh",
+  "launcher_starts_children": ["runA", "runB"],
+  "launcher_saves_pids": true,
+  "launcher_waits_independently": true,
+  "set_e_disabled_around_waits": true,
+  "runA_exit_code_file": "runA/runA_exit_code.txt",
+  "runB_exit_code_file": "runB/runB_exit_code.txt",
+  "launcher_exitcode_fix": "PASS",
+  "mock_exitcode_capture_test": "PASS",
+  "mock_observed_rc_a": 0,
+  "mock_observed_rc_b": 7
+}

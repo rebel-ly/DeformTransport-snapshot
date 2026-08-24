@@ -1,0 +1,30 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "representation": "81 lineage-qualified RGB simulation/coarse frames; frozen evaluator mapping",
+  "frame_count": 81,
+  "decoded_shape": [
+    81,
+    464,
+    832,
+    3
+  ],
+  "valid_tracks": 1110,
+  "valid_anchor_observations": 9766,
+  "tc_mar_lab": {
+    "n": 1110,
+    "mean": 65.71344520089995,
+    "median": 67.35846964518228,
+    "p95": 85.65334129333496
+  },
+  "tc_mar_rgb_l1": {
+    "n": 1110,
+    "mean": 0.3611773728531742,
+    "median": 0.21808784103227985,
+    "p95": 0.8472973614931106
+  },
+  "tc_me": {
+    "mean": 0.8946881631311656,
+    "median": 0.6916616512410174,
+    "p95": 1.9189550328221434
+  }
+}

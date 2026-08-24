@@ -1,0 +1,30 @@
+{
+  "purpose": "DATA_BINDING_EXPECTATION_CALIBRATION_ONLY",
+  "formal_rw_vs_dtfull_comparison": false,
+  "immutable_metric_source": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_073136__f1r3_binding_only_eval_port/generated/eval_v3_corrected_v2.py",
+  "candidate_methods_disabled": true,
+  "mode": "motion",
+  "values": {
+    "tcme": 0.7040501053065034
+  },
+  "report": {
+    "case": "santa",
+    "metric": "Track-Conditioned Motion Error (TC-ME)",
+    "methods": {
+      "rw": {
+        "transition_mean_epe_mean": 0.5869890665947547,
+        "transition_mean_epe_median": 0.5070961964161795,
+        "transition_mean_epe_p95": 1.153139444856402,
+        "sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7"
+      },
+      "old_correct": {
+        "transition_mean_epe_mean": 0.7040501053065034,
+        "transition_mean_epe_median": 0.6726863684632765,
+        "transition_mean_epe_p95": 1.1939701199879462,
+        "sha256": "1c20d32c82049e0cb5fd8f19b08957b4e5b0b70020267c357293cc568d43cf14"
+      }
+    },
+    "vs_old_correct": {},
+    "vs_realwonder": {}
+  }
+}

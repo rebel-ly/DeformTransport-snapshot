@@ -1,0 +1,14 @@
+gpu3
+whoami: cannot find name for user ID 10001
+/workspace
+/usr/bin/python
+Python 3.8.10
+/usr/bin/python
+/usr
+PATH=/workspace/.local/bin:/workspace/.local/bin:/usr/local/lib/python3.8/dist-packages/torch_tensorrt/bin:/usr/local/mpi/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/ucx/bin:/opt/tensorrt/bin:/workspace/.local/bin:/workspace/bin
+PYTHONPATH=
+LD_LIBRARY_PATH=/usr/local/lib/python3.8/dist-packages/torch/lib:/usr/local/lib/python3.8/dist-packages/torch_tensorrt/lib:/usr/local/cuda/compat/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+drwx------ 25 10001 1000 4096 Aug 12 13:42 /workspace
+drwxr-xr-x 21 10001 1000 4096 Aug 12 18:23 /workspace/DeformTransport
+drwxr-xr-x 14 10001 1000 4096 Aug 12 14:18 /workspace/DeformTransport_EvidenceV4_1
+drwxr-xr-x 11 10001 1000 4096 Aug 12 18:06 /workspace/Wan-Move

@@ -1,0 +1,49 @@
+{
+  "case": "tree",
+  "stage": "S160_point_id_raster_reconstruction",
+  "timeline": {
+    "existing_raster_states": "S0,S2,...,S158",
+    "existing_raster_count": 80,
+    "reconstructed_state": "S160",
+    "aligned_raster_states": "S0,S2,...,S160",
+    "aligned_raster_count": 81
+  },
+  "regression": {
+    "state": "S158",
+    "exact_pixel_match": true,
+    "mismatch_pixels": 0,
+    "total_pixels": 262144,
+    "stored_visible_unique_points": 5669
+  },
+  "S160": {
+    "shape": [
+      512,
+      512
+    ],
+    "minimum_visible_point_id": 0,
+    "maximum_visible_point_id": 15773,
+    "visible_unique_points": 5657
+  },
+  "aligned": {
+    "shape": [
+      81,
+      512,
+      512
+    ],
+    "first_80_equal_original": true,
+    "frame_80_equals_S160": true
+  },
+  "inputs": {
+    "trajectory": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/point_trajectories.pt",
+    "source_raster": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/flow_source_point_indices.npy",
+    "runtime_config": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/config.tree.transport.yaml"
+  },
+  "outputs": {
+    "final_raster_S160": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_182654__tree__S160_raster_reconstruction/final_raster_S160.npy",
+    "aligned_visibility_raster": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_182654__tree__S160_raster_reconstruction/aligned_visibility_raster.npy"
+  },
+  "sha256": {
+    "final_raster_S160.npy": "cdee94fe866bda932c9a9cb7b39f42668076a894d4890b2ab408e8db53656a82",
+    "aligned_visibility_raster.npy": "e14d22601c2fb06748da522e1f8ef28b01786bff6983cfcef28db4e7564ee14a"
+  }
+}

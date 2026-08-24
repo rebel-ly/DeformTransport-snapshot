@@ -1,0 +1,26 @@
+{
+  "source_config": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_151149__official_tree_runtime_config/config.normalized.yaml",
+  "runtime_config": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/config.tree.transport.yaml",
+  "changed": {
+    "export_point_trajectories": {
+      "before": null,
+      "after": true
+    },
+    "output_folder": {
+      "before": "result/tree",
+      "after": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/realwonder_tree"
+    }
+  },
+  "unexpected_changes": [],
+  "checks": {
+    "example_tree": true,
+    "material_mpm_elastic": true,
+    "frames_81": true,
+    "latent_frames_21": true,
+    "denoising_steps_preserved": true,
+    "target_faces_5000": true,
+    "trajectory_export_enabled": true,
+    "no_unexpected_changes": true
+  },
+  "all_checks_pass": true
+}

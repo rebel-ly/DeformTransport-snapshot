@@ -1,0 +1,14 @@
+{
+  "C1_SEED1_ENGINEERING_STATUS": "PASS_NORMAL_COMPLETION",
+  "process_alive": false,
+  "wrapper_pid": 62037,
+  "python_pid": 62052,
+  "exit_code": 0,
+  "completion_marker": true,
+  "start_time_utc": "2026-08-14T22:08:16Z",
+  "end_time_utc": "2026-08-14T22:43:28Z",
+  "fatal_error_scan": {"traceback": false, "cuda_oom": false, "runtime_error": false, "killed": false},
+  "mp4": {"path": "c1_seed1_gpu0/c1_preview_k0_v3d_seed001.mp4", "decode_success": true, "width": 832, "height": 464, "frame_count": 81, "fps": 16.0},
+  "runtime_denoise_steps": "25/25",
+  "science_result_seal": "CLOSED"
+}

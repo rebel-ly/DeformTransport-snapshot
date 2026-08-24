@@ -1,0 +1,265 @@
+{
+  "common_nonzero_support_scalars": 27209,
+  "differential_cells_all_channels": 121,
+  "differential_cells_any_channel": 9031,
+  "equal_target_support_cells": 0,
+  "functional_compute_device": "cpu",
+  "max_abs_residual": 0.0,
+  "mean_abs_residual": 0.0,
+  "observed_nonzero_differential_scalars": 27209,
+  "observed_only_nonzero_scalars": 0,
+  "observed_predicted_exact_equal": true,
+  "outside_support_observed_delta_scalars": 0,
+  "outside_support_predicted_delta_scalars": 0,
+  "per_channel": [
+    {
+      "channel": 0,
+      "observed_nonzero_scalars": 121,
+      "predicted_nonzero_scalars": 121,
+      "residual_nonzero_scalars": 0
+    },
+    {
+      "channel": 1,
+      "observed_nonzero_scalars": 9031,
+      "predicted_nonzero_scalars": 9031,
+      "residual_nonzero_scalars": 0
+    },
+    {
+      "channel": 2,
+      "observed_nonzero_scalars": 9026,
+      "predicted_nonzero_scalars": 9026,
+      "residual_nonzero_scalars": 0
+    },
+    {
+      "channel": 3,
+      "observed_nonzero_scalars": 9031,
+      "predicted_nonzero_scalars": 9031,
+      "residual_nonzero_scalars": 0
+    }
+  ],
+  "per_slot": [
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 718,
+      "observed_differential_scalars": 2166,
+      "predicted_differential_cells": 718,
+      "predicted_differential_scalars": 2166,
+      "residual_scalar_count": 0,
+      "tau": 1,
+      "write_support_cells": 718
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 654,
+      "observed_differential_scalars": 1974,
+      "predicted_differential_cells": 654,
+      "predicted_differential_scalars": 1974,
+      "residual_scalar_count": 0,
+      "tau": 2,
+      "write_support_cells": 654
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 619,
+      "observed_differential_scalars": 1864,
+      "predicted_differential_cells": 619,
+      "predicted_differential_scalars": 1864,
+      "residual_scalar_count": 0,
+      "tau": 3,
+      "write_support_cells": 619
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 589,
+      "observed_differential_scalars": 1771,
+      "predicted_differential_cells": 589,
+      "predicted_differential_scalars": 1771,
+      "residual_scalar_count": 0,
+      "tau": 4,
+      "write_support_cells": 589
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 552,
+      "observed_differential_scalars": 1662,
+      "predicted_differential_cells": 552,
+      "predicted_differential_scalars": 1662,
+      "residual_scalar_count": 0,
+      "tau": 5,
+      "write_support_cells": 552
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 522,
+      "observed_differential_scalars": 1574,
+      "predicted_differential_cells": 522,
+      "predicted_differential_scalars": 1574,
+      "residual_scalar_count": 0,
+      "tau": 6,
+      "write_support_cells": 522
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 507,
+      "observed_differential_scalars": 1528,
+      "predicted_differential_cells": 507,
+      "predicted_differential_scalars": 1528,
+      "residual_scalar_count": 0,
+      "tau": 7,
+      "write_support_cells": 507
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 483,
+      "observed_differential_scalars": 1456,
+      "predicted_differential_cells": 483,
+      "predicted_differential_scalars": 1456,
+      "residual_scalar_count": 0,
+      "tau": 8,
+      "write_support_cells": 483
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 465,
+      "observed_differential_scalars": 1405,
+      "predicted_differential_cells": 465,
+      "predicted_differential_scalars": 1405,
+      "residual_scalar_count": 0,
+      "tau": 9,
+      "write_support_cells": 465
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 449,
+      "observed_differential_scalars": 1351,
+      "predicted_differential_cells": 449,
+      "predicted_differential_scalars": 1351,
+      "residual_scalar_count": 0,
+      "tau": 10,
+      "write_support_cells": 449
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 418,
+      "observed_differential_scalars": 1258,
+      "predicted_differential_cells": 418,
+      "predicted_differential_scalars": 1258,
+      "residual_scalar_count": 0,
+      "tau": 11,
+      "write_support_cells": 418
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 408,
+      "observed_differential_scalars": 1229,
+      "predicted_differential_cells": 408,
+      "predicted_differential_scalars": 1229,
+      "residual_scalar_count": 0,
+      "tau": 12,
+      "write_support_cells": 408
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 375,
+      "observed_differential_scalars": 1129,
+      "predicted_differential_cells": 375,
+      "predicted_differential_scalars": 1129,
+      "residual_scalar_count": 0,
+      "tau": 13,
+      "write_support_cells": 375
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 377,
+      "observed_differential_scalars": 1135,
+      "predicted_differential_cells": 377,
+      "predicted_differential_scalars": 1135,
+      "residual_scalar_count": 0,
+      "tau": 14,
+      "write_support_cells": 377
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 355,
+      "observed_differential_scalars": 1069,
+      "predicted_differential_cells": 355,
+      "predicted_differential_scalars": 1069,
+      "residual_scalar_count": 0,
+      "tau": 15,
+      "write_support_cells": 355
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 330,
+      "observed_differential_scalars": 993,
+      "predicted_differential_cells": 330,
+      "predicted_differential_scalars": 993,
+      "residual_scalar_count": 0,
+      "tau": 16,
+      "write_support_cells": 330
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 319,
+      "observed_differential_scalars": 960,
+      "predicted_differential_cells": 319,
+      "predicted_differential_scalars": 960,
+      "residual_scalar_count": 0,
+      "tau": 17,
+      "write_support_cells": 319
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 295,
+      "observed_differential_scalars": 887,
+      "predicted_differential_cells": 295,
+      "predicted_differential_scalars": 887,
+      "residual_scalar_count": 0,
+      "tau": 18,
+      "write_support_cells": 295
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 295,
+      "observed_differential_scalars": 890,
+      "predicted_differential_cells": 295,
+      "predicted_differential_scalars": 890,
+      "residual_scalar_count": 0,
+      "tau": 19,
+      "write_support_cells": 295
+    },
+    {
+      "max_abs_residual": 0.0,
+      "observed_differential_cells": 301,
+      "observed_differential_scalars": 908,
+      "predicted_differential_cells": 301,
+      "predicted_differential_scalars": 908,
+      "residual_scalar_count": 0,
+      "tau": 20,
+      "write_support_cells": 301
+    }
+  ],
+  "predicted_nonzero_differential_scalars": 27209,
+  "predicted_only_nonzero_scalars": 0,
+  "residual_nonzero_scalars": 0,
+  "source_drift": {
+    "head": "80c58a7d2ad175fa82a4d57f79f2a1415317dcfa",
+    "sha256": {
+      "trajectory.py": "0c6bc94d8ce1f885f0333314a9b201a650163cd209b2a3b3f95b4f3a35a49dae",
+      "wan_move.py": "aca79f9cc4bf32ea363c4440ed2c7e7d90ef5aa763f3e96ae6c2b8eff35c1857"
+    }
+  },
+  "source_drift_gate": "PASS",
+  "source_feature_dtype": "torch.float32",
+  "source_feature_linf_difference": 0.7392787933349609,
+  "source_feature_nonzero_scalar_difference_count": 3790,
+  "source_feature_shape": [
+    1257,
+    4
+  ],
+  "source_slot_observed_delta_scalars": 0,
+  "source_slot_predicted_delta_scalars": 0,
+  "status": "PASS",
+  "winner_count": 9031,
+  "winner_mapping_equal": true
+}

@@ -1,0 +1,14 @@
+{
+  "algorithmic_source_changed": false,
+  "attempt2_formal_experiment_definition_unchanged": true,
+  "attempt2_runtime_policy": "PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True",
+  "denoise_configuration_changed": false,
+  "dtype_changed": false,
+  "formal_inputs_changed": false,
+  "frame_count_changed": false,
+  "model_parameters_changed": false,
+  "resolution_changed": false,
+  "scheduler_changed": false,
+  "seed_changed": false,
+  "trajectory_operator_changed": false
+}

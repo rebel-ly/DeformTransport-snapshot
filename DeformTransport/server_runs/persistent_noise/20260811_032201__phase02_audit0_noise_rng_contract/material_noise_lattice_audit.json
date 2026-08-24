@@ -1,0 +1,330 @@
+{
+  "santa": {
+    "track_shape": [
+      81,
+      1277,
+      2
+    ],
+    "visibility_shape": [
+      81,
+      1277
+    ],
+    "finite_fraction": 1.0,
+    "visible_in_noise_lattice_fraction": 1.0,
+    "source_visible_points": 1277,
+    "source_unique_cells": 1277,
+    "anchor_stats": [
+      {
+        "t": 0,
+        "visible_points": 1277,
+        "occupied_cells": 1277,
+        "collision_points": 0,
+        "max_points_per_cell": 1
+      },
+      {
+        "t": 4,
+        "visible_points": 738,
+        "occupied_cells": 692,
+        "collision_points": 46,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 8,
+        "visible_points": 700,
+        "occupied_cells": 635,
+        "collision_points": 65,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 12,
+        "visible_points": 656,
+        "occupied_cells": 596,
+        "collision_points": 60,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 16,
+        "visible_points": 627,
+        "occupied_cells": 575,
+        "collision_points": 52,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 20,
+        "visible_points": 607,
+        "occupied_cells": 567,
+        "collision_points": 40,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 24,
+        "visible_points": 553,
+        "occupied_cells": 519,
+        "collision_points": 34,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 28,
+        "visible_points": 546,
+        "occupied_cells": 503,
+        "collision_points": 43,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 32,
+        "visible_points": 547,
+        "occupied_cells": 494,
+        "collision_points": 53,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 36,
+        "visible_points": 522,
+        "occupied_cells": 472,
+        "collision_points": 50,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 40,
+        "visible_points": 495,
+        "occupied_cells": 451,
+        "collision_points": 44,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 44,
+        "visible_points": 489,
+        "occupied_cells": 450,
+        "collision_points": 39,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 48,
+        "visible_points": 472,
+        "occupied_cells": 433,
+        "collision_points": 39,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 52,
+        "visible_points": 456,
+        "occupied_cells": 414,
+        "collision_points": 42,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 56,
+        "visible_points": 417,
+        "occupied_cells": 378,
+        "collision_points": 39,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 60,
+        "visible_points": 401,
+        "occupied_cells": 358,
+        "collision_points": 43,
+        "max_points_per_cell": 4
+      },
+      {
+        "t": 64,
+        "visible_points": 379,
+        "occupied_cells": 350,
+        "collision_points": 29,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 68,
+        "visible_points": 356,
+        "occupied_cells": 328,
+        "collision_points": 28,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 72,
+        "visible_points": 342,
+        "occupied_cells": 313,
+        "collision_points": 29,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 76,
+        "visible_points": 320,
+        "occupied_cells": 293,
+        "collision_points": 27,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 80,
+        "visible_points": 320,
+        "occupied_cells": 290,
+        "collision_points": 30,
+        "max_points_per_cell": 2
+      }
+    ]
+  },
+  "tree": {
+    "track_shape": [
+      81,
+      713,
+      2
+    ],
+    "visibility_shape": [
+      81,
+      713
+    ],
+    "finite_fraction": 1.0,
+    "visible_in_noise_lattice_fraction": 1.0,
+    "source_visible_points": 713,
+    "source_unique_cells": 713,
+    "anchor_stats": [
+      {
+        "t": 0,
+        "visible_points": 713,
+        "occupied_cells": 713,
+        "collision_points": 0,
+        "max_points_per_cell": 1
+      },
+      {
+        "t": 4,
+        "visible_points": 668,
+        "occupied_cells": 645,
+        "collision_points": 23,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 8,
+        "visible_points": 662,
+        "occupied_cells": 562,
+        "collision_points": 100,
+        "max_points_per_cell": 4
+      },
+      {
+        "t": 12,
+        "visible_points": 625,
+        "occupied_cells": 559,
+        "collision_points": 66,
+        "max_points_per_cell": 2
+      },
+      {
+        "t": 16,
+        "visible_points": 581,
+        "occupied_cells": 513,
+        "collision_points": 68,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 20,
+        "visible_points": 552,
+        "occupied_cells": 494,
+        "collision_points": 58,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 24,
+        "visible_points": 513,
+        "occupied_cells": 455,
+        "collision_points": 58,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 28,
+        "visible_points": 466,
+        "occupied_cells": 417,
+        "collision_points": 49,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 32,
+        "visible_points": 440,
+        "occupied_cells": 383,
+        "collision_points": 57,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 36,
+        "visible_points": 412,
+        "occupied_cells": 363,
+        "collision_points": 49,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 40,
+        "visible_points": 393,
+        "occupied_cells": 346,
+        "collision_points": 47,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 44,
+        "visible_points": 370,
+        "occupied_cells": 320,
+        "collision_points": 50,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 48,
+        "visible_points": 367,
+        "occupied_cells": 327,
+        "collision_points": 40,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 52,
+        "visible_points": 342,
+        "occupied_cells": 310,
+        "collision_points": 32,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 56,
+        "visible_points": 345,
+        "occupied_cells": 305,
+        "collision_points": 40,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 60,
+        "visible_points": 337,
+        "occupied_cells": 306,
+        "collision_points": 31,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 64,
+        "visible_points": 332,
+        "occupied_cells": 295,
+        "collision_points": 37,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 68,
+        "visible_points": 327,
+        "occupied_cells": 305,
+        "collision_points": 22,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 72,
+        "visible_points": 338,
+        "occupied_cells": 310,
+        "collision_points": 28,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 76,
+        "visible_points": 337,
+        "occupied_cells": 304,
+        "collision_points": 33,
+        "max_points_per_cell": 3
+      },
+      {
+        "t": 80,
+        "visible_points": 336,
+        "occupied_cells": 293,
+        "collision_points": 43,
+        "max_points_per_cell": 3
+      }
+    ]
+  }
+}

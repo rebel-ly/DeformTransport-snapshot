@@ -1,0 +1,49 @@
+{
+  "wave2_authorized": true,
+  "wave2_launched": true,
+  "authorization": {
+    "wave1_scientific_validity": "PASS",
+    "gpu0_cross_device_generation_identity": "PASS",
+    "drop_zero62_manifest_pass": true
+  },
+  "execution_identity": "10011:10011",
+  "scientific_configuration_changed": false,
+  "arms": {
+    "seed3": {
+      "assigned_gpu": "GPU0",
+      "container_pid": 19918,
+      "uid_gid": "10011:10011",
+      "seed": 3,
+      "carrier_count": 1257,
+      "runner": "run_dtfull_container_exact.sh",
+      "output": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/wave2/20260814_082257/seed3/santa_correct_v3d_seed003.mp4"
+    },
+    "seed4": {
+      "assigned_gpu": "GPU1",
+      "container_pid": 20062,
+      "uid_gid": "10011:10011",
+      "seed": 4,
+      "carrier_count": 1257,
+      "runner": "run_dtfull_container_exact.sh",
+      "output": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/wave2/20260814_082257/seed4/santa_correct_v3d_seed004.mp4"
+    },
+    "drop_zero62": {
+      "assigned_gpu": "GPU2",
+      "container_pid": 23938,
+      "uid_gid": "10011:10011",
+      "seed": 0,
+      "carrier_count": 1195,
+      "runner": "run_drop_zero62_container_v3d.sh",
+      "output": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/parallel_acceleration/20260814_000000__dtfull_seed_floor/wave2/20260814_082257/drop_zero62/santa_correct_v3d_seed000.mp4"
+    }
+  },
+  "frozen_generator_configuration": {
+    "operator": "V3D",
+    "sample_steps": 40,
+    "sample_shift": 3.0,
+    "dtype": "bf16",
+    "resolution": "480x832",
+    "frame_count": 81
+  },
+  "launch_note": "Initial detached attempts performed no generation because output-log parent directories did not yet exist; no generator PIDs, GPU allocations, or target outputs existed. The recorded processes are the first actual generator launches. DROP-ZERO62 required bash invocation because the newly added runner lacked an execute bit; no permissions were changed."
+}

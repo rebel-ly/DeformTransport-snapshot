@@ -1,0 +1,1841 @@
+diff --git a/wan/modules/trajectory.py b/wan/modules/trajectory.py
+index 2ee59d1..5a48293 100644
+--- a/wan/modules/trajectory.py
++++ b/wan/modules/trajectory.py
+@@ -61,113 +61,1212 @@ def get_pos_emb(
+ 
+     return pos_emb
+ 
++
++_DT_CONTEXT = None
++
++
++def _dt_mode():
++    import os
++
++    return (
++        os.environ
++        .get(
++            "DT_TRANSPORT_VARIANT",
++            "baseline",
++        )
++        .strip()
++        .lower()
++    )
++
++
++def _dt_load_sidecars(
++    n,
++    device,
++):
++    import os
++    import numpy as np
++
++    depth_path = os.environ.get(
++        "DT_TRACK_DEPTH_PATH",
++        "",
++    )
++
++    ids_path = os.environ.get(
++        "DT_TRACK_IDS_PATH",
++        "",
++    )
++
++    if (
++        not depth_path
++        or not ids_path
++    ):
++        raise RuntimeError(
++            "DT custom transport requires "
++            "DT_TRACK_DEPTH_PATH and "
++            "DT_TRACK_IDS_PATH"
++        )
++
++    depth_np = np.load(
++        depth_path
++    )
++
++    ids_np = np.load(
++        ids_path
++    )
++
++    if (
++        depth_np.ndim == 3
++        and depth_np.shape[0] == 1
++    ):
++        depth_np = depth_np[0]
++
++    if depth_np.shape != (
++        81,
++        n,
++    ):
++        raise RuntimeError(
++            f"depth sidecar shape "
++            f"{depth_np.shape}, "
++            f"expected (81,{n})"
++        )
++
++    if ids_np.shape != (
++        n,
++    ):
++        raise RuntimeError(
++            f"ID sidecar shape "
++            f"{ids_np.shape}, "
++            f"expected ({n},)"
++        )
++
++    depth = (
++        torch
++        .from_numpy(
++            depth_np
++        )
++        .to(
++            device=device,
++            dtype=torch.float32,
++        )
++    )
++
++    ids = (
++        torch
++        .from_numpy(
++            ids_np.astype(
++                np.int64
++            )
++        )
++        .to(
++            device=device,
++        )
++    )
++
++    return (
++        depth,
++        ids,
++    )
++
++
+ def create_pos_feature_map(
+-    pred_tracks: torch.Tensor, # [T, N, 2]
+-    pred_visibility: torch.Tensor, # [T, N]
++    pred_tracks: torch.Tensor,
++    pred_visibility: torch.Tensor,
+     downsample_ratios: list[int],
+     height: int,
+     width: int,
+     pos_emb_dim: int,
+     track_num: int = -1,
+     t_down_strategy: str = "sample",
+-    device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu"),
++    device: torch.device = torch.device(
++        "cuda"
++        if torch.cuda.is_available()
++        else "cpu"
++    ),
+     dtype: torch.dtype = torch.float32,
+ ):
+-    """
+-    Create a feature map from the predicted tracks.
+ 
+-    Args:
+-    - pred_tracks: torch.Tensor, the predicted tracks, [T, N, 2]
+-    - pred_visibility: torch.Tensor, the predicted visibility, [T, N]
+-    - downsample_ratios: list[int], the ratios for downsampling time, height, and width
+-    - height: int, the height of the feature map
+-    - width: int, the width of the feature map
+-    - pos_emb_dim: int, the dimension of the position embeddings
+-    - track_num: int, the number of tracks to use
+-    - t_down_strategy: str, the strategy for downsampling time dimension
+-    - device: torch.device, the device
+-    - dtype: torch.dtype, the data type
++    global _DT_CONTEXT
+ 
+-    Returns:
+-    - feature_map: torch.Tensor, the feature map, [T', H', W', pos_emb_dim]
+-    - track_pos: torch.Tensor, the position embeddings, [N, T', 2], 2 = height, width
+-    """
+-    
+-    assert t_down_strategy in ["sample", "average"], "Invalid strategy for downsampling time dimension."
++    assert (
++        t_down_strategy
++        in [
++            "sample",
++            "average",
++        ]
++    ), "Invalid strategy"
+ 
+     t, n, _ = pred_tracks.shape
+-    t_down, h_down, w_down = downsample_ratios
+-    feature_map = torch.zeros((t-1) // t_down + 1, height // h_down, width // w_down, pos_emb_dim, device=device, dtype=dtype)
+-    track_pos = - torch.ones(n, (t-1) // t_down + 1, 2, dtype=torch.long)
+-    
++
++    (
++        t_down,
++        h_down,
++        w_down,
++    ) = downsample_ratios
++
++    feature_map = torch.zeros(
++        (
++            (t - 1)
++            // t_down
++            + 1,
++
++            height
++            // h_down,
++
++            width
++            // w_down,
++
++            pos_emb_dim,
++        ),
++        device=device,
++        dtype=dtype,
++    )
++
++    track_pos = (
++        -torch.ones(
++            n,
++            (t - 1)
++            // t_down
++            + 1,
++            2,
++            dtype=torch.long,
++        )
++    )
++
+     if track_num == -1:
+         track_num = n
+ 
+-    tracks_idx = torch.randperm(n)[:track_num]
+-    tracks = pred_tracks[:, tracks_idx]
+-    visibility = pred_visibility[:, tracks_idx]
+-    tracks_embs = get_pos_emb(torch.randperm(n)[:track_num], pos_emb_dim, device=device, dtype=dtype)
++    # Preserve original Wan-Move RNG consumption.
++    tracks_idx = (
++        torch.randperm(n)[
++            :track_num
++        ]
++    )
++
++    tracks = pred_tracks[
++        :,
++        tracks_idx,
++    ]
++
++    visibility = pred_visibility[
++        :,
++        tracks_idx,
++    ]
++
++    # Preserve second original randperm.
++    tracks_embs = get_pos_emb(
++        torch.randperm(n)[
++            :track_num
++        ],
++        pos_emb_dim,
++        device=device,
++        dtype=dtype,
++    )
++
++    for t_idx in range(
++        0,
++        t,
++        t_down,
++    ):
++
++        if (
++            t_down_strategy
++            == "sample"
++            or t_idx == 0
++        ):
++            cur_tracks = tracks[
++                t_idx
++            ]
++
++            cur_visibility = visibility[
++                t_idx
++            ]
+ 
+-    cover_count = 0
+-    for t_idx in range(0, t, t_down):
+-        if t_down_strategy == "sample" or t_idx == 0:
+-            cur_tracks = tracks[t_idx] # [N, 2]
+-            cur_visibility = visibility[t_idx] # [N]
+         else:
+-            cur_tracks = tracks[t_idx:t_idx+t_down].mean(dim=0)
+-            cur_visibility = torch.any(visibility[t_idx:t_idx+t_down], dim=0)
+-        
+-        for i in range(track_num):
+-            if not cur_visibility[i] or cur_tracks[i][0] < 0 or cur_tracks[i][1] < 0 or cur_tracks[i][0] >= width or cur_tracks[i][1] >= height:
++            cur_tracks = (
++                tracks[
++                    t_idx:
++                    t_idx
++                    + t_down
++                ]
++                .mean(
++                    dim=0
++                )
++            )
++
++            cur_visibility = (
++                torch.any(
++                    visibility[
++                        t_idx:
++                        t_idx
++                        + t_down
++                    ],
++                    dim=0,
++                )
++            )
++
++        for i in range(
++            track_num
++        ):
++
++            if (
++                not cur_visibility[i]
++                or cur_tracks[i][0] < 0
++                or cur_tracks[i][1] < 0
++                or cur_tracks[i][0] >= width
++                or cur_tracks[i][1] >= height
++            ):
+                 continue
++
+             x, y = cur_tracks[i]
+-            x, y = int(x // w_down), int(y // h_down)
+-            feature_map[t_idx // t_down, y, x] += tracks_embs[i]
+-            track_pos[i, t_idx // t_down, 0], track_pos[i, t_idx // t_down, 1] = y, x
+ 
+-    return feature_map, track_pos
++            x = int(
++                x
++                // w_down
++            )
++
++            y = int(
++                y
++                // h_down
++            )
++
++            feature_map[
++                t_idx
++                // t_down,
++                y,
++                x,
++            ] += tracks_embs[i]
++
++            track_pos[
++                i,
++                t_idx
++                // t_down,
++                0,
++            ] = y
++
++            track_pos[
++                i,
++                t_idx
++                // t_down,
++                1,
++            ] = x
++
++
++    mode = _dt_mode()
++
++    if mode in {
++        "v3b",
++        "v3c",
++        "v3d",
++        "v3e",
++    }:
++
++        if (
++            t_down_strategy
++            != "sample"
++        ):
++            raise RuntimeError(
++                "DT suite is frozen "
++                "to Wan-Move sample "
++                "temporal downsampling"
++            )
++
++        depth, ids = (
++            _dt_load_sidecars(
++                n,
++                pred_tracks.device,
++            )
++        )
++
++        idx_device = (
++            tracks_idx
++            .to(
++                pred_tracks.device
++            )
++        )
++
++        _DT_CONTEXT = {
++            "tracks":
++                tracks,
++
++            "visibility":
++                visibility,
++
++            "depth":
++                depth[
++                    :,
++                    idx_device,
++                ],
++
++            "ids":
++                ids[
++                    idx_device
++                ],
++
++            "t_down":
++                int(
++                    t_down
++                ),
++
++            "h_down":
++                int(
++                    h_down
++                ),
++
++            "w_down":
++                int(
++                    w_down
++                ),
++
++            "height":
++                int(
++                    height
++                ),
++
++            "width":
++                int(
++                    width
++                ),
++        }
++
++    else:
++        _DT_CONTEXT = None
++
++    return (
++        feature_map,
++        track_pos,
++    )
++
++
++def _dt_original_replace(
++    vae_feature,
++    track_pos,
++):
++
++    b, _, t, h, w = (
++        vae_feature.shape
++    )
++
++    assert (
++        b
++        == track_pos.shape[0]
++    ), "Batch size mismatch."
++
++    n = track_pos.shape[1]
++
++    # Preserve original third randperm.
++    track_pos = track_pos[
++        :,
++        torch.randperm(n),
++        :,
++        :,
++    ]
++
++    current_pos = (
++        track_pos[
++            :,
++            :,
++            1:,
++            :,
++        ]
++    )
++
++    mask = (
++        (current_pos[..., 0] >= 0)
++        &
++        (current_pos[..., 1] >= 0)
++    )
++
++    valid_indices = (
++        mask
++        .nonzero(
++            as_tuple=False
++        )
++    )
++
++    if (
++        valid_indices.shape[0]
++        == 0
++    ):
++        return vae_feature
++
++    batch_idx = valid_indices[
++        :,
++        0,
++    ]
++
++    track_idx = valid_indices[
++        :,
++        1,
++    ]
++
++    t_rel = valid_indices[
++        :,
++        2,
++    ]
++
++    t_target = (
++        t_rel
++        + 1
++    )
++
++    h_target = (
++        current_pos[
++            batch_idx,
++            track_idx,
++            t_rel,
++            0,
++        ]
++        .long()
++    )
++
++    w_target = (
++        current_pos[
++            batch_idx,
++            track_idx,
++            t_rel,
++            1,
++        ]
++        .long()
++    )
++
++    h_source = (
++        track_pos[
++            batch_idx,
++            track_idx,
++            0,
++            0,
++        ]
++        .long()
++    )
++
++    w_source = (
++        track_pos[
++            batch_idx,
++            track_idx,
++            0,
++            1,
++        ]
++        .long()
++    )
++
++    src_features = (
++        vae_feature[
++            batch_idx,
++            :,
++            0,
++            h_source,
++            w_source,
++        ]
++    )
++
++    vae_feature[
++        batch_idx,
++        :,
++        t_target,
++        h_target,
++        w_target,
++    ] = src_features
++
++    return vae_feature
++
++
++def _dt_bilinear_source_features(
++    vae_feature,
++    source_xy,
++    stride_y,
++    stride_x,
++):
++
++    # Treat the discrete VAE condition latent as a
++    # cell-centered continuous feature field.
++    #
++    # latent index:
++    # pixel / stride - 0.5
++    #
++    # This is a fixed geometric convention.
++    # No tunable alpha is introduced.
++
++    source_xy = (
++        source_xy
++        .to(
++            device=vae_feature.device,
++            dtype=torch.float32,
++        )
++    )
++
++    _, c, _, h, w = (
++        vae_feature.shape
++    )
++
++    lx = (
++        source_xy[:, 0]
++        / float(
++            stride_x
++        )
++        - 0.5
++    )
++
++    ly = (
++        source_xy[:, 1]
++        / float(
++            stride_y
++        )
++        - 0.5
++    )
++
++    if w > 1:
++        gx = (
++            lx
++            * (
++                2.0
++                / (
++                    w - 1
++                )
++            )
++            - 1.0
++        )
++    else:
++        gx = torch.zeros_like(
++            lx
++        )
++
++    if h > 1:
++        gy = (
++            ly
++            * (
++                2.0
++                / (
++                    h - 1
++                )
++            )
++            - 1.0
++        )
++    else:
++        gy = torch.zeros_like(
++            ly
++        )
++
++    grid = torch.stack(
++        [
++            gx,
++            gy,
++        ],
++        dim=-1,
++    ).view(
++        1,
++        1,
++        -1,
++        2,
++    )
++
++    src = (
++        vae_feature[
++            0,
++            :,
++            0,
++        ]
++        .unsqueeze(0)
++    )
++
++    sampled = (
++        torch.nn.functional.grid_sample(
++            src,
++            grid,
++            mode="bilinear",
++            padding_mode="border",
++            align_corners=True,
++        )
++    )
++
++    # [1,C,1,N]
++    # -> [N,C]
++    return (
++        sampled[
++            0,
++            :,
++            0,
++            :,
++        ]
++        .transpose(
++            0,
++            1
++        )
++        .contiguous()
++    )
+ 
+ 
+ def replace_feature(
+-    vae_feature: torch.Tensor,  # [B, C', T', H', W']
+-    track_pos: torch.Tensor,    # [B, N, T', 2]
++    vae_feature: torch.Tensor,
++    track_pos: torch.Tensor,
+ ) -> torch.Tensor:
+-    b, _, t, h, w = vae_feature.shape
+-    assert b == track_pos.shape[0], "Batch size mismatch."
++
++    import math
++
++    global _DT_CONTEXT
++
++    mode = _dt_mode()
++
++    if mode in {
++        "baseline",
++        "v3s",
++        "",
++    }:
++        return _dt_original_replace(
++            vae_feature,
++            track_pos,
++        )
++
++    if mode not in {
++        "v3b",
++        "v3c",
++        "v3d",
++        "v3e",
++    }:
++        raise RuntimeError(
++            f"unknown "
++            f"DT_TRANSPORT_VARIANT="
++            f"{mode}"
++        )
++
++    if _DT_CONTEXT is None:
++        raise RuntimeError(
++            "DT transport context missing; "
++            "create_pos_feature_map "
++            "must run first"
++        )
++
++    if (
++        vae_feature.shape[0]
++        != 1
++        or track_pos.shape[0]
++        != 1
++    ):
++        raise RuntimeError(
++            "DT suite freezes "
++            "batch size 1"
++        )
++
+     n = track_pos.shape[1]
+-    
+-    # Shuffle the trajectory order
+-    track_pos = track_pos[:, torch.randperm(n), :, :]
+-    
+-    # Extract coordinates at time steps ≥ 1 and generate a valid mask
+-    current_pos = track_pos[:, :, 1:, :]  # [B, N, T-1, 2]
+-    mask = (current_pos[..., 0] >= 0) & (current_pos[..., 1] >= 0)  # [B, N, T-1]
+-    
+-    # Get all valid indices
+-    valid_indices = mask.nonzero(as_tuple=False)  # [num_valid, 3]
+-    num_valid = valid_indices.shape[0]
+-    
+-    if num_valid == 0:
+-        return vae_feature
+-    
+-    # Decompose valid indices into each dimension
+-    batch_idx = valid_indices[:, 0]
+-    track_idx = valid_indices[:, 1]
+-    t_rel = valid_indices[:, 2]
+-    t_target = t_rel + 1  # Convert to original time step indices
+-    
+-    # Extract target position coordinates
+-    h_target = current_pos[batch_idx, track_idx, t_rel, 0].long()  # Ensure integer indices
+-    w_target = current_pos[batch_idx, track_idx, t_rel, 1].long()
+-    
+-    # Extract source position coordinates (t=0)
+-    h_source = track_pos[batch_idx, track_idx, 0, 0].long()
+-    w_source = track_pos[batch_idx, track_idx, 0, 1].long()
+-    
+-    # Get source features and assign to target positions
+-    src_features = vae_feature[batch_idx, :, 0, h_source, w_source]
+-    vae_feature[batch_idx, :, t_target, h_target, w_target] = src_features
+-    
++
++    # Preserve original Wan-Move third randperm
++    # RNG consumption.
++    #
++    # Reorder every associated material field
++    # identically.
++    perm = torch.randperm(
++        n
++    )
++
++    track_pos = track_pos[
++        :,
++        perm,
++        :,
++        :,
++    ]
++
++    perm_device = perm.to(
++        _DT_CONTEXT[
++            "tracks"
++        ].device
++    )
++
++    tracks = (
++        _DT_CONTEXT[
++            "tracks"
++        ][
++            :,
++            perm_device,
++        ]
++    )
++
++    visibility = (
++        _DT_CONTEXT[
++            "visibility"
++        ][
++            :,
++            perm_device,
++        ]
++    )
++
++    depth = (
++        _DT_CONTEXT[
++            "depth"
++        ][
++            :,
++            perm_device,
++        ]
++    )
++
++    ids = (
++        _DT_CONTEXT[
++            "ids"
++        ][
++            perm_device
++        ]
++    )
++
++    t_down = (
++        _DT_CONTEXT[
++            "t_down"
++        ]
++    )
++
++    stride_y = (
++        _DT_CONTEXT[
++            "h_down"
++        ]
++    )
++
++    stride_x = (
++        _DT_CONTEXT[
++            "w_down"
++        ]
++    )
++
++    tracks_sampled = (
++        tracks[
++            ::t_down
++        ]
++    )
++
++    vis_sampled = (
++        visibility[
++            ::t_down
++        ]
++    )
++
++    depth_sampled = (
++        depth[
++            ::t_down
++        ]
++    )
++
++    latent_t = (
++        track_pos.shape[2]
++    )
++
++    assert (
++        tracks_sampled.shape[0]
++        == latent_t
++    )
++
++    assert (
++        depth_sampled.shape[0]
++        == latent_t
++    )
++
++    src_h = (
++        track_pos[
++            0,
++            :,
++            0,
++            0,
++        ]
++        .to(
++            tracks.device
++        )
++    )
++
++    src_w = (
++        track_pos[
++            0,
++            :,
++            0,
++            1,
++        ]
++        .to(
++            tracks.device
++        )
++    )
++
++    src_valid = (
++        (src_h >= 0)
++        &
++        (src_w >= 0)
++    )
++
++    if mode == "v3d":
++
++        source_features = (
++            _dt_bilinear_source_features(
++                vae_feature,
++                tracks_sampled[0],
++                stride_y,
++                stride_x,
++            )
++        )
++
++    else:
++        source_features = None
++
++    H = vae_feature.shape[-2]
++    W = vae_feature.shape[-1]
++
++    for tau in range(
++        1,
++        latent_t,
++    ):
++
++        target_h = (
++            track_pos[
++                0,
++                :,
++                tau,
++                0,
++            ]
++            .to(
++                tracks.device
++            )
++        )
++
++        target_w = (
++            track_pos[
++                0,
++                :,
++                tau,
++                1,
++            ]
++            .to(
++                tracks.device
++            )
++        )
++
++        valid = (
++            src_valid
++            &
++            (target_h >= 0)
++            &
++            (target_w >= 0)
++            &
++            vis_sampled[tau]
++        )
++
++        indices = torch.where(
++            valid
++        )[0]
++
++        if (
++            indices.numel()
++            == 0
++        ):
++            continue
++
++
++        # ====================================================
++        # V3B / V3C / V3D:
++        # exactly one source material identity per target cell.
++        # ====================================================
++
++        if mode in {
++            "v3b",
++            "v3c",
++            "v3d",
++        }:
++
++            groups = {}
++
++            for ii in indices.tolist():
++
++                hh = int(
++                    target_h[
++                        ii
++                    ].item()
++                )
++
++                ww = int(
++                    target_w[
++                        ii
++                    ].item()
++                )
++
++                groups.setdefault(
++                    (
++                        hh,
++                        ww,
++                    ),
++                    [],
++                ).append(
++                    ii
++                )
++
++            for (
++                hh,
++                ww,
++            ), members in groups.items():
++
++                best = None
++                best_key = None
++
++                for ii in members:
++
++                    material_id = int(
++                        ids[
++                            ii
++                        ].item()
++                    )
++
++                    if mode == "v3b":
++
++                        x = float(
++                            tracks_sampled[
++                                tau,
++                                ii,
++                                0,
++                            ].item()
++                        )
++
++                        y = float(
++                            tracks_sampled[
++                                tau,
++                                ii,
++                                1,
++                            ].item()
++                        )
++
++                        # Squared quantization error
++                        # to target latent-cell center.
++                        score = (
++                            (
++                                x
++                                - (
++                                    ww
++                                    + 0.5
++                                )
++                                * stride_x
++                            ) ** 2
++                            +
++                            (
++                                y
++                                - (
++                                    hh
++                                    + 0.5
++                                )
++                                * stride_y
++                            ) ** 2
++                        )
++
++                    else:
++
++                        score = float(
++                            depth_sampled[
++                                tau,
++                                ii,
++                            ].item()
++                        )
++
++                        if (
++                            not math.isfinite(
++                                score
++                            )
++                            or score <= 0
++                        ):
++                            continue
++
++                    key = (
++                        score,
++                        material_id,
++                    )
++
++                    if (
++                        best_key is None
++                        or key
++                        < best_key
++                    ):
++                        best_key = key
++                        best = ii
++
++                if best is None:
++                    continue
++
++                if mode == "v3d":
++
++                    feat = (
++                        source_features[
++                            best
++                        ]
++                    )
++
++                else:
++
++                    source_h = int(
++                        src_h[
++                            best
++                        ].item()
++                    )
++
++                    source_w = int(
++                        src_w[
++                            best
++                        ].item()
++                    )
++
++                    feat = (
++                        vae_feature[
++                            0,
++                            :,
++                            0,
++                            source_h,
++                            source_w,
++                        ]
++                    )
++
++                vae_feature[
++                    0,
++                    :,
++                    tau,
++                    hh,
++                    ww,
++                ] = feat
++
++
++        # ====================================================
++        # V3E:
++        #
++        # depth-aware 3x3 local source-condition patch.
++        #
++        # Every target latent cell still has exactly one
++        # winning material contributor.
++        # ====================================================
++
++        else:
++
++            groups = {}
++
++            for ii in indices.tolist():
++
++                source_h0 = int(
++                    src_h[
++                        ii
++                    ].item()
++                )
++
++                source_w0 = int(
++                    src_w[
++                        ii
++                    ].item()
++                )
++
++                target_h0 = int(
++                    target_h[
++                        ii
++                    ].item()
++                )
++
++                target_w0 = int(
++                    target_w[
++                        ii
++                    ].item()
++                )
++
++                z = float(
++                    depth_sampled[
++                        tau,
++                        ii,
++                    ].item()
++                )
++
++                if (
++                    not math.isfinite(
++                        z
++                    )
++                    or z <= 0
++                ):
++                    continue
++
++                material_id = int(
++                    ids[
++                        ii
++                    ].item()
++                )
++
++                for dy in (
++                    -1,
++                    0,
++                    1,
++                ):
++                    for dx in (
++                        -1,
++                        0,
++                        1,
++                    ):
++
++                        source_h = (
++                            source_h0
++                            + dy
++                        )
++
++                        source_w = (
++                            source_w0
++                            + dx
++                        )
++
++                        hh = (
++                            target_h0
++                            + dy
++                        )
++
++                        ww = (
++                            target_w0
++                            + dx
++                        )
++
++                        if not (
++                            0 <= source_h < H
++                            and 0 <= source_w < W
++                            and 0 <= hh < H
++                            and 0 <= ww < W
++                        ):
++                            continue
++
++                        groups.setdefault(
++                            (
++                                hh,
++                                ww,
++                            ),
++                            [],
++                        ).append(
++                            (
++                                z,
++                                material_id,
++                                source_h,
++                                source_w,
++                            )
++                        )
++
++            for (
++                hh,
++                ww,
++            ), candidates in groups.items():
++
++                (
++                    z,
++                    material_id,
++                    source_h,
++                    source_w,
++                ) = min(
++                    candidates,
++                    key=lambda item: (
++                        item[0],
++                        item[1],
++                    ),
++                )
++
++                vae_feature[
++                    0,
++                    :,
++                    tau,
++                    hh,
++                    ww,
++                ] = (
++                    vae_feature[
++                        0,
++                        :,
++                        0,
++                        source_h,
++                        source_w,
++                    ]
++                )
++
+     return vae_feature
+ 
+ def get_video_track_video(
+@@ -484,3 +1583,383 @@ def draw_tracks_on_video(video, tracks, visibility=None, track_frame=24):
+         output_frames.append(frame.convert("RGB"))
+         
+     return output_frames
++
++
++# ===== DeformTransport V4 material transport helper =====
++_DT_V4_PLAN_CACHE = {}
++
++
++def _dt_v4_plan(track_pos, patch_radius):
++    """
++    Build deterministic material -> latent target claims once.
++
++    Arbitration:
++      smallest positive camera depth,
++      then smallest persistent material ID.
++
++    patch_radius=0: center cell only.
++    patch_radius=1: 3x3 local support with matched source offsets.
++    """
++    global _DT_CONTEXT, _DT_V4_PLAN_CACHE
++
++    if _DT_CONTEXT is None:
++        raise RuntimeError(
++            "DT V4 requires V3D context from create_pos_feature_map"
++        )
++
++    if track_pos.ndim != 4 or track_pos.shape[0] != 1:
++        raise RuntimeError(
++            f"unexpected V4 track_pos shape {tuple(track_pos.shape)}"
++        )
++
++    key = (int(patch_radius), tuple(track_pos.shape))
++
++    if key in _DT_V4_PLAN_CACHE:
++        return _DT_V4_PLAN_CACHE[key]
++
++    tp = track_pos[0].detach().cpu().numpy()
++
++    tracks = (
++        _DT_CONTEXT["tracks"]
++        .detach()
++        .cpu()
++        .numpy()
++    )
++
++    vis = (
++        _DT_CONTEXT["visibility"]
++        .detach()
++        .cpu()
++        .numpy()
++        .astype(bool)
++    )
++
++    depth = (
++        _DT_CONTEXT["depth"]
++        .detach()
++        .cpu()
++        .numpy()
++    )
++
++    ids = (
++        _DT_CONTEXT["ids"]
++        .detach()
++        .cpu()
++        .numpy()
++        .astype(np.int64)
++    )
++
++    td = int(_DT_CONTEXT["t_down"])
++    sy = int(_DT_CONTEXT["h_down"])
++    sx = int(_DT_CONTEXT["w_down"])
++
++    image_h = int(_DT_CONTEXT["height"])
++    image_w = int(_DT_CONTEXT["width"])
++
++    tracks_s = tracks[::td]
++    vis_s = vis[::td]
++    depth_s = depth[::td]
++
++    Tlat = tp.shape[1]
++
++    if tracks_s.shape[0] != Tlat:
++        raise RuntimeError(
++            f"V4 temporal mismatch tracks={tracks_s.shape[0]} "
++            f"track_pos={Tlat}"
++        )
++
++    src_valid = (
++        (tp[:, 0, 0] >= 0)
++        &
++        (tp[:, 0, 1] >= 0)
++    )
++
++    plan = []
++
++    for tau in range(Tlat):
++        if tau == 0:
++            plan.append(None)
++            continue
++
++        claims = {}
++
++        for ii in range(tp.shape[0]):
++            if not src_valid[ii]:
++                continue
++
++            if not vis_s[tau, ii]:
++                continue
++
++            th = int(tp[ii, tau, 0])
++            tw = int(tp[ii, tau, 1])
++
++            if th < 0 or tw < 0:
++                continue
++
++            z = float(depth_s[tau, ii])
++
++            if not np.isfinite(z) or z <= 0:
++                continue
++
++            mid = int(ids[ii])
++
++            src_x0 = float(tracks_s[0, ii, 0])
++            src_y0 = float(tracks_s[0, ii, 1])
++
++            for dy in range(-patch_radius, patch_radius + 1):
++                for dx in range(-patch_radius, patch_radius + 1):
++
++                    hh = th + dy
++                    ww = tw + dx
++
++                    src_x = src_x0 + dx * sx
++                    src_y = src_y0 + dy * sy
++
++                    # Actual latent bounds are checked again at application.
++                    # Here preserve source image-domain validity.
++                    if not (
++                        0.0 <= src_x < image_w
++                        and
++                        0.0 <= src_y < image_h
++                    ):
++                        continue
++
++                    k = (hh, ww)
++
++                    claim = (
++                        z,
++                        mid,
++                        src_x,
++                        src_y,
++                    )
++
++                    old = claims.get(k)
++
++                    if old is None or claim[:2] < old[:2]:
++                        claims[k] = claim
++
++        if not claims:
++            plan.append(None)
++            continue
++
++        # Stable target-cell order.
++        keys = sorted(claims.keys())
++
++        target_h = np.asarray(
++            [x[0] for x in keys],
++            dtype=np.int64,
++        )
++
++        target_w = np.asarray(
++            [x[1] for x in keys],
++            dtype=np.int64,
++        )
++
++        src_xy = np.asarray(
++            [
++                [
++                    claims[k][2],
++                    claims[k][3],
++                ]
++                for k in keys
++            ],
++            dtype=np.float32,
++        )
++
++        plan.append(
++            {
++                "target_h": target_h,
++                "target_w": target_w,
++                "src_xy": src_xy,
++            }
++        )
++
++    out = {
++        "plan": plan,
++        "stride_y": sy,
++        "stride_x": sx,
++    }
++
++    _DT_V4_PLAN_CACHE[key] = out
++    return out
++
++
++def _dt_v4_sample_source(frame0, source_xy, stride_y, stride_x):
++    """
++    frame0: [C,H,W], float32
++    source_xy: [M,2] in source pixel coordinates.
++
++    Same cell-center convention as frozen V3D:
++        latent_x = pixel_x / stride_x - 0.5
++        latent_y = pixel_y / stride_y - 0.5
++    """
++    if source_xy.numel() == 0:
++        return torch.empty(
++            (0, frame0.shape[0]),
++            device=frame0.device,
++            dtype=frame0.dtype,
++        )
++
++    C, H, W = frame0.shape
++
++    lx = source_xy[:, 0] / float(stride_x) - 0.5
++    ly = source_xy[:, 1] / float(stride_y) - 0.5
++
++    if W > 1:
++        gx = lx * (2.0 / (W - 1)) - 1.0
++    else:
++        gx = torch.zeros_like(lx)
++
++    if H > 1:
++        gy = ly * (2.0 / (H - 1)) - 1.0
++    else:
++        gy = torch.zeros_like(ly)
++
++    grid = torch.stack(
++        [gx, gy],
++        dim=-1,
++    ).view(1, 1, -1, 2)
++
++    sampled = torch.nn.functional.grid_sample(
++        frame0.unsqueeze(0),
++        grid,
++        mode="bilinear",
++        padding_mode="border",
++        align_corners=True,
++    )
++
++    # [1,C,1,M] -> [M,C]
++    return (
++        sampled[0, :, 0, :]
++        .transpose(0, 1)
++        .contiguous()
++    )
++
++
++def dt_v4_transport(
++    feature,
++    track_pos,
++    patch_radius=0,
++    mix=1.0,
++):
++    """
++    Transport source-time latent features along persistent
++    material trajectories using frozen V3D depth arbitration.
++
++    feature:
++      [C,T,H,W] or [1,C,T,H,W]
++
++    mix:
++      1.0 = hard replacement at supported cells.
++      0.2 = fixed soft interpolation used by V4B noise.
++    """
++    if feature.ndim == 4:
++        was_unbatched = True
++        x = feature.unsqueeze(0)
++    elif feature.ndim == 5 and feature.shape[0] == 1:
++        was_unbatched = False
++        x = feature
++    else:
++        raise RuntimeError(
++            f"V4 feature shape unsupported: {tuple(feature.shape)}"
++        )
++
++    if track_pos.ndim == 3:
++        track_pos = track_pos.unsqueeze(0)
++
++    if not (0.0 <= float(mix) <= 1.0):
++        raise RuntimeError(f"invalid V4 mix={mix}")
++
++    protocol = _dt_v4_plan(
++        track_pos,
++        int(patch_radius),
++    )
++
++    plan = protocol["plan"]
++    sy = protocol["stride_y"]
++    sx = protocol["stride_x"]
++
++    original_dtype = x.dtype
++
++    # CPU bf16 grid_sample is not universally supported.
++    # Execute intervention mathematically in float32, then cast back.
++    work = x.float().clone()
++
++    _, _, T, H, W = work.shape
++
++    if len(plan) != T:
++        raise RuntimeError(
++            f"V4 plan T={len(plan)} feature T={T}"
++        )
++
++    source_frame = work[0, :, 0]
++
++    for tau in range(1, T):
++        p = plan[tau]
++
++        if p is None:
++            continue
++
++        hh_np = p["target_h"]
++        ww_np = p["target_w"]
++
++        inside = (
++            (hh_np >= 0)
++            &
++            (hh_np < H)
++            &
++            (ww_np >= 0)
++            &
++            (ww_np < W)
++        )
++
++        if not np.any(inside):
++            continue
++
++        hh = torch.from_numpy(
++            hh_np[inside]
++        ).to(
++            device=work.device,
++            dtype=torch.long,
++        )
++
++        ww = torch.from_numpy(
++            ww_np[inside]
++        ).to(
++            device=work.device,
++            dtype=torch.long,
++        )
++
++        source_xy = torch.from_numpy(
++            p["src_xy"][inside]
++        ).to(
++            device=work.device,
++            dtype=torch.float32,
++        )
++
++        src = _dt_v4_sample_source(
++            source_frame,
++            source_xy,
++            sy,
++            sx,
++        )
++
++        # [C,M]
++        src = src.transpose(0, 1)
++
++        old = work[0, :, tau, hh, ww]
++
++        if float(mix) == 1.0:
++            new = src
++        else:
++            new = (
++                old * (1.0 - float(mix))
++                +
++                src * float(mix)
++            )
++
++        work[0, :, tau, hh, ww] = new
++
++    work = work.to(dtype=original_dtype)
++
++    return work[0] if was_unbatched else work
+diff --git a/wan/wan_move.py b/wan/wan_move.py
+index 8d59630..e01a074 100644
+--- a/wan/wan_move.py
++++ b/wan/wan_move.py
+@@ -21,7 +21,7 @@ from .modules.clip import CLIPModel
+ from .modules.model import WanModel
+ from .modules.t5 import T5EncoderModel
+ from .modules.vae import WanVAE
+-from .modules.trajectory import replace_feature, get_video_track_video, create_pos_feature_map
++from .modules.trajectory import replace_feature, get_video_track_video, create_pos_feature_map, dt_v4_transport
+ 
+ from .utils.fm_solvers import (
+     FlowDPMSolverMultistepScheduler,
+@@ -274,10 +274,41 @@ class WanMove:
+         ])[0]
+  
+         # Edit y to enable motion control
++        # DeformTransport formal protocol: freeze trajectory-internal RNG
++        torch.manual_seed(seed)
+         track_feats, track_pos = create_pos_feature_map(track, track_visibility, self.vae_stride, h, w, y.size(0), track_num=track_visibility.size(-1), device=y.device)
+         track_feats = track_feats.permute(3, 0, 1, 2)
+         edited_y = replace_feature(y.unsqueeze(0), track_pos.unsqueeze(0))[0]
+ 
++        # ===== DeformTransport V4 protocol =====
++        dt_v4_variant = (
++            __import__("os").environ
++            .get("DT_V4_VARIANT", "none")
++            .strip()
++            .lower()
++        )
++
++        dt_v4_allowed = {
++            "none",
++            "v4a_d20",
++            "v4a_d40",
++            "v4b_noise",
++            "v4c_hybrid",
++        }
++
++        if dt_v4_variant not in dt_v4_allowed:
++            raise RuntimeError(
++                f"unknown DT_V4_VARIANT={dt_v4_variant}"
++            )
++
++        print(
++            "DT_V4_PROTOCOL",
++            "variant=", dt_v4_variant,
++            "steps=", 40,
++            "noise_mix=", 0.2,
++            flush=True,
++        )
++
+         y_cond = torch.concat([msk, edited_y], dim=0)
+         y_uncond = torch.concat([msk, y])
+ 
+@@ -312,6 +343,24 @@ class WanMove:
+                 raise NotImplementedError("Unsupported solver.")
+ 
+             # sample videos
++
++            # DeformTransport V4B/V4C:
++            # material-consistent initial noise.
++            if dt_v4_variant in {"v4b_noise", "v4c_hybrid"}:
++                noise = dt_v4_transport(
++                    noise,
++                    track_pos.unsqueeze(0),
++                    patch_radius=1,
++                    mix=0.2,
++                )
++
++                print(
++                    "DT_V4_NOISE_TRANSPORT_DONE",
++                    "variant=",
++                    dt_v4_variant,
++                    flush=True,
++                )
++
+             latent = noise
+ 
+             arg_c = {
+@@ -351,6 +400,78 @@ class WanMove:
+                 noise_pred = noise_pred_uncond + guide_scale * (
+                     noise_pred_cond - noise_pred_uncond)
+ 
++                # DeformTransport V4A/V4C:
++                # x0 = z_t - sigma_t * v_t
++                # x0' = material_transport(x0)
++                # v_t' = (z_t - x0') / sigma_t
++                if dt_v4_variant in {
++                    "v4a_d20",
++                    "v4a_d40",
++                    "v4c_hybrid",
++                }:
++                    if dt_v4_variant == "v4a_d40":
++                        dt_v4_limit = 16
++                    else:
++                        dt_v4_limit = 8
++
++                    if _ < dt_v4_limit:
++                        dt_sigma = sample_scheduler.sigmas[_]
++
++                        dt_sigma = dt_sigma.to(
++                            device=noise_pred.device,
++                            dtype=torch.float32,
++                        )
++
++                        if float(dt_sigma.item()) <= 1e-8:
++                            raise RuntimeError(
++                                "V4 encountered non-positive sigma"
++                            )
++
++                        dt_latent = latent.to(
++                            device=noise_pred.device,
++                            dtype=torch.float32,
++                        )
++
++                        dt_velocity = noise_pred.to(
++                            dtype=torch.float32
++                        )
++
++                        dt_x0 = (
++                            dt_latent
++                            -
++                            dt_sigma * dt_velocity
++                        )
++
++                        dt_x0_material = dt_v4_transport(
++                            dt_x0,
++                            track_pos.unsqueeze(0),
++                            patch_radius=0,
++                            mix=1.0,
++                        )
++
++                        noise_pred = (
++                            (
++                                dt_latent
++                                -
++                                dt_x0_material.float()
++                            )
++                            /
++                            dt_sigma
++                        ).to(
++                            dtype=noise_pred.dtype
++                        )
++
++                        print(
++                            "DT_V4_X0_INTERVENTION",
++                            "variant=",
++                            dt_v4_variant,
++                            "step=",
++                            _,
++                            "sigma=",
++                            float(dt_sigma.item()),
++                            flush=True,
++                        )
++
+                 latent = latent.to(
+                     torch.device('cpu') if offload_model else self.device)
+ 

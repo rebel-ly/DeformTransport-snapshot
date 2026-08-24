@@ -1,0 +1,211 @@
+{
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_205857__aligned_projection_vs_future_visible_soft_parallel/source_and_future_visible/vae_latent_outputs_soft_future_visible.pt",
+  "output_sha256": "bf61b540d55159f9ca6af4f89ff49d6e076ae61ae990e6bcb9f579c2efc0874c",
+  "transport_method": "continuous_bilinear_forward_splat_gate",
+  "threshold": 0.25,
+  "latent_frame_indices": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60,
+    64,
+    68,
+    72,
+    76,
+    80
+  ],
+  "validity": {
+    "mode": "source_and_future_visible",
+    "visibility_contract": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_visibility_contract.pt",
+    "projection_effective_points_per_slot": [
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126,
+      19126
+    ],
+    "selected_effective_points_per_slot": [
+      19126,
+      11702,
+      10586,
+      9756,
+      9333,
+      8919,
+      8524,
+      8194,
+      7857,
+      7409,
+      7134,
+      6686,
+      6329,
+      6051,
+      5771,
+      5461,
+      5181,
+      4926,
+      4786,
+      4654,
+      4589
+    ],
+    "removed_effective_points_per_slot": [
+      0,
+      7424,
+      8540,
+      9370,
+      9793,
+      10207,
+      10602,
+      10932,
+      11269,
+      11717,
+      11992,
+      12440,
+      12797,
+      13075,
+      13355,
+      13665,
+      13945,
+      14200,
+      14340,
+      14472,
+      14537
+    ],
+    "selected_subset_projection": true,
+    "frame0_effective_contract_equal": true
+  },
+  "support": {
+    "hard_cells": 20690,
+    "raw_soft_cells": 23293,
+    "gated_cells": 22491,
+    "raw_soft_over_hard": 1.1258095698405026,
+    "gated_over_hard": 1.0870468825519575,
+    "soft_only_cells": 2603,
+    "retained_soft_only_cells": 1801
+  },
+  "fairness": {
+    "masks_equal": true,
+    "counts_equal": true,
+    "weights_allclose": true,
+    "weight_allclose_atol": 0.0002,
+    "weight_allclose_rtol": 0.0002,
+    "weight_max_abs_difference": 5.7220458984375e-06,
+    "weight_mean_abs_difference": 3.0892504554458355e-08,
+    "independent_gated_mask_equal": true,
+    "independent_gated_mask_difference_cells": 0,
+    "shared_canonical_gated_mask": true,
+    "valid_point_masks_equal": true,
+    "permutations_differ": true
+  },
+  "compatibility": {
+    "base_hard_mask_exact": true,
+    "base_hard_count_exact": true,
+    "base_projection_hard_mask_exact": true,
+    "base_projection_hard_count_exact": true,
+    "selected_hard_subset_projection_hard": true,
+    "transport_mask_equals_count_positive": true,
+    "selected_key_shapes_match_target": true
+  },
+  "latent_differences": {
+    "correct_vs_shuffled_mean_abs": 0.05291110649704933,
+    "soft_correct_vs_target_mean_abs": 0.07652074098587036,
+    "soft_correct_vs_target_gated_mean_abs": 0.44583508372306824,
+    "soft_correct_vs_hard_correct_mean_abs": 0.02428625151515007
+  },
+  "statistics": {
+    "target_latent": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 0.11687097698450089,
+      "std": 1.052530288696289,
+      "min": -3.625,
+      "max": 4.8125,
+      "finite": true
+    },
+    "soft_correct_fused": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 0.09587383270263672,
+      "std": 1.0181171894073486,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "soft_shuffled_fused": {
+      "shape": [
+        1,
+        21,
+        16,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 0.09437062591314316,
+      "std": 1.0104223489761353,
+      "min": -2.953125,
+      "max": 4.15625,
+      "finite": true
+    },
+    "transport_weight": {
+      "shape": [
+        21,
+        1,
+        60,
+        104
+      ],
+      "dtype": "torch.float32",
+      "mean": 1.2436968088150024,
+      "std": 3.3580660820007324,
+      "min": 0.0,
+      "max": 24.629104614257812,
+      "finite": true
+    }
+  },
+  "runtime_seconds": {
+    "transport": 1.0724094079923816,
+    "total": 3.590794346993789
+  },
+  "gpu_peak_memory_mib": {
+    "allocated": 138.34912109375,
+    "reserved": 202.0
+  }
+}

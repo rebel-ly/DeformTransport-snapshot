@@ -1,0 +1,9 @@
+{
+  "gpu_preflight":{"gpu1":"NVIDIA L40, 7 MiB, 0%", "gpu2":"NVIDIA L40, 7 MiB, 0%"},
+  "previous_vae_probe_attempted":true, "previous_vae_probe_not_run_reason":null, "previous_vae_probe_first_blocker":"NO_STRUCTURED_TENSOR_OUTPUT",
+  "f0r2_probe_attempted":true, "f0r2_probe_exit_code":1, "f0r2_probe_first_blocker":"ModuleNotFoundError: No module named 'wan'", "exact_traceback_file":"f0r2_probe_stderr.txt", "exact_stdout_file":"f0r2_probe_stdout.txt",
+  "source_tensor_shape":"[3,81,480,832] (formal expression, not reached at runtime)", "source_tensor_dtype":"float32 (formal expression, not reached at runtime)", "raw_vae_encode_return_type":"UNRESOLVED", "raw_vae_latent_shape":"UNRESOLVED_RUNTIME", "raw_vae_latent_dtype":"UNRESOLVED_RUNTIME",
+  "runtime_shape":"UNRESOLVED", "symbolic_formal_shape":"[16,21,60,104]", "symbolic_proof":"wan_move.py:207-214 deterministically sets lat_h=60 and lat_w=104 from exact formal max_area and aspect. VAE Encoder3d uses exactly three spatial Resample downsample blocks (vae.py:290-305); each downsample2d/3d applies ZeroPad2d((0,1,0,1)) then Conv2d stride (2,2) (vae.py:87-96), yielding 480→240→120→60 and 832→416→208→104. vae.py:535 chunks but does not alter spatial/temporal axes. WanVAE.encode :651-654 squeezes batch only. 81 frames are partitioned 1+20*4 by vae.py:519-534 and concatenated, yielding 21 temporal slots. z_dim=16 is set by WanVAE :621-645.",
+  "real_transport_y_shape":"[1,16,21,60,104]", "real_transport_y_dtype":"float32 by WanVAE.encode :653", "real_transport_latent_hw":"60x104", "real_transport_shape_evidence":"FORMAL_CODE_EXACT",
+  "qualification":"Runtime tensor capture failed prior to import, but the source-level shape proof is complete, deterministic, and follows the exact formal construction; no stride-only inference was used."
+}

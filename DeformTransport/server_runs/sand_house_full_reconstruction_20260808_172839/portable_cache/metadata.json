@@ -1,0 +1,19 @@
+{
+  "case": "sand_house",
+  "num_fg_pcs": 1,
+  "num_fg_meshes": 1,
+  "segmenter": "sam2",
+  "target_faces": 10000,
+  "mesh_resize_factor": 1.0,
+  "simulated_frames_num": 165,
+  "frame_steps": 2,
+  "num_output_frames": 42,
+  "fx_pixels": 911.4322509765625,
+  "fov_x_input": 31.37761878967285,
+  "target_size": [
+    512,
+    512
+  ],
+  "mesh_color_source": "OBJ fallback; not photometric",
+  "cache_version": 1
+}

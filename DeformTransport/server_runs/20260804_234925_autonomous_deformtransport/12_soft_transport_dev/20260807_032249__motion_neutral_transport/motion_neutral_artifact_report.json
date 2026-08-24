@@ -1,0 +1,50 @@
+{
+  "source_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_232607__full_generation_compatible_candidates/quality_ramp4_full_generation.pt",
+  "output_artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_032249__motion_neutral_transport/quality_motion_neutral_full_generation.pt",
+  "original_correct_mean_abs": 0.01730070263147354,
+  "original_shuffled_mean_abs": 0.022453181445598602,
+  "candidate_summary": {
+    "3": {
+      "correct_retained_ratio": 0.47479464363769946,
+      "shuffled_retained_ratio": 0.41302372731752396,
+      "correct_mean_abs": 0.008214280940592289,
+      "shuffled_mean_abs": 0.009273696690797806
+    },
+    "5": {
+      "correct_retained_ratio": 0.6014126028558251,
+      "shuffled_retained_ratio": 0.56024691276092,
+      "correct_mean_abs": 0.010404860600829124,
+      "shuffled_mean_abs": 0.012579325586557388
+    },
+    "7": {
+      "correct_retained_ratio": 0.6740064106843016,
+      "shuffled_retained_ratio": 0.6542563084534687,
+      "correct_mean_abs": 0.011660784482955933,
+      "shuffled_mean_abs": 0.014690135605633259
+    },
+    "9": {
+      "correct_retained_ratio": 0.7188411501678896,
+      "shuffled_retained_ratio": 0.7177331875505,
+      "correct_mean_abs": 0.012436456978321075,
+      "shuffled_mean_abs": 0.016115393489599228
+    }
+  },
+  "selected_kernel": 3,
+  "selected_correct_retained_ratio": 0.47479464363769946,
+  "selected_shuffled_retained_ratio": 0.41302372731752396,
+  "selected_correct_mean_abs": 0.008214280940592289,
+  "selected_shuffled_mean_abs": 0.009273696690797806,
+  "checks": {
+    "correct_shape_valid": true,
+    "shuffled_shape_valid": true,
+    "correct_finite": true,
+    "shuffled_finite": true,
+    "correct_slot0_zero": true,
+    "shuffled_slot0_zero": true,
+    "correct_outside_mask_zero": true,
+    "shuffled_outside_mask_zero": true,
+    "correct_nonzero": true,
+    "shuffled_nonzero": true
+  },
+  "all_checks_pass": true
+}

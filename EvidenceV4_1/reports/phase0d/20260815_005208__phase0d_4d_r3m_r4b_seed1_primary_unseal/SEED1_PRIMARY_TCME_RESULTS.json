@@ -1,0 +1,29 @@
+{
+  "N": 1257,
+  "authoritative_evaluator": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/conditioning_alignment/20260813_075742__f1r4_corrected_v2_preflight_recovery/generated/eval_v3_corrected_v2_recovered.py",
+    "sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5"
+  },
+  "evaluation_ids": {
+    "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8"
+  },
+  "full_precision_preserved": true,
+  "metric": "TC-ME",
+  "raw_result_paths": {
+    "C1": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/PRIMARY_RAW/C1/raw.json",
+    "C2": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/PRIMARY_RAW/C2/raw.json",
+    "CS": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_005208__phase0d_4d_r3m_r4b_seed1_primary_unseal/PRIMARY_RAW/CS/raw.json"
+  },
+  "seed": 1,
+  "values": {
+    "C1": 0.39610003385941484,
+    "C2": 0.39736386332028023,
+    "CS": 0.40577810212784815
+  },
+  "video_sha256": {
+    "C1": "cb1f81c25549b9fccedcb5473f6453cce2fe5982d4b2687fc9ac1975b17e7a1a",
+    "C2": "fb1b15389debe03dc4254917cca222ace6324d384e7cbca98dcd7f1828d57122",
+    "CS": "451492647274dba81709e03952b159b5ecba341d9fd5d97cdd03d688839e60e2"
+  }
+}

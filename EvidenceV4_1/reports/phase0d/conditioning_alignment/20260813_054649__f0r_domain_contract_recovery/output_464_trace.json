@@ -1,0 +1,14 @@
+{
+  "requested":"480x832 from formal runner --size; config MAX_AREA_CONFIGS maps this to 480*832.",
+  "trace":[
+    {"source_file":"/workspace/Wan-Move/generate.py","function":"generate","line_range":"497-510","exact_expression":"video = wan_move.generate(... max_area=MAX_AREA_CONFIGS[args.size], ... eval_bench=args.eval_bench)"},
+    {"source_file":"/workspace/Wan-Move/wan/wan_move.py","function":"WanMove.generate","line_range":"199-214","exact_expression":"h,w=img.shape[1:]; aspect_ratio=h/w; lat_h=round(sqrt(max_area*aspect_ratio)//8//2*2); lat_w=round(sqrt(max_area/aspect_ratio)//8//2*2); h=lat_h*8; w=lat_w*8"},
+    {"source_file":"/workspace/Wan-Move/wan/wan_move.py","function":"WanMove.generate","line_range":"374-389","exact_expression":"videos = self.vae.decode(x0); return videos[0]"},
+    {"source_file":"/workspace/Wan-Move/generate.py","function":"generate","line_range":"535-542","exact_expression":"cache_video(tensor=video[None], save_file=args.save_file, ...)"},
+    {"source_file":"/workspace/Wan-Move/wan/utils/utils.py","function":"cache_video","line_range":"40-54","exact_expression":"make_grid -> uint8 -> imageio writer; no spatial crop/resize"}
+  ],
+  "static_formula_for_formal_input":"lat_h=round((sqrt((480*832)*(480/832))//8//2)*2)=60; lat_w=round((sqrt((480*832)/(480/832))//8//2)*2)=104; h=480,w=832.",
+  "final_rgb_observed":"464x832 from frozen decoded replay evidence.",
+  "final_output_464_source_file":"UNRESOLVED", "final_output_464_function":"UNRESOLVED", "final_output_464_line_range":"UNRESOLVED", "final_output_464_cause":"UNRESOLVED_REQUIRES_DIFFUSION_OUTPUT",
+  "reason":"The static formal path calculates 480x832 and contains no 480-to-464 operation. There are no Replay intermediate tensors. A VAE-only probe did not yield a decode shape; no diffusion output may be regenerated."
+}

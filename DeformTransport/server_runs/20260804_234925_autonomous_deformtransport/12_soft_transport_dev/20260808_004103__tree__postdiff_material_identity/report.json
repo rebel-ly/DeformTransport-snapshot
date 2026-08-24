@@ -1,0 +1,75 @@
+{
+  "experiment": "Tree post-diffusion material identity consistency",
+  "reference": {
+    "correct": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt::correct_transported_latent",
+    "negative_control": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt::shuffled_transported_latent",
+    "future_active_cells": 14747,
+    "slots": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  "metrics": {
+    "BASELINE": {
+      "identity_L1_correct": 0.573526918888092,
+      "identity_L1_shuffled": 0.6006541848182678,
+      "identity_L1_margin_shuffled_minus_correct": 0.02712727151811123,
+      "identity_RMSE_correct": 0.6785420179367065,
+      "identity_RMSE_shuffled": 0.708340585231781,
+      "identity_cosine_correct": 0.697051465511322,
+      "identity_cosine_shuffled": 0.6646652221679688,
+      "identity_cosine_margin_correct_minus_shuffled": 0.032386187463998795,
+      "correct_closer_fraction_L1": 0.6445378661155701,
+      "correct_higher_fraction_cosine": 0.6017494797706604
+    },
+    "CONDITION_1P0": {
+      "identity_L1_correct": 0.5717213749885559,
+      "identity_L1_shuffled": 0.5984801650047302,
+      "identity_L1_margin_shuffled_minus_correct": 0.026758776977658272,
+      "identity_RMSE_correct": 0.6769322752952576,
+      "identity_RMSE_shuffled": 0.7060372829437256,
+      "identity_cosine_correct": 0.696651816368103,
+      "identity_cosine_shuffled": 0.6652777194976807,
+      "identity_cosine_margin_correct_minus_shuffled": 0.03137408569455147,
+      "correct_closer_fraction_L1": 0.6450125575065613,
+      "correct_higher_fraction_cosine": 0.6016817092895508
+    },
+    "SCALAR_0P745": {
+      "identity_L1_correct": 0.5716534852981567,
+      "identity_L1_shuffled": 0.5985678434371948,
+      "identity_L1_margin_shuffled_minus_correct": 0.02691434696316719,
+      "identity_RMSE_correct": 0.6766047477722168,
+      "identity_RMSE_shuffled": 0.7063081860542297,
+      "identity_cosine_correct": 0.697490394115448,
+      "identity_cosine_shuffled": 0.6654264330863953,
+      "identity_cosine_margin_correct_minus_shuffled": 0.03206386789679527,
+      "correct_closer_fraction_L1": 0.64263916015625,
+      "correct_higher_fraction_cosine": 0.5991048812866211
+    }
+  },
+  "scalar_vs_baseline": {
+    "correct_identity_L1_improvement_percent": 0.32665137907866043,
+    "correct_identity_RMSE_improvement_percent": 0.28550481963969576,
+    "correct_identity_cosine_delta": 0.00043892860412597656,
+    "correct_vs_shuffled_cosine_margin_delta": -0.00032231956720352173,
+    "correct_vs_shuffled_L1_margin_delta": -0.0002129245549440384
+  }
+}

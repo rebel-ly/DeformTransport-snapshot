@@ -1,0 +1,144 @@
+{
+  "stage": "five_way_full_generation_comparison",
+  "videos": {
+    "simulation_target": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/simulation.mp4",
+      "bytes": 1433705,
+      "shape": [
+        81,
+        480,
+        832,
+        3
+      ],
+      "mean": 28.458547592163086,
+      "std": 51.999366760253906,
+      "sharpness_score": 8.046682357788086,
+      "temporal_change": 2.1635706424713135
+    },
+    "realwonder_baseline": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4",
+      "bytes": 1044407,
+      "shape": [
+        81,
+        480,
+        832,
+        3
+      ],
+      "mean": 26.68815803527832,
+      "std": 52.03656005859375,
+      "sharpness_score": 6.809257984161377,
+      "temporal_change": 3.0147933959960938
+    },
+    "balanced_correct": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/balanced_correct_retry_gpu2_20260807_001201/aligned_santa_balanced_ramp4_correct_seed0.mp4",
+      "bytes": 1068823,
+      "shape": [
+        81,
+        480,
+        832,
+        3
+      ],
+      "mean": 26.56930923461914,
+      "std": 49.573909759521484,
+      "sharpness_score": 6.66526985168457,
+      "temporal_change": 2.861043691635132
+    },
+    "balanced_shuffled": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/balanced_shuffled/aligned_santa_balanced_ramp4_shuffled_seed0.mp4",
+      "bytes": 1057438,
+      "shape": [
+        81,
+        480,
+        832,
+        3
+      ],
+      "mean": 25.800260543823242,
+      "std": 46.36732482910156,
+      "sharpness_score": 6.53774356842041,
+      "temporal_change": 2.804838180541992
+    },
+    "quality_correct": {
+      "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/quality_correct/aligned_santa_quality_ramp4_correct_seed0.mp4",
+      "bytes": 1095181,
+      "shape": [
+        81,
+        480,
+        832,
+        3
+      ],
+      "mean": 26.543222427368164,
+      "std": 50.834983825683594,
+      "sharpness_score": 6.73298454284668,
+      "temporal_change": 2.920725107192993
+    }
+  },
+  "metrics_against_simulation_target": {
+    "realwonder_baseline": {
+      "l1": 13.86966323852539,
+      "mse": 964.3319091796875,
+      "psnr": 18.288538233179445,
+      "temporal_change_error": 3.7256875038146973,
+      "selected_frame_l1": {
+        "0": 3.996526002883911,
+        "20": 12.478368759155273,
+        "40": 14.4385347366333,
+        "60": 16.03763771057129,
+        "80": 16.90487289428711
+      }
+    },
+    "balanced_correct": {
+      "l1": 14.351189613342285,
+      "mse": 975.05810546875,
+      "psnr": 18.240498640077988,
+      "temporal_change_error": 3.8087687492370605,
+      "selected_frame_l1": {
+        "0": 3.980311870574951,
+        "20": 13.02017879486084,
+        "40": 14.969891548156738,
+        "60": 16.596099853515625,
+        "80": 17.180898666381836
+      }
+    },
+    "balanced_shuffled": {
+      "l1": 15.143440246582031,
+      "mse": 1019.1859741210938,
+      "psnr": 18.048269225286436,
+      "temporal_change_error": 3.8407695293426514,
+      "selected_frame_l1": {
+        "0": 3.995706558227539,
+        "20": 13.789433479309082,
+        "40": 16.00042152404785,
+        "60": 17.5134220123291,
+        "80": 18.01553726196289
+      }
+    },
+    "quality_correct": {
+      "l1": 13.953584671020508,
+      "mse": 962.7633056640625,
+      "psnr": 18.295608314577954,
+      "temporal_change_error": 3.7321741580963135,
+      "selected_frame_l1": {
+        "0": 3.993673324584961,
+        "20": 12.625057220458984,
+        "40": 14.506443977355957,
+        "60": 16.127397537231445,
+        "80": 16.87835693359375
+      }
+    }
+  },
+  "pairwise_metrics": {
+    "balanced_correct_vs_shuffled_l1": 4.574349403381348,
+    "balanced_correct_vs_quality_l1": 3.77075457572937,
+    "baseline_vs_balanced_correct_l1": 4.807044506072998,
+    "baseline_vs_quality_correct_l1": 3.112229347229004
+  },
+  "checks": {
+    "all_videos_have_81_frames": true,
+    "all_resolutions_equal": true,
+    "all_finite": true,
+    "correct_and_shuffled_differ": true
+  },
+  "all_checks_pass": true,
+  "contact_sheet": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/five_way_comparison/five_way_contact_sheet.png",
+  "interpretation_boundary": "Simulation frames are a mechanism-development reference rather than real-world ground truth."
+}

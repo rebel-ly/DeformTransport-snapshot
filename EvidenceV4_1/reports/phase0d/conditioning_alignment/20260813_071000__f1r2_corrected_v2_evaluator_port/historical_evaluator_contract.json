@@ -1,0 +1,16 @@
+{
+  "evaluator_source": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/v4_eval_files_to_upload/eval_v3.py",
+  "evaluator_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "case": "santa",
+  "n_expectation_location": "SOURCE_HARDCODE",
+  "config_container": "module-global CASES dictionary in evaluator source; not external config",
+  "bindings": {
+    "tracks": {"line_range": "65-70", "expression": "CASES['santa']['tracks']", "value": "server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_tracks_correct.npy"},
+    "visibility": {"line_range": "71-75", "expression": "CASES['santa']['vis']", "value": "server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/santa_material_visibility_correct.npy"},
+    "expect_n": {"line_range": "77-84", "expression": "CASES['santa']['expect']['n']", "value": 1277},
+    "n_guard": {"function": "appearance_case", "line_range": "808-832", "expression": "assert n == cfg['expect']['n']"},
+    "method_map": {"function": "method_paths", "line_range": "169-199", "expression": "fixed rw, old_correct, and CANDIDATES paths; no DT_FULL argument or label"},
+    "cli": {"function": "main", "line_range": "2144-2186", "arguments": ["--root", "--suite", "--out", "--mode", "--case", "--batch"], "external_config_argument": false}
+  },
+  "semantic_constants": {"anchors": "eval_v3.py:16-22", "patch_offsets": "eval_v3.py:24-30", "coordinate_mapping": "eval_v3.py:956-965", "video_decoder_and_domain": "eval_v3.py:256-353"}
+}

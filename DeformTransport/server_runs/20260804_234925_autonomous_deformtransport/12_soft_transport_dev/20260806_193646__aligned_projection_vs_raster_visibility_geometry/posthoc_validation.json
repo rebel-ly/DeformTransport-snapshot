@@ -1,0 +1,16 @@
+{
+  "diagnostic_run_interpretation": "The Python diagnostic completed successfully. The later exit_code=1 was captured from an accidentally concatenated cat/env shell command.",
+  "original_exit_code_file": "1",
+  "checks": {
+    "report_exists": true,
+    "report_all_checks_pass": true,
+    "per_frame_csv_exists": true,
+    "diagnostic_tensor_exists": true,
+    "diagnostic_tensor_sha_matches": true,
+    "projection_point_mask_shape": true,
+    "raster_point_mask_shape": true,
+    "latent_frame_indices_correct": true,
+    "correct_shuffled_geometry_shared": true
+  },
+  "validated_success": true
+}

@@ -1,0 +1,51 @@
+{
+  "canonical_rw_video_sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+  "lineage_status": "PASS",
+  "exact_sim_data_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410",
+  "lineage": {
+    "same_source": true,
+    "same_action": true,
+    "same_simulation": true,
+    "same_timeline": true,
+    "evidence": [
+      "canonical inference_command.txt",
+      "canonical stdout.log loaded 81 frames from exact sim_data_path"
+    ]
+  },
+  "assets": [
+    {
+      "kind": "coarse RGB simulation frames",
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/frames/frame_0000.png..frame_0080.png",
+      "count": 81,
+      "shape": [
+        480,
+        832,
+        3
+      ],
+      "usable_for_frozen_video_metrics": true
+    },
+    {
+      "kind": "physics flow",
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/flows.npy",
+      "sha256": "80694c4842530d98dc69fcce3a44af9a25d69e08d32f64545df76b62de425a1e",
+      "shape": [
+        80,
+        2,
+        240,
+        416
+      ],
+      "dtype": "float16",
+      "direct_formal_TCME_applicability": "NOT_APPLICABLE_REPRESENTATION_MISMATCH: formal TC-ME estimates RAFT from RGB"
+    },
+    {
+      "kind": "simulation video",
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/simulation.mp4",
+      "sha256": "ae20167d32e79c4f85edf62402e6fff7edf41286cd259fdb79d05dd7a54b54ac"
+    },
+    {
+      "kind": "source",
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/resized_input_image.png",
+      "sha256": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7"
+    }
+  ]
+}

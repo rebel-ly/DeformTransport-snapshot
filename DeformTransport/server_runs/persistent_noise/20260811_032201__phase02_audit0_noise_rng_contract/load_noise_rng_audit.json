@@ -1,0 +1,97 @@
+{
+  "seed": 0,
+  "cases": {
+    "santa": {
+      "trace": {
+        "randperm": [],
+        "randn_like": [
+          {
+            "shape": [
+              21,
+              32,
+              60,
+              104
+            ],
+            "dtype": "torch.float32",
+            "sha256": "4b8e40aba717d90fb346fbe03c59e8c4f1af9f35ed39b217149037c8fd5159e4",
+            "mean": -0.00015540486492682248,
+            "var": 0.9995973706245422
+          }
+        ]
+      },
+      "outputs": {
+        "structured_noise": {
+          "shape": [
+            21,
+            16,
+            60,
+            104
+          ],
+          "dtype": "torch.float32",
+          "sha256": "5e8afef754acd96fdea4a7b6bbcb489a2a6559a5f959ed49f7a6bd353d2fb485",
+          "mean": -0.0024781457614153624,
+          "var": 1.0032637119293213
+        },
+        "structured_noise_sde": {
+          "shape": [
+            21,
+            16,
+            60,
+            104
+          ],
+          "dtype": "torch.float32",
+          "sha256": "95a15039338da2e6689ee4b0090407a3e020d6b13cef73b9ebfeabc7c659dea1",
+          "mean": -0.001281600445508957,
+          "var": 1.0007587671279907
+        }
+      },
+      "repeat_bitwise_exact": true
+    },
+    "tree": {
+      "trace": {
+        "randperm": [],
+        "randn_like": [
+          {
+            "shape": [
+              21,
+              32,
+              60,
+              104
+            ],
+            "dtype": "torch.float32",
+            "sha256": "4b8e40aba717d90fb346fbe03c59e8c4f1af9f35ed39b217149037c8fd5159e4",
+            "mean": -0.00015540486492682248,
+            "var": 0.9995973706245422
+          }
+        ]
+      },
+      "outputs": {
+        "structured_noise": {
+          "shape": [
+            21,
+            16,
+            60,
+            104
+          ],
+          "dtype": "torch.float32",
+          "sha256": "6b9184c9d1d2543d55742ededbd26c178aa86f04609438901a4832fc85dec137",
+          "mean": -0.001668522716499865,
+          "var": 1.0030101537704468
+        },
+        "structured_noise_sde": {
+          "shape": [
+            21,
+            16,
+            60,
+            104
+          ],
+          "dtype": "torch.float32",
+          "sha256": "c16ce0519ff2610851aeb0fd9fc609c3f64efb5b8460f349a83582020bd07e65",
+          "mean": 0.0006454629474319518,
+          "var": 1.0011489391326904
+        }
+      },
+      "repeat_bitwise_exact": true
+    }
+  }
+}

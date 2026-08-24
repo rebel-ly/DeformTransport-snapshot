@@ -1,0 +1,330 @@
+diff --git a/infer_sim.py b/infer_sim.py
+index a3b838a..a980793 100644
+--- a/infer_sim.py
++++ b/infer_sim.py
+@@ -22,6 +22,10 @@ from omegaconf import OmegaConf
+ from PIL import Image
+ import imageio
+ 
++from deform_transport.pipeline_integration import (
++    load_precomputed_transport_latent,
++    load_precomputed_transport_residual,
++)
+ from vidgen import (
+     WanImageEncoder,
+     WanVideoVAE,
+@@ -89,9 +93,65 @@ def main():
+     parser.add_argument("--eval_degradation", type=float, default=0.5,
+                         help="Degradation level for noise (0.0 = pure structured noise)")
+     parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
++    parser.add_argument(
++        "--transport_latent_path",
++        type=str,
++        default=None,
++        help=(
++            "Optional VAE transport artifact produced by "
++            "scripts/run_wan_vae_transport_probe.py"
++        ),
++    )
++    parser.add_argument(
++        "--transport_mode",
++        choices=("correct", "shuffled", "flow", "blend"),
++        default="correct",
++        help="Which precomputed transport condition to use",
++    )
++    parser.add_argument(
++        "--transport_injection_mode",
++        choices=("replace", "inter_step_residual"),
++        default="replace",
++        help=(
++            "replace preserves the existing precomputed-latent "
++            "behavior; inter_step_residual keeps the fresh runtime "
++            "sim_latent and injects an artifact-local residual "
++            "between denoising steps"
++        ),
++    )
++    parser.add_argument(
++        "--transport_injection_scale",
++        type=float,
++        default=1.0,
++        help="Scale applied to an inter-step transport residual",
++    )
++    parser.add_argument(
++        "--transport_injection_step",
++        type=int,
++        default=0,
++        help=(
++            "Denoising-step index after which the residual is "
++            "injected, before re-noising to the next step"
++        ),
++    )
+ 
+     args, additional_args = parser.parse_known_args()
+ 
++    if args.transport_injection_scale < 0:
++        raise ValueError(
++            "--transport_injection_scale must be nonnegative"
++        )
++
++    if (
++        args.transport_injection_mode
++        == "inter_step_residual"
++        and not args.transport_latent_path
++    ):
++        raise ValueError(
++            "--transport_latent_path is required for "
++            "inter_step_residual injection"
++        )
++
+     device = torch.device("cuda")
+     set_seed(args.seed)
+ 
+@@ -251,6 +311,7 @@ def main():
+ 
+     # Encode simulation frames to latent space for SDEdit
+     sim_latent = None
++    transport_residual = None
+     if pipeline.sdedit:
+         print("Encoding simulation frames to latent space...")
+         sim_frames_device = sim_frames.to(device=device, dtype=torch.bfloat16)  # [1, C, T, H, W]
+@@ -258,6 +319,61 @@ def main():
+         sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+         print(f"  sim_latent shape: {sim_latent.shape}")
+ 
++        if args.transport_latent_path:
++            if args.transport_injection_mode == "replace":
++                print(
++                    f"Loading {args.transport_mode} transported "
++                    "sim_latent from: "
++                    f"{args.transport_latent_path}"
++                )
++                sim_latent = load_precomputed_transport_latent(
++                    args.transport_latent_path,
++                    mode=args.transport_mode,
++                    reference_latent=sim_latent,
++                )
++                print(
++                    "  transported sim_latent shape: "
++                    f"{sim_latent.shape}"
++                )
++            else:
++                print(
++                    f"Loading {args.transport_mode} artifact-local "
++                    "transport residual from: "
++                    f"{args.transport_latent_path}"
++                )
++                transport_residual = (
++                    load_precomputed_transport_residual(
++                        args.transport_latent_path,
++                        mode=args.transport_mode,
++                        reference_latent=sim_latent,
++                    )
++                )
++
++                residual_float = transport_residual.to(
++                    torch.float32
++                )
++
++                print(
++                    "  transport residual shape: "
++                    f"{transport_residual.shape}"
++                )
++                print(
++                    "  transport residual scale: "
++                    f"{args.transport_injection_scale}"
++                )
++                print(
++                    "  transport residual step: "
++                    f"{args.transport_injection_step}"
++                )
++                print(
++                    "  transport residual mean_abs: "
++                    f"{float(residual_float.abs().mean()):.8f}"
++                )
++                print(
++                    "  transport residual max_abs: "
++                    f"{float(residual_float.abs().max()):.8f}"
++                )
++
+         # Trim or pad sim_latent to match noise frames
+         if sim_latent.shape[1] > num_output_frames:
+             sim_latent = sim_latent[:, :num_output_frames]
+@@ -292,6 +408,13 @@ def main():
+         sim_latent=sim_latent,
+         sim_masks=sim_masks,
+         sim_franka_masks=sim_franka_masks,
++        transport_residual=transport_residual,
++        transport_residual_scale=(
++            args.transport_injection_scale
++        ),
++        transport_residual_step=(
++            args.transport_injection_step
++        ),
+         low_memory=low_memory,
+         device=device,
+         structured_noise_sde=structured_noise_sde,
+diff --git a/vidgen/pipeline_sdedit.py b/vidgen/pipeline_sdedit.py
+index e656def..64c2f3a 100644
+--- a/vidgen/pipeline_sdedit.py
++++ b/vidgen/pipeline_sdedit.py
+@@ -13,6 +13,40 @@ from vidgen.memory import gpu, get_cuda_free_memory_gb, move_model_to_device_wit
+ from vidgen.utils import extract_subdim
+ 
+ 
++def apply_transport_residual(
++    clean_latent: torch.Tensor,
++    transport_residual: torch.Tensor,
++    scale: float,
++) -> torch.Tensor:
++    """Add a transport residual without changing the input dtype."""
++
++    if tuple(clean_latent.shape) != tuple(
++        transport_residual.shape
++    ):
++        raise ValueError(
++            "clean latent and transport residual shapes differ"
++        )
++
++    if scale < 0:
++        raise ValueError(
++            "transport residual scale must be nonnegative"
++        )
++
++    if not bool(torch.isfinite(transport_residual).all()):
++        raise ValueError(
++            "transport residual contains NaN or Inf"
++        )
++
++    if scale == 0:
++        return clean_latent
++
++    return (
++        clean_latent.to(torch.float32)
++        + float(scale)
++        * transport_residual.to(torch.float32)
++    ).to(dtype=clean_latent.dtype)
++
++
+ class CausalInferencePipelineSDEdit(torch.nn.Module):
+     """Pipeline for causal video generation inference with SDEdit support."""
+ 
+@@ -88,6 +122,9 @@ class CausalInferencePipelineSDEdit(torch.nn.Module):
+         sim_latent: Optional[torch.Tensor] = None,
+         sim_masks: Optional[torch.Tensor] = None,
+         sim_franka_masks: Optional[torch.Tensor] = None,
++        transport_residual: Optional[torch.Tensor] = None,
++        transport_residual_scale: float = 0.0,
++        transport_residual_step: int = 0,
+         return_latents: bool = False,
+         batch_sample=None,
+         profile: bool = False,
+@@ -105,6 +142,9 @@ class CausalInferencePipelineSDEdit(torch.nn.Module):
+             sim_latent: Encoded simulation frames [B, T, C, H, W] for SDEdit.
+             sim_masks: Object masks [B, T, H, W] (True = object region to keep generated).
+             sim_franka_masks: Franka/mesh masks [B, T, H, W] (True = franka region, weak sdedit).
++            transport_residual: Artifact-local masked latent residual [B,T,C,H,W].
++            transport_residual_scale: Residual strength.
++            transport_residual_step: Step index after which to inject the residual.
+             return_latents: Whether to return latents alongside decoded video.
+             batch_sample: Batch dict for processor conditioning.
+             structured_noise_sde: Deterministic SDE noise from simulation.
+@@ -188,6 +228,42 @@ class CausalInferencePipelineSDEdit(torch.nn.Module):
+                 f"noise shape {noise.shape} != sim_latent shape {sim_latent.shape}"
+             )
+ 
++            if transport_residual is not None:
++                if tuple(transport_residual.shape) != tuple(
++                    sim_latent.shape
++                ):
++                    raise ValueError(
++                        "transport_residual shape "
++                        f"{tuple(transport_residual.shape)} "
++                        "does not match sim_latent "
++                        f"{tuple(sim_latent.shape)}"
++                    )
++
++                if not bool(
++                    torch.isfinite(
++                        transport_residual
++                    ).all()
++                ):
++                    raise ValueError(
++                        "transport_residual contains NaN or Inf"
++                    )
++
++                if transport_residual_scale < 0:
++                    raise ValueError(
++                        "transport_residual_scale must be "
++                        "nonnegative"
++                    )
++
++                if not (
++                    0
++                    <= transport_residual_step
++                    < len(self.denoising_step_list) - 1
++                ):
++                    raise ValueError(
++                        "transport_residual_step must identify "
++                        "a denoising step that has a following step"
++                    )
++
+             # Add noise to simulated latent at the first denoising step
+             sdedit_dropin_step = self.denoising_step_list[0]
+             noise = self.scheduler.add_noise(
+@@ -295,6 +371,24 @@ class CausalInferencePipelineSDEdit(torch.nn.Module):
+                 mask_current_franka = sim_franka_masks[
+                     :, current_start_frame - num_input_frames:current_start_frame + current_num_frames - num_input_frames]
+ 
++            transport_residual_current = None
++
++            if transport_residual is not None:
++                residual_start = (
++                    current_start_frame
++                    - num_input_frames
++                )
++                residual_end = (
++                    residual_start
++                    + current_num_frames
++                )
++                transport_residual_current = (
++                    transport_residual[
++                        :,
++                        residual_start:residual_end,
++                    ]
++                )
++
+             # Spatial denoising loop
+             for index, current_timestep in enumerate(self.denoising_step_list):
+                 print(f"current_timestep: {current_timestep}")
+@@ -331,6 +425,31 @@ class CausalInferencePipelineSDEdit(torch.nn.Module):
+                         crossattn_cache=self.crossattn_cache,
+                         current_start=current_start_frame * self.frame_seq_length
+                     )
++
++                    if (
++                        transport_residual_current
++                        is not None
++                        and index
++                        == transport_residual_step
++                        and transport_residual_scale != 0
++                    ):
++                        print(
++                            "Applying inter-step transport "
++                            f"residual: block_start="
++                            f"{current_start_frame}, "
++                            f"step_index={index}, "
++                            f"scale="
++                            f"{transport_residual_scale}"
++                        )
++
++                        denoised_pred = (
++                            apply_transport_residual(
++                                denoised_pred,
++                                transport_residual_current,
++                                transport_residual_scale,
++                            )
++                        )
++
+                     next_timestep = self.denoising_step_list[index + 1]
+                     if structured_noise_sde is not None:
+                         sde_noise = extract_subdim(structured_noise_sde, 16, return_complement=False, channel_dim=2)

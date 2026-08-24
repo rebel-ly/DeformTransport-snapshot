@@ -1,0 +1,27 @@
+{
+  "protocol": "geometry-only pre-registered support construction",
+  "cases": {
+    "santa": {
+      "all_tracks": 1277,
+      "source_patch_valid_tracks": 1277,
+      "source_valid_visible_tracks": 1277,
+      "balanced_complete_case_tracks": 83,
+      "balanced_fraction_of_all": 0.06499608457321848,
+      "balanced_fraction_of_source_valid_visible": 0.06499608457321848,
+      "return_after_occlusion_tracks": 237,
+      "return_after_occlusion_support": "SUFFICIENT",
+      "return_after_out_of_view_tracks": 0
+    },
+    "tree": {
+      "all_tracks": 713,
+      "source_patch_valid_tracks": 713,
+      "source_valid_visible_tracks": 713,
+      "balanced_complete_case_tracks": 156,
+      "balanced_fraction_of_all": 0.2187938288920056,
+      "balanced_fraction_of_source_valid_visible": 0.2187938288920056,
+      "return_after_occlusion_tracks": 180,
+      "return_after_occlusion_support": "SUFFICIENT",
+      "return_after_out_of_view_tracks": 0
+    }
+  }
+}

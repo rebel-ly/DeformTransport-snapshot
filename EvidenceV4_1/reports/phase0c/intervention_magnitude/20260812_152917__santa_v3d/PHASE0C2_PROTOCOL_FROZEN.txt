@@ -1,0 +1,273 @@
+当前阶段：
+
+Phase0C-2 — Operator Intervention Magnitude Audit
+
+Phase0C-1 已完成：
+
+PHASE0C1_STATUS = PASS
+
+Formal Santa:
+N=1257
+T=81
+latent future slots=20
+latent H=60
+latent W=104
+
+0C-1 frozen results:
+
+TOTAL_CANDIDATE_ASSIGNMENTS = 9766
+TOTAL_UNIQUE_TARGET_WRITES = 9031
+TOTAL_COLLISION_CELLS = 722
+TOTAL_COLLISION_CARRIERS = 1457
+GLOBAL_MAX_MULTIPLICITY = 3
+
+CARRIERS_WITH_ANY_CONTRIBUTION = 1102
+ZERO_CONTRIBUTION_CARRIERS = 155
+
+All Correct/Shuffled structural mismatches = 0.
+
+==================================================
+1. 核心问题
+==================================================
+
+量化 V3D operator 的 intervention magnitude。
+
+必须区分：
+
+A. structural magnitude
+B. feature-amplitude magnitude
+
+不得把 synthetic latent 的 L1/L2 当成真实 Wan latent
+intervention amplitude。
+
+==================================================
+2. Evidence inputs
+==================================================
+
+优先只读复用：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/
+functional_conditioning/
+20260812_143438__santa_v3d_seed0_import_recovered
+
+以及 Phase0C-1 evidence。
+
+不要重新运行 V3D operator。
+
+==================================================
+3. 0C-2A Structural Intervention Magnitude
+==================================================
+
+使用 0B-4R：
+
+correct_edited_y.npy
+identity_shuffled_edited_y.npy
+
+以及原 synthetic VAE 构造规范。
+
+如果 run_phase0b4.py / evidence 中可以精确重建原始 synthetic y，
+必须按照冻结脚本重建，不自行定义新 y。
+
+分别计算 Correct / Shuffled：
+
+1. future latent spatial cells total:
+   20 * 60 * 104
+
+2. write-support cell count
+
+3. write-support fraction
+
+4. per-slot write-support cell count
+
+5. per-slot write-support fraction
+
+6. source slot modified cell count
+
+7. outside-support modified cell count
+
+8. total future spatial cells whose ANY channel differs from original
+
+9. total future scalar elements differing from original
+
+10. per-slot changed scalar count
+
+11. Correct/Shuffled:
+    - support counts exact equality
+    - per-slot counts exact equality
+
+注意：
+
+因为 Correct/Shuffled source feature values不同，
+changed scalar count 不要求 exact equal，除非数据实际证明相同。
+
+结构性 support 必须 exact equal。
+
+==================================================
+4. Synthetic amplitude diagnostics
+==================================================
+
+允许计算：
+
+Correct:
+L1 / L2 / Linf of edited_y - synthetic_y
+
+Shuffled:
+L1 / L2 / Linf
+
+以及 per-slot values。
+
+但是必须在报告中明确标记：
+
+SYNTHETIC_HARNESS_ONLY
+
+不得解释为真实 Wan latent amplitude。
+
+同时计算 ratio：
+
+Correct/Shuffled L1 ratio
+Correct/Shuffled L2 ratio
+
+这里只作为 harness diagnostic，
+不设 PASS threshold，
+不用于判定 method superiority。
+
+==================================================
+5. Real-latent inventory
+==================================================
+
+只读搜索现有 DeformTransport / Evidence / formal Santa assets：
+
+寻找可能的：
+
+source latent
+Wan VAE encoded source
+y.npy
+vae latent
+source_latent.pt
+source_latent.npy
+
+但禁止全盘无界 find。
+
+优先搜索已知 Santa formal/new_audit/server_runs 相关目录。
+
+对任何候选必须记录：
+
+path
+shape
+dtype
+SHA256
+source image provenance
+resize/crop provenance
+Wan VAE/checkpoint provenance
+
+只有 provenance 足够明确才可标：
+
+REAL_LATENT_CANDIDATE_VALID = True
+
+如果没有符合条件的真实 latent：
+
+REAL_LATENT_AMPLITUDE_STATUS = UNRESOLVED_NO_VALID_CACHED_LATENT
+
+不要运行 GPU。
+不要 instantiate WanVAE。
+不要 encode image。
+
+==================================================
+6. PASS / FAIL rule
+==================================================
+
+0C-2 overall 主要审 structural magnitude。
+
+PASS 必须满足：
+
+- source slot modified cells = 0
+- outside intended future support modified cells = 0
+- reconstructed future write support = 9031
+- Correct/Shuffled support exact equal
+- per-slot structural support exact equal
+- no unexplained modification outside operator support
+
+Real latent amplitude 可以是 UNRESOLVED，
+不导致 0C-2 structural audit FAIL。
+
+如果 synthetic source reconstruction 无法精确恢复：
+
+STATUS = ERROR/UNRESOLVED
+不要自行创建新的 synthetic y。
+
+==================================================
+7. Output
+==================================================
+
+创建：
+
+/workspace/DeformTransport_EvidenceV4_1/reports/phase0c/
+intervention_magnitude/
+<TIMESTAMP>__santa_v3d
+
+生成：
+
+PHASE0C2_PROTOCOL_FROZEN.txt
+run_phase0c2.py
+structural_magnitude_audit.json
+per_slot_intervention.csv
+real_latent_inventory.json
+PHASE0C2_SUMMARY.md
+phase0c2_status.json
+SHA256SUMS.txt
+
+==================================================
+8. Summary 固定九节
+==================================================
+
+1. 阶段目标
+2. 审计问题
+3. 使用的数据
+4. 使用的方法
+5. 关键命令/脚本
+6. 关键结果
+7. PASS/FAIL/UNRESOLVED 判断
+8. 对后续实验影响
+9. 遗留问题
+
+==================================================
+9. Final stdout
+==================================================
+
+===== PHASE0C-2 INTERVENTION MAGNITUDE AUDIT =====
+
+OUT = ...
+
+FUTURE_SPATIAL_CELLS_TOTAL = ...
+CORRECT_WRITE_SUPPORT_CELLS = ...
+SHUFFLED_WRITE_SUPPORT_CELLS = ...
+WRITE_SUPPORT_FRACTION = ...
+
+SOURCE_SLOT_MODIFIED_CELLS_CORRECT = ...
+SOURCE_SLOT_MODIFIED_CELLS_SHUFFLED = ...
+
+OUTSIDE_SUPPORT_MODIFIED_CELLS_CORRECT = ...
+OUTSIDE_SUPPORT_MODIFIED_CELLS_SHUFFLED = ...
+
+CORRECT_CHANGED_FUTURE_CELLS = ...
+SHUFFLED_CHANGED_FUTURE_CELLS = ...
+
+CORRECT_CHANGED_SCALARS = ...
+SHUFFLED_CHANGED_SCALARS = ...
+
+PER_SLOT_SUPPORT_EXACT = True/False
+
+SYNTHETIC_L1_CORRECT = ...
+SYNTHETIC_L1_SHUFFLED = ...
+SYNTHETIC_L2_CORRECT = ...
+SYNTHETIC_L2_SHUFFLED = ...
+SYNTHETIC_LINF_CORRECT = ...
+SYNTHETIC_LINF_SHUFFLED = ...
+
+REAL_LATENT_CANDIDATE_VALID = True/False
+REAL_LATENT_AMPLITUDE_STATUS = ...
+
+PHASE0C2_STATUS = PASS/FAIL/ERROR/UNRESOLVED
+
+然后 STOP。
+不要进入 0C-3。

@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "audit_type": "REPRESENTATION_SEMANTICS_ONLY_NO_NEW_TCME",
+  "preserved_diagnostic_values": {
+    "RW_CONDITION_TCME": 0.8946881631311656,
+    "DT_EDITED_Y_TCME": 1.5050048806385061,
+    "classification": "DIAGNOSTIC_ONLY"
+  },
+  "rw_condition": {
+    "representation": "81 explicit RGB rasterized simulation/coarse frames at 832x480, evaluator-resized to 832x464",
+    "spatial_support": "frontmost projected point-raster support plus holes",
+    "overall_future_valid_pixel_fraction": 0.15766532702323716,
+    "temporal_density": "81 explicit RGB states S0,S10,...,S800; 80 transitions",
+    "future_rgb_explicitly_rerasterized": true,
+    "motion_exists_across_most_object_pixels": "UNRESOLVED_AS_STATED; explicit on occupied support only",
+    "holes_exist": true
+  },
+  "dt_edited_y_condition": {
+    "native_representation": "Wan VAE latent CxTxHxW",
+    "latent_shape": [
+      16,
+      21,
+      60,
+      104
+    ],
+    "future_latent_slots": 20,
+    "write_support": 9031,
+    "future_cell_denominator": 124800,
+    "intervention_fraction": 0.07236378205128205,
+    "untouched_condition_fraction": 0.9276362179487179,
+    "decode_semantics": "VAE decode maps 21 latent slots to 81 RGB frames",
+    "temporal_support": "sparse writes over future latent slots then nonlinear VAE decode"
+  },
+  "comparison": {
+    "representation_support_comparable": false,
+    "representation_temporal_semantics_comparable": false,
+    "condition_tcme_causal_interpretation_valid": false,
+    "reason": "RW explicit projected RGB raster support differs from sparse edited latent support and VAE decode semantics."
+  },
+  "rw_metric_advantage_already_present_in_conditioning_motion": "UNRESOLVED_REPRESENTATION_ASYMMETRY"
+}

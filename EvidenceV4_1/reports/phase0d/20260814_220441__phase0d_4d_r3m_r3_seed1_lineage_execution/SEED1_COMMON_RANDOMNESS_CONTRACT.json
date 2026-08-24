@@ -1,0 +1,17 @@
+{
+  "EPSILON_CHANGE": "DETERMINISTIC_CONSEQUENCE_OF_FORMAL_DIFFUSION_SEED",
+  "EPSILON_SEED1_NATIVE_SEMANTICS_PASS": true,
+  "SEED0_TO_SEED1_ONLY_SCIENTIFIC_RANDOM_CHANGE": "FORMAL_DIFFUSION_SEED",
+  "SEED1_THREE_ARM_SHARED_EPSILON": true,
+  "seed1_epsilon_dtype": "float32",
+  "seed1_epsilon_file_sha256": "9b55589da21a129832555b8237c627e44c933088c26614524d30bf1a550e9002",
+  "seed1_epsilon_path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_100000__phase0d_4d_r3m_seed1_wave1/EPSILON_SEED1_58x104.npy",
+  "seed1_epsilon_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "seed1_epsilon_tensor_sha256": "df48b8742c815d043c8cf8940884d4d0eb09046b1c1e7a7b3faf8da25a548ce9",
+  "validation_evidence": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_110000__phase0d_4d_r3m_r2_epsilon_validation/EPSILON_VALIDATION.json"
+}

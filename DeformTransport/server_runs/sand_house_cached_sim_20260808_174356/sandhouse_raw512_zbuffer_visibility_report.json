@@ -1,0 +1,20 @@
+{
+  "status": "SANDHOUSE_RAW512_ZBUFFER_VISIBILITY_GO",
+  "definition": "front-most persistent material point per native 512x512 camera raster pixel; minimum positive camera depth; exact depth tie by minimum raw persistent material ID",
+  "trajectory": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/raw_sim/point_trajectories.pt",
+  "shape": [
+    165,
+    441807
+  ],
+  "dtype": "bool",
+  "frame0_visible": 41628,
+  "frame7_visible": 41628,
+  "frame10_visible": 41628,
+  "frame41_visible": 32046,
+  "frame80_visible": 33749,
+  "frame160_visible": 34383,
+  "min_visible": 30694,
+  "max_visible": 41948,
+  "mean_visible": 35559.84848484849,
+  "visible_depth_positive_fraction": 1.0
+}

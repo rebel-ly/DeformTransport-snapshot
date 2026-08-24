@@ -1,0 +1,64 @@
+{
+  "生成时间": "2026-08-09T04:25:40.428935+08:00",
+  "case": "sand_house",
+  "experiment_definition": "SandHouse cached simulation geometry + SandHouse robot-action dynamics",
+  "seed": 0,
+  "算法": "项目simulation/image23D/noise_warp/noise_warp.py::get_noise_from_video",
+  "光流模型": "torchvision RAFT-Large C_T_SKHT_V2",
+  "权重来源": "https://download.pytorch.org/models/raft_large_C_T_SKHT_V2-ff5fadd5.pth",
+  "权重SHA256": "ff5fadd56d26b40647388883af1547351ea17868b765c05b27231e72dd16a322",
+  "输入帧": 165,
+  "原始输入shape": [
+    165,
+    480,
+    832,
+    3
+  ],
+  "RAFT输入shape": [
+    165,
+    240,
+    416,
+    3
+  ],
+  "预处理": "torch.nn.functional.interpolate(mode=area,size=(240,416)); equivalent replacement for original resize_frames=0.5 while bypassing unavailable cv2",
+  "参数": {
+    "noise_channels": 32,
+    "resize_frames": null,
+    "等效预缩放": 0.5,
+    "resize_flow": 8,
+    "downscale_factor": 32,
+    "remove_background": false
+  },
+  "检查": {
+    "noise_shape": [
+      165,
+      60,
+      104,
+      32
+    ],
+    "noise_dtype": "float16",
+    "noise_finite": true,
+    "flow_shape": [
+      164,
+      2,
+      240,
+      416
+    ],
+    "flow_dtype": "float16",
+    "flow_finite": true
+  },
+  "hard_checks": {
+    "noise_shape_exact": true,
+    "noise_dtype_float16": true,
+    "noise_finite": true,
+    "flow_shape_exact": true,
+    "flow_dtype_float16": true,
+    "flow_finite": true
+  },
+  "all_checks_pass": true,
+  "耗时秒": 60.8995810719789,
+  "torch峰值allocated_MiB": 15834.685546875,
+  "torch峰值reserved_MiB": 17816.0,
+  "noises_SHA256": "35ed8e599271e19347fddc85c90883e3614f1d9c5a0bd72dc4266f99b99d0df3",
+  "flows_SHA256": "62c1cc0f516a2f7e71aa6898b9117702bced9b50c4e8b61b0d75254e43cf5067"
+}

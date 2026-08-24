@@ -1,0 +1,21 @@
+{
+  "conditioning_edited_y_exact_equal_across_seeds": "NOT_FUNCTIONALLY_EXECUTED",
+  "evidence_level": "STATIC/ALGEBRAIC",
+  "invariants": [
+    "target support",
+    "winner material IDs",
+    "winning depths",
+    "carrier contribution",
+    "final write positions"
+  ],
+  "reason": "No cached real source latent exists and no VAE/14B instantiation is permitted in Phase0D-1. Static frozen code path establishes permutation-coupled V3D structural invariance; `track_feats` random embeddings are not supplied to model arg_c/arg_null.",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "status": "STATIC_ALGEBRAIC_INVARIANT",
+  "trajectory_rng_generator_consumed_conditioning_effect": "NOT_DETECTED_STATICALLY"
+}

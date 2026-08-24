@@ -1,0 +1,53 @@
+diff --git a/infer_sim.py b/infer_sim.py
+index a3b838a..8430348 100644
+--- a/infer_sim.py
++++ b/infer_sim.py
+@@ -22,6 +22,7 @@ from omegaconf import OmegaConf
+ from PIL import Image
+ import imageio
+ 
++from deform_transport.pipeline_integration import load_precomputed_transport_latent
+ from vidgen import (
+     WanImageEncoder,
+     WanVideoVAE,
+@@ -89,6 +90,21 @@ def main():
+     parser.add_argument("--eval_degradation", type=float, default=0.5,
+                         help="Degradation level for noise (0.0 = pure structured noise)")
+     parser.add_argument("--local_attn_size", type=int, default=21, help="Local attention size for causal model")
++    parser.add_argument(
++        "--transport_latent_path",
++        type=str,
++        default=None,
++        help=(
++            "Optional VAE transport artifact produced by "
++            "scripts/run_wan_vae_transport_probe.py"
++        ),
++    )
++    parser.add_argument(
++        "--transport_mode",
++        choices=("correct", "shuffled", "flow", "blend"),
++        default="correct",
++        help="Which precomputed fused latent to inject when --transport_latent_path is set",
++    )
+ 
+     args, additional_args = parser.parse_known_args()
+ 
+@@ -258,6 +274,18 @@ def main():
+         sim_latent = sim_latent.to(device=device, dtype=torch.bfloat16)
+         print(f"  sim_latent shape: {sim_latent.shape}")
+ 
++        if args.transport_latent_path:
++            print(
++                f"Loading {args.transport_mode} transported sim_latent from: "
++                f"{args.transport_latent_path}"
++            )
++            sim_latent = load_precomputed_transport_latent(
++                args.transport_latent_path,
++                mode=args.transport_mode,
++                reference_latent=sim_latent,
++            )
++            print(f"  transported sim_latent shape: {sim_latent.shape}")
++
+         # Trim or pad sim_latent to match noise frames
+         if sim_latent.shape[1] > num_output_frames:
+             sim_latent = sim_latent[:, :num_output_frames]

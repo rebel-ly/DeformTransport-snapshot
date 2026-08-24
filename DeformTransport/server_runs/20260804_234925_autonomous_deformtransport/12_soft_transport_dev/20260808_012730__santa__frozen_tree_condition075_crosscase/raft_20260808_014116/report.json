@@ -1,0 +1,28 @@
+{
+  "protocol": {
+    "case": "Santa Cloth",
+    "correct_scale": 0.75,
+    "matched_shuffled_scale": 0.5778925808373001,
+    "santa_tuning": false
+  },
+  "metrics": {
+    "REALWONDER": {
+      "global_EPE": 0.10112713277339935,
+      "transport_EPE": 0.5069329142570496,
+      "transport_angle_deg": 14.351032257080078,
+      "pred_flow_magnitude_mean": 0.24964474141597748
+    },
+    "CORRECT_075": {
+      "global_EPE": 0.1028173565864563,
+      "transport_EPE": 0.5153765678405762,
+      "transport_angle_deg": 15.554134368896484,
+      "pred_flow_magnitude_mean": 0.24939806759357452
+    },
+    "SHUFFLED_MATCH": {
+      "global_EPE": 0.1045050397515297,
+      "transport_EPE": 0.5232690572738647,
+      "transport_angle_deg": 15.315567970275879,
+      "pred_flow_magnitude_mean": 0.25102537870407104
+    }
+  }
+}

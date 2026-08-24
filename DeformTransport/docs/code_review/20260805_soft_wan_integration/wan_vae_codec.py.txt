@@ -1,0 +1,160 @@
+SOURCE_FILE=deform_transport/wan_vae_codec.py
+SHA256=33fdb73417236346b4b0be1de9e4ac58623cb1bd1f9c171d31a42b39fcabaf60
+
+     1	"""Minimal RealWonder Wan VAE-only codec without text or diffusion models."""
+     2	
+     3	from __future__ import annotations
+     4	
+     5	import importlib.util
+     6	from pathlib import Path
+     7	import sys
+     8	
+     9	import torch
+    10	import torch.nn as nn
+    11	
+    12	
+    13	# Importing ``wan.modules.vae`` normally executes ``wan/__init__.py``, which
+    14	# eagerly imports the diffusion model and requires unrelated packages. Loading
+    15	# this standalone module file preserves RealWonder's exact VAE implementation
+    16	# while keeping the VAE-only stage independent of diffusers, PEFT, T5, and CLIP.
+    17	_VAE_SOURCE = Path(__file__).resolve().parents[1] / "wan" / "modules" / "vae.py"
+    18	_VAE_SPEC = importlib.util.spec_from_file_location(
+    19	    "deform_transport_realwonder_wan_vae", _VAE_SOURCE
+    20	)
+    21	if _VAE_SPEC is None or _VAE_SPEC.loader is None:
+    22	    raise ImportError(f"cannot load RealWonder Wan VAE source from {_VAE_SOURCE}")
+    23	_VAE_MODULE = importlib.util.module_from_spec(_VAE_SPEC)
+    24	sys.modules[_VAE_SPEC.name] = _VAE_MODULE
+    25	_VAE_SPEC.loader.exec_module(_VAE_MODULE)
+    26	_video_vae = _VAE_MODULE._video_vae
+    27	
+    28	
+    29	WAN_VAE_MEAN = (
+    30	    -0.7571,
+    31	    -0.7089,
+    32	    -0.9113,
+    33	    0.1075,
+    34	    -0.1745,
+    35	    0.9653,
+    36	    -0.1517,
+    37	    1.5508,
+    38	    0.4134,
+    39	    -0.0715,
+    40	    0.5517,
+    41	    -0.3632,
+    42	    -0.1922,
+    43	    -0.9497,
+    44	    0.2503,
+    45	    -0.2921,
+    46	)
+    47	WAN_VAE_STD = (
+    48	    2.8184,
+    49	    1.4541,
+    50	    2.3275,
+    51	    2.6558,
+    52	    1.2196,
+    53	    1.7708,
+    54	    2.6052,
+    55	    2.0743,
+    56	    3.2687,
+    57	    2.1526,
+    58	    2.8652,
+    59	    1.5579,
+    60	    1.6382,
+    61	    1.1253,
+    62	    2.8251,
+    63	    1.9160,
+    64	)
+    65	
+    66	
+    67	def causal_latent_frame_end_indices(pixel_frame_count: int) -> torch.Tensor:
+    68	    """Map each causal VAE latent slot to the end of its pixel-frame chunk.
+    69	
+    70	    Wan encodes frame zero alone, then consecutive four-frame chunks. For 21
+    71	    pixel frames this produces six latent slots aligned to `[0,4,8,12,16,20]`.
+    72	    """
+    73	
+    74	    if pixel_frame_count < 1:
+    75	        raise ValueError("pixel_frame_count must be at least one")
+    76	    return torch.tensor(
+    77	        [0, *range(4, pixel_frame_count, 4)], dtype=torch.long
+    78	    )
+    79	
+    80	
+    81	class RealWonderWanVAECodec(nn.Module):
+    82	    """The exact 16-channel Wan2.1 VAE and normalization used by RealWonder."""
+    83	
+    84	    def __init__(
+    85	        self,
+    86	        checkpoint_path: str | Path,
+    87	        *,
+    88	        device: torch.device | str,
+    89	        dtype: torch.dtype = torch.bfloat16,
+    90	    ) -> None:
+    91	        super().__init__()
+    92	        self.checkpoint_path = Path(checkpoint_path)
+    93	        if not self.checkpoint_path.is_file():
+    94	            raise FileNotFoundError(self.checkpoint_path)
+    95	        self.compute_device = torch.device(device)
+    96	        self.compute_dtype = dtype
+    97	        self.model = _video_vae(
+    98	            pretrained_path=str(self.checkpoint_path), z_dim=16, device="cpu"
+    99	        ).eval().requires_grad_(False)
+   100	        self.model.to(device=self.compute_device, dtype=self.compute_dtype)
+   101	        self.register_buffer(
+   102	            "latent_mean", torch.tensor(WAN_VAE_MEAN, dtype=torch.float32)
+   103	        )
+   104	        self.register_buffer(
+   105	            "latent_inverse_std",
+   106	            1.0 / torch.tensor(WAN_VAE_STD, dtype=torch.float32),
+   107	        )
+   108	
+   109	    def _scale(self, dtype: torch.dtype) -> list[torch.Tensor]:
+   110	        return [
+   111	            self.latent_mean.to(device=self.compute_device, dtype=dtype),
+   112	            self.latent_inverse_std.to(device=self.compute_device, dtype=dtype),
+   113	        ]
+   114	
+   115	    @torch.inference_mode()
+   116	    def encode_pixels(self, pixels: torch.Tensor) -> torch.Tensor:
+   117	        """Encode `[B,C,T,H,W]` pixels in `[-1,1]` to `[B,Tz,16,h,w]`."""
+   118	
+   119	        pixels = torch.as_tensor(pixels)
+   120	        if pixels.ndim != 5 or pixels.shape[1] != 3:
+   121	            raise ValueError("pixels must have shape [B, 3, T, H, W]")
+   122	        pixels = pixels.to(device=self.compute_device, dtype=self.compute_dtype)
+   123	        scale = self._scale(pixels.dtype)
+   124	        outputs = [
+   125	            self.model.encode(sample.unsqueeze(0), scale).float().squeeze(0)
+   126	            for sample in pixels
+   127	        ]
+   128	        latent = torch.stack(outputs).permute(0, 2, 1, 3, 4).contiguous()
+   129	        expected_slots = (pixels.shape[2] + 3) // 4
+   130	        if latent.shape[1] != expected_slots:
+   131	            raise RuntimeError(
+   132	                f"unexpected temporal compression: got {latent.shape[1]}, "
+   133	                f"expected {expected_slots}"
+   134	            )
+   135	        return latent
+   136	
+   137	    @torch.inference_mode()
+   138	    def decode_latents(self, latent: torch.Tensor) -> torch.Tensor:
+   139	        """Decode `[B,Tz,16,h,w]` to `[B,T,C,H,W]` pixels in `[-1,1]`."""
+   140	
+   141	        latent = torch.as_tensor(latent)
+   142	        if latent.ndim != 5 or latent.shape[2] != 16:
+   143	            raise ValueError("latent must have shape [B, Tz, 16, H, W]")
+   144	        latent = latent.to(device=self.compute_device, dtype=self.compute_dtype)
+   145	        latent_channel_first = latent.permute(0, 2, 1, 3, 4).contiguous()
+   146	        scale = self._scale(latent.dtype)
+   147	        outputs = [
+   148	            self.model.decode(sample.unsqueeze(0), scale)
+   149	            .float()
+   150	            .clamp_(-1, 1)
+   151	            .squeeze(0)
+   152	            for sample in latent_channel_first
+   153	        ]
+   154	        return torch.stack(outputs).permute(0, 2, 1, 3, 4).contiguous()
+   155	
+   156	    def clear_cache(self) -> None:
+   157	        self.model.clear_cache()

@@ -1,0 +1,12 @@
+{
+  "LOCAL_CODEX_ONLY_POLICY": "ENABLED",
+  "SERVER_ROLE": "SSH_EXECUTION_TARGET_ONLY",
+  "SERVER_SIDE_CODEX_CLI_INVOKED": false,
+  "SERVER_SIDE_CODEX_AGENT_CREATED": false,
+  "SERVER_SIDE_OPENAI_API_CALLED": false,
+  "SERVER_SIDE_CPA_API_KEY_CONSUMED_FOR_LLM": false,
+  "SERVER_SIDE_LLM_INFERENCE_DETECTED": false,
+  "EXISTING_REMOTE_HELPER_PROCESSES_KILLED": false,
+  "QUOTA_ISOLATION_STATUS": "PASS",
+  "basis": "This task invoked only host shell, filesystem, existing Python/CV/GPU evaluator code, and cached RAFT inference. No server-side Codex/LLM/API command was invoked; no helper was killed."
+}

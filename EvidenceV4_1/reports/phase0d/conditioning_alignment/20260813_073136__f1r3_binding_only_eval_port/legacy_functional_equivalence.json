@@ -1,0 +1,41 @@
+{
+  "policy": "N1277_SEMANTIC_EQUIVALENCE_TEST_FIXTURE_ONLY",
+  "runtime": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python (Python 3.11)",
+  "gpu_binding": "CUDA_VISIBLE_DEVICES=1; evaluator cuda:0",
+  "root": "/mnt/sdbd/home/liuyu_qyh/DeformTransport",
+  "suite": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/wan_move_method_suite/20260810_054423__v3s_v3b_v3c_v3d_v3e_correct_seed0",
+  "original_evaluator_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "legacy_fixture_sha256": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "runs": {
+    "appearance": {
+      "original_exit_code": 0,
+      "fixture_exit_code": 0,
+      "original_report_sha256": "a450ef5325f4e7fd137f254ec0316c69d1e23ac5db2128c27760b6319b9bb8ae",
+      "fixture_report_sha256": "a450ef5325f4e7fd137f254ec0316c69d1e23ac5db2128c27760b6319b9bb8ae",
+      "byte_exact": true,
+      "cases": [
+        "santa",
+        "tree"
+      ],
+      "santa_n": 1277,
+      "santa_valid_tracks": 1277,
+      "santa_observations": 25540
+    },
+    "santa_motion": {
+      "original_exit_code": 0,
+      "fixture_exit_code": 0,
+      "original_report_sha256": "7d289095005717528ce8476cee2d28a8047471c28f0c20ef5974fdf81e604f91",
+      "fixture_report_sha256": "7d289095005717528ce8476cee2d28a8047471c28f0c20ef5974fdf81e604f91",
+      "byte_exact": true,
+      "frame_count": 81,
+      "transition_count": 80
+    }
+  },
+  "LEGACY_EQ_EXIT_CODES_EQUAL": true,
+  "LEGACY_EQ_SAMPLE_COUNTS_EQUAL": true,
+  "LEGACY_EQ_FRAME_COUNTS_EQUAL": true,
+  "LEGACY_EQ_VISIBILITY_COUNTS_EQUAL": true,
+  "LEGACY_EQ_METRIC_SET_EQUAL": true,
+  "LEGACY_EQ_ALL_VALUES_EXACT": true,
+  "LEGACY_EQ_MAX_ABS_DIFF": 0
+}

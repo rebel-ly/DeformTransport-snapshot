@@ -1,0 +1,50 @@
+{
+  "status": "PRELAUNCH_RUNNER_AUDIT_OK",
+  "normalized_manifests": {
+    "santa_correct": {
+      "task": "wan-move-i2v",
+      "size": "480*832",
+      "frame_num": "81",
+      "base_seed": "0",
+      "sample_steps": "40",
+      "sample_shift": "3.0",
+      "dtype": "bf16",
+      "offload_model": "True",
+      "t5_cpu": "present",
+      "checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P"
+    },
+    "tree_correct": {
+      "task": "wan-move-i2v",
+      "size": "480*832",
+      "frame_num": "81",
+      "base_seed": "0",
+      "sample_steps": "40",
+      "sample_shift": "3.0",
+      "dtype": "bf16",
+      "offload_model": "True",
+      "t5_cpu": "present",
+      "checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P"
+    },
+    "tree_shuffled": {
+      "task": "wan-move-i2v",
+      "size": "480*832",
+      "frame_num": "81",
+      "base_seed": "0",
+      "sample_steps": "40",
+      "sample_shift": "3.0",
+      "dtype": "bf16",
+      "offload_model": "True",
+      "t5_cpu": "present",
+      "checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P"
+    }
+  },
+  "all_match_successful_santa_algorithmic_contract": true,
+  "allowed_differences_only": [
+    "case image",
+    "prompt",
+    "tracks",
+    "visibility",
+    "output/run path",
+    "GPU argument"
+  ]
+}

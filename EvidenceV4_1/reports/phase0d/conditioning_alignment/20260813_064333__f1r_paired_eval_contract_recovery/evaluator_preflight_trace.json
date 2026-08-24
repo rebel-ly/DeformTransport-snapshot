@@ -1,0 +1,13 @@
+{
+  "type": "deterministic loader validation only; no metric computation",
+  "runtime": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python (Python 3.11)",
+  "frozen_evaluator_sha": "2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08",
+  "sidecars": {"tracks_shape": [1,81,1257,2], "visibility_shape": [1,81,1257], "ids_shape": [1257], "n": 1257},
+  "rw": {"video_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4", "loader_shape": [81,464,832,3], "preflight": "PASS"},
+  "dtfull": {"video_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport_EvidenceV4_1/reports/phase0d/formal_runs/santa_correct_v3d_seed000_replayA_2re/santa_correct_v3d_seed000.mp4", "loader_shape": [81,464,832,3], "preflight": "PASS"},
+  "patch_bounds": "Frozen evaluator patch eligibility is used unchanged; no score loop ran. Static definition: 8x8 bilinear patch, offsets -3.5..+3.5.",
+  "timeline": "81 frames for both inputs; semantics equal.",
+  "rw_preflight": "PASS",
+  "dtfull_preflight": "PASS",
+  "formal_evaluator_invocation_preflight": "FAIL: frozen evaluator would bind legacy N=1277 sidecars and has no DT_FULL binding."
+}

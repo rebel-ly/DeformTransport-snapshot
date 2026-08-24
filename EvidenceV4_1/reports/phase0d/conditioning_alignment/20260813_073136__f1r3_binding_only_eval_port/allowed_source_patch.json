@@ -1,0 +1,89 @@
+{
+  "policy": "Only deterministic DATASET_BINDING, METHOD_BINDING, OUTPUT_BINDING literal replacements are allowed.",
+  "builder_sha256": "385b39f7ad018be72d10d37ffd6eb56e117fe0ccba49f01bc11cf0a75bfda0f0",
+  "allowed_fields": [
+    {
+      "category": "METHOD_BINDING",
+      "field": "CANDIDATES",
+      "original_lines": [
+        32,
+        38
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.tracks",
+      "original_lines": [
+        66,
+        69
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.vis",
+      "original_lines": [
+        72,
+        75
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.n",
+      "original_lines": [
+        78,
+        78
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.valid_tracks",
+      "original_lines": [
+        79,
+        79
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.obs",
+      "original_lines": [
+        80,
+        80
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.lab",
+      "original_lines": [
+        81,
+        81
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.rgb",
+      "original_lines": [
+        82,
+        82
+      ]
+    },
+    {
+      "category": "DATASET_BINDING",
+      "field": "CASES.santa.expect.tcme",
+      "original_lines": [
+        83,
+        83
+      ]
+    },
+    {
+      "category": "OUTPUT_BINDING",
+      "field": "main.appearance_cases",
+      "original_lines": [
+        2216,
+        2219
+      ]
+    }
+  ],
+  "allowed_binding_diff_hunks": 5,
+  "forbidden_source_diff_hunks": 0,
+  "verification": "generated source exactly equals original transformed by builder build-report replacements; all semantic region source SHA and AST dumps equal"
+}

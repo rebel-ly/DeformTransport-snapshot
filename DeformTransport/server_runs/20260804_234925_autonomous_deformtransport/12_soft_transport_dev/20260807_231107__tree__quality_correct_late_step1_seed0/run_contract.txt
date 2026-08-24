@@ -1,0 +1,4 @@
+method=late_transport_injection
+transport_injection_step=1
+transport_injection_scale=1.0
+artifact=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212536__tree__quality_ramp4_frozen_santa_recipe/tree_quality_ramp4_full_generation.pt

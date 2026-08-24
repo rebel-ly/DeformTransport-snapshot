@@ -1,0 +1,12 @@
+{
+  "LOCAL_CODEX_ONLY_POLICY": "ENABLED",
+  "SERVER_ROLE": "SSH_EXECUTION_TARGET_ONLY",
+  "SERVER_SIDE_CODEX_CLI_INVOKED": false,
+  "SERVER_SIDE_CODEX_AGENT_CREATED": false,
+  "SERVER_SIDE_OPENAI_API_CALLED": false,
+  "SERVER_SIDE_CPA_API_KEY_CONSUMED_FOR_LLM": false,
+  "SERVER_SIDE_LLM_INFERENCE_DETECTED": false,
+  "EXISTING_REMOTE_HELPER_PROCESSES_KILLED": false,
+  "QUOTA_ISOLATION_STATUS": "PASS",
+  "basis": "Only shell/filesystem, existing Python/CV evaluator code, GPU execution, and locally cached RAFT weights were used. No server-side Codex, LLM, or OpenAI API was invoked."
+}

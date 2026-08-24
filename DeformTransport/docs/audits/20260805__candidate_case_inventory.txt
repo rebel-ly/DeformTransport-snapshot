@@ -1,0 +1,143 @@
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim
+PROMPT=Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement. 
+config.yaml=yes
+resized_input_image.png=yes
+flows.npy=yes
+flows_geometry.npy=yes
+point_trajectories.pt=yes
+transport_ready.pt=no
+frames=81
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim
+PROMPT=Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement. 
+config.yaml=yes
+resized_input_image.png=yes
+flows.npy=no
+flows_geometry.npy=yes
+point_trajectories.pt=yes
+transport_ready.pt=no
+frames=81
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1
+PROMPT=Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement. 
+config.yaml=yes
+resized_input_image.png=yes
+flows.npy=yes
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=21
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_1
+PROMPT=A sleek BMW 7 Series luxury sedan driving smoothly through a dense forest. The car glides gracefully along a winding dirt road lined with tall trees casting dappled shadows. The vehicle's polished exterior gleams under the filtered sunlight, highlighting its modern design and chrome accents. The interior, with its luxurious leather seats and advanced technology dashboard, is briefly glimpsed as the camera captures a moment of the driver focused on the road. The serene forest environment provides a stark contrast to the high-tech automotive experience. Medium shot focusing on the car as it moves through the scenic forest path.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_3
+PROMPT=A book slowly opens, revealing a burst of magical light that spills out, illuminating the screen. Words and various knowledge symbols such as books, scrolls, and gears float gracefully out of the pages, swirling and expanding to fill the frame. This emphasizes the concept of knowledge amplification and growth. The camera remains static, capturing the magical transformation in a close-up shot.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_5
+PROMPT=Realistic 8K resolution video of Vin Diesel as Optimus Prime delivering a powerful punch. Optimus Prime stands tall and imposing, with his iconic blue and red armor gleaming under a soft light. His muscular form and detailed mechanical features are visible as he clenches his fist and strikes with incredible force. The scene focuses on his determined expression and the motion of his arm as it connects with the air, creating a ripple effect. The background shows a dimly lit garage with tools scattered around, adding to the gritty realism. Medium close-up shot.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_7
+PROMPT=A solitary medieval figure, dressed in a tunic and hooded cloak, walking down a narrow cobblestone street under a dimly lit sky. The figure carries a wooden staff and wears a leather satchel over their shoulder. The street is lined with old stone buildings, their windows partially boarded up, and there are faint sounds of distant chatter and the occasional clatter of hooves. The atmosphere is somber and quiet, with a few flickering torches casting shadows along the walls. The figure moves steadily, with a determined yet cautious demeanor. Medium shot, following the figure as they walk.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_8
+PROMPT=A vibrant live music performance featuring a group of musicians playing songs on stage. The band consists of a guitarist, drummer, bassist, and keyboardist, all dressed in casual yet stylish outfits. They are performing in a well-lit concert hall with a diverse audience clapping along. Each musician is engaged in their respective instrument, with expressive facial expressions and body language conveying their passion for the music. The scene is captured from a medium shot angle, focusing on the interaction between the band members and their energetic performance.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_0
+PROMPT=In a dramatic and cinematic 4K scene, spaghetti noodles are seen on fire, curling and twisting as flames engulf them. The spaghetti strands are illuminated by flickering orange and red flames, casting shadows on a dark, textured wooden surface. Smoke rises from the burning spaghetti, adding depth and realism to the scene. The camera focuses closely on the spaghetti, capturing every detail of the burning process, with a slight tilt to highlight the fiery chaos. The overall atmosphere is intense and visually striking, emphasizing the unexpected and dangerous nature of the burning food.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_2
+PROMPT=A serene nighttime scene over a tranquil lake, where moving shadows cast by trees and clouds glide gracefully across the water's surface. The moonlight creates a soft, silvery glow that illuminates the rippling waves. The shadows dance and shift, creating an ethereal and mysterious atmosphere. The background features sparse, tall trees and a distant, hazy shoreline. The camera remains static, capturing the fluid motion of the shadows and the reflective quality of the lake. Medium-wide shot.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_4
+PROMPT=Hollywood street scene in 1971, filmed in 16mm footage from the perspective of an old Cadillac car window. The exterior of the Cadillac shows classic detailing with chrome accents and a polished finish. Inside the car, the interior is vintage, with plush seats and a dashboard featuring analog gauges. Outside, the bustling cityscape includes retro signage, vintage cars, and pedestrians dressed in 1970s fashion. The camera captures the reflections and movements outside as the car drives down the street, showcasing the vibrant energy of Hollywood in the early 1970s. Medium shot, static scene.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_6
+PROMPT=A heavy machinery vehicle, such as a bulldozer or excavator, driving through a busy mining facility. The facility is filled with large piles of raw minerals, conveyor belts, and other industrial equipment. The machine's tires leave deep tracks in the dusty ground as it moves steadily forward. Workers in orange safety vests can be seen operating other machinery and walking around the site. The background includes towering silos and buildings with exposed steel structures. The scene captures the gritty, industrious atmosphere of a mining operation. Wide shot, static camera to showcase the expansive facility and ongoing activities.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+
+==================================================
+DIR=/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_9
+PROMPT=A hyper-realistic depiction of a teenage girl with curly brown hair, wearing a casual outfit consisting of a green t-shirt and jeans, sitting comfortably in front of a computer. She is speaking into a Google Home device, saying ""Okay Google, play a song."" Her expression is focused and engaged as she waits for the device to respond. The background shows a neatly organized home office with books and posters on the wall. The scene should be captured in a medium close-up to emphasize her interaction with the device. Static shot.
+config.yaml=no
+resized_input_image.png=no
+flows.npy=no
+flows_geometry.npy=no
+point_trajectories.pt=no
+transport_ready.pt=no
+frames=0
+

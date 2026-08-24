@@ -1,0 +1,174 @@
+{
+  "paths": {
+    "baseline": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_033448__interstep_patch_baseline_regression/santa_interstep_patch_baseline_seed0.mp4",
+    "uniform_correct_g020": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_034301__santa__interstep_correct_g010_vs_g020_seed0/interstep_correct_g020/santa_interstep_correct_g020_seed0.mp4",
+    "confidence_correct_g020": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/confidence_correct_g020/santa_confidence_interstep_correct_g020_seed0.mp4",
+    "uniform_shuffled_g020": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/interstep_shuffled_g020/santa_interstep_shuffled_g020_seed0.mp4",
+    "confidence_shuffled_g020": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/confidence_shuffled_g020/santa_confidence_interstep_shuffled_g020_seed0.mp4"
+  },
+  "shape": [
+    81,
+    480,
+    832,
+    3
+  ],
+  "pairwise": {
+    "baseline_vs_uniform_correct": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 3.259798049926758,
+      "mse_0_255": 82.6541519165039,
+      "psnr_db": 28.958156867579294,
+      "max_abs_difference": 254.0,
+      "different_values": 61040397,
+      "per_frame_mae": {
+        "minimum": 1.5908311605453491,
+        "mean": 3.259793996810913,
+        "maximum": 4.559056282043457,
+        "first": 1.5908311605453491,
+        "middle": 3.189074993133545,
+        "final": 4.559056282043457
+      }
+    },
+    "baseline_vs_confidence_correct": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.9187216758728027,
+      "mse_0_255": 61.79756164550781,
+      "psnr_db": 30.221090214553477,
+      "max_abs_difference": 243.0,
+      "different_values": 60621803,
+      "per_frame_mae": {
+        "minimum": 1.5828434228897095,
+        "mean": 2.9187171459198,
+        "maximum": 3.9386701583862305,
+        "first": 1.5828434228897095,
+        "middle": 2.921583652496338,
+        "final": 3.9386701583862305
+      }
+    },
+    "uniform_vs_confidence_correct": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.5825440883636475,
+      "mse_0_255": 48.17413330078125,
+      "psnr_db": 31.302664508476138,
+      "max_abs_difference": 221.0,
+      "different_values": 60269850,
+      "per_frame_mae": {
+        "minimum": 1.5686181783676147,
+        "mean": 2.5825459957122803,
+        "maximum": 3.8855252265930176,
+        "first": 1.5686181783676147,
+        "middle": 2.4791300296783447,
+        "final": 3.8855252265930176
+      }
+    },
+    "uniform_correct_vs_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.7706496715545654,
+      "mse_0_255": 47.08320617675781,
+      "psnr_db": 31.402143319840327,
+      "max_abs_difference": 231.0,
+      "different_values": 61214633,
+      "per_frame_mae": {
+        "minimum": 1.5898420810699463,
+        "mean": 2.770646810531616,
+        "maximum": 3.601808786392212,
+        "first": 1.5898420810699463,
+        "middle": 2.6554086208343506,
+        "final": 3.5679244995117188
+      }
+    },
+    "confidence_correct_vs_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 2.7388296127319336,
+      "mse_0_255": 46.0805778503418,
+      "psnr_db": 31.495624443667893,
+      "max_abs_difference": 223.0,
+      "different_values": 61273721,
+      "per_frame_mae": {
+        "minimum": 1.5875775814056396,
+        "mean": 2.7388291358947754,
+        "maximum": 3.8603198528289795,
+        "first": 1.5875775814056396,
+        "middle": 2.643057107925415,
+        "final": 3.8603198528289795
+      }
+    },
+    "baseline_vs_uniform_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 3.7189626693725586,
+      "mse_0_255": 106.70047760009766,
+      "psnr_db": 27.84913997501334,
+      "max_abs_difference": 255.0,
+      "different_values": 61768390,
+      "per_frame_mae": {
+        "minimum": 1.6243832111358643,
+        "mean": 3.718965530395508,
+        "maximum": 5.030494689941406,
+        "first": 1.6243832111358643,
+        "middle": 3.7119200229644775,
+        "final": 5.030494689941406
+      }
+    },
+    "baseline_vs_confidence_shuffled": {
+      "shape_equal": true,
+      "exactly_equal": false,
+      "mae_0_255": 3.436058759689331,
+      "mse_0_255": 86.26335906982422,
+      "psnr_db": 28.77253995429349,
+      "max_abs_difference": 255.0,
+      "different_values": 61827444,
+      "per_frame_mae": {
+        "minimum": 1.6204310655593872,
+        "mean": 3.4360501766204834,
+        "maximum": 4.617564678192139,
+        "first": 1.6204310655593872,
+        "middle": 3.3403120040893555,
+        "final": 4.617564678192139
+      }
+    }
+  },
+  "video_statistics": {
+    "baseline": {
+      "standard_deviation": 52.434879302978516,
+      "edge_energy": 13.194692611694336,
+      "temporal_first_difference": 3.1001346111297607,
+      "temporal_second_difference": 4.612634181976318
+    },
+    "uniform_correct_g020": {
+      "standard_deviation": 51.500579833984375,
+      "edge_energy": 13.056493759155273,
+      "temporal_first_difference": 3.0300092697143555,
+      "temporal_second_difference": 4.448696136474609
+    },
+    "confidence_correct_g020": {
+      "standard_deviation": 51.5233039855957,
+      "edge_energy": 13.105022430419922,
+      "temporal_first_difference": 3.0448503494262695,
+      "temporal_second_difference": 4.491903305053711
+    },
+    "uniform_shuffled_g020": {
+      "standard_deviation": 50.395816802978516,
+      "edge_energy": 12.968915939331055,
+      "temporal_first_difference": 3.003471851348877,
+      "temporal_second_difference": 4.411544322967529
+    },
+    "confidence_shuffled_g020": {
+      "standard_deviation": 50.549800872802734,
+      "edge_energy": 13.04839038848877,
+      "temporal_first_difference": 3.0378105640411377,
+      "temporal_second_difference": 4.488290309906006
+    }
+  },
+  "snapshots": {
+    "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/comparison/comparison_first.png",
+    "middle": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/comparison/comparison_middle.png",
+    "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/comparison/comparison_final.png"
+  },
+  "interpretation_boundary": "Baseline is not future-video ground truth. Distance to Baseline and generic sharpness are engineering diagnostics only."
+}

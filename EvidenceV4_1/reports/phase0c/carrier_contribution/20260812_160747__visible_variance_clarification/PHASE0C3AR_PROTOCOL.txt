@@ -1,0 +1,3 @@
+Phase0C-3A-R — Visible-count Variance Clarification
+
+Read-only standard-library-only audit. No scipy installation, operator rerun, GPU, or historical evidence modification.

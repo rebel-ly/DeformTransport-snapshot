@@ -1,0 +1,91 @@
+{
+  "protocol": "Tree visibility-aware TC-MAR",
+  "implementation": {
+    "coordinate_mapping": "x_out=x_input; y_out=y_input*464/480",
+    "patch_sampling": "exact float32 bilinear 8x8 centered grid, offsets -3.5..+3.5, no clamping",
+    "lab_conversion": "RGB float32 [0,1] -> OpenCV COLOR_RGB2LAB; mean Lab per patch; L2 source-to-future",
+    "rgb_l1": "mean absolute elementwise source-to-future 8x8 RGB [0,1] difference",
+    "anchors": [
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32,
+      36,
+      40,
+      44,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68,
+      72,
+      76,
+      80
+    ],
+    "visibility_rule": "use TRUE visibility at each future anchor; per-track mean over valid visible anchors; require >=1 valid anchor; identical observation set for both arms"
+  },
+  "counts": {
+    "selected_tracks": 713,
+    "valid_tracks_at_least_one_visible_anchor": 709,
+    "total_anchor_slots": 14260,
+    "visible_anchor_observations": 8743,
+    "excluded_invisible_observations": 5517,
+    "excluded_boundary_observations": 0,
+    "valid_observations_per_method": 8743
+  },
+  "primary_lab_tc_mar": {
+    "correct": {
+      "mean": 18.963632837739503,
+      "median": 17.266448355334273,
+      "p95": 35.91799551222484
+    },
+    "shuffled": {
+      "mean": 19.862847282447163,
+      "median": 16.82093508006104,
+      "p95": 43.15010441248816
+    },
+    "paired": {
+      "mean_difference_shuffled_minus_correct": 0.8992144447076637,
+      "median_difference_shuffled_minus_correct": -0.16001685844349467,
+      "fraction_shuffled_gt_correct": 0.4781382228490832,
+      "relative_mean_improvement": 0.0452711754725266,
+      "bootstrap_95_ci_mean_difference": [
+        0.3139462453832824,
+        1.4965966314034798
+      ],
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 0
+    }
+  },
+  "secondary_rgb_l1": {
+    "correct": {
+      "mean": 0.14480022393815412,
+      "median": 0.12839838469629355,
+      "p95": 0.2834823112702921
+    },
+    "shuffled": {
+      "mean": 0.1558087566487663,
+      "median": 0.12986526143407295,
+      "p95": 0.344766606024802
+    },
+    "paired": {
+      "mean_difference_shuffled_minus_correct": 0.011008532710612183,
+      "median_difference_shuffled_minus_correct": 0.0018944686506239955,
+      "fraction_shuffled_gt_correct": 0.5528913963328632,
+      "relative_mean_improvement": 0.070654133614764,
+      "bootstrap_95_ci_mean_difference": [
+        0.007513582482152395,
+        0.014767275364558201
+      ],
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 0
+    }
+  },
+  "pre_registered_tree_decision": "GO",
+  "decision_rule": "GO iff lower bound of 95% valid-track bootstrap CI for mean(Shuffled Lab - Correct Lab) > 0"
+}

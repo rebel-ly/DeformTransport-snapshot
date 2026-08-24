@@ -1,0 +1,77 @@
+{
+  "execution_context": "host filesystem /mnt/sdbd/home/liuyu_qyh; /workspace namespace absent",
+  "path_namespace_failure": false,
+  "sidecars": {
+    "ids": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+      "sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+      "file_type": ".npy",
+      "object_type": "numpy.ndarray",
+      "shape": [
+        1257
+      ],
+      "dtype": "int64",
+      "N": 1257,
+      "T": null,
+      "evaluator_consumption": "formal set identity preflight; historical metric loader does not load IDs"
+    },
+    "tracks": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+      "sha256": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929",
+      "file_type": ".npy",
+      "object_type": "numpy.ndarray",
+      "shape": [
+        1,
+        81,
+        1257,
+        2
+      ],
+      "dtype": "float32",
+      "N": 1257,
+      "T": 81,
+      "evaluator_consumption": "np.load(...)[0].astype(float32); exact native representation"
+    },
+    "visibility": {
+      "path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy",
+      "sha256": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff",
+      "file_type": ".npy",
+      "object_type": "numpy.ndarray",
+      "shape": [
+        1,
+        81,
+        1257
+      ],
+      "dtype": "bool",
+      "N": 1257,
+      "T": 81,
+      "evaluator_consumption": "np.load(...)[0].astype(bool); exact native representation"
+    }
+  },
+  "deterministic_representation_adapter_required": false,
+  "methods": {
+    "rw": {
+      "key": "rw",
+      "label": "rw",
+      "sha256": "1a70268e9a872f24c4945b6bae41ef82b58fe2248b948cbe8e06b516e781cfe7",
+      "decoded_shape": [
+        81,
+        464,
+        832,
+        3
+      ]
+    },
+    "dt_full": {
+      "key": "dt_full",
+      "label": "dt_full",
+      "sha256": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+      "decoded_shape": [
+        81,
+        464,
+        832,
+        3
+      ]
+    }
+  },
+  "mapping": "x identity; y_eval=y_track*464/480",
+  "formal_runtime": "/mnt/sdbd/home/liuyu_qyh/tools/miniforge3/envs/wan-move/bin/python; CUDA_VISIBLE_DEVICES=1 for TC-ME"
+}

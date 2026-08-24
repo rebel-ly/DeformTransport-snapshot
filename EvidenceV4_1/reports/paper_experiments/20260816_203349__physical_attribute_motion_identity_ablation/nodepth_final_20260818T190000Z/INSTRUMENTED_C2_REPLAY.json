@@ -1,0 +1,35 @@
+{
+  "aggregates": {
+    "CARRIERS_WITH_ANY_CONTRIBUTION": 1094,
+    "GLOBAL_MAX_MULTIPLICITY": 3,
+    "OBSERVED_DIFF_SUPPORT": 8962,
+    "TOTAL_CANDIDATE_ASSIGNMENTS": 9766,
+    "TOTAL_COLLISION_CARRIERS": 804,
+    "TOTAL_COLLISION_CELLS": 788,
+    "TOTAL_UNIQUE_TARGET_WRITES": 8962,
+    "ZERO_CONTRIBUTION_CARRIERS": 163
+  },
+  "correct_vs_shuffled_invariants": {
+    "collision_structure_mismatch": 0,
+    "per_carrier_contribution_mismatch": 0,
+    "target_cell_structure_mismatch": 0,
+    "winner_depth_mismatch": 0,
+    "winner_id_mismatch": 0,
+    "zero_contribution_mismatch": 0
+  },
+  "method": "current frozen create_pos_feature_map + replace_feature on CPU; independent valid-candidate/winner reconstruction from its persisted _DT_CONTEXT",
+  "observed_vs_predicted_residual": 0,
+  "runtime_grid": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "total_future_cells": 120640,
+  "winner_export": {
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/nodepth_final_20260818T190000Z/C2_CANONICAL_WINNER_MAP.csv",
+    "rows": 8962,
+    "serialization": "latent_t,latent_y,latent_x,winner_material_id\\n; UTF-8; LF; ascending canonical key",
+    "winner_map_sha256": "53a42abab8359276cc5b890e55eac87f355e7225ea9d08564eb78768c5811fac"
+  }
+}

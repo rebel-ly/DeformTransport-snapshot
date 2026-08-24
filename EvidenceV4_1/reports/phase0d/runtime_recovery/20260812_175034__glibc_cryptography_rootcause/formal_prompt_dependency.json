@@ -1,0 +1,10 @@
+{
+  "DASHSCOPE_FUNCTIONALLY_REQUIRED_FOR_FORMAL_RUN": false,
+  "FORMAL_PROMPT_EXTENSION_ENABLED": false,
+  "evidence": [
+    "frozen runner contains --prompt but no --use_prompt_extend",
+    "generate.py default use_prompt_extend=False",
+    "DashScope construction is guarded by if args.use_prompt_extend at line 314"
+  ],
+  "fixed_prompt_path": "/mnt/sdbd/home/liuyu_qyh/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/prompt.txt"
+}

@@ -1,0 +1,788 @@
+
+================================================================
+FILE: scripts/run_wan_vae_transport_probe.py
+================================================================
+     1	"""Run the gated Wan VAE-only baseline and hard-latent transport probe."""
+     2	
+     3	from __future__ import annotations
+     4	
+     5	import argparse
+     6	import hashlib
+     7	import json
+     8	import os
+     9	import subprocess
+    10	import sys
+    11	import time
+    12	from pathlib import Path
+    13	
+    14	import imageio.v2 as imageio
+    15	import numpy as np
+    16	import torch
+    17	import torch.nn.functional as F
+    18	from PIL import Image, ImageDraw
+    19	
+    20	
+    21	REPO_ROOT = Path(__file__).resolve().parents[1]
+    22	if str(REPO_ROOT) not in sys.path:
+    23	    sys.path.insert(0, str(REPO_ROOT))
+    24	
+    25	from deform_transport.hard_transport import hard_point_transport  # noqa: E402
+    26	from deform_transport.transport_metrics import (  # noqa: E402
+    27	    aggregate_frame_metrics,
+    28	    compare_correct_and_shuffled,
+    29	    masked_frame_metrics,
+    30	)
+    31	from deform_transport.transport_payloads import (  # noqa: E402
+    32	    load_realwonder_rgb_crop,
+    33	    point_support_mask,
+    34	)
+    35	from deform_transport.transport_ready import validate_transport_ready  # noqa: E402
+    36	from deform_transport.wan_vae_codec import (  # noqa: E402
+    37	    RealWonderWanVAECodec,
+    38	    causal_latent_frame_end_indices,
+    39	)
+    40	
+    41	
+    42	DEFAULT_INPUT = (
+    43	    REPO_ROOT
+    44	    / "artifacts"
+    45	    / "transport_validation"
+    46	    / "santa_cloth_21f"
+    47	    / "transport_ready.pt"
+    48	)
+    49	DEFAULT_CHECKPOINT = (
+    50	    REPO_ROOT
+    51	    / "wan_models"
+    52	    / "Wan2.1-Fun-V1.1-1.3B-InP"
+    53	    / "Wan2.1_VAE.pth"
+    54	)
+    55	DEFAULT_OUTPUT = DEFAULT_INPUT.parent / "wan_vae"
+    56	EXPECTED_SHA256 = "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+    57	
+    58	
+    59	def _sha256(path: Path) -> str:
+    60	    digest = hashlib.sha256()
+    61	    with path.open("rb") as file:
+    62	        for chunk in iter(lambda: file.read(4 * 1024 * 1024), b""):
+    63	            digest.update(chunk)
+    64	    return digest.hexdigest()
+    65	
+    66	
+    67	def _gpu_used_memory_mib() -> int | None:
+    68	    visible_devices = os.environ.get("CUDA_VISIBLE_DEVICES", "").strip()
+    69	    if visible_devices == "-1":
+    70	        return None
+    71	
+    72	    gpu_id = visible_devices.split(",", maxsplit=1)[0].strip() or "0"
+    73	
+--
+    87	        return int(result.stdout.strip().splitlines()[0])
+    88	    except (FileNotFoundError, IndexError, subprocess.SubprocessError, ValueError):
+    89	        return None
+    90	
+    91	
+    92	def _timed_cuda(function):
+    93	    torch.cuda.synchronize()
+    94	    started = time.perf_counter()
+    95	    output = function()
+    96	    torch.cuda.synchronize()
+    97	    return output, time.perf_counter() - started
+    98	
+    99	
+   100	def _pixel_video_from_paths(paths) -> torch.Tensor:
+   101	    frames = [load_realwonder_rgb_crop(path) for path in paths]
+   102	    return torch.stack(frames).permute(1, 0, 2, 3).unsqueeze(0).mul(2.0).sub(1.0)
+   103	
+   104	
+   105	def _pixels_01(decoded: torch.Tensor) -> torch.Tensor:
+   106	    return decoded[0].mul(0.5).add(0.5).clamp(0.0, 1.0)
+   107	
+   108	
+   109	def _uint8_frames(frames: torch.Tensor) -> np.ndarray:
+   110	    return (
+   111	        frames.detach()
+   112	        .cpu()
+   113	        .clamp(0.0, 1.0)
+   114	        .permute(0, 2, 3, 1)
+   115	        .mul(255.0)
+   116	        .round()
+   117	        .to(torch.uint8)
+   118	        .numpy()
+   119	    )
+   120	
+   121	
+   122	def _write_video(path: Path, frames: np.ndarray, fps: int = 8) -> None:
+   123	    writer = imageio.get_writer(path, fps=fps, codec="libx264", quality=8)
+   124	    try:
+   125	        for frame in frames:
+   126	            writer.append_data(frame)
+   127	    finally:
+   128	        writer.close()
+   129	
+   130	
+   131	def _source_comparison(source: torch.Tensor, reconstruction: torch.Tensor) -> Image.Image:
+   132	    source_image = Image.fromarray(_uint8_frames(source)[0])
+   133	    reconstruction_image = Image.fromarray(_uint8_frames(reconstruction)[0])
+   134	    canvas = Image.new("RGB", (1664, 512), "black")
+   135	    for panel_index, (label, image) in enumerate(
+   136	        (("Input source RGB", source_image), ("Wan VAE reconstruction", reconstruction_image))
+   137	    ):
+   138	        resized = image.resize((832, 480), resample=Image.Resampling.BILINEAR)
+   139	        left = panel_index * 832
+   140	        canvas.paste(resized, (left, 32))
+   141	        ImageDraw.Draw(canvas).text((left + 10, 9), label, fill="white")
+   142	    return canvas
+   143	
+   144	
+   145	def _labeled_four_panel(frames_by_label: list[tuple[str, np.ndarray]]) -> np.ndarray:
+   146	    outputs = []
+   147	    frame_count = len(frames_by_label[0][1])
+   148	    for frame_index in range(frame_count):
+   149	        panels = []
+   150	        for label, frames in frames_by_label:
+   151	            image = Image.fromarray(frames[frame_index]).resize(
+   152	                (416, 240), resample=Image.Resampling.BILINEAR
+   153	            )
+   154	            panel = Image.new("RGB", (416, 272), "black")
+   155	            panel.paste(image, (0, 32))
+   156	            ImageDraw.Draw(panel).text((8, 9), label, fill="white")
+   157	            panels.append(np.asarray(panel))
+   158	        outputs.append(np.concatenate(panels, axis=1))
+   159	    return np.stack(outputs)
+   160	
+   161	
+   162	def _expand_latent_mask_to_pixel_frames(mask: torch.Tensor, pixel_frames: int) -> torch.Tensor:
+   163	    expanded = [mask[:1]]
+   164	    for latent_index in range(1, mask.shape[0]):
+   165	        expanded.append(mask[latent_index : latent_index + 1].repeat(4, 1, 1, 1))
+   166	    expanded_mask = torch.cat(expanded, dim=0)
+   167	    return expanded_mask[:pixel_frames]
+   168	
+   169	
+   170	def _latent_frame_metrics(prediction, target, mask):
+   171	    metrics = []
+   172	    for frame_index in range(prediction.shape[0]):
+   173	        expanded = mask[frame_index].expand(prediction.shape[1], -1, -1)
+   174	        selected = (prediction[frame_index] - target[frame_index])[expanded]
+   175	        metrics.append(
+   176	            {
+   177	                "frame": frame_index,
+   178	                "support_cells": int(mask[frame_index].sum()),
+   179	                "masked_l1": float(selected.abs().mean()),
+   180	                "masked_mse": float(selected.square().mean()),
+   181	                "masked_psnr_db": None,
+   182	            }
+   183	        )
+   184	    return metrics
+   185	
+   186	
+   187	def _tensor_statistics(tensor: torch.Tensor) -> dict:
+   188	    tensor = tensor.detach().float()
+--
+   214	    torch.manual_seed(args.seed)
+   215	    output_dir = args.output_dir.resolve()
+   216	    output_dir.mkdir(parents=True, exist_ok=True)
+   217	    checkpoint = args.checkpoint.resolve()
+   218	    checkpoint_hash = _sha256(checkpoint)
+   219	    if checkpoint_hash != EXPECTED_SHA256:
+   220	        raise ValueError(f"Wan VAE SHA256 mismatch: {checkpoint_hash}")
+   221	    state = torch.load(
+   222	        args.transport_ready.resolve(), map_location="cpu", weights_only=False
+   223	    )
+   224	    validate_transport_ready(state)
+   225	    if not torch.cuda.is_available():
+   226	        raise RuntimeError("the VAE-only probe requires the verified CUDA runtime")
+   227	
+   228	    torch.cuda.reset_peak_memory_stats()
+   229	    gpu_before = _gpu_used_memory_mib()
+   230	    overall_started = time.perf_counter()
+   231	    codec, load_seconds = _timed_cuda(
+   232	        lambda: RealWonderWanVAECodec(
+   233	            checkpoint, device="cuda", dtype=torch.bfloat16
+   234	        )
+   235	    )
+   236	    model_parameters = sum(parameter.numel() for parameter in codec.model.parameters())
+   237	
+   238	    source_crop = load_realwonder_rgb_crop(state["paths"]["initial_rgb"])
+   239	    source_pixels = source_crop.mul(2.0).sub(1.0).unsqueeze(0).unsqueeze(2)
+   240	    source_latent, source_encode_seconds = _timed_cuda(
+   241	        lambda: codec.encode_pixels(source_pixels)
+   242	    )
+   243	    source_decoded, source_decode_seconds = _timed_cuda(
+   244	        lambda: codec.decode_latents(source_latent)
+   245	    )
+   246	    source_decoded = source_decoded.cpu()
+   247	    source_frames_01 = source_pixels[0].permute(1, 0, 2, 3).mul(0.5).add(0.5)
+   248	    source_reconstruction_01 = _pixels_01(source_decoded)
+   249	    source_reconstruction_mae = float(
+   250	        (source_frames_01 - source_reconstruction_01).abs().mean()
+   251	    )
+   252	    source_comparison_path = output_dir / "source_original_reconstruction.png"
+   253	    _source_comparison(source_frames_01, source_reconstruction_01).save(
+   254	        source_comparison_path
+   255	    )
+   256	    baseline = {
+   257	        "checkpoint": {
+   258	            "path": str(checkpoint),
+   259	            "bytes": checkpoint.stat().st_size,
+   260	            "sha256": checkpoint_hash,
+   261	            "source": "alibaba-pai/Wan2.1-Fun-V1.1-1.3B-InP/Wan2.1_VAE.pth",
+   262	        },
+   263	        "model_parameters": model_parameters,
+   264	        "compute_dtype": "torch.bfloat16",
+   265	        "input": {
+   266	            "shape": list(source_pixels.shape),
+   267	            "range": [float(source_pixels.min()), float(source_pixels.max())],
+   268	            "layout": "[B,C,T,H,W]",
+   269	        },
+   270	        "latent": _tensor_statistics(source_latent),
+   271	        "decoded": _tensor_statistics(source_decoded),
+   272	        "decoded_layout": "[B,T,C,H,W]",
+   273	        "source_reconstruction_mae_0_1": source_reconstruction_mae,
+   274	        "finite": bool(
+   275	            torch.isfinite(source_latent).all()
+   276	            and torch.isfinite(source_decoded).all()
+   277	        ),
+   278	        "runtime_seconds": {
+   279	            "model_load": load_seconds,
+   280	            "source_encode": source_encode_seconds,
+   281	            "source_decode": source_decode_seconds,
+   282	        },
+   283	        "source_comparison": str(source_comparison_path),
+   284	    }
+   285	    baseline_path = output_dir / "baseline_report.json"
+   286	    baseline_path.write_text(json.dumps(baseline, indent=2), encoding="utf-8")
+   287	    if args.baseline_only:
+   288	        baseline["gpu_memory_mib"] = {
+   289	            "whole_device_before": gpu_before,
+   290	            "whole_device_after": _gpu_used_memory_mib(),
+   291	            "torch_peak_allocated": float(
+   292	                torch.cuda.max_memory_allocated() / (1024**2)
+   293	            ),
+   294	            "torch_peak_reserved": float(
+   295	                torch.cuda.max_memory_reserved() / (1024**2)
+   296	            ),
+   297	        }
+   298	        baseline_path.write_text(json.dumps(baseline, indent=2), encoding="utf-8")
+   299	        print(json.dumps(baseline, indent=2))
+   300	        return
+   301	
+   302	    future_pixels = _pixel_video_from_paths(state["paths"]["coarse_rgb_frames"])
+   303	    target_latent, future_encode_seconds = _timed_cuda(
+   304	        lambda: codec.encode_pixels(future_pixels)
+   305	    )
+   306	    latent_frame_indices = causal_latent_frame_end_indices(future_pixels.shape[2])
+   307	    if target_latent.shape[1] != latent_frame_indices.numel():
+   308	        raise RuntimeError("causal frame mapping does not match encoded temporal slots")
+   309	
+   310	    def run_transport(mode):
+   311	        return hard_point_transport(
+   312	            source_latent[0, 0],
+   313	            state["source_points_2d_latent"].cuda(),
+   314	            state["points_2d_latent"][latent_frame_indices].cuda(),
+   315	            state["source_visible"].cuda(),
+   316	            state["source_valid"].cuda(),
+   317	            state["projection_valid"][latent_frame_indices].cuda(),
+   318	            state["point_id"].cuda(),
+   319	            object_id=state["object_id"].cuda(),
+   320	            mode=mode,
+   321	            seed=args.seed,
+   322	        )
+   323	
+   324	    correct_result, correct_transport_seconds = _timed_cuda(
+   325	        lambda: run_transport("correct")
+   326	    )
+   327	    shuffled_result, shuffled_transport_seconds = _timed_cuda(
+   328	        lambda: run_transport("shuffled")
+   329	    )
+   330	    raw_correct_latent = correct_result["transported_grid"].unsqueeze(0)
+   331	    raw_shuffled_latent = shuffled_result["transported_grid"].unsqueeze(0)
+   332	    latent_mask = correct_result["transport_mask"].unsqueeze(0)
+   333	    fused_correct_latent = torch.where(
+   334	        latent_mask, raw_correct_latent, target_latent
+   335	    )
+   336	    fused_shuffled_latent = torch.where(
+   337	        latent_mask, raw_shuffled_latent, target_latent
+   338	    )
+   339	
+   340	    def decode_cpu(latent):
+   341	        decoded, seconds = _timed_cuda(lambda: codec.decode_latents(latent))
+   342	        decoded_cpu = decoded.cpu()
+   343	        del decoded
+   344	        codec.clear_cache()
+   345	        torch.cuda.empty_cache()
+   346	        return decoded_cpu, seconds
+   347	
+   348	    original_decoded, original_decode_seconds = decode_cpu(target_latent)
+   349	    raw_correct_decoded, raw_correct_decode_seconds = decode_cpu(raw_correct_latent)
+   350	    raw_shuffled_decoded, raw_shuffled_decode_seconds = decode_cpu(
+   351	        raw_shuffled_latent
+   352	    )
+   353	    fused_correct_decoded, fused_correct_decode_seconds = decode_cpu(
+   354	        fused_correct_latent
+   355	    )
+   356	    fused_shuffled_decoded, fused_shuffled_decode_seconds = decode_cpu(
+   357	        fused_shuffled_latent
+   358	    )
+   359	
+   360	    target_pixels_01 = future_pixels[0].permute(1, 0, 2, 3).mul(0.5).add(0.5)
+   361	    original_01 = _pixels_01(original_decoded)
+   362	    raw_correct_01 = _pixels_01(raw_correct_decoded)
+   363	    raw_shuffled_01 = _pixels_01(raw_shuffled_decoded)
+   364	    fused_correct_01 = _pixels_01(fused_correct_decoded)
+   365	    fused_shuffled_01 = _pixels_01(fused_shuffled_decoded)
+   366	
+   367	    target_support = point_support_mask(
+   368	        state["points_2d_latent"],
+   369	        state["projection_valid"],
+   370	        height=state["latent_height"],
+   371	        width=state["latent_width"],
+   372	    )
+   373	    pixel_transport_mask = _expand_latent_mask_to_pixel_frames(
+   374	        correct_result["transport_mask"].cpu(), target_pixels_01.shape[0]
+   375	    )
+   376	    pixel_shared_mask = pixel_transport_mask & target_support
+   377	    pixel_shared_mask = F.interpolate(
+   378	        pixel_shared_mask.float(), size=(480, 832), mode="nearest"
+   379	    ).bool()
+   380	    fused_correct_metrics = masked_frame_metrics(
+   381	        fused_correct_01, target_pixels_01, pixel_shared_mask
+   382	    )
+   383	    fused_shuffled_metrics = masked_frame_metrics(
+   384	        fused_shuffled_01, target_pixels_01, pixel_shared_mask
+   385	    )
+   386	    decoded_comparison = compare_correct_and_shuffled(
+   387	        fused_correct_metrics, fused_shuffled_metrics
+   388	    )
+   389	    raw_correct_metrics = masked_frame_metrics(
+   390	        raw_correct_01, target_pixels_01, pixel_shared_mask
+   391	    )
+   392	    raw_shuffled_metrics = masked_frame_metrics(
+   393	        raw_shuffled_01, target_pixels_01, pixel_shared_mask
+   394	    )
+   395	    raw_decoded_comparison = compare_correct_and_shuffled(
+   396	        raw_correct_metrics, raw_shuffled_metrics
+   397	    )
+   398	    full_mask = torch.ones(
+   399	        (target_pixels_01.shape[0], 1, 480, 832), dtype=torch.bool
+   400	    )
+   401	    original_reconstruction_metrics = masked_frame_metrics(
+   402	        original_01, target_pixels_01, full_mask
+   403	    )
+   404	
+   405	    latent_target_support = target_support[latent_frame_indices].cuda()
+   406	    latent_shared_mask = correct_result["transport_mask"] & latent_target_support
+   407	    correct_latent_metrics = _latent_frame_metrics(
+   408	        raw_correct_latent[0], target_latent[0], latent_shared_mask
+   409	    )
+   410	    shuffled_latent_metrics = _latent_frame_metrics(
+   411	        raw_shuffled_latent[0], target_latent[0], latent_shared_mask
+   412	    )
+   413	    latent_comparison = compare_correct_and_shuffled(
+   414	        correct_latent_metrics, shuffled_latent_metrics
+   415	    )
+   416	
+   417	    fairness = {
+   418	        "transport_masks_equal": bool(
+   419	            torch.equal(
+   420	                correct_result["transport_mask"],
+   421	                shuffled_result["transport_mask"],
+   422	            )
+   423	        ),
+   424	        "contribution_counts_equal": bool(
+   425	            torch.equal(
+   426	                correct_result["contribution_count"],
+   427	                shuffled_result["contribution_count"],
+   428	            )
+   429	        ),
+   430	        "valid_point_masks_equal": bool(
+   431	            torch.equal(
+   432	                correct_result["valid_point_mask"],
+   433	                shuffled_result["valid_point_mask"],
+   434	            )
+   435	        ),
+   436	        "permutations_differ": not bool(
+   437	            torch.equal(
+   438	                correct_result["permutation"], shuffled_result["permutation"]
+   439	            )
+   440	        ),
+   441	    }
+   442	    latent_outputs_path = output_dir / "vae_latent_outputs.pt"
+   443	    torch.save(
+   444	        {
+   445	            "format_version": 1,
+   446	            "latent_frame_indices": latent_frame_indices,
+   447	            "source_latent": source_latent.detach().cpu(),
+   448	            "target_latent": target_latent.detach().cpu(),
+   449	            "correct_transported_latent": raw_correct_latent.detach().cpu(),
+   450	            "shuffled_transported_latent": raw_shuffled_latent.detach().cpu(),
+   451	            "correct_fused_latent": fused_correct_latent.detach().cpu(),
+   452	            "shuffled_fused_latent": fused_shuffled_latent.detach().cpu(),
+   453	            "transport_mask": correct_result["transport_mask"].detach().cpu(),
+   454	            "contribution_count": correct_result["contribution_count"].detach().cpu(),
+   455	            "shuffled_permutation": shuffled_result["permutation"].detach().cpu(),
+   456	        },
+   457	        latent_outputs_path,
+   458	    )
+   459	
+   460	    videos = {
+   461	        "target_input": _uint8_frames(target_pixels_01),
+   462	        "original_reconstruction": _uint8_frames(original_01),
+   463	        "raw_correct": _uint8_frames(raw_correct_01),
+   464	        "raw_shuffled": _uint8_frames(raw_shuffled_01),
+   465	        "fused_correct": _uint8_frames(fused_correct_01),
+   466	        "fused_shuffled": _uint8_frames(fused_shuffled_01),
+   467	    }
+   468	    video_paths = {}
+   469	    for name, frames in videos.items():
+   470	        path = output_dir / f"{name}.mp4"
+   471	        _write_video(path, frames)
+   472	        video_paths[name] = str(path)
+   473	    comparison_frames = _labeled_four_panel(
+   474	        [
+   475	            ("Original VAE recon", videos["original_reconstruction"]),
+   476	            ("Correct masked replace", videos["fused_correct"]),
+   477	            ("Shuffled masked replace", videos["fused_shuffled"]),
+   478	            ("Coarse RGB input", videos["target_input"]),
+   479	        ]
+   480	    )
+   481	    comparison_video_path = output_dir / "original_correct_shuffled_target.mp4"
+   482	    _write_video(comparison_video_path, comparison_frames)
+   483	    for name, frame_index in (
+   484	        ("first", 0),
+   485	        ("mid", len(comparison_frames) // 2),
+   486	        ("final", len(comparison_frames) - 1),
+   487	    ):
+   488	        Image.fromarray(comparison_frames[frame_index]).save(
+   489	            output_dir / f"comparison_{name}.png"
+   490	        )
+   491	
+   492	    latent_different = not torch.equal(raw_correct_latent, raw_shuffled_latent)
+   493	    pixel_frame_count = int(future_pixels.shape[2])
+   494	    expected_latent_slots = int(latent_frame_indices.numel())
+   495	    expected_future_latent_shape = [
+   496	        1,
+   497	        expected_latent_slots,
+   498	        *list(source_latent.shape[2:]),
+   499	    ]
+   500	
+   501	    engineering_checks = {
+   502	        "source_encode_decode_finite": baseline["finite"],
+   503	        "source_latent_shape_is_1x1x16x60x104": list(source_latent.shape)
+   504	        == [1, 1, 16, 60, 104],
+   505	        "future_latent_shape_matches_temporal_mapping": list(target_latent.shape)
+   506	        == expected_future_latent_shape,
+   507	        "future_decode_returns_all_pixel_frames": int(original_decoded.shape[1])
+   508	        == pixel_frame_count,
+   509	        "correct_and_shuffled_latents_differ": latent_different,
+   510	        "fused_correct_is_finite": bool(torch.isfinite(fused_correct_decoded).all()),
+   511	        "fused_shuffled_is_finite": bool(torch.isfinite(fused_shuffled_decoded).all()),
+   512	        "fused_correct_is_not_collapsed": float(fused_correct_01.std()) > 0.01,
+   513	        "fused_shuffled_is_not_collapsed": float(fused_shuffled_01.std()) > 0.01,
+   514	        **fairness,
+   515	    }
+   516	    positive_signal_checks = {
+   517	        "correct_latent_l1_below_shuffled": latent_comparison[
+   518	            "overall_correct_better"
+   519	        ],
+   520	        "correct_decoded_l1_below_shuffled": decoded_comparison[
+   521	            "overall_correct_better"
+   522	        ],
+   523	        "correct_decoded_not_worse_in_majority": decoded_comparison[
+   524	            "correct_not_worse_fraction"
+   525	        ]
+   526	        >= 0.5,
+   527	    }
+   528	    automated_passed = all(engineering_checks.values()) and all(
+   529	        positive_signal_checks.values()
+   530	    )
+   531	    visual_passed = args.visual_inspection == "pass"
+   532	    gpu_after = _gpu_used_memory_mib()
+   533	    report = {
+   534	        "stage": "wan_vae_only_latent_transport",
+   535	        "case": state["case_name"],
+   536	        "is_robot_action": False,
+   537	        "baseline": baseline,
+   538	        "actual_temporal_mapping": {
+   539	            "pixel_frames": int(future_pixels.shape[2]),
+   540	            "latent_slots": int(target_latent.shape[1]),
+   541	            "causal_chunk_end_frame_indices": latent_frame_indices.tolist(),
+   542	            "note": "frame zero is encoded alone; later slots encode four-frame causal chunks",
+   543	        },
+   544	        "latent_statistics": {
+   545	            "target_original": _tensor_statistics(target_latent),
+   546	            "correct_transported": _tensor_statistics(raw_correct_latent),
+   547	            "shuffled_transported": _tensor_statistics(raw_shuffled_latent),
+   548	            "correct_masked_replace": _tensor_statistics(fused_correct_latent),
+   549	            "shuffled_masked_replace": _tensor_statistics(fused_shuffled_latent),
+   550	        },
+   551	        "composition": {
+   552	            "method": "masked_replace",
+   553	            "inside_transport_mask": "transported source latent",
+   554	            "outside_transport_mask": "original encoded coarse-RGB latent",
+   555	            "blend_alpha_inside": 1.0,
+   556	        },
+   557	        "latent_proxy_metrics": {
+   558	            "correct": correct_latent_metrics,
+   559	            "shuffled": shuffled_latent_metrics,
+   560	            "comparison": latent_comparison,
+   561	        },
+   562	        "decoded_proxy_metrics": {
+   563	            "correct_masked_replace": {
+   564	                "frames": fused_correct_metrics,
+   565	                "aggregate": aggregate_frame_metrics(fused_correct_metrics),
+   566	            },
+   567	            "shuffled_masked_replace": {
+   568	                "frames": fused_shuffled_metrics,
+   569	                "aggregate": aggregate_frame_metrics(fused_shuffled_metrics),
+   570	            },
+   571	            "comparison": decoded_comparison,
+   572	            "raw_transport_comparison": raw_decoded_comparison,
+   573	            "original_vae_reconstruction": aggregate_frame_metrics(
+   574	                original_reconstruction_metrics
+   575	            ),
+   576	        },
+   577	        "target_note": (
+   578	            "All target comparisons use the saved RealWonder coarse RGB input or "
+   579	            "its VAE latent. This is a geometry-aligned proxy, not real future-video ground truth."
+   580	        ),
+   581	        "fairness": fairness,
+   582	        "engineering_checks": engineering_checks,
+   583	        "positive_signal_checks": positive_signal_checks,
+   584	        "automated_acceptance_passed": automated_passed,
+   585	        "visual_inspection": {
+   586	            "status": args.visual_inspection,
+   587	            "note": args.visual_note,
+   588	        },
+   589	        "task3a_passed": automated_passed and visual_passed,
+   590	        "runtime_seconds": {
+   591	            "model_load": load_seconds,
+   592	            "source_encode": source_encode_seconds,
+   593	            "source_decode": source_decode_seconds,
+   594	            "future_video_encode": future_encode_seconds,
+   595	            "correct_transport": correct_transport_seconds,
+   596	            "shuffled_transport": shuffled_transport_seconds,
+   597	            "original_decode": original_decode_seconds,
+   598	            "raw_correct_decode": raw_correct_decode_seconds,
+   599	            "raw_shuffled_decode": raw_shuffled_decode_seconds,
+   600	            "fused_correct_decode": fused_correct_decode_seconds,
+   601	            "fused_shuffled_decode": fused_shuffled_decode_seconds,
+   602	            "total": time.perf_counter() - overall_started,
+   603	        },
+   604	        "gpu_memory_mib": {
+   605	            "whole_device_before": gpu_before,
+   606	            "whole_device_after": gpu_after,
+   607	            "torch_peak_allocated": float(
+   608	                torch.cuda.max_memory_allocated() / (1024**2)
+   609	            ),
+   610	            "torch_peak_reserved": float(
+   611	                torch.cuda.max_memory_reserved() / (1024**2)
+   612	            ),
+   613	        },
+   614	        "artifacts": {
+   615	            "baseline_report": str(baseline_path),
+   616	            "source_original_reconstruction": str(source_comparison_path),
+   617	            "latent_outputs": str(latent_outputs_path),
+   618	            "videos": video_paths,
+   619	            "comparison_video": str(comparison_video_path),
+   620	            "comparison_first": str(output_dir / "comparison_first.png"),
+   621	            "comparison_mid": str(output_dir / "comparison_mid.png"),
+   622	            "comparison_final": str(output_dir / "comparison_final.png"),
+   623	        },
+   624	        "not_downloaded": [
+   625	            "Wan diffusion transformer",
+   626	            "RealWonder distilled video checkpoint",
+   627	            "T5",
+   628	            "CLIP",
+   629	            "SAM",
+   630	            "FLUX",
+   631	            "QWM",
+   632	        ],
+   633	        "not_validated": ["future video generation", "robot action conditioning"],
+   634	    }
+   635	    report_path = output_dir / "report.json"
+   636	    report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+   637	    print(
+   638	        json.dumps(
+   639	            {
+   640	                "report": str(report_path),
+   641	                "shapes": {
+   642	                    "source_latent": list(source_latent.shape),
+   643	                    "future_latent": list(target_latent.shape),
+   644	                    "original_decoded": list(original_decoded.shape),
+   645	                },
+   646	                "latent_comparison": latent_comparison,
+   647	                "decoded_comparison": decoded_comparison,
+   648	                "engineering_checks": engineering_checks,
+   649	                "positive_signal_checks": positive_signal_checks,
+   650	                "automated_acceptance_passed": automated_passed,
+   651	                "visual_inspection": args.visual_inspection,
+   652	                "task3a_passed": report["task3a_passed"],
+   653	                "runtime_seconds": report["runtime_seconds"],
+   654	                "gpu_memory_mib": report["gpu_memory_mib"],
+   655	            },
+   656	            indent=2,
+   657	        )
+   658	    )
+   659	
+   660	
+   661	if __name__ == "__main__":
+   662	    main()
+
+================================================================
+FILE: deform_transport/wan_vae_codec.py
+================================================================
+     1	"""Minimal RealWonder Wan VAE-only codec without text or diffusion models."""
+     2	
+     3	from __future__ import annotations
+     4	
+     5	import importlib.util
+     6	from pathlib import Path
+     7	import sys
+     8	
+     9	import torch
+    10	import torch.nn as nn
+    11	
+    12	
+    13	# Importing ``wan.modules.vae`` normally executes ``wan/__init__.py``, which
+    14	# eagerly imports the diffusion model and requires unrelated packages. Loading
+    15	# this standalone module file preserves RealWonder's exact VAE implementation
+    16	# while keeping the VAE-only stage independent of diffusers, PEFT, T5, and CLIP.
+    17	_VAE_SOURCE = Path(__file__).resolve().parents[1] / "wan" / "modules" / "vae.py"
+    18	_VAE_SPEC = importlib.util.spec_from_file_location(
+    19	    "deform_transport_realwonder_wan_vae", _VAE_SOURCE
+    20	)
+    21	if _VAE_SPEC is None or _VAE_SPEC.loader is None:
+    22	    raise ImportError(f"cannot load RealWonder Wan VAE source from {_VAE_SOURCE}")
+    23	_VAE_MODULE = importlib.util.module_from_spec(_VAE_SPEC)
+    24	sys.modules[_VAE_SPEC.name] = _VAE_MODULE
+    25	_VAE_SPEC.loader.exec_module(_VAE_MODULE)
+    26	_video_vae = _VAE_MODULE._video_vae
+    27	
+    28	
+    29	WAN_VAE_MEAN = (
+    30	    -0.7571,
+    31	    -0.7089,
+    32	    -0.9113,
+    33	    0.1075,
+    34	    -0.1745,
+    35	    0.9653,
+    36	    -0.1517,
+    37	    1.5508,
+    38	    0.4134,
+    39	    -0.0715,
+    40	    0.5517,
+    41	    -0.3632,
+    42	    -0.1922,
+    43	    -0.9497,
+    44	    0.2503,
+--
+    49	    1.4541,
+    50	    2.3275,
+    51	    2.6558,
+    52	    1.2196,
+    53	    1.7708,
+    54	    2.6052,
+    55	    2.0743,
+    56	    3.2687,
+    57	    2.1526,
+    58	    2.8652,
+    59	    1.5579,
+    60	    1.6382,
+    61	    1.1253,
+    62	    2.8251,
+    63	    1.9160,
+    64	)
+    65	
+    66	
+    67	def causal_latent_frame_end_indices(pixel_frame_count: int) -> torch.Tensor:
+    68	    """Map each causal VAE latent slot to the end of its pixel-frame chunk.
+    69	
+    70	    Wan encodes frame zero alone, then consecutive four-frame chunks. For 21
+    71	    pixel frames this produces six latent slots aligned to `[0,4,8,12,16,20]`.
+    72	    """
+    73	
+    74	    if pixel_frame_count < 1:
+    75	        raise ValueError("pixel_frame_count must be at least one")
+    76	    return torch.tensor(
+    77	        [0, *range(4, pixel_frame_count, 4)], dtype=torch.long
+    78	    )
+    79	
+    80	
+    81	class RealWonderWanVAECodec(nn.Module):
+    82	    """The exact 16-channel Wan2.1 VAE and normalization used by RealWonder."""
+    83	
+    84	    def __init__(
+    85	        self,
+    86	        checkpoint_path: str | Path,
+    87	        *,
+    88	        device: torch.device | str,
+    89	        dtype: torch.dtype = torch.bfloat16,
+    90	    ) -> None:
+    91	        super().__init__()
+    92	        self.checkpoint_path = Path(checkpoint_path)
+    93	        if not self.checkpoint_path.is_file():
+    94	            raise FileNotFoundError(self.checkpoint_path)
+    95	        self.compute_device = torch.device(device)
+    96	        self.compute_dtype = dtype
+    97	        self.model = _video_vae(
+    98	            pretrained_path=str(self.checkpoint_path), z_dim=16, device="cpu"
+    99	        ).eval().requires_grad_(False)
+   100	        self.model.to(device=self.compute_device, dtype=self.compute_dtype)
+   101	        self.register_buffer(
+   102	            "latent_mean", torch.tensor(WAN_VAE_MEAN, dtype=torch.float32)
+   103	        )
+   104	        self.register_buffer(
+   105	            "latent_inverse_std",
+   106	            1.0 / torch.tensor(WAN_VAE_STD, dtype=torch.float32),
+   107	        )
+   108	
+   109	    def _scale(self, dtype: torch.dtype) -> list[torch.Tensor]:
+   110	        return [
+   111	            self.latent_mean.to(device=self.compute_device, dtype=dtype),
+   112	            self.latent_inverse_std.to(device=self.compute_device, dtype=dtype),
+   113	        ]
+   114	
+   115	    @torch.inference_mode()
+   116	    def encode_pixels(self, pixels: torch.Tensor) -> torch.Tensor:
+   117	        """Encode `[B,C,T,H,W]` pixels in `[-1,1]` to `[B,Tz,16,h,w]`."""
+   118	
+   119	        pixels = torch.as_tensor(pixels)
+   120	        if pixels.ndim != 5 or pixels.shape[1] != 3:
+   121	            raise ValueError("pixels must have shape [B, 3, T, H, W]")
+   122	        pixels = pixels.to(device=self.compute_device, dtype=self.compute_dtype)
+   123	        scale = self._scale(pixels.dtype)
+   124	        outputs = [
+   125	            self.model.encode(sample.unsqueeze(0), scale).float().squeeze(0)
+   126	            for sample in pixels
+   127	        ]
+   128	        latent = torch.stack(outputs).permute(0, 2, 1, 3, 4).contiguous()
+   129	        expected_slots = (pixels.shape[2] + 3) // 4
+   130	        if latent.shape[1] != expected_slots:
+   131	            raise RuntimeError(
+   132	                f"unexpected temporal compression: got {latent.shape[1]}, "
+   133	                f"expected {expected_slots}"
+   134	            )
+   135	        return latent
+   136	
+   137	    @torch.inference_mode()
+   138	    def decode_latents(self, latent: torch.Tensor) -> torch.Tensor:
+   139	        """Decode `[B,Tz,16,h,w]` to `[B,T,C,H,W]` pixels in `[-1,1]`."""
+   140	
+   141	        latent = torch.as_tensor(latent)
+   142	        if latent.ndim != 5 or latent.shape[2] != 16:
+   143	            raise ValueError("latent must have shape [B, Tz, 16, H, W]")
+   144	        latent = latent.to(device=self.compute_device, dtype=self.compute_dtype)
+   145	        latent_channel_first = latent.permute(0, 2, 1, 3, 4).contiguous()
+   146	        scale = self._scale(latent.dtype)
+   147	        outputs = [
+   148	            self.model.decode(sample.unsqueeze(0), scale)
+   149	            .float()
+   150	            .clamp_(-1, 1)
+   151	            .squeeze(0)
+   152	            for sample in latent_channel_first
+   153	        ]
+   154	        return torch.stack(outputs).permute(0, 2, 1, 3, 4).contiguous()
+   155	
+   156	    def clear_cache(self) -> None:
+   157	        self.model.clear_cache()

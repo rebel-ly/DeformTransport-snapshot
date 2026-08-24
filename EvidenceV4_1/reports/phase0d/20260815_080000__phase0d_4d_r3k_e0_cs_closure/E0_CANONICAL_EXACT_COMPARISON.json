@@ -1,0 +1,17 @@
+{
+  "e0_mp4_sha": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+  "e0_decoded_rgb_sha": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+  "canonical_mp4_sha": "08785a3ce49d4faa98c8fe8850fed1b2912d8b8fc4fa80ee377de6dfe7bff935",
+  "canonical_decoded_rgb_sha": "935d9301a208abb73e437346c3297a31705563e60ce2aa2be4cf46b44ce7cbc6",
+  "mp4_exact": true,
+  "rgb_exact": true,
+  "different_channel_values": 0,
+  "max_abs_diff": 0,
+  "mean_abs_diff": 0.0,
+  "shape": [
+    81,
+    464,
+    832,
+    3
+  ]
+}

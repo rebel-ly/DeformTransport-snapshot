@@ -1,0 +1,77 @@
+{
+  "artifact": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/vae_latent_outputs.pt",
+    "sha256": "c2865ff722e2070749d4662d60d593ce4645f573481ca9f23901cfcb45bf08ea",
+    "bytes": 43741714
+  },
+  "transport": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_transport_ready.pt",
+    "sha256": "712a23054b6a8253c05a078586a4d5d9ae905b7459ffbff66c741ba87efbe6de"
+  },
+  "latent_frame_indices": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60,
+    64,
+    68,
+    72,
+    76,
+    80
+  ],
+  "latent_anchor_simulation_steps": [
+    0,
+    40,
+    80,
+    120,
+    160,
+    200,
+    240,
+    280,
+    320,
+    360,
+    400,
+    440,
+    480,
+    520,
+    560,
+    600,
+    640,
+    680,
+    720,
+    760,
+    800
+  ],
+  "source_vs_target_slot0": {
+    "exactly_equal": true,
+    "allclose_1e_6": true,
+    "mean_abs": 0.0,
+    "p90_abs": 0.0,
+    "p99_abs": 0.0,
+    "max_abs": 0.0
+  },
+  "checks": {
+    "indices_are_0_4_to_80": true,
+    "anchor_steps_are_0_40_to_800": true,
+    "source_shape": true,
+    "target_shape": true,
+    "all_latents_finite": true,
+    "mask_shape": true,
+    "mask_equals_count_positive": true,
+    "correct_shuffled_masks_shared": true
+  },
+  "all_structural_checks_pass": true,
+  "interpretation_boundary": "This validates the aligned VAE temporal contract. Hard Correct/Shuffled results from this probe are diagnostic only and are not the final visibility-aware method."
+}

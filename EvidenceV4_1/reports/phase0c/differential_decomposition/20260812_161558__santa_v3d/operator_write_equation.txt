@@ -1,0 +1,9 @@
+Frozen V3D write equation (trajectory.py SHA frozen):
+
+Source lookup: `_dt_bilinear_source_features` converts source pixel xy to latent cell-centered coordinates lx=x/stride_x-0.5, ly=y/stride_y-0.5 (lines 573-615); normalizes them (617-660); and calls `torch.nn.functional.grid_sample(..., mode="bilinear", padding_mode="border", align_corners=True)` (671-678), returning an [N,C] source-feature vector (681-695). Thus V3D uses bilinear, not discrete-cell, source sampling.
+
+Winner: for each future tau and target cell, valid candidates are grouped (lines 934-990). V3D score is depth; nonfinite or <=0 depth is skipped (1050-1063). Winner is lexicographic min `(depth, material_id)` (1065-1076). Target point-to-cell-center offsets are not computed or used on this V3D path.
+
+Write: V3D selects `feat = source_features[best]` (1081-1087), then directly overwrites every C channel at exactly `[0, :, tau, hh, ww]` (1113-1119): y_out[0,:,tau,hh,ww] = source_features[best]. There is no alpha blend, interpolation at target, splatting weight, residual addition, normalization, patch write, or channel transform.
+
+Therefore predicted differential at each common winner target is F_correct[best]-F_shuffled[best], written to the same `[0,:,tau,hh,ww]`; zero elsewhere, including source slot.

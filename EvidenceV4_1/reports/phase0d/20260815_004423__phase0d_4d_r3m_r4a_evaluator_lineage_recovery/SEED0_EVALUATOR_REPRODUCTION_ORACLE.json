@@ -1,0 +1,11 @@
+{
+  "mode": "PERSISTED_SAME_EVALUATOR_RAW_OUTPUT_ORACLE_NO_NEW_EXECUTION_R4A_GPU_PROHIBITED",
+  "C1_TCME_EXACT_REPRODUCTION": true,
+  "C2_TCME_EXACT_REPRODUCTION": true,
+  "CS_TCME_EXACT_REPRODUCTION": true,
+  "C1_TCMAR_EXACT_REPRODUCTION": true,
+  "C2_TCMAR_EXACT_REPRODUCTION": true,
+  "CS_TCMAR_EXACT_REPRODUCTION": true,
+  "absolute_difference_all_fields": 0.0,
+  "basis": "Each authoritative seed0 raw metric JSON records evaluator SHA e6a00...7ef5 and was written by the persisted run_cpair_primary.py/run_cpair_secondary.py invocation importing this exact path."
+}

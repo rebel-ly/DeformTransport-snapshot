@@ -1,0 +1,106 @@
+{
+  "protocol": "SandHouse held-out frozen TC-MAR",
+  "rw_available": false,
+  "cases": {
+    "sandhouse": {
+      "case": "sandhouse",
+      "metric": "Track-Conditioned Material Appearance Retention (TC-MAR)",
+      "anchors": [
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64,
+        68,
+        72,
+        76,
+        80
+      ],
+      "valid_tracks": 1791,
+      "total_valid_anchor_observations": 11383,
+      "methods": {
+        "rw": {
+          "tc_mar_lab": {
+            "n": 1791,
+            "mean": 23.294537291684335,
+            "median": 23.0153751373291,
+            "p95": 35.90977560149299
+          },
+          "tc_mar_rgb_l1": {
+            "n": 1791,
+            "mean": 0.15986149645878311,
+            "median": 0.1447022393345833,
+            "p95": 0.26736052831014
+          },
+          "sha256": "dbdc01524071b8501258f6dde855eeb3a39d938d3e016a2972de73322e7bb0b5"
+        },
+        "old_correct": {
+          "tc_mar_lab": {
+            "n": 1791,
+            "mean": 27.266238756585757,
+            "median": 25.111696243286133,
+            "p95": 49.55519652366638
+          },
+          "tc_mar_rgb_l1": {
+            "n": 1791,
+            "mean": 0.21851406576136978,
+            "median": 0.19046576414257288,
+            "p95": 0.4465866684913635
+          },
+          "sha256": "ec8655e24b6f21ac8fca2e8aeda31bc08125fb1bab1fe0271ce6270254a217bb"
+        },
+        "v3d": {
+          "tc_mar_lab": {
+            "n": 1791,
+            "mean": 23.294537291684335,
+            "median": 23.0153751373291,
+            "p95": 35.90977560149299
+          },
+          "tc_mar_rgb_l1": {
+            "n": 1791,
+            "mean": 0.15986149645878311,
+            "median": 0.1447022393345833,
+            "p95": 0.26736052831014
+          },
+          "sha256": "dbdc01524071b8501258f6dde855eeb3a39d938d3e016a2972de73322e7bb0b5"
+        }
+      },
+      "vs_old_correct": {
+        "v3d": {
+          "definition": "OldCorrect TC-MAR Lab - candidate; positive means candidate better",
+          "paired_mean_difference": 3.971701464901428,
+          "paired_median_difference": 1.468778133392334,
+          "fraction_candidate_better": 0.5873813512004467,
+          "bootstrap_95_ci": [
+            3.423392751306401,
+            4.510346740075069
+          ],
+          "status": "IMPROVE",
+          "relative_mean_improvement": 0.14566370889502006
+        }
+      },
+      "vs_realwonder": {
+        "v3d": {
+          "definition": "RealWonder TC-MAR Lab - candidate; positive means candidate better",
+          "paired_mean_difference": 0.0,
+          "bootstrap_95_ci": [
+            0.0,
+            0.0
+          ],
+          "decision": "TIE"
+        }
+      }
+    }
+  }
+}

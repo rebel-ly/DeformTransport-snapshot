@@ -1,0 +1,12 @@
+usage: build_soft_wan_latent_artifact.py [-h] --transport-ready
+                                         TRANSPORT_READY --base-vae-artifact
+                                         BASE_VAE_ARTIFACT --output OUTPUT
+                                         [--threshold THRESHOLD] [--seed SEED]
+
+options:
+  -h, --help            show this help message and exit
+  --transport-ready TRANSPORT_READY
+  --base-vae-artifact BASE_VAE_ARTIFACT
+  --output OUTPUT
+  --threshold THRESHOLD
+  --seed SEED

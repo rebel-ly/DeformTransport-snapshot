@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/workspace/Wan-Move/wan/__init__.py", line 1, in <module>
+    from . import configs, distributed, modules
+  File "/workspace/Wan-Move/wan/configs/__init__.py", line 9, in <module>
+    from .wan_move_14B import wan_move_14B
+  File "/workspace/Wan-Move/wan/configs/wan_move_14B.py", line 3, in <module>
+    from easydict import EasyDict
+ModuleNotFoundError: No module named 'easydict'
+PROMPT_IMPORT_RC=1
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/workspace/Wan-Move/generate.py", line 18, in <module>
+    import wan
+  File "/workspace/Wan-Move/wan/__init__.py", line 1, in <module>
+    from . import configs, distributed, modules
+  File "/workspace/Wan-Move/wan/configs/__init__.py", line 9, in <module>
+    from .wan_move_14B import wan_move_14B
+  File "/workspace/Wan-Move/wan/configs/wan_move_14B.py", line 3, in <module>
+    from easydict import EasyDict
+ModuleNotFoundError: No module named 'easydict'
+GENERATE_IMPORT_RC=1

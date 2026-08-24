@@ -1,0 +1,34 @@
+{
+  "c2_required_artifacts": {
+    "depth": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0b/functional_conditioning/20260812_143438__santa_v3d_seed0_import_recovered/santa_authoritative_depth_81x1257.npy",
+    "ids": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_point_ids.npy",
+    "tracks": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_tracks_correct.npy",
+    "visibility": "/workspace/DeformTransport/server_runs/new_audit/20260811_224005__santa_corrected_v2_aligned_timeline/santa_material_visibility_correct.npy"
+  },
+  "derived_batched_preview_used_in_formal_run": false,
+  "formal_overlay_modified": false,
+  "k0_legal_artifacts": {
+    "depth": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_depth.npy",
+    "ids": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_ids.npy",
+    "tracks": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_tracks.npy",
+    "visibility": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_200000__phase0d_4d_recovery/k0_visibility.npy"
+  },
+  "preview_batch_contract": "PASS_RAW_ARTIFACT_MATCHES_FORMAL_RUNTIME",
+  "preview_runtime_contract": "RAW_UNBATCHED_[16,21,60,104]",
+  "runtime_epsilon_content_exact": true,
+  "runtime_epsilon_shape": [
+    16,
+    21,
+    60,
+    104
+  ],
+  "runtime_epsilon_tensor_content_sha256": "b6f3bbbd7bbc3412b70dd57c39e1709e70ba7d38b9e0cb60bac7820776208b51",
+  "runtime_preview_shape": [
+    16,
+    21,
+    60,
+    104
+  ],
+  "silent_transport_fallback_allowed": false,
+  "transport_mode_contract_guard": "PASS"
+}

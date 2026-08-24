@@ -1,0 +1,21 @@
+{
+  "attempt": 12,
+  "denoise_steps_completed": "25/25",
+  "duration_seconds": 5.0625,
+  "fps": 16.0,
+  "frame_count": 81,
+  "generation_error_class": "NONE",
+  "generation_exit_success": true,
+  "generation_start": "2026-08-19T14:37:18Z",
+  "generation_success": "2026-08-19T15:32:18Z",
+  "height": 464,
+  "physical_gpu": 2,
+  "validation_result": "PASS",
+  "video_decodable": true,
+  "video_exists": true,
+  "video_nonempty": true,
+  "video_path": "/workspace/DeformTransport_EvidenceV4_1/reports/paper_experiments/20260816_203349__physical_attribute_motion_identity_ablation/nodepth_final_20260818T190000Z/nodepth_auto_attempt_12_gpu2_20260819T143718Z/nodepth_formal_correct_v3d_seed000.mp4",
+  "video_sha256": "42b374a07d4e87d91706b65da663cc8be875821f26d4c46d967b31dfa8e54d9e",
+  "video_size_bytes": 3334536,
+  "width": 832
+}

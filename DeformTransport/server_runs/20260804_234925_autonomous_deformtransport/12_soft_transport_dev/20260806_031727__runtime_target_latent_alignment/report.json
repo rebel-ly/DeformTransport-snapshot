@@ -1,0 +1,60 @@
+{
+  "sim_data_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim",
+  "artifact": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_194114__santa__soft_fusion_ablations/outputs/vae_latent_outputs_soft_gate025_blend_a050.pt",
+  "fresh_runtime_latent": {
+    "shape": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "dtype": "torch.bfloat16",
+    "mean": 0.11755702644586563,
+    "std": 1.0512571334838867,
+    "min": -3.59375,
+    "max": 4.65625,
+    "finite": true
+  },
+  "artifact_target_latent_after_bfloat16_cast": {
+    "shape": [
+      1,
+      21,
+      16,
+      60,
+      104
+    ],
+    "dtype": "torch.bfloat16",
+    "mean": 0.11669107526540756,
+    "std": 1.0522958040237427,
+    "min": -3.609375,
+    "max": 4.625,
+    "finite": true
+  },
+  "alignment": {
+    "shape_equal": true,
+    "exact_after_bfloat16_cast": false,
+    "allclose_atol_1e-4": false,
+    "allclose_atol_1e-3": false,
+    "allclose_atol_1e-2": false,
+    "full_max_abs_difference": 0.03125,
+    "full_mean_abs_difference": 0.001926410710439086,
+    "full_nonzero_values": 677668,
+    "transport_mask_values": 359248,
+    "transport_mask_max_abs_difference": 0.03125,
+    "transport_mask_mean_abs_difference": 0.0016310057835653424
+  },
+  "artifact_contract": {
+    "mask_cells": 22453,
+    "mask_count_contract": true
+  },
+  "runtime_seconds": {
+    "vae_load": 0.6419634390040301,
+    "vae_encode": 7.083122195006581,
+    "total": 8.619577296019997
+  },
+  "gpu_peak_memory_mib": {
+    "allocated": 3708.22021484375,
+    "reserved": 4460.0
+  }
+}

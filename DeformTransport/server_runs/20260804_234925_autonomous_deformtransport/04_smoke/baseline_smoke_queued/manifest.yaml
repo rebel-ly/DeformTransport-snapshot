@@ -1,0 +1,12 @@
+experiment_id: santa_baseline_smoke_seed0
+case: santa_cloth_21f
+variant: baseline
+seed: 0
+status: queued
+说明: 首次单卡完整生成，当前阻塞于完整final_sim和空闲GPU
+公平性:
+  transport参数: 禁止
+  checkpoint: 固定
+  noise: 固定
+  resolution: 480x832
+  顺序: Baseline先运行

@@ -1,0 +1,18 @@
+{
+  "用途": "真实 Wan VAE 编码→transport→解码 GPU smoke；不作为公平生成或 GT 评估",
+  "版本": "v3",
+  "修复原因": "v1 的 initial_rgb 和 coarse_rgb_frames 都已是 832x480，官方加载器要求 512x512；v2 仅修复 initial_rgb，仍不完整",
+  "初始帧来源": "/workspace/DeformTransport/artifacts/stage1_dynamic/santa_cloth_2f_wsl_20260802_retry3/frame_initial.png",
+  "初始帧SHA256": "dd5d8410fde94cc8fb303f425648838b2dce0d16f5774bdfd8987a0d1e57dc04",
+  "历史源图像素核验": "官方预处理后与历史 source_original_reconstruction 左面板逐像素一致（MAE=0，最大绝对差=0）",
+  "未来帧转换": "832x480 视频代理帧嵌入 832x832（上下边缘复制），双线性缩放至 512x512；运行时再走官方 resize+crop",
+  "未来帧往返MAE均值": 1.6485680263024014,
+  "未来帧往返MAE最大": 1.6719117254273503,
+  "未来帧往返最大绝对差": 62,
+  "未来帧数": 21,
+  "v1_transport_ready": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy.pt",
+  "v1_SHA256": "45d25b1901e621e575a83ffb1a351306c2ed4980b8a5988f70e6caef56cc123b",
+  "v3_transport_ready": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_videoproxy_transport_ready/transport_ready_videoproxy_v3.pt",
+  "v3_SHA256": "2c842162a6268827fc7bd7ab83f544dd6dcd64200cdaccc60253ad53c8a7fd3d",
+  "重要限制": "未来帧源自历史 target_input.mp4，且增加一次尺寸往返；属于有损 proxy，仅验证真实 GPU 闭环工程可行性"
+}

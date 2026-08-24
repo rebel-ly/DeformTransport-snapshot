@@ -1,0 +1,37 @@
+DeformTransport SandHouse protocol
+
+Case:
+  sand_house
+
+Physical timeline:
+  165 frames
+
+Wan temporal slots:
+  42
+  [0,4,8,...,164]
+
+Material:
+  mpm_sand
+
+Persistent material points:
+  441807
+
+V1 screening:
+  No SandHouse-specific parameter tuning.
+  RealWonder vs Correct vs Shuffled.
+  Initial screening seed = 0.
+  Correct and Shuffled must share all settings except correspondence identity.
+
+Decision:
+  Correct > Shuffled but Correct < RealWonder:
+    close V1 and move to Adaptive Residual Transport.
+
+  Correct >= RealWonder:
+    validate seeds 0,1,2 before further conclusions.
+
+V2 geometry:
+  frozen after sand_house_v2_geometry_features.pt
+  no further reconstruction / SAM3D / MoGe / Genesis tuning unless a concrete bug is found.
+
+Important:
+  Simulation RGB is an engineering proxy, not ground-truth future RGB.

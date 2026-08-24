@@ -1,0 +1,75 @@
+{
+  "stage": "aligned_final_sim_pre_full_generation_validation",
+  "final_sim": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410",
+  "aligned_contract": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_contract_20260806_192643/outputs/aligned_transport_ready.pt",
+  "mismatch_indices": [],
+  "arrays": {
+    "flows": {
+      "shape": [
+        80,
+        2,
+        240,
+        416
+      ],
+      "dtype": "float16",
+      "mean_abs": 0.15073353052139282
+    },
+    "noises": {
+      "shape": [
+        81,
+        60,
+        104,
+        32
+      ],
+      "dtype": "float16",
+      "mean": -0.0025294290389865637,
+      "std": 1.0016316175460815
+    }
+  },
+  "simulation_video": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/simulation.mp4",
+    "frame_count": 81,
+    "first_shape": [
+      480,
+      832,
+      3
+    ],
+    "last_shape": [
+      480,
+      832,
+      3
+    ]
+  },
+  "hashes": {
+    "config": "ef4d28b5a3c1b1fef7e2e520f6ae5504337c50c738883cea1f1a9ebda3e1a12c",
+    "prompt": "6be4051b8f80209ab8b005969fb77112e357bfc39fd21e09ab70193b5cfe077c",
+    "resized_input": "00c0ccefe33723a8d3d98a03450f22fa4143558bc944bcd06a294c492f654fc7",
+    "flows": "80694c4842530d98dc69fcce3a44af9a25d69e08d32f64545df76b62de425a1e",
+    "noises": "922da8eda664919b659604a8a590e558ab98b63272e5aba5639f0bb19558977b"
+  },
+  "checks": {
+    "source_frame_count_81": true,
+    "final_frame_count_81": true,
+    "all_exact_preprocessed_pixels": true,
+    "frame0_is_resized_input": true,
+    "flows_shape": true,
+    "flows_dtype_float16": true,
+    "flows_finite": true,
+    "flows_nonzero": true,
+    "noises_shape": true,
+    "noises_dtype_float16": true,
+    "noises_finite": true,
+    "noises_noncollapsed": true,
+    "config_output_frames_21": true,
+    "config_denoising_steps": true,
+    "mask_dropin_disabled": true,
+    "prompt_nonempty": true,
+    "simulation_video_81_frames": true,
+    "simulation_video_shape": true,
+    "build_exit_zero": true,
+    "pre_noise_exit_zero": true,
+    "noise_generation_exit_zero": true
+  },
+  "all_checks_pass": true,
+  "known_warning": "RAFT input 240x416 is not divisible by noise_warp downscale_factor 32. All compared methods use the exact same generated noise."
+}

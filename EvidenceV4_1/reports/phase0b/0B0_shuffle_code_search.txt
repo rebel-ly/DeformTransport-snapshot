@@ -1,0 +1,401 @@
+/workspace/DeformTransport/tests/test_hard_transport.py:16:    make_objectwise_feature_permutation,
+/workspace/DeformTransport/tests/test_hard_transport.py:109:    def test_correct_and_shuffled_are_different_on_nonuniform_grid(self):
+/workspace/DeformTransport/tests/test_hard_transport.py:114:        shuffled = self._run(grid, source_uv, target_uv, mode="shuffled", seed=0)
+/workspace/DeformTransport/tests/test_hard_transport.py:115:        self.assertFalse(torch.equal(shuffled["permutation"], torch.arange(8)))
+/workspace/DeformTransport/tests/test_hard_transport.py:117:            torch.equal(correct["transported_grid"], shuffled["transported_grid"])
+/workspace/DeformTransport/tests/test_hard_transport.py:120:            torch.equal(correct["transport_mask"], shuffled["transport_mask"])
+/workspace/DeformTransport/tests/test_hard_transport.py:126:        first = make_objectwise_feature_permutation(eligible, object_id, seed=7)
+/workspace/DeformTransport/tests/test_hard_transport.py:127:        repeated = make_objectwise_feature_permutation(eligible, object_id, seed=7)
+/workspace/DeformTransport/tests/test_hard_transport.py:128:        different = make_objectwise_feature_permutation(eligible, object_id, seed=8)
+/workspace/DeformTransport/tests/test_soft_transport.py:159:    def test_correct_and_shuffled_have_identical_spatial_contract(self):
+/workspace/DeformTransport/tests/test_soft_transport.py:179:        shuffled = self._run(
+/workspace/DeformTransport/tests/test_soft_transport.py:183:            mode="shuffled",
+/workspace/DeformTransport/tests/test_soft_transport.py:190:                shuffled["transport_mask"],
+/workspace/DeformTransport/tests/test_soft_transport.py:196:                shuffled["contribution_count"],
+/workspace/DeformTransport/tests/test_soft_transport.py:202:                shuffled["transport_weight"],
+/workspace/DeformTransport/tests/test_soft_transport.py:208:                shuffled["valid_point_mask"],
+/workspace/DeformTransport/tests/test_soft_transport.py:214:                shuffled["transported_grid"],
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:29:        shuffled = target.clone()
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:32:        shuffled[:, :, :, 0, 0] = -3.0
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:36:        shuffled[:, :, :, 1, 1] = -100.0
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:53:                "shuffled_transported_latent": shuffled,
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:87:    def test_shuffled_residual_differs(self) -> None:
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:106:            shuffled = load_precomputed_transport_residual(
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:108:                mode="shuffled",
+/workspace/DeformTransport/tests/test_interstep_transport_residual.py:113:                torch.equal(correct, shuffled)
+/workspace/DeformTransport/tests/test_pipeline_integration.py:13:        shuffled = correct.flip(2)
+/workspace/DeformTransport/tests/test_pipeline_integration.py:22:                "shuffled_fused_latent": shuffled,
+/workspace/DeformTransport/tests/test_pipeline_integration.py:30:        return correct, shuffled
+/workspace/DeformTransport/tests/test_pipeline_integration.py:32:    def test_selects_correct_and_shuffled_without_changing_contract(self):
+/workspace/DeformTransport/tests/test_pipeline_integration.py:35:            correct, shuffled = self._write_artifact(path)
+/workspace/DeformTransport/tests/test_pipeline_integration.py:40:            loaded_shuffled = load_precomputed_transport_latent(
+/workspace/DeformTransport/tests/test_pipeline_integration.py:41:                path, mode="shuffled", reference_latent=reference
+/workspace/DeformTransport/tests/test_pipeline_integration.py:52:            self.assertTrue(torch.equal(loaded_shuffled, shuffled.to(torch.bfloat16)))
+/workspace/DeformTransport/tests/test_pipeline_integration.py:53:            self.assertFalse(torch.equal(loaded_correct, loaded_shuffled))
+/workspace/DeformTransport/tests/test_pipeline_integration.py:70:            correct, shuffled = self._write_artifact(path)
+/workspace/DeformTransport/tests/test_pipeline_integration.py:76:                    "shuffled_fused_latent": shuffled,
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:83:    shuffled = run_transport(
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:87:        mode="shuffled",
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:122:        "correct_shuffled_same_mask": bool(
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:125:                shuffled["transport_mask"],
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:128:        "correct_shuffled_same_count": bool(
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:131:                shuffled["contribution_count"],
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:134:        "correct_shuffled_same_weight": bool(
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:137:                shuffled["transport_weight"],
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:140:        "correct_shuffled_different_features": bool(
+/workspace/DeformTransport/scripts/validate_soft_transport_math.py:143:                shuffled["transported_grid"],
+/workspace/DeformTransport/scripts/validate_soft_transport_cpu_gpu.py:209:    for mode in ("correct", "shuffled"):
+/workspace/DeformTransport/scripts/validate_soft_transport_cpu_gpu.py:335:            "permutation_exact": bool(
+/workspace/DeformTransport/scripts/validate_soft_transport_cpu_gpu.py:337:                    soft_cpu["permutation"],
+/workspace/DeformTransport/scripts/validate_soft_transport_cpu_gpu.py:338:                    soft_gpu["permutation"].cpu(),
+/workspace/DeformTransport/scripts/validate_soft_transport_cpu_gpu.py:361:            mode_report["permutation_exact"],
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:993:    permutation = torch.randperm(
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:1002:            torch.sort(permutation).values,
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:1011:        "correct_and_shuffled_share_target_geometry"
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:1371:        "shuffled_permutation":
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:1372:            permutation,
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:1373:        "geometry_shared_by_correct_and_shuffled":
+/workspace/DeformTransport/scripts/diagnose_aligned_visibility_transport_geometry.py:1465:            "correct_shuffled_fairness": (
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1000:    permutation = torch.randperm(
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1009:            torch.sort(permutation).values,
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1018:        "correct_and_shuffled_share_target_geometry"
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1378:        "shuffled_permutation":
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1379:            permutation,
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1380:        "geometry_shared_by_correct_and_shuffled":
+/workspace/DeformTransport/scripts/diagnose_aligned_future_visibility_transport_geometry.py:1472:            "correct_shuffled_fairness": (
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:61:shuffled_raw = (
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:62:    art["shuffled_transport_residual"]
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:90:shuffled = (
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:91:    shuffled_raw
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:111:    shuffled[outside].abs().max()
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:125:    mean_abs(shuffled),
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:137:    correct - shuffled
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:144:# Remove the global shuffled nuisance direction from
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:151:s64 = shuffled.double().reshape(-1)
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:160:        "zero shuffled residual energy"
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:173:    - beta * shuffled
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:296:        "shuffled_transport_residual"
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:304:        "shuffled_transported_latent"
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:312:        "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:360:        "ctd_shuffled_source_scale"
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:377:    "Delta = Delta_correct_actual - Delta_shuffled_actual",
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:384:    "beta * Delta_shuffled_actual; "
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:426:    "shuffled_actual_mean_abs":
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:427:        mean_abs(shuffled),
+/workspace/DeformTransport/scripts/build_counterfactual_transport_debiasing.py:429:    "correct_shuffled_cosine":
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:67:    "shuffled_dir": (
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:69:        / "20260808_010603__tree__shuffled_condition_energy_matched_seed0"
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:101:    "shuffled_dir": (
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:104:        / "shuffled_matched"
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:191:        expected = "Loading shuffled artifact-local"
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:487:        "shuffled_dir",
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:502:    shuffled_video = unique_mp4(
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:503:        cfg["shuffled_dir"]
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:511:    shuffled_scale = parse_scale(
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:512:        cfg["shuffled_dir"],
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:513:        "shuffled",
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:529:        "shuffled =",
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:530:        shuffled_video,
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:537:        "shuffled_scale =",
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:538:        shuffled_scale,
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:561:    shuffled_raw = (
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:564:            "shuffled",
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:593:        tuple(shuffled_raw.shape)
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:597:            f"{name}: shuffled residual shape"
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:614:    shuffled = (
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:615:        shuffled_raw
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:616:        * shuffled_scale
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:676:        shuffled_video
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:704:    # correct beats baseline AND shuffled.
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:858:        "shuffled_scale":
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:859:            shuffled_scale,
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:870:        "shuffled_video":
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:871:            str(shuffled_video),
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:1028:    permutation = torch.randperm(
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:1040:        len(permutation),
+/workspace/DeformTransport/scripts/train_transport_utility_selector.py:1043:        idx = permutation[
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:26:    compare_correct_and_shuffled,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:148:    correct: np.ndarray, shuffled: np.ndarray, target: np.ndarray
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:155:            labels, (correct[frame_index], shuffled[frame_index], target[frame_index])
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:268:    coordinate_shuffled, time_coordinate_shuffled = _run_transport(
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:269:        coordinate_payload, state, mode="shuffled", seed=args.seed, device=device
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:274:    rgb_shuffled, time_rgb_shuffled = _run_transport(
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:275:        rgb_payload, state, mode="shuffled", seed=args.seed, device=device
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:280:        & rgb_shuffled["transport_mask"]
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:286:    shuffled_frame_metrics = masked_frame_metrics(
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:287:        rgb_shuffled["transported_grid"], target_rgb.to(device), shared_support
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:289:    comparison = compare_correct_and_shuffled(
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:290:        correct_frame_metrics, shuffled_frame_metrics
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:293:    shuffled_coverage = transport_coverage_metrics(rgb_shuffled)
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:297:    shuffled_features = rgb_shuffled["point_features"][eligible]
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:300:        torch.sort(shuffled_features, dim=0).values,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:304:            torch.equal(rgb_correct["transport_mask"], rgb_shuffled["transport_mask"])
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:309:                rgb_shuffled["contribution_count"],
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:314:                rgb_correct["valid_point_mask"], rgb_shuffled["valid_point_mask"]
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:319:                rgb_correct["source_point_mask"], rgb_shuffled["source_point_mask"]
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:328:        "correct_and_shuffled_permutations_differ": not bool(
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:329:            torch.equal(rgb_correct["permutation"], rgb_shuffled["permutation"])
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:334:        - coordinate_shuffled["transported_grid"]
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:348:            "shuffled": _cpu_result(coordinate_shuffled),
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:352:            "shuffled": _cpu_result(rgb_shuffled),
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:362:    shuffled_visual = _to_uint8(_upsample_transport(rgb_shuffled))
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:364:    coordinate_shuffled_visual = _to_uint8(_upsample_transport(coordinate_shuffled))
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:377:        correct_visual, shuffled_visual, target_shared_visual
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:382:        "shuffled_rgb": output_dir / "shuffled_rgb_transport.mp4",
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:384:        "comparison": output_dir / "correct_shuffled_target.mp4",
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:386:        "coordinate_shuffled": output_dir / "coordinate_shuffled.mp4",
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:391:    _write_video(video_paths["shuffled_rgb"], shuffled_visual)
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:395:    _write_video(video_paths["coordinate_shuffled"], coordinate_shuffled_visual)
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:416:        "shuffled_has_no_nan_or_inf": not shuffled_coverage["contains_nan_or_inf"],
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:429:        "overall_correct_l1_below_shuffled": comparison["overall_correct_better"],
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:456:                "correct_vs_shuffled_shared_mask_mae": coordinate_difference,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:474:        "shuffled": {
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:475:            "coverage": shuffled_coverage,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:476:            "frame_metrics": shuffled_frame_metrics,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:477:            "aggregate_metrics": aggregate_frame_metrics(shuffled_frame_metrics),
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:491:            "coordinate_shuffled": time_coordinate_shuffled,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:493:            "rgb_shuffled": time_rgb_shuffled,
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:496:                + time_coordinate_shuffled
+/workspace/DeformTransport/scripts/run_checkpoint_free_transport_probe.py:498:                + time_rgb_shuffled
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:28:    compare_correct_and_shuffled,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:327:    shuffled_result, shuffled_transport_seconds = _timed_cuda(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:328:        lambda: run_transport("shuffled")
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:331:    raw_shuffled_latent = shuffled_result["transported_grid"].unsqueeze(0)
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:336:    fused_shuffled_latent = torch.where(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:337:        latent_mask, raw_shuffled_latent, target_latent
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:350:    raw_shuffled_decoded, raw_shuffled_decode_seconds = decode_cpu(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:351:        raw_shuffled_latent
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:356:    fused_shuffled_decoded, fused_shuffled_decode_seconds = decode_cpu(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:357:        fused_shuffled_latent
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:363:    raw_shuffled_01 = _pixels_01(raw_shuffled_decoded)
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:365:    fused_shuffled_01 = _pixels_01(fused_shuffled_decoded)
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:383:    fused_shuffled_metrics = masked_frame_metrics(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:384:        fused_shuffled_01, target_pixels_01, pixel_shared_mask
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:386:    decoded_comparison = compare_correct_and_shuffled(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:387:        fused_correct_metrics, fused_shuffled_metrics
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:392:    raw_shuffled_metrics = masked_frame_metrics(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:393:        raw_shuffled_01, target_pixels_01, pixel_shared_mask
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:395:    raw_decoded_comparison = compare_correct_and_shuffled(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:396:        raw_correct_metrics, raw_shuffled_metrics
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:410:    shuffled_latent_metrics = _latent_frame_metrics(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:411:        raw_shuffled_latent[0], target_latent[0], latent_shared_mask
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:413:    latent_comparison = compare_correct_and_shuffled(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:414:        correct_latent_metrics, shuffled_latent_metrics
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:421:                shuffled_result["transport_mask"],
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:427:                shuffled_result["contribution_count"],
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:433:                shuffled_result["valid_point_mask"],
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:436:        "permutations_differ": not bool(
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:438:                correct_result["permutation"], shuffled_result["permutation"]
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:450:            "shuffled_transported_latent": raw_shuffled_latent.detach().cpu(),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:452:            "shuffled_fused_latent": fused_shuffled_latent.detach().cpu(),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:455:            "shuffled_permutation": shuffled_result["permutation"].detach().cpu(),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:464:        "raw_shuffled": _uint8_frames(raw_shuffled_01),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:466:        "fused_shuffled": _uint8_frames(fused_shuffled_01),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:477:            ("Shuffled masked replace", videos["fused_shuffled"]),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:481:    comparison_video_path = output_dir / "original_correct_shuffled_target.mp4"
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:492:    latent_different = not torch.equal(raw_correct_latent, raw_shuffled_latent)
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:509:        "correct_and_shuffled_latents_differ": latent_different,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:511:        "fused_shuffled_is_finite": bool(torch.isfinite(fused_shuffled_decoded).all()),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:513:        "fused_shuffled_is_not_collapsed": float(fused_shuffled_01.std()) > 0.01,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:517:        "correct_latent_l1_below_shuffled": latent_comparison[
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:520:        "correct_decoded_l1_below_shuffled": decoded_comparison[
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:547:            "shuffled_transported": _tensor_statistics(raw_shuffled_latent),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:549:            "shuffled_masked_replace": _tensor_statistics(fused_shuffled_latent),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:559:            "shuffled": shuffled_latent_metrics,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:567:            "shuffled_masked_replace": {
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:568:                "frames": fused_shuffled_metrics,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:569:                "aggregate": aggregate_frame_metrics(fused_shuffled_metrics),
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:596:            "shuffled_transport": shuffled_transport_seconds,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:599:            "raw_shuffled_decode": raw_shuffled_decode_seconds,
+/workspace/DeformTransport/scripts/run_wan_vae_transport_probe.py:601:            "fused_shuffled_decode": fused_shuffled_decode_seconds,
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:139:    soft_shuffled = soft_point_transport(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:142:        mode="shuffled",
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:246:        "soft_shuffled_finite": bool(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:248:                soft_shuffled["transported_grid"]
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:260:        "soft_correct_shuffled_same_mask": bool(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:263:                soft_shuffled["transport_mask"],
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:266:        "soft_correct_shuffled_same_count": bool(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:269:                soft_shuffled["contribution_count"],
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:272:        "soft_correct_shuffled_same_weight": bool(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:275:                soft_shuffled["transport_weight"],
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:278:        "soft_correct_shuffled_same_valid_points": bool(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:281:                soft_shuffled["valid_point_mask"],
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:284:        "soft_correct_shuffled_output_different": bool(
+/workspace/DeformTransport/scripts/compare_hard_soft_continuous.py:287:                soft_shuffled["transported_grid"],
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:208:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:387:    soft_shuffled = soft_point_transport(
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:394:        mode="shuffled",
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:448:        soft_shuffled["transport_mask"],
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:456:        soft_shuffled["contribution_count"],
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:463:    shuffled_transport_weight = soft_shuffled["transport_weight"]
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:467:        - shuffled_transport_weight
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:480:            shuffled_transport_weight,
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:496:        soft_shuffled["valid_point_mask"],
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:526:    shuffled_independent_gated_mask = (
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:531:                shuffled_transport_weight
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:540:            shuffled_independent_gated_mask,
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:547:            != shuffled_independent_gated_mask
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:570:    raw_shuffled = (
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:571:        soft_shuffled["transported_grid"]
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:583:    fused_shuffled = torch.where(
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:585:        raw_shuffled,
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:591:        (raw_shuffled, "raw_shuffled"),
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:593:        (fused_shuffled, "fused_shuffled"),
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:639:        "shuffled_transported_latent": (
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:640:            raw_shuffled.detach().cpu().contiguous()
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:645:        "shuffled_fused_latent": (
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:646:            fused_shuffled.detach().cpu().contiguous()
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:685:        "shuffled_permutation": (
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:686:            soft_shuffled["permutation"]
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:826:            "permutations_differ": bool(
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:828:                    soft_correct["permutation"],
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:829:                    soft_shuffled["permutation"],
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:848:                == tuple(fused_shuffled.shape)
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:852:            "correct_vs_shuffled_mean_abs": float(
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:854:                    fused_correct - fused_shuffled
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:885:            "soft_shuffled_fused": tensor_stats(
+/workspace/DeformTransport/scripts/build_soft_wan_latent_artifact.py:886:                fused_shuffled
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:419:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:429:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:512:        "hard_shuffled": hard[
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:513:            "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:518:        "soft_shuffled": soft[
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:519:            "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:671:                videos["hard_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:675:                videos["soft_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:732:    pixel_proxy["soft_shuffled"][
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:735:        decoded["soft_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:753:        "hard_shuffled_on_hard_support":
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:755:                latent_variants["hard_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:759:        "soft_shuffled_on_hard_support":
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:761:                latent_variants["soft_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:771:        "soft_shuffled_on_retained_soft_only":
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:773:                latent_variants["soft_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:792:        "decoded_soft_correct_vs_soft_shuffled":
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:795:                decoded["soft_shuffled"],
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:798:        "decoded_hard_correct_vs_hard_shuffled":
+/workspace/DeformTransport/scripts/decode_compare_hard_soft_wan_artifacts.py:801:                decoded["hard_shuffled"],
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:124:        "shuffled_transported_latent",
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:126:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:156:        "shuffled_transported_latent",
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:158:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:181:        "shuffled_transported_latent",
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:183:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:201:    raw_shuffled: torch.Tensor,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:203:    fused_shuffled: torch.Tensor,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:224:        (fused_shuffled, "fused_shuffled"),
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:251:        "shuffled_transported_latent": (
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:252:            raw_shuffled.detach().cpu().contiguous()
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:257:        "shuffled_fused_latent": (
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:258:            fused_shuffled.detach().cpu().contiguous()
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:306:    for mode in ("correct", "shuffled"):
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:395:    raw_shuffled = soft[
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:396:        "shuffled_transported_latent"
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:404:    if tuple(raw_shuffled.shape) != tuple(target.shape):
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:420:    hardmask_shuffled = torch.where(
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:422:        raw_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:446:        raw_shuffled=raw_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:448:        fused_shuffled=hardmask_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:479:    blend_shuffled = (
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:483:        * (raw_shuffled - target)
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:505:        raw_shuffled=raw_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:507:        fused_shuffled=blend_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:550:                "correct_vs_shuffled_mean_abs": (
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:553:                        hardmask_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:584:                "correct_vs_shuffled_mean_abs": (
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:587:                        blend_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:619:                and torch.isfinite(hardmask_shuffled).all()
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:621:                and torch.isfinite(blend_shuffled).all()
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:624:            "correct_shuffled_remain_different": bool(
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:627:                    hardmask_shuffled,
+/workspace/DeformTransport/scripts/build_soft_fusion_ablation_artifacts.py:631:                    blend_shuffled,
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:91:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:122:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:271:        "hard_shuffled": hard[
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:272:            "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:277:        "soft_replace_shuffled": soft_replace[
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:278:            "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:283:        "soft_hardmask_shuffled": soft_hardmask[
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:284:            "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:289:        "soft_blend_shuffled": soft_blend[
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:290:            "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:434:                videos["hard_shuffled"],
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:445:                    "soft_blend_shuffled"
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:510:        "hard_correct_vs_hard_shuffled":
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:513:                decoded["hard_shuffled"],
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:515:        "blend_correct_vs_blend_shuffled":
+/workspace/DeformTransport/scripts/decode_soft_fusion_ablation_comparison.py:521:                    "soft_blend_shuffled"
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:160:        "shuffled_transported_latent",
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:179:    shuffled = state[
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:180:        "shuffled_transported_latent"
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:261:    shuffled_residual = shuffled - target
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:267:    weighted_shuffled_residual = (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:268:        confidence_5d * shuffled_residual
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:275:    weighted_shuffled = (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:276:        target + weighted_shuffled_residual
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:292:            weighted_shuffled_residual[~mask_5d]
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:301:        and torch.isfinite(weighted_shuffled).all()
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:380:        "shuffled_transported_latent": (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:381:            weighted_shuffled.contiguous()
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:386:        "shuffled_transport_residual": (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:387:            weighted_shuffled_residual.contiguous()
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:395:        "shuffled_fused_latent": (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:396:            weighted_shuffled.contiguous()
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:450:    loaded_shuffled_residual = (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:453:            mode="shuffled",
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:464:    expected_shuffled = (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:465:        weighted_shuffled_residual.to(
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:477:    shuffled_loader_match = bool(
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:479:            loaded_shuffled_residual,
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:480:            expected_shuffled,
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:517:            "raw_shuffled_mean_abs": float(
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:518:                shuffled_residual.abs().mean()
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:520:            "weighted_shuffled_mean_abs": float(
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:521:                weighted_shuffled_residual.abs().mean()
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:523:            "correct_vs_shuffled_mean_abs": float(
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:526:                    - weighted_shuffled
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:540:            "shuffled_zero_outside_mask": True,
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:545:            "shuffled_loader_match": (
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:546:                shuffled_loader_match
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:548:            "correct_shuffled_different": bool(
+/workspace/DeformTransport/scripts/build_confidence_weighted_residual_artifact.py:551:                    weighted_shuffled,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:709:        "shuffled_fused_latent",
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:736:    shuffled_latent = artifact[
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:737:        "shuffled_fused_latent"
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:759:        ("shuffled_fused_latent", shuffled_latent),
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:856:    shuffled_decoded, shuffled_decode_seconds = (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:857:        decode_cpu(shuffled_latent)
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:868:    shuffled_01 = pixels_01(
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:869:        shuffled_decoded
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:883:        ("shuffled", shuffled_decoded),
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:918:    shuffled_uint8 = uint8_frames(
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:919:        shuffled_01
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:925:        "shuffled_fused": shuffled_uint8,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:953:                shuffled_uint8,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:960:        / "target_correct_shuffled.mp4"
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1000:            "shuffled_vs_target": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1002:                    shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1016:            "shuffled_vs_target": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1018:                    shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1032:            "shuffled_vs_target": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1034:                    shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1040:        "correct_vs_shuffled": {
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1044:                    shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1051:                    shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1071:        "shuffled_common_region": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1073:                shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1089:        "shuffled_full_frame": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1091:                shuffled_01,
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1104:        "shuffled": temporal_metrics(
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1105:            shuffled_01
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1123:        "shuffled_decode_shape_matches_target": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1124:            shuffled_decoded.shape
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1137:        "shuffled_finite": bool(
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1139:                shuffled_decoded
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1145:        "shuffled_not_collapsed": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1146:            float(shuffled_01.std()) > 0.01
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1213:            "shuffled_decoded": tensor_stats(
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1214:                shuffled_01
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1241:            "shuffled_decode": (
+/workspace/DeformTransport/scripts/decode_precomputed_wan_transport_artifact.py:1242:                shuffled_decode_seconds
+/workspace/DeformTransport/scripts/de

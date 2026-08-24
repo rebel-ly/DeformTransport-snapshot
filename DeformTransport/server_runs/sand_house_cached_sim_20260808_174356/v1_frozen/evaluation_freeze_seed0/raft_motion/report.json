@@ -1,0 +1,64 @@
+{
+  "experiment": "SandHouse three-way RAFT motion diagnostic",
+  "reference_flow": "/workspace/DeformTransport/server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_201448__sand_house_final_sim_seed0/flows.npy",
+  "reference_shape": [
+    164,
+    2,
+    240,
+    416
+  ],
+  "video_preprocessing": "480x832 RGB -> area resize 240x416 -> torchvision RAFT transforms",
+  "raft_weights": "Raft_Large_Weights.C_T_SKHT_V2",
+  "transport_region": "Quality transport mask mapped causally to destination frames 1..164",
+  "metrics": {
+    "BASELINE": {
+      "EPE_global": 0.2949581444263458,
+      "magnitude_error_global": 0.24131709337234497,
+      "angle_error_deg_global": 41.24652099609375,
+      "pred_flow_magnitude_mean": 0.3721984922885895,
+      "reference_flow_magnitude_mean": 0.4471103847026825,
+      "EPE_transport_region": 1.0056567192077637,
+      "magnitude_error_transport_region": 0.8067988157272339,
+      "angle_error_deg_transport_region": 47.20138931274414,
+      "transport_pixels": 2960000
+    },
+    "CORRECT": {
+      "EPE_global": 0.29138579964637756,
+      "magnitude_error_global": 0.2398940771818161,
+      "angle_error_deg_global": 41.43653869628906,
+      "pred_flow_magnitude_mean": 0.37444427609443665,
+      "reference_flow_magnitude_mean": 0.4471103847026825,
+      "EPE_transport_region": 0.9911830425262451,
+      "magnitude_error_transport_region": 0.8040932416915894,
+      "angle_error_deg_transport_region": 45.740474700927734,
+      "transport_pixels": 2960000
+    },
+    "SHUFFLED_MATCH": {
+      "EPE_global": 0.2991297245025635,
+      "magnitude_error_global": 0.24672921001911163,
+      "angle_error_deg_global": 40.52915573120117,
+      "pred_flow_magnitude_mean": 0.3676226735115051,
+      "reference_flow_magnitude_mean": 0.4471103847026825,
+      "EPE_transport_region": 1.0215282440185547,
+      "magnitude_error_transport_region": 0.8314505219459534,
+      "angle_error_deg_transport_region": 42.62281036376953,
+      "transport_pixels": 2960000
+    }
+  },
+  "comparisons": {
+    "correct_vs_baseline_global_EPE_improvement_percent": 1.2111361721901237,
+    "correct_vs_matched_global_EPE_improvement_percent": 2.5888182356546614,
+    "correct_vs_baseline_transport_EPE_improvement_percent": 1.439226368707667,
+    "correct_vs_matched_transport_EPE_improvement_percent": 2.970569014610465
+  },
+  "global_EPE_ranking": [
+    "CORRECT",
+    "BASELINE",
+    "SHUFFLED_MATCH"
+  ],
+  "transport_EPE_ranking": [
+    "CORRECT",
+    "BASELINE",
+    "SHUFFLED_MATCH"
+  ]
+}

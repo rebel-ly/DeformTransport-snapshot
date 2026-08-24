@@ -1,0 +1,22 @@
+keys = ['artifact_kind', 'contribution_count', 'correct_fused_latent', 'correct_transported_latent', 'format_version', 'hard_reference_contribution_count', 'hard_reference_mask', 'latent_frame_indices', 'projection_hard_reference_contribution_count', 'projection_hard_reference_mask', 'projection_target_valid', 'raw_soft_contribution_count', 'raw_soft_transport_mask', 'seed', 'selected_future_visible', 'selected_target_valid', 'shuffled_fused_latent', 'shuffled_permutation', 'shuffled_transported_latent', 'soft_only_mask', 'soft_weight_threshold', 'source_files', 'source_latent', 'target_latent', 'transport_mask', 'transport_method', 'transport_validity_mode', 'transport_weight']
+transport_validity_mode = source_and_future_visible
+soft_weight_threshold = 0.25
+latent_frame_indices shape= (21,) dtype= torch.int64 finite= True
+target_latent shape= (1, 21, 16, 60, 104) dtype= torch.float32 finite= True
+correct_transported_latent shape= (1, 21, 16, 60, 104) dtype= torch.float32 finite= True
+shuffled_transported_latent shape= (1, 21, 16, 60, 104) dtype= torch.float32 finite= True
+correct_fused_latent shape= (1, 21, 16, 60, 104) dtype= torch.float32 finite= True
+shuffled_fused_latent shape= (1, 21, 16, 60, 104) dtype= torch.float32 finite= True
+transport_mask shape= (21, 1, 60, 104) dtype= torch.bool finite= True
+contribution_count shape= (21, 1, 60, 104) dtype= torch.int64 finite= True
+transport_weight shape= (21, 1, 60, 104) dtype= torch.float32 finite= True
+raw_soft_transport_mask shape= (21, 1, 60, 104) dtype= torch.bool finite= True
+hard_reference_mask shape= (21, 1, 60, 104) dtype= torch.bool finite= True
+projection_hard_reference_mask shape= (21, 1, 60, 104) dtype= torch.bool finite= True
+selected_future_visible shape= (21, 15774) dtype= torch.bool finite= True
+correct_vs_shuffled_mean_abs = 0.022362418472766876
+gated_support_cells = 15911
+raw_soft_support_cells = 16534
+selected_hard_support_cells = 14438
+projection_hard_support_cells = 14512
+TREE_FUTURE_VISIBLE_SOFT_GATE025_OK

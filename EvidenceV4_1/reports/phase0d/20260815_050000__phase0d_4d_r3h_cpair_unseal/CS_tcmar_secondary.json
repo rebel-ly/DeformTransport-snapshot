@@ -1,0 +1,8 @@
+{
+  "arm": "CS",
+  "metric": "TC-MAR",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "value": 11.860088155174827,
+  "candidate_mp4_sha256": "2c38e1308f30aff23f85b40035d930f20d8fde91d483da7cc756eef4fa5d812e",
+  "cross_baseline_interpretation": "NOT_OPENED"
+}

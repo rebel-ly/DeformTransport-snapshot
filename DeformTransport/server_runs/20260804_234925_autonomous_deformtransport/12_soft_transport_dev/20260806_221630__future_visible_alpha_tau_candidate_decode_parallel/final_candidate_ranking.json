@@ -1,0 +1,419 @@
+{
+  "checks": {
+    "gpu2_passed": true,
+    "gpu3_passed": true,
+    "target_hashes_equal": true,
+    "candidate_count_is_8": true,
+    "candidate_ids_unique": true,
+    "reference_found": true
+  },
+  "all_checks_pass": true,
+  "candidate_count": 8,
+  "reference": {
+    "candidate_id": "a1p000_t0p250",
+    "alpha": 1.0,
+    "threshold": 0.25,
+    "correct_target_l1": 0.16314834457488708,
+    "correct_target_mse": 0.04350702118496468,
+    "correct_target_psnr_db": 13.681125017629851,
+    "identity_l1": 0.1259359317245307,
+    "identity_retention": 1.0,
+    "target_l1_ratio": 1.0,
+    "sharpness_distance": 1.6847407939715875,
+    "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/comparison.mp4",
+    "selected_images": {
+      "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/first.png",
+      "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/quarter.png",
+      "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/mid.png",
+      "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/three_quarter.png",
+      "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/final.png"
+    }
+  },
+  "recommendations": {
+    "quality_priority": {
+      "candidate_id": "a0p250_t0p750",
+      "alpha": 0.25,
+      "threshold": 0.75,
+      "correct_target_l1": 0.0402803059299419,
+      "correct_target_mse": 0.0032211886474540754,
+      "correct_target_psnr_db": 25.009417565121577,
+      "identity_l1": 0.031627528070483676,
+      "identity_retention": 0.25113982671494417,
+      "target_l1_ratio": 0.24689374590284455,
+      "sharpness_distance": 0.5598995041994764,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/final.png"
+      }
+    },
+    "balanced": {
+      "candidate_id": "a0p500_t0p750",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "correct_target_l1": 0.08257100967989292,
+      "correct_target_mse": 0.012505366113381806,
+      "correct_target_psnr_db": 19.111890004945867,
+      "identity_l1": 0.06632265816500157,
+      "identity_retention": 0.5266380869764334,
+      "target_l1_ratio": 0.5061100061728903,
+      "sharpness_distance": 1.00816546570857,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/final.png"
+      }
+    },
+    "control_priority": {
+      "candidate_id": "a1p000_t0p250",
+      "alpha": 1.0,
+      "threshold": 0.25,
+      "correct_target_l1": 0.16314834457488708,
+      "correct_target_mse": 0.04350702118496468,
+      "correct_target_psnr_db": 13.681125017629851,
+      "identity_l1": 0.1259359317245307,
+      "identity_retention": 1.0,
+      "target_l1_ratio": 1.0,
+      "sharpness_distance": 1.6847407939715875,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/final.png"
+      }
+    }
+  },
+  "decoded_pareto_frontier": [
+    {
+      "candidate_id": "a0p250_t0p750",
+      "alpha": 0.25,
+      "threshold": 0.75,
+      "correct_target_l1": 0.0402803059299419,
+      "correct_target_mse": 0.0032211886474540754,
+      "correct_target_psnr_db": 25.009417565121577,
+      "identity_l1": 0.031627528070483676,
+      "identity_retention": 0.25113982671494417,
+      "target_l1_ratio": 0.24689374590284455,
+      "sharpness_distance": 0.5598995041994764,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p250_t0p250",
+      "alpha": 0.25,
+      "threshold": 0.25,
+      "correct_target_l1": 0.0408718639432832,
+      "correct_target_mse": 0.0032781446640046293,
+      "correct_target_psnr_db": 24.9333263335473,
+      "identity_l1": 0.032057651675041814,
+      "identity_retention": 0.2545552427814166,
+      "target_l1_ratio": 0.25051963628428064,
+      "sharpness_distance": 0.5756671526879535,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p500_t0p750",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "correct_target_l1": 0.08257100967989292,
+      "correct_target_mse": 0.012505366113381806,
+      "correct_target_psnr_db": 19.111890004945867,
+      "identity_l1": 0.06632265816500157,
+      "identity_retention": 0.5266380869764334,
+      "target_l1_ratio": 0.5061100061728903,
+      "sharpness_distance": 1.00816546570857,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p500_t0p000",
+      "alpha": 0.5,
+      "threshold": 0.0,
+      "correct_target_l1": 0.08707252666814091,
+      "correct_target_mse": 0.01352423991157133,
+      "correct_target_psnr_db": 18.772864506268714,
+      "identity_l1": 0.0690158168658798,
+      "identity_retention": 0.5480232362662262,
+      "target_l1_ratio": 0.5337015640276604,
+      "sharpness_distance": 1.0804497526744052,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p625_t0p000",
+      "alpha": 0.625,
+      "threshold": 0.0,
+      "correct_target_l1": 0.10948088705355738,
+      "correct_target_mse": 0.020776371897002797,
+      "correct_target_psnr_db": 16.904918619781714,
+      "identity_l1": 0.0860516874142635,
+      "identity_retention": 0.6832973420365123,
+      "target_l1_ratio": 0.6710511671989678,
+      "sharpness_distance": 1.279913187903941,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p875_t0p100",
+      "alpha": 0.875,
+      "threshold": 0.1,
+      "correct_target_l1": 0.14725685933673824,
+      "correct_target_mse": 0.036093018765066875,
+      "correct_target_psnr_db": 14.496195152506386,
+      "identity_l1": 0.11397100957455458,
+      "identity_retention": 0.9049919908787597,
+      "target_l1_ratio": 0.9025948729081069,
+      "sharpness_distance": 1.5862993266701935,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/final.png"
+      }
+    },
+    {
+      "candidate_id": "a1p000_t0p250",
+      "alpha": 1.0,
+      "threshold": 0.25,
+      "correct_target_l1": 0.16314834457488708,
+      "correct_target_mse": 0.04350702118496468,
+      "correct_target_psnr_db": 13.681125017629851,
+      "identity_l1": 0.1259359317245307,
+      "identity_retention": 1.0,
+      "target_l1_ratio": 1.0,
+      "sharpness_distance": 1.6847407939715875,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/final.png"
+      }
+    },
+    {
+      "candidate_id": "a1p000_t0p000",
+      "alpha": 1.0,
+      "threshold": 0.0,
+      "correct_target_l1": 0.1703871619646196,
+      "correct_target_mse": 0.04714325424513699,
+      "correct_target_psnr_db": 13.336168664848174,
+      "identity_l1": 0.12818978524502414,
+      "identity_retention": 1.0178968265024113,
+      "target_l1_ratio": 1.0443695423854564,
+      "sharpness_distance": 1.7907178554216412,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/final.png"
+      }
+    }
+  ],
+  "all_candidates": [
+    {
+      "candidate_id": "a0p250_t0p250",
+      "alpha": 0.25,
+      "threshold": 0.25,
+      "correct_target_l1": 0.0408718639432832,
+      "correct_target_mse": 0.0032781446640046293,
+      "correct_target_psnr_db": 24.9333263335473,
+      "identity_l1": 0.032057651675041814,
+      "identity_retention": 0.2545552427814166,
+      "target_l1_ratio": 0.25051963628428064,
+      "sharpness_distance": 0.5756671526879535,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p250_t0p250/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p250_t0p750",
+      "alpha": 0.25,
+      "threshold": 0.75,
+      "correct_target_l1": 0.0402803059299419,
+      "correct_target_mse": 0.0032211886474540754,
+      "correct_target_psnr_db": 25.009417565121577,
+      "identity_l1": 0.031627528070483676,
+      "identity_retention": 0.25113982671494417,
+      "target_l1_ratio": 0.24689374590284455,
+      "sharpness_distance": 0.5598995041994764,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p250_t0p750/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p500_t0p000",
+      "alpha": 0.5,
+      "threshold": 0.0,
+      "correct_target_l1": 0.08707252666814091,
+      "correct_target_mse": 0.01352423991157133,
+      "correct_target_psnr_db": 18.772864506268714,
+      "identity_l1": 0.0690158168658798,
+      "identity_retention": 0.5480232362662262,
+      "target_l1_ratio": 0.5337015640276604,
+      "sharpness_distance": 1.0804497526744052,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p500_t0p000/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p500_t0p750",
+      "alpha": 0.5,
+      "threshold": 0.75,
+      "correct_target_l1": 0.08257100967989292,
+      "correct_target_mse": 0.012505366113381806,
+      "correct_target_psnr_db": 19.111890004945867,
+      "identity_l1": 0.06632265816500157,
+      "identity_retention": 0.5266380869764334,
+      "target_l1_ratio": 0.5061100061728903,
+      "sharpness_distance": 1.00816546570857,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p500_t0p750/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p625_t0p000",
+      "alpha": 0.625,
+      "threshold": 0.0,
+      "correct_target_l1": 0.10948088705355738,
+      "correct_target_mse": 0.020776371897002797,
+      "correct_target_psnr_db": 16.904918619781714,
+      "identity_l1": 0.0860516874142635,
+      "identity_retention": 0.6832973420365123,
+      "target_l1_ratio": 0.6710511671989678,
+      "sharpness_distance": 1.279913187903941,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a0p625_t0p000/final.png"
+      }
+    },
+    {
+      "candidate_id": "a0p875_t0p100",
+      "alpha": 0.875,
+      "threshold": 0.1,
+      "correct_target_l1": 0.14725685933673824,
+      "correct_target_mse": 0.036093018765066875,
+      "correct_target_psnr_db": 14.496195152506386,
+      "identity_l1": 0.11397100957455458,
+      "identity_retention": 0.9049919908787597,
+      "target_l1_ratio": 0.9025948729081069,
+      "sharpness_distance": 1.5862993266701935,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a0p875_t0p100/final.png"
+      }
+    },
+    {
+      "candidate_id": "a1p000_t0p000",
+      "alpha": 1.0,
+      "threshold": 0.0,
+      "correct_target_l1": 0.1703871619646196,
+      "correct_target_mse": 0.04714325424513699,
+      "correct_target_psnr_db": 13.336168664848174,
+      "identity_l1": 0.12818978524502414,
+      "identity_retention": 1.0178968265024113,
+      "target_l1_ratio": 1.0443695423854564,
+      "sharpness_distance": 1.7907178554216412,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/a1p000_t0p000/final.png"
+      }
+    },
+    {
+      "candidate_id": "a1p000_t0p250",
+      "alpha": 1.0,
+      "threshold": 0.25,
+      "correct_target_l1": 0.16314834457488708,
+      "correct_target_mse": 0.04350702118496468,
+      "correct_target_psnr_db": 13.681125017629851,
+      "identity_l1": 0.1259359317245307,
+      "identity_retention": 1.0,
+      "target_l1_ratio": 1.0,
+      "sharpness_distance": 1.6847407939715875,
+      "comparison_video": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/comparison.mp4",
+      "selected_images": {
+        "first": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/first.png",
+        "quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/quarter.png",
+        "mid": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/mid.png",
+        "three_quarter": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/three_quarter.png",
+        "final": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/a1p000_t0p250/final.png"
+      }
+    }
+  ],
+  "interpretation_boundary": "This ranking is based on Wan VAE-only proxy fidelity, sharpness, and Correct/Shuffled identity separation. Full RealWonder diffusion generation remains necessary."
+}

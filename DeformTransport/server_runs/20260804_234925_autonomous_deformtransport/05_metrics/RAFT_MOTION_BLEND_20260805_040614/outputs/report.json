@@ -1,0 +1,26 @@
+{
+  "时间": "2026-08-05T04:06:37.982312+08:00",
+  "任务": "官方RAFT_Large生成视频相对coarse_proxy光流一致性",
+  "说明": "参考是有损coarse proxy的RAFT flow，不是future_GT；只衡量运动引导一致性",
+  "结果": {
+    "REALWONDER_SANTA_BLEND_20260805_040147": {
+      "视频": "server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BLEND_20260805_040147/santa_blend_seed0.mp4",
+      "flow_shape": [
+        20,
+        2,
+        240,
+        416
+      ],
+      "EPE_mean_px": 0.2853526473045349,
+      "EPE_median_px": 0.045174490660429,
+      "EPE_p95_px": 1.7527813911437988,
+      "cosine_mean": 0.40588271617889404,
+      "预测flow幅值mean_px": 0.5988109707832336,
+      "参考flow幅值mean_px": 0.4658375680446625,
+      "finite": true
+    }
+  },
+  "总耗时秒": 6.977583674000925,
+  "torch峰值allocated_MiB": 174.27978515625,
+  "torch峰值reserved_MiB": 264.0
+}

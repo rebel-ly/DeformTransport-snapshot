@@ -1,0 +1,25 @@
+{
+  "FVD_SINGLE_CLIP_SEED_FLOOR": "NOT_APPLICABLE",
+  "LPIPS": "UNAVAILABLE_NO_FROZEN_MODEL_NORMALIZATION_IMPLEMENTATION_LOCATED",
+  "PIXEL_PAIRWISE_METRICS": "PASS",
+  "SSIM": "UNAVAILABLE_NO_FROZEN_IMPLEMENTATION_LOCATED",
+  "decoded_rgb_required": {
+    "dtype": true,
+    "frame_count": true,
+    "max_abs_pixel_difference": true,
+    "mp4_hash_not_substitute": true,
+    "pixel_scalar_mismatch_count": true,
+    "shape_HWC": true,
+    "tensor_sha256": true
+  },
+  "formal_reference_quality_metrics": "UNRESOLVED_NO_GT_REFERENCE",
+  "interpretation": "Permits same-condition output stochasticity across seeds only; not task-quality seed noise floor.",
+  "metrics": [
+    "decoded RGB exact mismatch",
+    "MAE",
+    "RMSE",
+    "PSNR"
+  ],
+  "scope": "PAIRWISE_OUTPUT_STOCHASTICITY_ONLY",
+  "status": "PASS"
+}

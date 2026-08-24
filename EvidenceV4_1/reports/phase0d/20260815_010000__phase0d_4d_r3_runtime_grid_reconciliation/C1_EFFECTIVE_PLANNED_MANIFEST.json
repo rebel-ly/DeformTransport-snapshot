@@ -1,0 +1,72 @@
+{
+  "actual_native_sigma": 0.8329627513885498,
+  "actual_native_timestep": 832,
+  "arm": "C1",
+  "begin_index": 15,
+  "dtype": "bf16",
+  "epsilon": {
+    "canonical_source": "wan_move.py private Generator(device=self.device), manual_seed(0), torch.randn; actual runtime shape",
+    "dtype": "torch.float32",
+    "epsilon_status": "PROVISIONAL_PENDING_BEGIN0",
+    "finite": true,
+    "max": 4.785398483276367,
+    "mean": -0.0003667346900328994,
+    "min": -5.119814872741699,
+    "npy_file_sha256": "20911e4d396115ea12ab1c7715202c7321dd8104fe114d7515d2321485b9e288",
+    "pt_file_sha256": "11f943937843034ac420b81ebacf3a34d513ccba5005150d8ec07b7b52f15dc8",
+    "roundtrip_exact": true,
+    "shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "std": 0.999748170375824,
+    "tensor_content_sha256": "316cfc55f5782bb887395795d3ea0c685fbc240067c6f2f0b2964dee18a891c9"
+  },
+  "formal_overlay": {
+    "generate_sha256": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+    "wan_move_sha256": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7"
+  },
+  "preview": {
+    "dtype": "float32",
+    "file_sha256": "0110c684d4c70a3d4d6f78889f50f569e1110091a1cac980ebccb78dbced2d31",
+    "finite": true,
+    "formal_target": [
+      464,
+      832
+    ],
+    "frame_count": 81,
+    "max": 4.7883687019348145,
+    "mean": 0.11643020808696747,
+    "min": -3.700727701187134,
+    "path": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260815_010000__phase0d_4d_r3_runtime_grid_reconciliation/WAN_FORMAL_PREVIEW_LATENT_58x104.npy",
+    "preprocess_provenance": "torchvision TF.to_tensor -> (x-0.5)/0.5; torch.nn.functional.interpolate per RGB frame, mode=bicubic, default align_corners/antialias; no crop/pad/evaluator preprocessing",
+    "shape": [
+      16,
+      21,
+      58,
+      104
+    ],
+    "source_frames": "/workspace/DeformTransport_EvidenceV4_1/reports/phase0d/20260814_100000__fast_a_b_screen/preview_reconstruction_20260814",
+    "std": 1.0505518913269043,
+    "tensor_content_sha256": "ed1fb8069bd65ce27edd825061943a414df7df14e33197ba771b987e9dcc4e14",
+    "vae_checkpoint": "/workspace/Wan-Move/Wan-Move-14B-480P/Wan2.1_VAE.pth",
+    "vae_checkpoint_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+  },
+  "prompt": "Wind blows the hanging clothes. The motion is gentle, continuous, and rhythmic, driven by shifting airflow. Static camera, eye-level frontal view, natural fabric movement.",
+  "resolution": "480*832 -> decoded 832x464",
+  "scheduler": "FlowUniPCMultistepScheduler",
+  "seed": 0,
+  "shift": 3.0,
+  "steps": 40,
+  "transport": {
+    "K": 0,
+    "depth": "k0_depth.npy",
+    "expected_writes": 0,
+    "ids": "k0_ids.npy",
+    "tracks": "k0_tracks.npy",
+    "visibility": "k0_visibility.npy"
+  },
+  "transport_variant": "v3d"
+}

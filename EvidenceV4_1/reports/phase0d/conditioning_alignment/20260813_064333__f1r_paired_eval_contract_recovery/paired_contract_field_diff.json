@@ -1,0 +1,30 @@
+{
+  "allowed_method_specific_fields": ["VIDEO_PATH", "VIDEO_SHA", "METHOD_LABEL"],
+  "must_be_identical_fields": {
+    "evaluator_path_sha": {"rw": "eval_v3.py / 2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08", "dt_full": "eval_v3.py / 2b801bda24950e45871f5629f9d8a39c4baf668d8a95ed978df72feb14690c08", "status": "PASS"},
+    "runtime": {"rw": "wan-move Python 3.11 loader runtime", "dt_full": "wan-move Python 3.11 loader runtime", "status": "PASS"},
+    "evaluation_ids_sha": {"rw": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8", "dt_full": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8", "status": "PASS"},
+    "tracks_sha": {"rw": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929", "dt_full": "a8b6b9894fb751ba525f0fc6ee8ae91e0c86752344257ae33ddf7fdebfb51929", "status": "PASS"},
+    "visibility_sha": {"rw": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff", "dt_full": "5b0d73612f5de2e9b54deff3d55db19719625696ee6298bac0cd02859ccb0eff", "status": "PASS"},
+    "timeline": {"rw": "81 aligned simulation frames", "dt_full": "81 aligned formal replay frames", "status": "SEMANTICS_EQUAL; serialization comparison not the failure"},
+    "coordinate_mapping": {"rw": "x identity; y*=464/480", "dt_full": "x identity; y*=464/480", "status": "PASS"},
+    "video_frame_count": {"rw": 81, "dt_full": 81, "status": "PASS"},
+    "video_hw": {"rw": "464x832 decoded evaluator RGB", "dt_full": "464x832 decoded evaluator RGB", "status": "PASS"},
+    "patch_definition": {"rw": "8x8; offsets -3.5..+3.5", "dt_full": "8x8; offsets -3.5..+3.5", "status": "PASS"},
+    "temporal_bucket_definition": {"rw": "frozen evaluator ANCHORS=4..80 step 4", "dt_full": "frozen evaluator ANCHORS=4..80 step 4", "status": "PASS"},
+    "metric_arguments": {"rw": "same frozen evaluator invocation semantics", "dt_full": "same frozen evaluator invocation semantics", "status": "BLOCKED_BY_EVALUATOR_BINDING"},
+    "decode_backend": {"rw": "OpenCV cv2.VideoCapture", "dt_full": "OpenCV cv2.VideoCapture", "status": "PASS"}
+  },
+  "fail_fields": [
+    {"field": "tracks_path_and_n", "rw_value": "required corrected-v2 N=1257", "dt_value": "required corrected-v2 N=1257", "expected_relation": "MUST_BE_IDENTICAL and evaluator must bind the specified asset", "why_fail": "frozen evaluator instead loads fixed N=1277 bridge paths and asserts N=1277"},
+    {"field": "visibility_path_and_n", "rw_value": "required corrected-v2 N=1257", "dt_value": "required corrected-v2 N=1257", "expected_relation": "MUST_BE_IDENTICAL and evaluator must bind the specified asset", "why_fail": "frozen evaluator instead loads fixed N=1277 bridge path"},
+    {"field": "method_video_binding", "rw_value": "canonical RW path is hard-coded under rw", "dt_value": "canonical Replay A has no supported DT_FULL binding", "expected_relation": "VIDEO_PATH/METHOD_LABEL may differ, but both must be accepted by invocation", "why_fail": "method_paths has no argument or DT_FULL label"}
+  ],
+  "PAIRED_CONTRACT_FAIL_FIELDS": ["tracks_path_and_n", "visibility_path_and_n", "method_video_binding"],
+  "PATH_ONLY_DIFFERENCE_COUNT": 0,
+  "CONTENT_IDENTITY_DIFFERENCE_COUNT": 0,
+  "SEMANTIC_CONTRACT_DIFFERENCE_COUNT": 3,
+  "TIMELINE_SEMANTICS_EQUAL": true,
+  "TIMELINE_SERIALIZATION_EXACT_EQUAL": "NOT_APPLICABLE_NO_SERIALIZATION_MISMATCH_OBSERVED",
+  "VIDEO_DOMAIN_PAIRING": "PASS"
+}

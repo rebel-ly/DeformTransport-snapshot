@@ -1,0 +1,194 @@
+{
+  "时间": "2026-08-05T03:30:59.395500+08:00",
+  "任务": "RealWonder_checkpoint_generator与generator_ema_GPU逐张量差异审计",
+  "checkpoint": "/workspace/DeformTransport/ckpts/Realwonder-Distilled-AR-I2V-Flow/sink_size=1-attn_size=21-frame_per_block=3-denoising_steps=4/step=000800.pt",
+  "键": {
+    "generator": 983,
+    "generator_ema": 983,
+    "公共": 983,
+    "仅generator": [],
+    "仅generator_ema": []
+  },
+  "张量": {
+    "完全相同": 0,
+    "有差异": 983,
+    "总元素": 1564428608,
+    "全局最大绝对差": 0.00015842542052268982,
+    "全局RMS差": 1.3404417998134446e-05,
+    "最大差Top20": [
+      [
+        0.00015842542052268982,
+        "model.blocks.26.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.0001541227102279663,
+        "model.blocks.25.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.00014976857346482575,
+        "model.blocks.29.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.0001486595720052719,
+        "model.blocks.27.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.00014702603220939636,
+        "model.blocks.28.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.0001450963318347931,
+        "model.blocks.29.ffn.0.weight",
+        [
+          8960,
+          1536
+        ]
+      ],
+      [
+        0.00013082940131425858,
+        "model.blocks.25.cross_attn.o.weight",
+        [
+          1536,
+          1536
+        ]
+      ],
+      [
+        0.0001305295154452324,
+        "model.blocks.28.cross_attn.o.weight",
+        [
+          1536,
+          1536
+        ]
+      ],
+      [
+        0.00012832693755626678,
+        "model.blocks.28.ffn.0.weight",
+        [
+          8960,
+          1536
+        ]
+      ],
+      [
+        0.0001251986250281334,
+        "model.blocks.27.cross_attn.o.weight",
+        [
+          1536,
+          1536
+        ]
+      ],
+      [
+        0.00012478092685341835,
+        "model.blocks.27.ffn.0.weight",
+        [
+          8960,
+          1536
+        ]
+      ],
+      [
+        0.00012341514229774475,
+        "model.head.head.weight",
+        [
+          64,
+          1536
+        ]
+      ],
+      [
+        0.00012312829494476318,
+        "model.blocks.19.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.00012187473475933075,
+        "model.blocks.26.ffn.0.weight",
+        [
+          8960,
+          1536
+        ]
+      ],
+      [
+        0.00012136809527873993,
+        "model.blocks.27.self_attn.o.weight",
+        [
+          1536,
+          1536
+        ]
+      ],
+      [
+        0.00012013223022222519,
+        "model.blocks.20.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.00011885026469826698,
+        "model.blocks.18.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.00011831521987915039,
+        "model.blocks.5.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ],
+      [
+        0.00011801323853433132,
+        "model.blocks.20.cross_attn.o.weight",
+        [
+          1536,
+          1536
+        ]
+      ],
+      [
+        0.0001176595687866211,
+        "model.blocks.3.ffn.2.weight",
+        [
+          1536,
+          8960
+        ]
+      ]
+    ]
+  },
+  "耗时秒": {
+    "checkpoint加载": 16.174707208992913,
+    "GPU比较": 4.010508600011235,
+    "总计": 20.2099683409906
+  },
+  "资源": {
+    "torch峰值allocated_MiB": 216.0029296875,
+    "torch峰值reserved_MiB": 260.0,
+    "CPU_maxRSS_GiB": 17.93680191040039,
+    "MemAvailable_before_GiB": 79.88568878173828,
+    "MemAvailable_after_GiB": 58.19029998779297
+  },
+  "通过": true
+}

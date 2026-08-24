@@ -1,0 +1,12 @@
+{
+  "metric": "TC-ME",
+  "evaluator_sha256": "e6a00e649c928fddfa569ff5c30e641c6653643a6f5a2d59bfbb78b0b2a77ef5",
+  "material_ids_sha256": "f94bb0a7986c693e194f750a7afd715f44506518abbb4dd37e0a791380c819b8",
+  "c1_tcme": 0.47438763126111494,
+  "c2_tcme": 0.42167144903579584,
+  "delta_tcme_c2_minus_c1": -0.0527161822253191,
+  "relative_tcme_change": -0.11112654359555316,
+  "lower_is_better": true,
+  "seed0_incremental_transport_signal": "PASS",
+  "cross_protocol_interpretation": "NOT_OPENED"
+}

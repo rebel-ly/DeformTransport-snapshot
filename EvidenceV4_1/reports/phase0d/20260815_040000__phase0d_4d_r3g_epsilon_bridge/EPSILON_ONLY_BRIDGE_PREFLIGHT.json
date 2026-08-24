@@ -1,0 +1,14 @@
+{
+  "formal_overlay_modified": false,
+  "formal_overlay_generate_sha256": "45f7323f22d7bb7d593b949fa48e6cf764d08cafeaf8863d726df9a663b21b85",
+  "formal_overlay_wan_move_sha256": "eae7f5a86f39164f3ad1ce3b8db4a974f4a71f42c2898402f029bb9db77c32f7",
+  "e0_only_new_interface_active": "EXTERNAL_EPSILON_REPLACEMENT",
+  "preview_latent": null,
+  "start_index": null,
+  "initial_epsilon": "R3_SHARED_EPSILON_58x104.npy",
+  "native_noise_equals_external_epsilon": true,
+  "private_generator_reused_after_initial_noise": false,
+  "canonical_fields_preserved": ["Correct K1257", "source", "prompt", "seed=0", "40 steps", "shift=3", "bf16", "native full denoising scheduler"],
+  "gpu2_prelaunch_clean": true,
+  "gpu3_used": false
+}

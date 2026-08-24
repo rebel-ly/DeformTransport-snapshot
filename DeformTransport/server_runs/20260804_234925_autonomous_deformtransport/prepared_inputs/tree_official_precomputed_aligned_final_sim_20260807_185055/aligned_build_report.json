@@ -1,0 +1,1307 @@
+{
+  "stage": "tree_aligned_final_sim_exact_realwonder_preprocessing_build",
+  "experiment_definition": "Official precomputed Tree geometry + official Tree dynamics",
+  "output": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055",
+  "aligned_contract": {
+    "transport_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_183939__tree__aligned_81state_contract/aligned_transport_ready.pt",
+    "transport_sha256": "9b1250cc6b771e358de51b8297487789116bddbc7290a02792cff83c9363e357",
+    "visibility_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_183939__tree__aligned_81state_contract/aligned_visibility_contract.pt",
+    "visibility_sha256": "d1fae7327f583aff8a44c369d32fbf32bee11fb97a2d15f1de060fb281ab9368"
+  },
+  "runtime_config": {
+    "source": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/config.tree.transport.yaml",
+    "source_sha256": "fbbf02f12355149256333d9e3acb2c074896ac791b9ba6293a63e36a0cad8c7d",
+    "saved": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/config.yaml",
+    "saved_sha256": "6be6aceeb909ac28330fb2cebc4f39372561f69ee71e22b5056e563735abcbc0",
+    "only_intended_change": "output_folder"
+  },
+  "preprocessing_function": "deform_transport.transport_payloads.load_realwonder_rgb_crop",
+  "mapping_contract": "frame_0000=S0; frame_0001..0080=S2,S4,...,S160",
+  "frame_count": 81,
+  "latent_pixel_indices": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60,
+    64,
+    68,
+    72,
+    76,
+    80
+  ],
+  "latent_physical_states": [
+    0,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    88,
+    96,
+    104,
+    112,
+    120,
+    128,
+    136,
+    144,
+    152,
+    160
+  ],
+  "frames": [
+    {
+      "index": 0,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_initial.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0000.png",
+      "target_sha256": "5f5c74396303275e2e5404dae86563faf878637a19ecedcc1fa439a0606a9d5d"
+    },
+    {
+      "index": 1,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0000.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0001.png",
+      "target_sha256": "bc67a21ed3353a52d8a327fc3ead6ea8658f53f5cfaf1bb02e624655bca8e49f"
+    },
+    {
+      "index": 2,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0001.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0002.png",
+      "target_sha256": "b01c3d6d4d8c3b2915811a91a253bd94f77e2deba33e04085848fd229ececbb3"
+    },
+    {
+      "index": 3,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0002.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0003.png",
+      "target_sha256": "44d54f8598294d636aac1e24548d8d625ba0164c7ff50032aee454288f02b7cb"
+    },
+    {
+      "index": 4,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0003.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0004.png",
+      "target_sha256": "560e7f490769e1179777d98f5cb39b1b44b3463f3d1d7b4d6ae807384d715d02"
+    },
+    {
+      "index": 5,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0004.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0005.png",
+      "target_sha256": "18ffd460f474d5cd7c193174c830906bc1a2e6b9e2f29b326cac51fe8bda663b"
+    },
+    {
+      "index": 6,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0005.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0006.png",
+      "target_sha256": "2f2c29ed9a31445d1bfcc662759269d0b5facbe90a532de3ee6162ff7bf59c11"
+    },
+    {
+      "index": 7,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0006.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0007.png",
+      "target_sha256": "a27c20dd58ea1ce326b6837524756ab748c7a31eec7f0955f96cef5bbfadbb9e"
+    },
+    {
+      "index": 8,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0007.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0008.png",
+      "target_sha256": "033693348114c2a38cd55259153975b3444804c013f3896b74b38f6a940928b2"
+    },
+    {
+      "index": 9,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0008.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0009.png",
+      "target_sha256": "04d94a00c832f653e00e0071f720cd6836edf422f34c852ee2edfbd0fa7cc3b2"
+    },
+    {
+      "index": 10,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0009.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0010.png",
+      "target_sha256": "21451f9876f0fa09b81d52508ac955e37cb911853a02fc415166e87430b8654f"
+    },
+    {
+      "index": 11,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0010.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0011.png",
+      "target_sha256": "68ae3b189507fe0782d2452662e427659eb4a04a6f1e4936066a74fda74fbf8b"
+    },
+    {
+      "index": 12,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0011.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0012.png",
+      "target_sha256": "1edab9ac0bc3b129f7a8702c5c388bdb50f371d3747ee7c2b4ded7eb6f2e7f04"
+    },
+    {
+      "index": 13,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0012.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0013.png",
+      "target_sha256": "8b1434093266109d9a7f59a87103d4b33da2b7b29a34097d955b3d2d6a64025b"
+    },
+    {
+      "index": 14,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0013.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0014.png",
+      "target_sha256": "742bb761c0c3cf1b1ba259fcf3f27ba2704fa1beafae0a9a3e1c3cf696dac51c"
+    },
+    {
+      "index": 15,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0014.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0015.png",
+      "target_sha256": "35846ea5d76c4c0266033c785c9deec95839f9d7bed8069548a6a37b5a875d17"
+    },
+    {
+      "index": 16,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0015.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0016.png",
+      "target_sha256": "f1dce56d14812e6d268c9c523a9de38b381564efbff8fe2fd9959e761f69d30d"
+    },
+    {
+      "index": 17,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0016.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0017.png",
+      "target_sha256": "3541cf6f9cd1a88f8547eceaa6ff52d255f611892316d9438e7c81e1b2516482"
+    },
+    {
+      "index": 18,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0017.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0018.png",
+      "target_sha256": "ecf0ae6d443e34af54ac12db14f1553956ac67afab6a3f03f796d6f3649f5a33"
+    },
+    {
+      "index": 19,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0018.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0019.png",
+      "target_sha256": "6dc1786b5bcb513c4b928a3a032a13186c648b13676d49ffa9cb3b095e14faa3"
+    },
+    {
+      "index": 20,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0019.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0020.png",
+      "target_sha256": "4a6543e5578b55e48f72f46a958db92ba395281bb30269bbb7da804daa4974cc"
+    },
+    {
+      "index": 21,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0020.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0021.png",
+      "target_sha256": "42c408c11b4af7af056f8f5343c0716d41ed0c70359a97f4fee34c186d0aee24"
+    },
+    {
+      "index": 22,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0021.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0022.png",
+      "target_sha256": "0c0347abdd80422e91db16b07dc24e7b4225127b64ce8182a2f4fbbdb7438dca"
+    },
+    {
+      "index": 23,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0022.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0023.png",
+      "target_sha256": "adfacc6bb6b80bad9e74f17d47b6c2f647cc72ca6b9dce21fd2137d47db3c5dc"
+    },
+    {
+      "index": 24,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0023.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0024.png",
+      "target_sha256": "ed3ff264306f245913c152819a886779d5e3b506650a0d77d90cbd8c8e93e9a8"
+    },
+    {
+      "index": 25,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0024.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0025.png",
+      "target_sha256": "a85012e4996ee873ce343b58677ccc307480be6bc529272b030a8e9da8282cdf"
+    },
+    {
+      "index": 26,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0025.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0026.png",
+      "target_sha256": "d046ed0b66e144a38c73502dbbc856df2f5c502dd4ad6773bc9afe36443ac12b"
+    },
+    {
+      "index": 27,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0026.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0027.png",
+      "target_sha256": "df57ff0d5512b3ea72a6ae34b1bf4073fc6f63d28ef684cbf40fb6c682e972c0"
+    },
+    {
+      "index": 28,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0027.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0028.png",
+      "target_sha256": "c38fb818eb9d0fd05748a5dc6c0e440dd25650c5d0d20af52124e2b269cb21cd"
+    },
+    {
+      "index": 29,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0028.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0029.png",
+      "target_sha256": "d897a48c9602b8c733ae6efe2e4adbc243298acf9fdb5a66755a492f35fd6737"
+    },
+    {
+      "index": 30,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0029.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0030.png",
+      "target_sha256": "2df605032868d3ba493429172265d90b13cacebb4a4318c146b6bd59125ce1a8"
+    },
+    {
+      "index": 31,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0030.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0031.png",
+      "target_sha256": "a971ada0c8aa4340f937f692c975c510806d1d68cb1fe659d8a2a004a30c1eaa"
+    },
+    {
+      "index": 32,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0031.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0032.png",
+      "target_sha256": "228b3bd97aa4ade1e36e15e90520cb1095ecd8a766ee58db388e6475871bb464"
+    },
+    {
+      "index": 33,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0032.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0033.png",
+      "target_sha256": "7c80a0f4735a9793d1e58061f669a20d81df1803e4b84667f0d81ca706af98f7"
+    },
+    {
+      "index": 34,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0033.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0034.png",
+      "target_sha256": "635f1ab6805aa121279badb7965b147a06eba748b87965855eab1df859964301"
+    },
+    {
+      "index": 35,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0034.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0035.png",
+      "target_sha256": "79dfbd74c2c1e68ca1ddbc0e0f99e7acd2c1191dc468ebcfdc9cf07f5b3c5ca3"
+    },
+    {
+      "index": 36,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0035.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0036.png",
+      "target_sha256": "3970426d143d0103fd8d473dd98254910bbc41961eca6ae494d403e5a9a0db04"
+    },
+    {
+      "index": 37,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0036.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0037.png",
+      "target_sha256": "ef5bcb6efba0778986e6bb1b083b6092baec631e2885b7a1c9f08abce1fed905"
+    },
+    {
+      "index": 38,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0037.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0038.png",
+      "target_sha256": "926ba16360689a85b853b7a172d86ebda5d620bdb69af592210c48ea63d6fab5"
+    },
+    {
+      "index": 39,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0038.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0039.png",
+      "target_sha256": "15cf95b8b5cccb462e50774b5c8d27fad8edc3eb0b551df03225a8859e547fe6"
+    },
+    {
+      "index": 40,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0039.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0040.png",
+      "target_sha256": "44012c7d8f5a0170158ab791f58e11b1dcafd60ec97998caa2e9937ad1d2ff25"
+    },
+    {
+      "index": 41,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0040.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0041.png",
+      "target_sha256": "4e9ef618afbe86ce74162ce316615dcdb44dfd0245d0969698fc079da39235f0"
+    },
+    {
+      "index": 42,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0041.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0042.png",
+      "target_sha256": "37d9fa8371db9290215b17dcdb80174162d185b72fdfe26cdd2469122fcab578"
+    },
+    {
+      "index": 43,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0042.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0043.png",
+      "target_sha256": "97ec855dc67a88f8b78f358845e402af98b2a916898051db3b3d2a7983e996ff"
+    },
+    {
+      "index": 44,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0043.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0044.png",
+      "target_sha256": "9b408cf75344b25d4d9dcdcf4b0607acde9e5744cc97185c881798b6625d2e22"
+    },
+    {
+      "index": 45,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0044.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0045.png",
+      "target_sha256": "ba868bd4aabba28bf02d339b4d0ae642ee8e5c819decfb8ba7765074d63ff6ed"
+    },
+    {
+      "index": 46,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0045.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0046.png",
+      "target_sha256": "bbca58748fa4dfdffa02c67722d14b868fd410adcea0a14164518dd7d0a2404f"
+    },
+    {
+      "index": 47,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0046.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0047.png",
+      "target_sha256": "3b0e23104d82e74c91e0de21c8df9e4132107a849cb47b209692e778521090f5"
+    },
+    {
+      "index": 48,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0047.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0048.png",
+      "target_sha256": "8f58a1c477cd4952c901516b9ffee54f80ca0a57f30540445cf56f64b9d6b302"
+    },
+    {
+      "index": 49,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0048.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0049.png",
+      "target_sha256": "0306264600155344e11c76102909c3cbb29c680a6d92bf65f6ee110053ed7040"
+    },
+    {
+      "index": 50,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0049.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0050.png",
+      "target_sha256": "b5eeeb0fefd8a47810e207abd50f0b3bf98fc66ad7a7a0158b18ea67b0accdf0"
+    },
+    {
+      "index": 51,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0050.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0051.png",
+      "target_sha256": "e9562e8393f44a1c747f8897a4a856a3b48dcae4dcad27560415778aa3dc84ef"
+    },
+    {
+      "index": 52,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0051.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0052.png",
+      "target_sha256": "9d9e5f8f5643f32660029ff0bb777b85e8538bd4509993a11637416a0751ea5c"
+    },
+    {
+      "index": 53,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0052.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0053.png",
+      "target_sha256": "282b46759d95b0ac07d224169ebd2f31d5837efaf8883dcd827067de7ace6fe6"
+    },
+    {
+      "index": 54,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0053.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0054.png",
+      "target_sha256": "e6f20501088727e9c6dbc4b252672b440e6eaeabfe0ffa63c447f0d92cbf0208"
+    },
+    {
+      "index": 55,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0054.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0055.png",
+      "target_sha256": "370163c3cbea251bc5ebfa82a8481ed16268a0916f79e167a6f8aca73265c618"
+    },
+    {
+      "index": 56,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0055.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0056.png",
+      "target_sha256": "438cf206888f282e620c29a82533b7b33afe36ba43ca24a3dab477035ed76e31"
+    },
+    {
+      "index": 57,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0056.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0057.png",
+      "target_sha256": "cd04976021ec77278a4d39270c019203e317423d8d8315c0f681f6a9283e29f0"
+    },
+    {
+      "index": 58,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0057.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0058.png",
+      "target_sha256": "5de4714786cef1893a079b867919c1dfbb26c2fbb4f57bfc5539afbf5fc0b3fd"
+    },
+    {
+      "index": 59,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0058.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0059.png",
+      "target_sha256": "ad77adf1c533378985620193ff2ae9a066757921188fbc8ab8c354d6bdefc5ee"
+    },
+    {
+      "index": 60,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0059.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0060.png",
+      "target_sha256": "421f098dfb15aa398b01c81cffde6a6d0a2b18307561991bf36974891700359d"
+    },
+    {
+      "index": 61,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0060.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0061.png",
+      "target_sha256": "b772e057d1a616299df9cc4adf18367e5bb7a45538e465017788c693e56f5880"
+    },
+    {
+      "index": 62,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0061.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0062.png",
+      "target_sha256": "f293553de7664ebf2ca913b39839e7e71f83099961eed08eae7a49520eba8336"
+    },
+    {
+      "index": 63,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0062.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0063.png",
+      "target_sha256": "743d3a81448691fd68b7b570417f0fb6c3491f39479d99c8a765a9c7e8542062"
+    },
+    {
+      "index": 64,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0063.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0064.png",
+      "target_sha256": "22fc03ba633c401c763f4a64c96faf30fc8f118ac8307f9da2806ab5117539b1"
+    },
+    {
+      "index": 65,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0064.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0065.png",
+      "target_sha256": "101de3ac20ce8f85ed789b65c82692e68e3397577d2df486b7e3ad0fb36e5ba8"
+    },
+    {
+      "index": 66,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0065.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0066.png",
+      "target_sha256": "45f9b2851a55c1894f3485680515aa4787afa8766f6148469a75a3a3c04973c3"
+    },
+    {
+      "index": 67,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0066.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0067.png",
+      "target_sha256": "e6dac4b69b19f90a21744f832de565821e45f6f69650fff461d84c73e901a452"
+    },
+    {
+      "index": 68,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0067.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0068.png",
+      "target_sha256": "2dc85fa9b40129884cfa975eb824e2ae0e4337a882ce6e450a0eb1786231f92d"
+    },
+    {
+      "index": 69,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0068.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0069.png",
+      "target_sha256": "62165dc44fd0e751299692b17449a4100427361afd34554be5c6da1b1a2acfba"
+    },
+    {
+      "index": 70,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0069.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0070.png",
+      "target_sha256": "afc6879ca1fa9e2eb340372e8323f4a90750dd3b358a6482c331796212710402"
+    },
+    {
+      "index": 71,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0070.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0071.png",
+      "target_sha256": "482699e0e7a12ddd5cbc99f71d7f3ef30114633db0e9c0c1bb57ab31457d3fe7"
+    },
+    {
+      "index": 72,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0071.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0072.png",
+      "target_sha256": "57a16a43d2f89f147312cc69e98e738a8711e5c4daee759b6ac5f827658053e6"
+    },
+    {
+      "index": 73,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0072.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0073.png",
+      "target_sha256": "8aad822b0b8e1fed302e40b61fa8be72f527e28ce414b32f2bb65c1ad31cc9a1"
+    },
+    {
+      "index": 74,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0073.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0074.png",
+      "target_sha256": "676721f915c12540e55c27be51a55eb24fe7e27c7c345624fe1c6b4cdd03d4b8"
+    },
+    {
+      "index": 75,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0074.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0075.png",
+      "target_sha256": "e2d7db9eff478a337f317d2b4b62888b5fef0e9869af96c3d1482ed69deaf264"
+    },
+    {
+      "index": 76,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0075.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0076.png",
+      "target_sha256": "38a8d255e504af2180f5eba53e46d825c69396df3b551aa68368a4297cf12dbe"
+    },
+    {
+      "index": 77,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0076.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0077.png",
+      "target_sha256": "76f6a414fa37d93103bdc8a2130e3632dfa6fb001df0ecd8318997d6236282ed"
+    },
+    {
+      "index": 78,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0077.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0078.png",
+      "target_sha256": "d63ebb5bb0c7d5c236f4ef217a9be8017d3057b6a45a9be3cf3fd27dc53aa4e3"
+    },
+    {
+      "index": 79,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0078.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0079.png",
+      "target_sha256": "89dec10604deb4bc2de8a99f9065bd995c7839aa99232ae8e6898ac54253a3bd"
+    },
+    {
+      "index": 80,
+      "source_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/frame_future_0079.png",
+      "raw_size": [
+        512,
+        512
+      ],
+      "processed_shape": [
+        480,
+        832,
+        3
+      ],
+      "target_path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/frames/frame_0080.png",
+      "target_sha256": "49e9a7c952e6b22b94deb345c4abc36fdae0bce21b9b40309170ecb48921225a"
+    }
+  ],
+  "simulation_mp4": {
+    "path": "/workspace/DeformTransport/server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/simulation.mp4",
+    "sha256": "34f52f91715cd87b64251a8efaaff12491dcb58ac1323810f62ee27c543ef4c0",
+    "decoded_frames": 81,
+    "fps": 10
+  },
+  "checks": {
+    "frame_count_is_81": true,
+    "all_processed_480x832": true,
+    "frame0_source_is_initial": true,
+    "frame1_source_is_S2": true,
+    "frame80_source_is_S160": true,
+    "resized_input_equals_frame0": true,
+    "config_exists": true,
+    "prompt_exists": true,
+    "simulation_video_exists": true,
+    "simulation_video_has_81_frames": true,
+    "no_stale_noise": true,
+    "no_stale_raft_flow": true,
+    "official_tree_dynamics_preserved": true,
+    "tree_realwonder_schedule_preserved": true
+  },
+  "all_checks_pass": true
+}

@@ -1,0 +1,25 @@
+Santa V4 queue manually stopped during V4B-Noise.
+
+Reason:
+The Santa bridge visibility contract was audited and found to encode
+aligned projection validity rather than physical/z-buffer visibility.
+
+Affected old asset:
+server_runs/wan_move_bridge/20260809_010015__santa_correct_tracks/
+santa_material_visibility_correct.npy
+
+Audit:
+- bridge visibility true fraction: 1.0
+- selected aligned_projection_valid true fraction: 1.0
+- selected aligned_visible true fraction: 0.3775051481
+- selected source_and_aligned_visible true fraction: 0.2993416282
+- all-frame aligned-visible tracks: 50 / 1277
+- source-visible selected tracks: 907 / 1277
+
+Therefore Santa generations using the old visibility asset are retained
+as historical diagnostics only and are not used as final inferential results.
+
+V4A-D20 and V4A-D40 had completed before this audit.
+V4B-Noise was interrupted.
+V4C-Hybrid was intentionally prevented from starting.
+2026-08-11T02:35:52+00:00

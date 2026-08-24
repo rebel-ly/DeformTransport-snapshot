@@ -1,0 +1,26 @@
+{
+  "correct_vs_identity_shuffled_causal_contract": "PASS",
+  "formal_case": "santa",
+  "formal_input": "corrected-v2 Santa, N=1257, T=81, simulation steps 0,10,...,800",
+  "formal_track_count": 1257,
+  "full_track_kinematic_invariance": "FAIL",
+  "functional_conditioning_localization": "PASS",
+  "future_state_invariance": "PASS",
+  "future_target_support_invariance": "PASS",
+  "generator_consumed_motion_confound": "NOT_DETECTED",
+  "historical_n1277_santa": "legacy/rejected; not valid for formal evidence",
+  "input_intervention_isolation": "PASS",
+  "interpretation_scope": "Causal-contract validity only; no video-quality superiority is established.",
+  "paired_rng": "PASS",
+  "phase": "Phase0B",
+  "phase0b_substeps": {
+    "Phase0B-1": "PASS",
+    "Phase0B-2": "QUALIFIED_PASS",
+    "Phase0B-3": "PASS",
+    "Phase0B-4R": "PASS",
+    "Phase0B-4_initial": "CPU_IMPORT_BLOCKED"
+  },
+  "proceed_to_phase0c": true,
+  "status": "PASS",
+  "wanmove_consumption_isolation": "PASS"
+}

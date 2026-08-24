@@ -1,0 +1,9 @@
+{
+  "authorization_source": "wave1_corrected_final_audit_after_uid_transition.json",
+  "wave1_scientific_validity": "PASS",
+  "drop_zero62_manifest_pass": false,
+  "wave2_authorized": false,
+  "wave2_launched": false,
+  "reason": "DROP_ZERO62_MANIFEST.json is absent; no frozen DROP-ZERO62 artifact has passed its required gate.",
+  "scientific_configuration_changed": false
+}

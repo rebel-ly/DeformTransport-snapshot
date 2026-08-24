@@ -1,0 +1,44 @@
+{
+  "begin15_status": "PASS",
+  "begin_index_actual": 15,
+  "first_denoise_index": 15,
+  "first_effective_solver_order": 1,
+  "first_step_output_shape": [
+    1,
+    16,
+    21,
+    58,
+    104
+  ],
+  "last_sample_none_at_first_step": true,
+  "lower_order_nums_at_first_step": 0,
+  "midstart_terminal_endpoint_consistent": true,
+  "model_outputs_empty_at_first_step": true,
+  "off_by_one_start": false,
+  "planned_effective_indices": "15..39",
+  "planned_effective_steps": 25,
+  "runtime_epsilon_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "runtime_epsilon_tensor_content_sha256": "316cfc55f5782bb887395795d3ea0c685fbc240067c6f2f0b2964dee18a891c9",
+  "runtime_preview_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "start_state_exact_formula": true,
+  "start_state_max_abs_diff": 0.0,
+  "start_state_shape": [
+    16,
+    21,
+    58,
+    104
+  ],
+  "start_state_sigma": 0.8329627513885498,
+  "start_state_sigma_index": 15,
+  "start_state_timestep": 832
+}

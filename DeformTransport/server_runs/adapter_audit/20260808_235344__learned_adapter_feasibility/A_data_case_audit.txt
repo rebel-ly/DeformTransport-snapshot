@@ -1,0 +1,410 @@
+============================================================
+A1. CURRENT GIT
+============================================================
+feature/trajectory-probe
+b49252d08a745d621d40ec9aab66605d27edc554
+
+============================================================
+A2. REGISTERED CASE / MATERIAL DEFINITIONS
+============================================================
+
+============================================================
+A3. CASE-RELATED SOURCE FILES
+============================================================
+demo_web/case_handlers/base.py
+demo_web/case_handlers/__init__.py
+demo_web/case_handlers/lamp.py
+demo_web/case_handlers/persimmon.py
+demo_web/case_handlers/santa_cloth.py
+demo_web/case_handlers/tree.py
+demo_web/demo_data/lamp/config.yaml
+demo_web/demo_data/persimmon/config.yaml
+demo_web/demo_data/santa_cloth/config.yaml
+demo_web/demo_data/tree/config.yaml
+demo_web/simulation/case_simulation/case_handler.py
+demo_web/simulation/case_simulation/__init__.py
+demo_web/simulation/case_simulation/lamp.py
+demo_web/simulation/case_simulation/persimmon.py
+demo_web/simulation/case_simulation/santa_cloth.py
+demo_web/simulation/case_simulation/tree.py
+simulation/case_simulation/case_handler.py
+simulation/case_simulation/__init__.py
+simulation/case_simulation/lamp.py
+simulation/case_simulation/persimmon.py
+simulation/case_simulation/sand_house.py
+simulation/case_simulation/santa_cloth.py
+simulation/case_simulation/tree.py
+simulation/case_simulation/two_duck.py
+
+============================================================
+A4. DATASET / TARGET / VIDEO REFERENCES IN SOURCE
+============================================================
+
+============================================================
+A5. POSSIBLE TRAIN / VAL / TEST DIRECTORIES
+============================================================
+
+============================================================
+A6. EXISTING LOCAL RUN VIDEO / CONFIG INVENTORY
+============================================================
+server_runs/sand_house_cached_sim_20260808_174356/raw_sim/flows.npy
+server_runs/sand_house_cached_sim_20260808_174356/raw_sim/point_trajectories.pt
+server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_201448__sand_house_final_sim_seed0/config.yaml
+server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_201448__sand_house_final_sim_seed0/flows.npy
+server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_201448__sand_house_final_sim_seed0/prompt.txt
+server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_202951__sand_house_realwonder_baseline_seed0/sand_house_realwonder_seed0.mp4
+server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_203833__sand_house_frozen_correct_condition075_seed0/sand_house_frozen_correct_condition075_seed0.mp4
+server_runs/sand_house_cached_sim_20260808_174356/v1_frozen/20260808_204447__sand_house_frozen_shuffled_energy_matched_seed0/sand_house_frozen_shuffled_energy_matched_seed0.mp4
+server_runs/sand_house_cached_sim_20260808_174356/config.yaml
+server_runs/sand_house_cached_sim_20260808_174356/v2_dev/20260808_231107__sand_house_v2A_correct_seed0/sand_house_v2A_correct_seed0.mp4
+server_runs/sand_house_cached_sim_20260808_174356/v2_dev/20260808_225223__sand_house_v2B_correct_seed0/sand_house_v2B_correct_seed0.mp4
+server_runs/sand_house_cached_sim_20260808_174356/v2_dev/20260808_230335__sand_house_v2B_shuffled_seed0/sand_house_v2B_shuffled_seed0.mp4
+server_runs/sand_house_cached_sim_20260808_174356/v2_dev/20260808_231835__sand_house_v2A_shuffled_seed0/sand_house_v2A_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_CORRECT_20260805_033343/santa_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA__SEED1_/santa__seed1.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_BLEND_A05_MANUAL_20260805_035051/santa_official_blend_a05_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_034305/santa_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_FLOW_GENERATOR_MANUAL_20260805_052727/santa_official_flow_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_SHUFFLED_20260805_033730/santa_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_FLOW_20260805_035223/santa_flow_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_EMA_20260805_040221/santa_baseline_seed0_ema.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/config.yaml
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/simulation.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/point_trajectories.pt
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_ASSEMBLY_MANUAL_20260805_003555/final_sim/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/target_input.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/raw_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/fused_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/original_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/raw_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/fused_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_WAN_VAE_MANUAL_20260805_013606/outputs/original_correct_shuffled_target.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/original_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/raw_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/raw_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/fused_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/fused_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/target_input.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/WAN_VAE_E2E_21F_20260805_022223/outputs/original_correct_shuffled_target.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BASELINE_20260805_032928/santa_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/REALWONDER_SANTA_BLEND_20260805_040147/santa_blend_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_SIM_4F_20260805_050419_retry2/outputs/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_SIM_4F_20260805_050419_retry2/outputs/point_trajectories.pt
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/simulation_source/point_trajectories.pt
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim/config.yaml
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_CHAIN_20260805_050719/final_sim/point_trajectories.pt
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRIO_MANUAL_20260805_021601/baseline/santa_official_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRIO_MANUAL_20260805_021601/correct/santa_official_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/04_smoke/OFFICIAL_SANTA_81F_TRIO_MANUAL_20260805_021601/shuffled/santa_official_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/config.yaml
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/simulation_proxy.mp4
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/santa_21f_final_sim_proxy_v1/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/config.yaml
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_santa_81f_aligned_final_sim_20260806_234410/simulation.mp4
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/simulation.mp4
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/config.yaml
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/tree_official_precomputed_aligned_final_sim_20260807_185055/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_1/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_3/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_5/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_7/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_8/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_0/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_2/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_4/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_6/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/prepared_inputs/official_hf_example_data_metadata_20260805/sample_9/prompt.txt
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/realwonder_santa_proxy_trio_20260805/methods_3x2.mp4
+server_runs/20260804_234925_autonomous_deformtransport/05_metrics/realwonder_santa_proxy_trio_20260805/trio_2x2.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/hard_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/soft_hardmask_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/soft_blend_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/original.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/hard_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/soft_replace_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/soft_replace_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/soft_hardmask_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/soft_blend_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/quality_comparison.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_195213__santa__soft_fusion_ablation_decode/outputs/identity_comparison.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_173303__final_confidence_code_baseline_regression/santa_final_code_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224740__temporal_schedule_decode_parallel/quality_gpu2/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_224740__temporal_schedule_decode_parallel/balanced_gpu3/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_025209__quality_condition_space_correct_vs_shuffled/quality_condition_correct/aligned_santa_quality_condition_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_025209__quality_condition_space_correct_vs_shuffled/quality_condition_shuffled/aligned_santa_quality_condition_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_203228__tree__realwonder_baseline_seed0/tree_realwonder_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_212707__tree__quality_ramp4_correct_seed0/tree_quality_ramp4_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_232849__tree__highpass_correct_step0_seed0/tree_highpass_correct_step0_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_020153__santa__baseline_repro_vs_blend_correct_seed0/baseline_current/santa_current_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_020153__santa__baseline_repro_vs_blend_correct_seed0/blend_correct_a050/santa_soft_blend_a050_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_033448__interstep_patch_baseline_regression/santa_interstep_patch_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_034301__santa__interstep_correct_g010_vs_g020_seed0/interstep_correct_g010/santa_interstep_correct_g010_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_034301__santa__interstep_correct_g010_vs_g020_seed0/interstep_correct_g020/santa_interstep_correct_g020_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/interstep_shuffled_g010/santa_interstep_shuffled_g010_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_155617__santa__interstep_shuffled_g010_vs_g020_seed0/interstep_shuffled_g020/santa_interstep_shuffled_g020_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/confidence_correct_g020/santa_confidence_interstep_correct_g020_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_170453__santa__confidence_interstep_g020_correct_vs_shuffled_seed0/confidence_shuffled_g020/santa_confidence_interstep_shuffled_g020_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/shuffled_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/target_correct_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/projection_only/correct_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/correct_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/target_correct_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_212154__projection_vs_future_visible_vae_decode_parallel/source_and_future_visible/shuffled_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/point_trajectories.pt
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_175657__tree__official_precomputed__80future_81aligned/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_174506__tree__official_precomputed__4f_trajectory/flows.npy
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_160835__official_tree_transport_run/20260807_174506__tree__official_precomputed__4f_trajectory/point_trajectories.pt
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_215830__tree__quality_ramp4_shuffled_energy_matched_seed0/tree_quality_ramp4_shuffled_energy_matched_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_004947__tree__shuffled_condition_scalar0745_seed0/tree_shuffled_condition_scalar0745_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_012730__santa__frozen_tree_condition075_crosscase/correct/santa_quality_condition075_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_012730__santa__frozen_tree_condition075_crosscase/shuffled_matched/santa_quality_condition_matched_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_014552__santa__energy_normalized_condition/correct/santa_energy_normalized_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_014552__santa__energy_normalized_condition/shuffled/santa_energy_normalized_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_023852__santa__a025_correct_vs_a050_shuffled_seed0/a025_correct/santa_soft_blend_a025_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_023852__santa__a025_correct_vs_a050_shuffled_seed0/a050_shuffled/santa_soft_blend_a050_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/projection_evaluated_on_future_mask/correct_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/projection_evaluated_on_future_mask/target_correct_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/projection_evaluated_on_future_mask/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/projection_evaluated_on_future_mask/shuffled_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/future_evaluated_on_future_mask/correct_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/future_evaluated_on_future_mask/target_correct_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/future_evaluated_on_future_mask/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_215216__future_visible_kept_region_decode_check/future_evaluated_on_future_mask/shuffled_fused.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu2_candidates/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_221630__future_visible_alpha_tau_candidate_decode_parallel/gpu3_candidates/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/quality_gpu2/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_225341__temporal_schedule_decode_parallel_manifest_fixed/balanced_gpu3/target_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_032909__quality_motion_neutral_correct/motion_neutral_correct/aligned_santa_quality_motion_neutral_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/original_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/raw_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/original_correct_shuffled_target.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/target_input.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/raw_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/fused_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_204037__tree__aligned_wan_vae_base/outputs/fused_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_234159__tree__norm_direction_correct_step0_seed0/tree_norm_direction_correct_step0_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_010603__tree__shuffled_condition_energy_matched_seed0/tree_shuffled_condition_energy_matched_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/original.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/soft_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/hard_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/hard_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/soft_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260805_185312__santa__hard_soft_wan_decode/outputs/hard_soft_comparison.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/target_input.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/raw_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/raw_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/fused_correct.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/fused_shuffled.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/original_reconstruction.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_200216__santa__aligned_step0_800_wan_vae_base/outputs/original_correct_shuffled_target.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/baseline/aligned_santa_baseline_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260806_235302__aligned_baseline_vs_balanced_ramp4_full_generation/balanced_correct_retry_gpu2_20260807_001201/aligned_santa_balanced_ramp4_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/quality_correct/aligned_santa_quality_ramp4_correct_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_004033__gpu2_serial_balanced_shuffled_then_quality_correct/balanced_shuffled/aligned_santa_balanced_ramp4_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_214106__tree__quality_ramp4_shuffled_seed0/tree_quality_ramp4_shuffled_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_231107__tree__quality_correct_late_step1_seed0/tree_quality_correct_late_step1_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260807_235221__tree__quality_condition_residual_seed0/tree_quality_condition_residual_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_000312__tree__cosine_gate_condition_seed0/tree_cosine_gate_condition_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_001219__tree__condition_scalar0745_seed0/tree_condition_scalar0745_seed0.mp4
+server_runs/20260804_234925_autonomous_deformtransport/12_soft_transport_dev/20260808_002154__tree__motion_conflict_condition_seed0/tree_motion_conflict_condition_seed0.mp4
+
+============================================================
+A7. EXISTING CASE CENSUS IF PRESENT
+============================================================
+{
+  "cases": [
+    "lamp",
+    "persimmon",
+    "sand_house",
+    "santa_cloth",
+    "santa_cloth_robot",
+    "tree",
+    "two_duck"
+  ],
+  "records": [
+    {
+      "case": "lamp",
+      "class": "Lamp",
+      "file": "simulation/case_simulation/lamp.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "persimmon",
+      "class": "Persimmon",
+      "file": "simulation/case_simulation/persimmon.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation",
+        "add_entities_to_scene"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "sand_house",
+      "class": "SandHouse",
+      "file": "simulation/case_simulation/sand_house.py",
+      "line": 10,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "add_robots",
+        "fix_particles",
+        "init_robots_pose",
+        "custom_simulation",
+        "after_simulation_step"
+      ],
+      "flags": {
+        "robot": [
+          "franka",
+          "robot",
+          "inverse_kinematics",
+          "ik",
+          "end_effector",
+          "ee_"
+        ],
+        "cloth": [],
+        "mpm": [
+          "particle",
+          "sand"
+        ],
+        "rigid": [
+          "mesh"
+        ],
+        "precomputed": [],
+        "trajectory": [
+          "vertices",
+          "particles"
+        ],
+        "render": []
+      },
+      "asset_strings": [
+        "cases/xml/franka_emika_panda/panda.xml"
+      ]
+    },
+    {
+      "case": "santa_cloth",
+      "class": "SantaCloth",
+      "file": "simulation/case_simulation/santa_cloth.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation",
+        "fix_particles",
+        "create_force_fields",
+        "detect_ground_plane"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [
+          "cloth"
+        ],
+        "mpm": [
+          "particle"
+        ],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [
+          "particles",
+          "vel"
+        ],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "tree",
+      "class": "Tree",
+      "file": "simulation/case_simulation/tree.py",
+      "line": 10,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "fix_particles",
+        "create_force_fields"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [
+          "particle"
+        ],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [
+          "particles"
+        ],
+        "render": []
+      },
+      "asset_strings": []
+    },
+    {
+      "case": "two_duck",
+      "class": "TwoDuck",
+      "file": "simulation/case_simulation/two_duck.py",
+      "line": 8,
+      "bases": [
+        "CaseHandler"
+      ],
+      "methods": [
+        "__init__",
+        "custom_simulation"
+      ],
+      "flags": {
+        "robot": [],
+        "cloth": [],
+        "mpm": [],
+        "rigid": [],
+        "precomputed": [],
+        "trajectory": [],
+        "render": []
+      },
+      "asset_strings": []
+    }
+  ]
+}

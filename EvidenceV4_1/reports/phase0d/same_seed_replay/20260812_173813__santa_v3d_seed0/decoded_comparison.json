@@ -1,0 +1,4 @@
+{
+  "status": "NOT_APPLICABLE_NO_OUTPUTS",
+  "reason": "Both runs failed before output creation; decode and pixel comparison were not attempted."
+}

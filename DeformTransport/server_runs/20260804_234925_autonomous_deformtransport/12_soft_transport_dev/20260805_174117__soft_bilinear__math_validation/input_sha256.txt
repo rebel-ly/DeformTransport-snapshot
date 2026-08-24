@@ -1,0 +1,2 @@
+5b1a34365f7406a46be9f9885610a42f0b83e8225e65c8f0beb24a4e8790c012  deform_transport/soft_transport.py
+ba784c1fabb1c78b37b883939402a3974673c8c27dfc989b3e76a9e70042d367  scripts/validate_soft_transport_math.py

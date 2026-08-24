@@ -1,0 +1,26 @@
+{
+  "case": "santa",
+  "old_correct_tcme_mean": 0.6146068110130727,
+  "v3a_tcme_mean": 0.7152461672201753,
+  "realwonder_tcme_mean": 0.5621128710918128,
+  "v3a_minus_old_correct": {
+    "definition": "positive means V3A motion is worse",
+    "paired_mean_difference": 0.10063935620710254,
+    "paired_median_difference": 0.02988821268081665,
+    "fraction_v3a_worse": 0.6375,
+    "bootstrap_95_ci": [
+      0.05781433437019587,
+      0.146600892029237
+    ]
+  },
+  "realwonder_minus_v3a": {
+    "definition": "positive means V3A better than RealWonder",
+    "paired_mean_difference": -0.1531332961283624,
+    "bootstrap_95_ci": [
+      -0.2537334992992692,
+      -0.06621413367800415
+    ],
+    "decision": "LOSS"
+  },
+  "motion_safety": "REGRESSION_STOP"
+}

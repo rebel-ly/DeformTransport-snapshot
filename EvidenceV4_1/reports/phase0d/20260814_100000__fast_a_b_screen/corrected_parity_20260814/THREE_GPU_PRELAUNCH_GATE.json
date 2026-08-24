@@ -1,0 +1,17 @@
+{
+  "A2_vs_B2_G1_only_source_gpu_diff": true,
+  "B2_G1_vs_B2_G2_only_gpu_diff": true,
+  "THREE_GPU_LAUNCH_AUTHORIZED": true,
+  "all_match_canonical_intended": true,
+  "hardware": {
+    "container": "deformtransport-dev",
+    "nvidia_smi": [
+      "0, GPU-14bb1875-6456-dba9-fde5-e1383c8d480b, NVIDIA L40, 535.129.03",
+      "1, GPU-0e2857f8-18bc-0f5b-c1ff-5b67f892cd60, NVIDIA L40, 535.129.03",
+      "2, GPU-56d1a97e-c16c-ebf6-4fc6-8466b32d0bbf, NVIDIA L40, 535.129.03",
+      "3, GPU-111b4686-bb10-d8db-87fd-401b36dcbdf3, NVIDIA L40, 535.129.03"
+    ],
+    "python": "/workspace/tools/miniforge3/envs/wan-move/bin/python",
+    "uid_gid": "10011:10011"
+  }
+}

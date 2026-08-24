@@ -1,0 +1,16 @@
+--- server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/flow_mode_integration_20260805_0350/pipeline_integration.py	2026-08-05 03:49:23.000000000 +0800
++++ server_runs/20260804_234925_autonomous_deformtransport/02_code_audit/flow_mode_integration_20260805_0350/pipeline_integration.py.after	2026-08-05 03:49:23.000000000 +0800
+@@ -8,11 +8,12 @@
+ import torch
+ 
+ 
+-TransportCondition = Literal["correct", "shuffled"]
++TransportCondition = Literal["correct", "shuffled", "flow"]
+ 
+ _LATENT_KEYS = {
+     "correct": "correct_fused_latent",
+     "shuffled": "shuffled_fused_latent",
++    "flow": "flow_fused_latent",
+ }
+ 
+ 
